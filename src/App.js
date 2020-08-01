@@ -24,7 +24,6 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path="/404" component={NotFoundPage} />
-          {/* <Redirect to="/404" /> */}
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/home" component={HomePage} />
@@ -33,6 +32,7 @@ class App extends Component {
           <Route exact path="/landing" component={LandingPage} />
           <Route exact path="/:username" component={ShowCardPage} />
           <Route exact path="/" component={LandingPage} />
+          <Redirect to="/404" />
         </Switch>
       </Router>
     );

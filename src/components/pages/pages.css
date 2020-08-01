@@ -1,0 +1,92 @@
+.login-page {
+  height: 100%;
+}
+
+.login-info {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.block {
+  display: block;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.auth-input {
+  margin-bottom: 25px;
+  padding: 5px 2px 10px 2px;
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: #ccc;
+}
+
+.auth-input:focus {
+  border-color: #ff5349;
+}
+
+.remember-me-label {
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.auth-btn {
+  padding: 8px 0px 8px 0px;
+  border-radius: 5px;
+  border: none;
+  margin-top: 25px;
+}
+
+.auth-btn:focus {
+  outline: 0;
+}
+
+.auth-btn:hover {
+  background-color: #eb4b42;
+}
+
+.question-link-container-one {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.question-link-container-two {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.question-one {
+  display: inline;
+  font-size: 13px;
+  margin-right: 4px;
+}
+
+.link-one {
+  display: inline;
+  font-size: 13px;
+  margin-left: 4px;
+}
+
+.link-one:hover {
+  color: #eb4b42;
+  text-decoration: none;
+}
+
+.question-two {
+  display: inline;
+  font-size: 15px;
+  margin-right: 4px;
+}
+
+.link-two {
+  display: inline;
+  font-size: 15px;
+  margin-left: 4px;
+}
+
+.link-two:hover {
+  color: #eb4b42;
+  text-decoration: none;
+}
