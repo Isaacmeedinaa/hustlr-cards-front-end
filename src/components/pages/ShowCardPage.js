@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import "./pages.css";
 
 import { connect } from "react-redux";
-import { fetchCards } from "../../store/actions/cards";
+import { fetchPublicCard } from "../../store/actions/publicCard";
 
 class ShowCardPage extends Component {
   componentDidMount() {
     const username = this.props.location.pathname.slice(1);
     const history = this.props.history;
-    this.props.fetchCards(username, history);
+    this.props.fetchPublicCard(username, history);
   }
 
   render() {
@@ -23,12 +23,14 @@ class ShowCardPage extends Component {
 const mapStateToProps = (state) => {
   return {
     loader: state.loader,
+    publicCard: state.publicCard,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCards: (pathname, history) => dispatch(fetchCards(pathname, history)),
+    fetchPublicCard: (pathname, history) =>
+      dispatch(fetchPublicCard(pathname, history)),
   };
 };
 

@@ -1,4 +1,4 @@
-import { IS_LOADING, IS_NOT_LOADING } from "../actions/cards";
+import { IS_LOADING, IS_NOT_LOADING } from "../actions/loader";
 
 const loader = (state = false, action) => {
   switch (action.type) {
