@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../components.css";
+import "./UI.css";
 
 class TopToolbar extends Component {
   render() {

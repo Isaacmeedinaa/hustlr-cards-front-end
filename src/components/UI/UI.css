@@ -24,3 +24,10 @@
   color: #eb4b42;
   text-decoration: none;
 }
+
+.sidetoolbar {
+  grid-area: sidetoolbar;
+  background-color: beige;
+  border-right: 1px solid #d1d2d5;
+  height: 100vh;
+}

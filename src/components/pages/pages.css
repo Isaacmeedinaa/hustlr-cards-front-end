@@ -92,3 +92,40 @@
   color: #eb4b42;
   text-decoration: none;
 }
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.grid-container {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(75px, 75px) 1fr 1fr;
+  /* grid-template-rows: 1fr; */
+  grid-template-areas: "sidetoolbar cardform cardshow";
+  background-color: aliceblue;
+}
+
+.card-form-container {
+  grid-area: cardform;
+  padding: 15px 20px 15px 20px;
+}
+
+.card-show-container {
+  grid-area: cardshow;
+  border-left: 1px solid #d1d2d5;
+  padding: 15px 20px 15px 20px;
+}
+
+/* 770 breakpoint for the home page */
+@media only screen and (max-width: 770px) {
+  .grid-container {
+    grid-template-columns: minmax(75px, 75px) 1fr;
+    grid-template-areas:
+      "sidetoolbar cardform"
+      "sidetoolbar cardshow";
+  }
+  .card-show-container {
+    border: none;
+  }
+}

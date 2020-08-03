@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import "../components.css";
+
+import "../../constants/colors.css";
+import "./UI.css";
 
 class SideToolbar extends Component {
   render() {
-    return <div>SideToolbar.js</div>;
+    return <div className="primary-light-bg sidetoolbar">hi</div>;
   }
 }
 
