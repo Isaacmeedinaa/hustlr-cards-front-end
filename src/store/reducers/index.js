@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import user from "./user";
 import loader from "./loader";
+import user from "./user";
+import publicCard from "./publicCard";
 
 export default combineReducers({
-  user,
   loader,
+  user,
+  publicCard,
 });

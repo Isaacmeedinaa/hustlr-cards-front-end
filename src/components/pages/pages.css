@@ -2,7 +2,7 @@
   height: 100%;
 }
 
-.login-info {
+.auth-info {
   margin-bottom: 60px;
   text-align: center;
 }
@@ -27,16 +27,18 @@
   border-color: #ff5349;
 }
 
+.remember-me-container {
+  margin-bottom: 18px;
+}
+
 .remember-me-label {
   margin-left: 10px;
-  font-size: 15px;
 }
 
 .auth-btn {
   padding: 8px 0px 8px 0px;
   border-radius: 5px;
   border: none;
-  margin-top: 25px;
 }
 
 .auth-btn:focus {

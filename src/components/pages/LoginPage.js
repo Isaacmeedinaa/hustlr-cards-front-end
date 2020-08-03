@@ -12,7 +12,7 @@ class LoginPage extends Component {
 
     this.state = {
       isChecked: false,
-      emailPhoneNumber: "",
+      email: "",
       password: "",
     };
   }
@@ -42,9 +42,9 @@ class LoginPage extends Component {
       <div className="secondary-light-bg container h-100">
         <div className="row h-100 justify-content-center align-items-center">
           <div>
-            <div className="login-info">
+            <div className="auth-info">
               <h1 className="primary-color app-name">hustlr.cards</h1>
-              <h5 className="login-text">Login to continue</h5>
+              <h5 className="auth-text">Login to continue</h5>
             </div>
             <AuthCard>
               <form onSubmit={this.loginSubmitHandler}>
@@ -53,9 +53,9 @@ class LoginPage extends Component {
                 </label> */}
                 <input
                   className="block auth-input full-width"
-                  placeholder="Email or Phone Number"
-                  name="emailPhoneNumber"
-                  value={this.state.emailPhoneNumber}
+                  placeholder="Email"
+                  name="email"
+                  value={this.state.email}
                   onChange={this.inputChangeHandler}
                 />
                 {/* <label className="block auth-label">Password</label> */}
@@ -80,20 +80,20 @@ class LoginPage extends Component {
                   type="submit"
                   value="Log In"
                 />
-
-                <div className="question-link-container-one">
-                  <p className="question-one">Having trouble logging in?</p>
-                  <a className="primary-color link-one" href="/">
-                    Reset your password
-                  </a>
-                </div>
-                <div className="question-link-container-two">
-                  <p className="question-two">New to Hustlr?</p>
-                  <a className="primary-color link-two" href="/register">
-                    Join us today!
-                  </a>
-                </div>
               </form>
+
+              <div className="question-link-container-one">
+                <p className="question-one">Having trouble logging in?</p>
+                <a className="primary-color link-one" href="/">
+                  Reset your password
+                </a>
+              </div>
+              <div className="question-link-container-two">
+                <p className="question-two">New to Hustlr?</p>
+                <a className="primary-color link-two" href="/register">
+                  Join us today!
+                </a>
+              </div>
             </AuthCard>
             <AuthFooter />
           </div>
