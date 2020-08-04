@@ -35,6 +35,7 @@ class LoginPage extends Component {
     event.preventDefault();
 
     // Send request to back end
+    this.props.history.push("/home");
   };
 
   render() {
@@ -48,9 +49,6 @@ class LoginPage extends Component {
             </div>
             <AuthCard>
               <form onSubmit={this.loginSubmitHandler}>
-                {/* <label className="block auth-label">
-                  Email or Phone Number
-                </label> */}
                 <input
                   className="block auth-input full-width"
                   placeholder="Email"
@@ -58,7 +56,6 @@ class LoginPage extends Component {
                   value={this.state.email}
                   onChange={this.inputChangeHandler}
                 />
-                {/* <label className="block auth-label">Password</label> */}
                 <input
                   className="block auth-input full-width"
                   placeholder="Password"

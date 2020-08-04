@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { fetchPublicCard } from "../../store/actions/publicCard";
 
 class ShowCardPage extends Component {
-  componentDidMount() {
+  componentWillMount() {
     const username = this.props.location.pathname.slice(1);
     const history = this.props.history;
     this.props.fetchPublicCard(username, history);
