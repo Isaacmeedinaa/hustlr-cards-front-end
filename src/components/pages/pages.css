@@ -17,10 +17,11 @@
 
 .auth-input {
   margin-bottom: 25px;
-  padding: 5px 2px 10px 2px;
-  outline: 0;
-  border-width: 0 0 2px;
-  border-color: #ccc;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
 }
 
 .auth-input:focus {
@@ -97,7 +98,7 @@
   padding: 0 !important;
 }
 
-.grid-container {
+.grid-container-home {
   min-height: 100%;
   display: grid;
   grid-template-columns: minmax(75px, 75px) 1fr 1fr;
@@ -106,26 +107,66 @@
   background-color: aliceblue;
 }
 
-.card-form-container {
+.card-form-col-wrapper {
   grid-area: cardform;
+}
+
+.card-form-col-container {
   padding: 15px 20px 15px 20px;
 }
 
-.card-show-container {
+.card-show-col-wrapper {
   grid-area: cardshow;
   border-left: 1px solid #d1d2d5;
+}
+
+.card-show-col-container {
+  padding: 15px 20px 15px 20px;
+}
+
+.grid-container-settings {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(75px, 75px) 1fr;
+  /* grid-template-rows: 1fr; */
+  grid-template-areas: "sidetoolbar settings";
+  background-color: aliceblue;
+}
+
+.settings-wrapper {
+  grid-area: settings;
+}
+
+.settings-container {
+  padding: 15px 20px 15px 20px;
+}
+
+.grid-container-support {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(75px, 75px) 1fr;
+  /* grid-template-rows: 1fr; */
+  grid-template-areas: "sidetoolbar support";
+  background-color: aliceblue;
+}
+
+.support-wrapper {
+  grid-area: support;
+}
+
+.support-container {
   padding: 15px 20px 15px 20px;
 }
 
 /* 770 breakpoint for the home page */
 @media only screen and (max-width: 770px) {
-  .grid-container {
+  .grid-container-home {
     grid-template-columns: minmax(75px, 75px) 1fr;
     grid-template-areas:
       "sidetoolbar cardform"
       "sidetoolbar cardshow";
   }
-  .card-show-container {
+  .card-show-col-wrapper {
     border: none;
   }
 }
