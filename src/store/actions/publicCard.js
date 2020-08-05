@@ -5,7 +5,7 @@ export const SET_PUBLIC_CARD = "SET_PUBLIC_CARD";
 export const fetchPublicCard = (pathname, history) => {
   return (dispatch) => {
     dispatch({ type: IS_LOADING });
-    fetch(`http://localhost:4000/cards/${pathname}`)
+    fetch(`http://localhost:4000/publicCards/${pathname}`)
       .then((resp) => {
         if (!resp.ok) {
           history.push("/404");

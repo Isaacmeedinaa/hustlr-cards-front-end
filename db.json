@@ -1,7 +1,17 @@
 {
-  "cards": [{ "id": "trinumdesign" }, { "id": "zenyxllc" }],
+  "publicCards": [{ "id": "trinumdesign" }, { "id": "zenyxllc" }],
   "users": [
     { "id": 1, "username": "isaacmeedinaa" },
     { "id": 2, "username": "astears" }
+  ],
+  "cards": [
+    {
+      "id": 1,
+      "businessName": "Zenyx LLC",
+      "businessIndustry": "Software Development",
+      "businessServices": "We offer amazing web design and development services. We also do graphic design and print for you brand!",
+      "businessPhoneNumber": "+1 (773) 234-8889",
+      "businessEmail": "contact@zenyx.io"
+    }
   ]
 }
