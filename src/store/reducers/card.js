@@ -7,6 +7,10 @@ const initialState = {
   businessServices: "",
   businessPhoneNumber: "",
   businessEmail: "",
+  businessFBLink: "",
+  businessIGLink: "",
+  businessTwitterLink: "",
+  businessSCLink: "",
 };
 
 const loader = (state = initialState, action) => {
@@ -19,6 +23,10 @@ const loader = (state = initialState, action) => {
         businessServices: action.card.businessServices,
         businessPhoneNumber: action.card.businessPhoneNumber,
         businessEmail: action.card.businessEmail,
+        businessFBLink: action.card.businessFBLink,
+        businessIGLink: action.card.businessIGLink,
+        businessTwitterLink: action.card.businessTwitterLink,
+        businessSCLink: action.card.businessSCLink,
       };
 
     default:

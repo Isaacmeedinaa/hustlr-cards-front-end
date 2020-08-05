@@ -2,6 +2,18 @@
   color: #ff5349;
 }
 
+.primary-color-hover {
+  color: #ff5349;
+}
+
+.primary-color-hover:hover {
+  color: #eb4b42;
+}
+
+.primary-color:hover {
+  color: #eb4b42;
+}
+
 .primary-color-bg {
   background-color: #ff5349;
 }
