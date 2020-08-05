@@ -11,7 +11,11 @@
       "businessIndustry": "Software Development",
       "businessServices": "We offer amazing web design and development services. We also do graphic design and print for you brand!",
       "businessPhoneNumber": "+1 (773) 234-8889",
-      "businessEmail": "contact@zenyx.io"
+      "businessEmail": "contact@zenyx.io",
+      "businessFBLink": "https://www.facebook.com/zenyxllc",
+      "businessIGLink": "https://www.instagram.com/zenyxllc",
+      "businessTwitterLink": "https://www.twitter.com/zenyxllc",
+      "businessSCLink": "https://www.snapchat.com/add/zenyxllc"
     }
   ]
 }

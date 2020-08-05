@@ -4,6 +4,10 @@ import { connect } from "react-redux";
 
 import MdCall from "react-ionicons/lib/MdCall";
 import MdMail from "react-ionicons/lib/MdMail";
+import LogoFacebook from "react-ionicons/lib/LogoFacebook";
+import LogoInstagram from "react-ionicons/lib/LogoInstagram";
+import LogoTwitter from "react-ionicons/lib/LogoTwitter";
+import LogoSnapchat from "react-ionicons/lib/LogoSnapchat";
 
 import "../../constants/colors.css";
 import "./UI.css";
@@ -46,11 +50,14 @@ class Card extends Component {
                   color={this.state.primary}
                 />
               </div>
-              <p className="card-business-contact-text">
+              <a
+                href={"tel:" + this.props.card.businessPhoneNumber}
+                className="primary-color-hover card-business-contact-text"
+              >
                 {this.props.card.businessPhoneNumber === ""
                   ? "Enter Phone Number"
                   : this.props.card.businessPhoneNumber}
-              </p>
+              </a>
             </div>
             <div
               className="card-business-contact-detail"
@@ -63,11 +70,52 @@ class Card extends Component {
                   color={this.state.primary}
                 />
               </div>
-              <p className="card-business-contact-text">
+              <a
+                href={"mainto:" + this.props.card.businessEmail}
+                className="primary-color-hover card-business-contact-text"
+              >
                 {this.props.card.businessEmail === ""
                   ? "Enter Email"
                   : this.props.card.businessEmail}
-              </p>
+              </a>
+            </div>
+          </div>
+          <div className="card-business-social-media-links-container">
+            <div className="card-business-social-media-icon-container">
+              <a href={this.props.card.businessFBLink} target="_black">
+                <LogoFacebook
+                  className="card-business-social-media-icon"
+                  fontSize="28px"
+                  color={this.state.primary}
+                />
+              </a>
+            </div>
+            <div className="card-business-social-media-icon-container">
+              <a href={this.props.card.businessIGLink} target="_black">
+                <LogoInstagram
+                  className="card-business-social-media-icon"
+                  fontSize="28px"
+                  color={this.state.primary}
+                />
+              </a>
+            </div>
+            <div className="card-business-social-media-icon-container">
+              <a href={this.props.card.businessTwitterLink} target="_black">
+                <LogoTwitter
+                  className="card-business-social-media-icon"
+                  fontSize="28px"
+                  color={this.state.primary}
+                />
+              </a>
+            </div>
+            <div className="card-business-social-media-icon-container">
+              <a href={this.props.card.businessSCLink} target="_blank">
+                <LogoSnapchat
+                  className="card-business-social-media-icon"
+                  fontSize="28px"
+                  color={this.state.primary}
+                />
+              </a>
             </div>
           </div>
         </div>

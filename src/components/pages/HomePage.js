@@ -9,24 +9,6 @@ import "./pages.css";
 import "../../constants/colors.css";
 
 class HomeContainer extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      modalIsClosed: true,
-    };
-  }
-
-  componentDidMount() {}
-
-  toggleModal = () => {
-    this.setState((prevState) => {
-      return {
-        modalIsClosed: !prevState.modalIsClosed,
-      };
-    });
-  };
-
   render() {
     if (this.props.loader) {
       return null;
@@ -43,7 +25,7 @@ class HomeContainer extends Component {
             <div className="secondary-light-bg card-form-col-wrapper">
               <TopToolbar />
               <div className="card-form-col-container">
-                <CardForm toggleModal={this.toggleModal} />
+                <CardForm />
               </div>
             </div>
             <div className="secondary-light-bg card-show-col-wrapper">

@@ -22,7 +22,11 @@ export const setCard = (
   businessIndustry,
   businessServices,
   businessPhoneNumber,
-  businessEmail
+  businessEmail,
+  businessFBLink,
+  businessIGLInk,
+  businessTwitterLink,
+  businessSCLink
 ) => {
   return {
     type: SET_CARD,
@@ -33,6 +37,10 @@ export const setCard = (
       businessServices,
       businessPhoneNumber,
       businessEmail,
+      businessFBLink,
+      businessIGLInk,
+      businessTwitterLink,
+      businessSCLink,
     },
   };
 };

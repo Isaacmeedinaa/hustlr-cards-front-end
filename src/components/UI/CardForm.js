@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { Animated } from "react-animated-css";
+
 import { connect } from "react-redux";
 import { setCard } from "../../store/actions/card";
 
@@ -11,12 +13,17 @@ class CardForm extends Component {
     super(props);
 
     this.state = {
+      isHidden: true,
       id: props.card.id,
       businessName: props.card.businessName,
       businessIndustry: props.card.businessIndustry,
       businessServices: props.card.businessServices,
       businessPhoneNumber: props.card.businessPhoneNumber,
       businessEmail: props.card.businessEmail,
+      businessFBLink: props.card.businessFBLink,
+      businessIGLink: props.card.businessIGLink,
+      businessTwitterLink: props.card.businessTwitterLink,
+      businessSCLink: props.card.businessSCLink,
     };
   }
 
@@ -32,6 +39,10 @@ class CardForm extends Component {
     const businessServicesValue = this.state.businessServices;
     const businessPhoneNumberValue = this.state.businessPhoneNumber;
     const businessEmailValue = this.state.businessEmail;
+    const businessFBLinkValue = this.state.businessFBLink;
+    const businessIGLinkValue = this.state.businessIGLink;
+    const businessTwitterLinkValue = this.state.businessTwitterLink;
+    const businessSCLinkValue = this.state.businessSCLink;
 
     this.props.setCard(
       this.state.id,
@@ -39,8 +50,20 @@ class CardForm extends Component {
       businessIndustryValue,
       businessServicesValue,
       businessPhoneNumberValue,
-      businessEmailValue
+      businessEmailValue,
+      businessFBLinkValue,
+      businessIGLinkValue,
+      businessTwitterLinkValue,
+      businessSCLinkValue
     );
+  };
+
+  showSocialMediaLinks = () => {
+    this.setState((prevState) => {
+      return {
+        isHidden: !prevState.isHidden,
+      };
+    });
   };
 
   render() {
@@ -89,7 +112,7 @@ class CardForm extends Component {
               id="cardFormInputPhoneNumber"
               className="card-form-input-contact"
               name="businessPhoneNumber"
-              placeholder="Phone Number"
+              placeholder="+1 (773) 555-0000"
               value={this.state.businessPhoneNumber}
               onChange={this.cardFormInputChangeHandler}
             />
@@ -97,19 +120,55 @@ class CardForm extends Component {
               id="cardFormInputEmail"
               className="card-form-input-contact"
               name="businessEmail"
-              placeholder="Email"
+              placeholder="youremail@email.com"
               value={this.state.businessEmail}
               onChange={this.cardFormInputChangeHandler}
             />
           </div>
-          <div
-            className="card-form-button"
-            onClick={() => this.props.toggleModal()}
-          >
+          <div className="card-form-button" onClick={this.showSocialMediaLinks}>
             <span className="primary-color card-form-button-text">
-              + Add Social Media
+              {this.state.isHidden ? "+ Edit Social Media Links" : "Close"}
             </span>
           </div>
+          {this.state.isHidden ? null : (
+            <Animated
+              className="card-form-social-media-inputs-animation-wrapper"
+              animationIn="bounceIn"
+              animationOut="fadeOut"
+              isVisible={true}
+            >
+              <div className="card-form-social-media-inputs-container">
+                <input
+                  className="card-form-social-media-input"
+                  name="businessFBLink"
+                  placeholder="https://www.facebook.com/your_username"
+                  value={this.state.businessFBLink}
+                  onChange={this.cardFormInputChangeHandler}
+                />
+                <input
+                  className="card-form-social-media-input"
+                  name="businessIGLink"
+                  placeholder="https://www.instagram.com/your_username"
+                  value={this.state.businessIGLink}
+                  onChange={this.cardFormInputChangeHandler}
+                />
+                <input
+                  className="card-form-social-media-input"
+                  name="businessTwitterLink"
+                  placeholder="https://www.twitter.com/your_username"
+                  value={this.state.businessTwitterLink}
+                  onChange={this.cardFormInputChangeHandler}
+                />
+                <input
+                  className="card-form-social-media-input"
+                  name="businessSCLink"
+                  placeholder="https://www.snapchat.com/add/your_username"
+                  value={this.state.businessSCLink}
+                  onChange={this.cardFormInputChangeHandler}
+                />
+              </div>
+            </Animated>
+          )}
         </div>
       </div>
     );
@@ -130,7 +189,11 @@ const mapDispatchToProps = (dispatch) => {
       businessIndustry,
       businessServices,
       businessPhoneNumber,
-      businessEmail
+      businessEmail,
+      businessFBLink,
+      businessIGLink,
+      businessTwitterLink,
+      businessSCLink
     ) =>
       dispatch(
         setCard(
@@ -139,7 +202,11 @@ const mapDispatchToProps = (dispatch) => {
           businessIndustry,
           businessServices,
           businessPhoneNumber,
-          businessEmail
+          businessEmail,
+          businessFBLink,
+          businessIGLink,
+          businessTwitterLink,
+          businessSCLink
         )
       ),
   };
