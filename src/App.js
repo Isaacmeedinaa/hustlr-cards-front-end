@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { connect } from "react-redux";
+import { fetchCard } from "./store/actions/card";
 
 import "./App.css";
 
@@ -19,7 +20,39 @@ import SupportPage from "./components/pages/SupportPage";
 import ShowCardPage from "./components/pages/ShowCardPage";
 
 class App extends Component {
+  constructor() {
+    super();
+  }
+
+  componentDidMount() {
+    this.props.fetchCard();
+    window.addEventListener("beforeunload", this.keepOnPage);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this.keepOnPage);
+  }
+
+  keepOnPage = (event) => {
+    const localStorageCard = JSON.parse(localStorage.getItem("card"));
+
+    for (const key in localStorageCard) {
+      if (localStorageCard.hasOwnProperty(key)) {
+        if (localStorageCard[key] !== this.props.card[key]) {
+          console.log(localStorageCard, this.props.card);
+          let message;
+          event.returnValue = message;
+          return message;
+        }
+      }
+    }
+  };
+
   render() {
+    if (this.props.loader) {
+      return null;
+    }
+
     return (
       <Router>
         <Switch>
@@ -39,4 +72,17 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+const mapStateToProps = (state) => {
+  return {
+    loader: state.loader,
+    card: state.card,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchCard: () => dispatch(fetchCard()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -13,23 +13,11 @@ class HomeContainer extends Component {
     super();
 
     this.state = {
-      businessName: "",
-      businessServices: "",
-      businessPhoneNumber: "",
-      businessEmail: "",
       modalIsClosed: true,
     };
   }
 
-  componentWillUnmount() {
-    alert("hi");
-  }
-
-  cardFormInputChangeHandler = (field, value) => {
-    this.setState({
-      [field]: value,
-    });
-  };
+  componentDidMount() {}
 
   toggleModal = () => {
     this.setState((prevState) => {
@@ -40,6 +28,10 @@ class HomeContainer extends Component {
   };
 
   render() {
+    if (this.props.loader) {
+      return null;
+    }
+
     return (
       <Fragment>
         <div className="container-fluid h-100 no-padding">
@@ -51,24 +43,12 @@ class HomeContainer extends Component {
             <div className="secondary-light-bg card-form-col-wrapper">
               <TopToolbar />
               <div className="card-form-col-container">
-                <CardForm
-                  businessName={this.state.businessName}
-                  businessServices={this.state.businessServices}
-                  businessPhoneNumber={this.state.businessPhoneNumber}
-                  businessEmail={this.state.businessEmail}
-                  cardFormInputChangeHandler={this.cardFormInputChangeHandler}
-                  toggleModal={this.toggleModal}
-                />
+                <CardForm toggleModal={this.toggleModal} />
               </div>
             </div>
             <div className="secondary-light-bg card-show-col-wrapper">
               <div className="card-show-col-container">
-                <Card
-                  businessName={this.state.businessName}
-                  businessServices={this.state.businessServices}
-                  businessPhoneNumber={this.state.businessPhoneNumber}
-                  businessEmail={this.state.businessEmail}
-                />
+                <Card />
               </div>
             </div>
           </div>

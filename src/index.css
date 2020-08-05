@@ -8,3 +8,27 @@ body,
   font-family: "Poppins", sans-serif;
   background-color: #f6f7fb;
 }
+
+.dropdown-menu {
+  min-width: 100% !important;
+}
+
+.btn {
+  border: none !important;
+  outline: none !important;
+}
+
+.btn:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+.btn-secondary {
+  border: none !important;
+  outline: none !important;
+}
+
+.btn-secondary:focus {
+  border: none !important;
+  outline: none !important;
+}
