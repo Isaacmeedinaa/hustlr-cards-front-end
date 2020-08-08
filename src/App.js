@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchCard } from "./store/actions/card";
+import { fetchIndustries } from "./store/actions/industries";
 
 import "./App.css";
 
@@ -26,27 +27,27 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchCard();
-    window.addEventListener("beforeunload", this.keepOnPage);
+    this.props.fetchIndustries();
+    // window.addEventListener("beforeunload", this.keepOnPage);
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.keepOnPage);
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener("beforeunload", this.keepOnPage);
+  // }
 
-  keepOnPage = (event) => {
-    const localStorageCard = JSON.parse(localStorage.getItem("card"));
+  // keepOnPage = (event) => {
+  //   const localStorageCard = JSON.parse(localStorage.getItem("card"));
 
-    for (const key in localStorageCard) {
-      if (localStorageCard.hasOwnProperty(key)) {
-        if (localStorageCard[key] !== this.props.card[key]) {
-          console.log(localStorageCard, this.props.card);
-          let message;
-          event.returnValue = message;
-          return message;
-        }
-      }
-    }
-  };
+  //   for (const key in localStorageCard) {
+  //     if (localStorageCard.hasOwnProperty(key)) {
+  //       if (localStorageCard[key] !== this.props.card[key]) {
+  //         let message;
+  //         event.returnValue = message;
+  //         return message;
+  //       }
+  //     }
+  //   }
+  // };
 
   render() {
     if (this.props.loader) {
@@ -82,6 +83,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchCard: () => dispatch(fetchCard()),
+    fetchIndustries: () => dispatch(fetchIndustries()),
   };
 };
 
