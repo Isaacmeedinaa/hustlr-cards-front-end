@@ -135,6 +135,16 @@ class CardForm extends Component {
             />
             <div className="card-form-dropdown-container">
               <Select
+                classNamePrefix="card-form-dropdown"
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 0,
+                  colors: {
+                    ...theme.colors,
+                    primary25: "#f1f1f1",
+                    primary: "rgba(255, 83, 73, 0.3)",
+                  },
+                })}
                 options={this.props.dropdownIndustries}
                 value={this.props.dropdownIndustries.filter(
                   (option) => option.label === this.state.industry.name
