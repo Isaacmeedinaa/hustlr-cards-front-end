@@ -7,18 +7,22 @@
   "industries": [
     {
       "id": 1,
-      "name": "Software Development"
+      "name": "Select a Business Industry"
     },
     {
       "id": 2,
-      "name": "Graphic Design and Print"
+      "name": "Software Development"
     },
     {
       "id": 3,
-      "name": "Clothing and Apparel"
+      "name": "Graphic Design and Print"
     },
     {
       "id": 4,
+      "name": "Clothing and Apparel"
+    },
+    {
+      "id": 5,
       "name": "Health and Beauty"
     }
   ],
@@ -40,8 +44,8 @@
       "snapchatLink": "https://www.snapchat.com/add/zenyxllc",
       "themeId": 1,
       "industry": {
-        "id": 1,
-        "name": "Software Development"
+        "id": 3,
+        "name": "Graphic Design and Print"
       },
       "userId": 1,
       "photos": [

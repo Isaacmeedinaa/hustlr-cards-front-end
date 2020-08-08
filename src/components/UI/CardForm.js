@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { Animated } from "react-animated-css";
+import Select from "react-select";
 
 import { connect } from "react-redux";
 import { setCard } from "../../store/actions/card";
@@ -93,8 +94,8 @@ class CardForm extends Component {
     await this.setState({
       ...this.state,
       industry: {
-        id: parseInt(event.target.value),
-        name: event.target.options[event.target.selectedIndex].text,
+        id: parseInt(event.value),
+        name: event.label,
       },
     });
 
@@ -116,15 +117,15 @@ class CardForm extends Component {
           <div className="primary-color-bg card-form-business-img-container">
             <img className="card-form-business-img" src={this.state.imgUrl} />
           </div>
-          <div
-            className="card-form-button"
-            onClick={this.handleImageSelectorClick}
-          >
-            <span className="primary-color card-form-button-text">
-              Choose New Photo
-            </span>
-          </div>
           <form className="card-form" onSubmit={() => {}}>
+            <div
+              className="card-form-button"
+              onClick={this.handleImageSelectorClick}
+            >
+              <span className="primary-color card-form-button-text">
+                Choose New Photo
+              </span>
+            </div>
             <input
               className="card-form-input"
               name="title"
@@ -133,21 +134,13 @@ class CardForm extends Component {
               onChange={this.cardFormInputChangeHandler}
             />
             <div className="card-form-dropdown-container">
-              <select
-                className="card-form-dropdown"
-                name="industry"
-                defaultValue={
-                  this.state.businessIndustry === ""
-                    ? "DEFAULT"
-                    : this.state.businessIndustry
-                }
+              <Select
+                options={this.props.dropdownIndustries}
+                value={this.props.dropdownIndustries.filter(
+                  (option) => option.label === this.state.industry.name
+                )}
                 onChange={this.cardFormSelectorChangeHandler}
-              >
-                <option value="DEFAULT" disabled>
-                  Select a Business Industry
-                </option>
-                {this.renderIndustryOptions()}
-              </select>
+              />
             </div>
             <textarea
               className="card-form-input-large"
@@ -238,7 +231,8 @@ class CardForm extends Component {
 const mapStateToProps = (state) => {
   return {
     card: state.card,
-    industries: state.industries,
+    originalIndustries: state.industries.originalIndustries,
+    dropdownIndustries: state.industries.dropdownIndustries,
   };
 };
 

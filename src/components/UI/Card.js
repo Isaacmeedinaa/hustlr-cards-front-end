@@ -26,7 +26,7 @@ const CardLink = (props) => {
 };
 
 const CardIndustry = (props) => {
-  if (!props.industry) {
+  if (!props.industry || props.industry.id === 1) {
     return null;
   }
   return <h5 className="card-business-industry">{props.industry.name}</h5>;
