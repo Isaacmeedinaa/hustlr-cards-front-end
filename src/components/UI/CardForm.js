@@ -133,6 +133,23 @@ class CardForm extends Component {
               value={this.state.title}
               onChange={this.cardFormInputChangeHandler}
             />
+            <div className="card-form-location-fields">
+              <input
+                className="card-form-input-location"
+                name="city"
+                placeholder="City"
+                value={this.state.city}
+                onChange={this.cardFormInputChangeHandler}
+              />
+              <input
+                id="cardFormInputEmail"
+                className="card-form-input-location"
+                name="state"
+                placeholder="State"
+                value={this.state.state}
+                onChange={this.cardFormInputChangeHandler}
+              />
+            </div>
             <div className="card-form-dropdown-container">
               <Select
                 classNamePrefix="card-form-dropdown"

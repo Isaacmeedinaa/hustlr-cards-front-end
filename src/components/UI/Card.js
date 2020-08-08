@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 
 import { connect, useSelector } from "react-redux";
 
+import MdPin from "react-ionicons/lib/MdPin";
 import MdCall from "react-ionicons/lib/MdCall";
 import MdMail from "react-ionicons/lib/MdMail";
 import LogoFacebook from "react-ionicons/lib/LogoFacebook";
@@ -21,6 +22,29 @@ const CardLink = (props) => {
       >
         https://www.hustlr.cards/{props.pathToCard}
       </a>
+    </div>
+  );
+};
+
+const CardLocation = (props) => {
+  const [primaryColor, setPrimaryColor] = useState("#ff5349");
+
+  if (!props.city || !props.state) {
+    return null;
+  }
+
+  return (
+    <div className="card-business-location-container">
+      <div className="card-business-location-icon-container">
+        <MdPin
+          className="card-business-contact-icon"
+          fontSize="18px"
+          color={primaryColor}
+        />
+      </div>
+      <p className="primary-color card-business-contact-text">
+        {props.city}, {props.state}
+      </p>
     </div>
   );
 };
@@ -217,6 +241,10 @@ class Card extends Component {
             <img className="card-business-img" src={this.props.card.imgUrl} />
           </div>
           <h1 className="card-business-name">{this.props.card.title}</h1>
+          <CardLocation
+            city={this.props.card.city}
+            state={this.props.card.state}
+          />
           <CardIndustry industry={this.props.card.industry} />
           <CardServices services={this.props.card.services} />
           <CardContactDetails
