@@ -85,6 +85,7 @@ class SideToolbar extends Component {
               className="sidetoolbar-icon"
               onClick={() => {
                 this.props.history.push("/login");
+                localStorage.removeItem("card");
                 console.log("dispatch logout action");
               }}
               fontSize="30px"

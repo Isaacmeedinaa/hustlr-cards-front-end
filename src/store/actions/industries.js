@@ -2,7 +2,8 @@ import Industry from "../../models/industry";
 
 import { IS_LOADING, IS_NOT_LOADING } from "./loader";
 
-export const SET_INDUSTRIES = "SET_INDUSTRIES";
+export const SET_ORIGINAL_INDUSTRIES = "SET_ORIGINAL_INDUSTRIES";
+export const SET_DROPDOWN_INDUSTRIES = "SET_DROPDOWN_INDUSTRIES";
 
 export const fetchIndustries = () => {
   return (dispatch) => {
@@ -10,15 +11,27 @@ export const fetchIndustries = () => {
     fetch("http://localhost:4000/industries")
       .then((resp) => resp.json())
       .then((industries) => {
-        const loadedIndustries = [];
+        const originalIndustries = [];
 
         for (const key in industries) {
-          loadedIndustries.push(
+          originalIndustries.push(
             new Industry(industries[key].id, industries[key].name)
           );
         }
 
-        dispatch({ type: SET_INDUSTRIES, industries: loadedIndustries });
+        const dropdownIndustries = industries.map((industry) => ({
+          value: industry.id,
+          label: industry.name,
+        }));
+
+        dispatch({
+          type: SET_ORIGINAL_INDUSTRIES,
+          originalIndustries: originalIndustries,
+        });
+        dispatch({
+          type: SET_DROPDOWN_INDUSTRIES,
+          dropdownIndustries: dropdownIndustries,
+        });
         dispatch({ type: IS_NOT_LOADING });
       });
   };
