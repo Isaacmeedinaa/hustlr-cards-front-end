@@ -111,14 +111,24 @@
   width: 100%;
 }
 
-.card-form-dropdown {
-  width: 100%;
-  height: 45px;
-  background-color: rgba(255, 83, 73, 0.3);
-  color: #ff5349;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 8px;
+.card-form-dropdown__control {
+  width: 100% !important;
+  height: 45px !important;
+  background-color: #f1f1f1 !important;
+  border: none !important;
+  border-radius: 5px !important;
+}
+
+.card-form-dropdown__single-value {
+  color: black !important;
+}
+
+.card-form-dropdown__option--is-disabled {
+  color: black !important;
+}
+
+.card-form-dropdown__option--is-selected {
+  color: #ff5349 !important;
 }
 
 .card-form-dropdown:hover {
