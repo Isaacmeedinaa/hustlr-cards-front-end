@@ -8,6 +8,7 @@ import {
 import { connect } from "react-redux";
 import { fetchCard } from "./store/actions/card";
 import { fetchIndustries } from "./store/actions/industries";
+import { closeThemePicker } from "./store/actions/themePicker";
 
 import "./App.css";
 
@@ -76,7 +77,8 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     loader: state.loader,
-    card: state.card,
+    cardData: state.card.cardData,
+    themePicker: state.themePicker,
   };
 };
 
@@ -84,6 +86,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCard: () => dispatch(fetchCard()),
     fetchIndustries: () => dispatch(fetchIndustries()),
+    closeThemePicker: () => dispatch(closeThemePicker()),
   };
 };
 

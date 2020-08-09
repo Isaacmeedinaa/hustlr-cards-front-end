@@ -5,6 +5,7 @@ import user from "./user";
 import industries from "./industries";
 import themes from "./themes";
 import card from "./card";
+import themePicker from "./themePicker";
 import publicCard from "./publicCard";
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   industries,
   themes,
   card,
+  themePicker,
   publicCard,
 });
 

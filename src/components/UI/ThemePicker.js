@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setCardThemeId } from "../../store/actions/card";
 
+import { Animated } from "react-animated-css";
+
 import "../../constants/colors.css";
 import "./UI.css";
 
@@ -125,13 +127,20 @@ class ThemePicker extends Component {
 
   render() {
     return (
-      <div className="primary-light-bg theme-picker">
-        <Colors
-          themes={this.props.themes}
-          pickColorClickHandler={this.pickColorClickHandler}
-          themeId={this.state.themeId}
-        />
-      </div>
+      <Animated
+        className="theme-picker-animation-wrapper"
+        animationIn="bounceIn"
+        animationOut="fadeOut"
+        isVisible={true}
+      >
+        <div className="primary-light-bg theme-picker">
+          <Colors
+            themes={this.props.themes}
+            pickColorClickHandler={this.pickColorClickHandler}
+            themeId={this.state.themeId}
+          />
+        </div>
+      </Animated>
     );
   }
 }
