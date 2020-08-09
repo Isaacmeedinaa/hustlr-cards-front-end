@@ -1,8 +1,13 @@
 import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
+import {
+  openThemePicker,
+  closeThemePicker,
+} from "../../store/actions/themePicker";
 
 import MdBrush from "react-ionicons/lib/MdBrush";
+import MdCloseCircle from "react-ionicons/lib/MdCloseCircle";
 
 import ThemePicker from "./ThemePicker";
 
@@ -13,18 +18,16 @@ class TopToolbar extends Component {
     super(props);
 
     this.state = {
-      showThemePicker: false,
       primary: "#ff5349",
-      title: props.cardData.title,
     };
   }
 
   openCloseThemePickerHandler = () => {
-    this.setState((prevState) => {
-      return {
-        showThemePicker: !prevState.showThemePicker,
-      };
-    });
+    if (!this.props.themePicker) {
+      this.props.openThemePicker();
+    } else {
+      this.props.closeThemePicker();
+    }
   };
 
   render() {
@@ -36,15 +39,23 @@ class TopToolbar extends Component {
               className="toptoolbar-theme-icon-container"
               onClick={this.openCloseThemePickerHandler}
             >
-              <MdBrush
-                className="toptoolbar-theme-icon"
-                fontSize="18px"
-                color={this.state.primary}
-              />
+              {!this.props.themePicker ? (
+                <MdBrush
+                  className="toptoolbar-theme-icon"
+                  fontSize="18px"
+                  color={this.state.primary}
+                />
+              ) : (
+                <MdCloseCircle
+                  className="toptoolbar-theme-icon"
+                  fontSize="18px"
+                  color={this.state.primary}
+                />
+              )}
             </div>
           </div>
         </div>
-        {!this.state.showThemePicker ? null : <ThemePicker />}
+        {!this.props.themePicker ? null : <ThemePicker />}
       </Fragment>
     );
   }
@@ -52,9 +63,16 @@ class TopToolbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cardData: state.card.cardData,
+    themePicker: state.themePicker,
     themes: state.themes,
   };
 };
 
-export default connect(mapStateToProps)(TopToolbar);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openThemePicker: () => dispatch(openThemePicker()),
+    closeThemePicker: () => dispatch(closeThemePicker()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopToolbar);
