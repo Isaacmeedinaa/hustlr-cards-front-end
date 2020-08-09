@@ -1,4 +1,4 @@
-import { SET_CARD } from "../actions/card";
+import { SET_CARD, SET_CARD_THEME_ID } from "../actions/card";
 
 const initialState = {
   id: null,
@@ -43,6 +43,12 @@ const loader = (state = initialState, action) => {
         industry: action.card.industry,
         userId: action.card.userId,
         photos: action.card.photos,
+      };
+
+    case SET_CARD_THEME_ID:
+      return {
+        ...state,
+        themeId: action.themeId,
       };
 
     default:
