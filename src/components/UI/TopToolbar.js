@@ -15,6 +15,7 @@ class TopToolbar extends Component {
     this.state = {
       showThemePicker: false,
       primary: "#ff5349",
+      title: props.cardData.title,
     };
   }
 
@@ -51,7 +52,7 @@ class TopToolbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    card: state.card,
+    cardData: state.card.cardData,
     themes: state.themes,
   };
 };

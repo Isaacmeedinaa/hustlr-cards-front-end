@@ -1,54 +1,74 @@
+import { THEMES } from "../../data/theme";
+
 import { SET_CARD, SET_CARD_THEME_ID } from "../actions/card";
 
 const initialState = {
-  id: null,
-  title: "",
-  services: "",
-  city: "",
-  state: "",
-  email: "",
-  phoneNumber: "",
-  imgUrl: "",
-  pathToCard: "",
-  isPublic: null,
-  facebookLink: "",
-  instagramLink: "",
-  twitterLink: "",
-  snapchatLink: "",
-  themeId: null,
-  industry: {},
-  userId: null,
-  photos: [],
+  cardData: {
+    id: null,
+    title: "",
+    services: "",
+    city: "",
+    state: "",
+    email: "",
+    phoneNumber: "",
+    imgUrl: "",
+    pathToCard: "",
+    isPublic: null,
+    facebookLink: "",
+    instagramLink: "",
+    twitterLink: "",
+    snapchatLink: "",
+    themeId: null,
+    industry: {},
+    userId: null,
+    photos: [],
+  },
+  cardTheme: {
+    primaryColor: "",
+    transparentColor: "",
+  },
 };
 
-const loader = (state = initialState, action) => {
+const card = (state = initialState, action) => {
   switch (action.type) {
     case SET_CARD:
       return {
-        id: action.card.id,
-        title: action.card.title,
-        services: action.card.services,
-        city: action.card.city,
-        state: action.card.state,
-        email: action.card.email,
-        phoneNumber: action.card.phoneNumber,
-        imgUrl: action.card.imgUrl,
-        pathToCard: action.card.pathToCard,
-        isPublic: action.card.isPublic,
-        facebookLink: action.card.facebookLink,
-        instagramLink: action.card.instagramLink,
-        twitterLink: action.card.twitterLink,
-        snapchatLink: action.card.snapchatLink,
-        themeId: action.card.themeId,
-        industry: action.card.industry,
-        userId: action.card.userId,
-        photos: action.card.photos,
+        cardData: {
+          id: action.cardData.id,
+          title: action.cardData.title,
+          services: action.cardData.services,
+          city: action.cardData.city,
+          state: action.cardData.state,
+          email: action.cardData.email,
+          phoneNumber: action.cardData.phoneNumber,
+          imgUrl: action.cardData.imgUrl,
+          pathToCard: action.cardData.pathToCard,
+          isPublic: action.cardData.isPublic,
+          facebookLink: action.cardData.facebookLink,
+          instagramLink: action.cardData.instagramLink,
+          twitterLink: action.cardData.twitterLink,
+          snapchatLink: action.cardData.snapchatLink,
+          themeId: action.cardData.themeId,
+          industry: action.cardData.industry,
+          userId: action.cardData.userId,
+          photos: action.cardData.photos,
+        },
+        cardTheme: {
+          primaryColor: action.cardTheme.primaryColor,
+          transparentColor: action.cardTheme.transparentColor,
+        },
       };
 
     case SET_CARD_THEME_ID:
       return {
-        ...state,
-        themeId: action.themeId,
+        cardData: {
+          ...state.cardData,
+          themeId: action.themeId,
+        },
+        cardTheme: {
+          primaryColor: action.cardTheme.primaryColor,
+          transparentColor: action.cardTheme.transparentColor,
+        },
       };
 
     default:
@@ -56,4 +76,4 @@ const loader = (state = initialState, action) => {
   }
 };
 
-export default loader;
+export default card;
