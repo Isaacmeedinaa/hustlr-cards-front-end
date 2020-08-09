@@ -21,29 +21,36 @@ class CardForm extends Component {
 
     this.state = {
       isHidden: true,
-      id: props.card.id,
-      title: props.card.title,
-      services: props.card.services,
-      city: props.card.city,
-      state: props.card.state,
-      email: props.card.email,
-      phoneNumber: props.card.phoneNumber,
-      imgUrl: props.card.imgUrl,
-      pathToCard: props.card.pathToCard,
-      isPublic: props.card.isPublic,
-      facebookLink: props.card.facebookLink,
-      instagramLink: props.card.instagramLink,
-      twitterLink: props.card.twitterLink,
-      snapchatLink: props.card.snapchatLink,
-      themeId: props.card.themeId,
-      industry: props.card.industry,
-      userId: props.card.userId,
-      photos: props.card.photos,
+      id: props.cardData.id,
+      title: props.cardData.title,
+      services: props.cardData.services,
+      city: props.cardData.city,
+      state: props.cardData.state,
+      email: props.cardData.email,
+      phoneNumber: props.cardData.phoneNumber,
+      imgUrl: props.cardData.imgUrl,
+      pathToCard: props.cardData.pathToCard,
+      isPublic: props.isPublic,
+      facebookLink: props.cardData.facebookLink,
+      instagramLink: props.cardData.instagramLink,
+      twitterLink: props.cardData.twitterLink,
+      snapchatLink: props.cardData.snapchatLink,
+      themeId: props.cardData.themeId,
+      industry: props.cardData.industry,
+      userId: props.cardData.userId,
+      photos: props.cardData.photos,
     };
   }
 
   componentDidMount() {
     this.fileSelector = buildFileSelector();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...this.state,
+      themeId: nextProps.cardData.themeId,
+    });
   }
 
   handleImageSelectorClick = (event) => {
@@ -257,7 +264,8 @@ class CardForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    card: state.card,
+    cardData: state.card.cardData,
+    cardTheme: state.card.cardTheme,
     originalIndustries: state.industries.originalIndustries,
     dropdownIndustries: state.industries.dropdownIndustries,
   };

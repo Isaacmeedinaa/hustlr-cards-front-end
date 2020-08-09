@@ -111,7 +111,7 @@ class ThemePicker extends Component {
     super(props);
 
     this.state = {
-      themeId: props.card.themeId,
+      themeId: props.cardData.themeId,
     };
   }
 
@@ -138,7 +138,7 @@ class ThemePicker extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    card: state.card,
+    cardData: state.card.cardData,
     themes: state.themes,
   };
 };
