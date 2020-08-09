@@ -104,7 +104,6 @@
   grid-template-columns: minmax(75px, 75px) 1fr 1fr;
   /* grid-template-rows: 1fr; */
   grid-template-areas: "sidetoolbar cardform cardshow";
-  background-color: aliceblue;
 }
 
 .card-form-col-wrapper {
@@ -130,7 +129,6 @@
   grid-template-columns: minmax(75px, 75px) 1fr;
   /* grid-template-rows: 1fr; */
   grid-template-areas: "sidetoolbar settings";
-  background-color: aliceblue;
 }
 
 .settings-wrapper {

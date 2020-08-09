@@ -42,7 +42,7 @@ const CardLocation = (props) => {
           color={primaryColor}
         />
       </div>
-      <p className="primary-color card-business-contact-text">
+      <p className="primary-color card-business-location-text">
         {props.city}, {props.state}
       </p>
     </div>

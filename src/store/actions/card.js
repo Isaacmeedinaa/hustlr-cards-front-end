@@ -4,6 +4,7 @@ import { IS_LOADING, IS_NOT_LOADING } from "./loader";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
+export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
 
 export const fetchCard = () => {
   return (dispatch) => {
@@ -85,34 +86,9 @@ export const setCard = (
   };
 };
 
-// export const setCard = (
-//   businessName,
-//   businessIndustry,
-//   businessServices,
-//   businessPhoneNumber,
-//   businessEmail
-// ) => {
-//   return (dispatch) => {
-//     dispatch({
-//       type: SET_CARD,
-//       card: {
-//         businessName,
-//         businessIndustry,
-//         businessServices,
-//         businessPhoneNumber,
-//         businessEmail,
-//       },
-//     });
-
-//     dispatch({
-//       type: REHYDRATE,
-//       card: {
-//         businessName,
-//         businessIndustry,
-//         businessServices,
-//         businessPhoneNumber,
-//         businessEmail,
-//       },
-//     });
-//   };
-// };
+export const setCardThemeId = (id) => {
+  return {
+    type: SET_CARD_THEME_ID,
+    themeId: id,
+  };
+};
