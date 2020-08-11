@@ -15,6 +15,10 @@
   width: 100%;
 }
 
+.auth-error-text {
+  text-align: center;
+}
+
 .auth-input {
   margin-bottom: 25px;
   height: 40px;
@@ -25,7 +29,8 @@
 }
 
 .auth-input:focus {
-  border-color: #ff5349;
+  border: 2px solid #ff5349;
+  outline: none;
 }
 
 .remember-me-container {

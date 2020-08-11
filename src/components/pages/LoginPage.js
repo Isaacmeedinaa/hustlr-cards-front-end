@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+import { userLogin } from "../../store/actions/user";
+
 import AuthCard from "../UI/AuthCard";
 import AuthFooter from "../UI/AuthFooter";
 
@@ -12,7 +15,7 @@ class LoginPage extends Component {
 
     this.state = {
       isChecked: false,
-      email: "",
+      username: "",
       password: "",
     };
   }
@@ -31,11 +34,14 @@ class LoginPage extends Component {
     });
   };
 
-  loginSubmitHandler = (event) => {
+  loginSubmitHandler = async (event) => {
     event.preventDefault();
 
-    // Send request to back end
-    this.props.history.push("/home");
+    const username = this.state.username;
+    const password = this.state.password;
+    const history = this.props.history;
+
+    this.props.userLogin(username, password, history);
   };
 
   render() {
@@ -48,12 +54,19 @@ class LoginPage extends Component {
               <h5 className="auth-text">Login to continue</h5>
             </div>
             <AuthCard>
+              {this.props.errors.length !== 0
+                ? this.props.errors.map((error, index) => (
+                    <p key={index} className="primary-color auth-error-text">
+                      {error}
+                    </p>
+                  ))
+                : null}
               <form onSubmit={this.loginSubmitHandler}>
                 <input
                   className="block auth-input full-width"
-                  placeholder="Email"
-                  name="email"
-                  value={this.state.email}
+                  placeholder="Username"
+                  name="username"
+                  value={this.state.username}
                   onChange={this.inputChangeHandler}
                 />
                 <input
@@ -100,4 +113,17 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+const mapStateToProps = (state) => {
+  return {
+    errors: state.errors,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLogin: (username, password, history) =>
+      dispatch(userLogin(username, password, history)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
