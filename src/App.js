@@ -11,7 +11,6 @@ import { fetchIndustries } from "./store/actions/industries";
 import { closeThemePicker } from "./store/actions/themePicker";
 
 import "./App.css";
-import "react-toggle/style.css";
 
 import LandingPage from "./components/pages/LandingPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
@@ -28,8 +27,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchCard();
-    this.props.fetchIndustries();
+    // this.props.fetchCard();
+    // this.props.fetchIndustries();
     // window.addEventListener("beforeunload", this.keepOnPage);
   }
 
