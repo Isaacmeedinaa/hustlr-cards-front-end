@@ -5,6 +5,8 @@ import { IS_LOADING, IS_NOT_LOADING } from "./loader";
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
 export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
+export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
+export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
 
 export const fetchCard = () => {
   return (dispatch, getState) => {
@@ -105,5 +107,16 @@ export const setCardThemeId = (id) => {
     const cardTheme = themes.find((theme) => theme.id === id);
 
     dispatch({ type: SET_CARD_THEME_ID, themeId: id, cardTheme: cardTheme });
+  };
+};
+
+export const setIsPublic = (isPublic) => {
+  return (dispatch) => {
+    console.log("dispatch:", isPublic);
+    if (!isPublic) {
+      dispatch({ type: SET_CARD_NOT_PUBLIC });
+    } else {
+      dispatch({ type: SET_CARD_PUBLIC });
+    }
   };
 };

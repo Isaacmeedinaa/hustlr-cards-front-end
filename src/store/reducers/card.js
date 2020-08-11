@@ -1,6 +1,11 @@
 import { THEMES } from "../../data/theme";
 
-import { SET_CARD, SET_CARD_THEME_ID } from "../actions/card";
+import {
+  SET_CARD,
+  SET_CARD_THEME_ID,
+  SET_CARD_PUBLIC,
+  SET_CARD_NOT_PUBLIC,
+} from "../actions/card";
 
 const initialState = {
   cardData: {
@@ -68,6 +73,24 @@ const card = (state = initialState, action) => {
         cardTheme: {
           primaryColor: action.cardTheme.primaryColor,
           transparentColor: action.cardTheme.transparentColor,
+        },
+      };
+
+    case SET_CARD_PUBLIC:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          isPublic: true,
+        },
+      };
+
+    case SET_CARD_NOT_PUBLIC:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          isPublic: false,
         },
       };
 

@@ -50,6 +50,7 @@ class CardForm extends Component {
     this.setState({
       ...this.state,
       themeId: nextProps.cardData.themeId,
+      isPublic: nextProps.cardData.isPublic,
     });
   }
 

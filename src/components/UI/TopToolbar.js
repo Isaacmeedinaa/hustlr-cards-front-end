@@ -10,6 +10,7 @@ import MdBrush from "react-ionicons/lib/MdBrush";
 import MdCloseCircle from "react-ionicons/lib/MdCloseCircle";
 
 import ThemePicker from "./ThemePicker";
+import PublicToggle from "./PublicToggle";
 
 import "./UI.css";
 
@@ -53,6 +54,7 @@ class TopToolbar extends Component {
                 />
               )}
             </div>
+            <PublicToggle />
           </div>
         </div>
         {!this.props.themePicker ? null : <ThemePicker />}
