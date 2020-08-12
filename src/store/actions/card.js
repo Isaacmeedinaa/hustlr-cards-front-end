@@ -8,13 +8,19 @@ export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
 export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
 export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
 
-export const fetchCard = () => {
+export const fetchCard = (userId) => {
   return (dispatch, getState) => {
     const { themes } = getState();
 
     dispatch({ type: IS_LOADING });
-    fetch(`http://localhost:4000/cards/1`)
-      .then((resp) => resp.json())
+    fetch(`http://localhost:5000/api/v1/cards/${userId}`)
+      .then((resp) => {
+        if (resp.status === 401) {
+          console.log("error");
+        } else if (resp.ok) {
+          return resp.json();
+        }
+      })
       .then((card) => {
         const cardDataModel = new Card(
           card.id,

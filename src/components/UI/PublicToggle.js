@@ -22,14 +22,9 @@ class PublicToggle extends Component {
         isPublic: !prevState.isPublic,
       };
     });
-
-    console.log("state function:", this.state.isPublic);
-
-    this.props.setIsPublic(this.state.isPublic);
   };
 
   render() {
-    console.log("redux state:", this.props.cardData);
     return (
       <div className="public-toggle-container">
         <span className="public-toggle-label">

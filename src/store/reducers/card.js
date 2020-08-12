@@ -5,6 +5,7 @@ import {
   SET_CARD_THEME_ID,
   SET_CARD_PUBLIC,
   SET_CARD_NOT_PUBLIC,
+  FETCH_CARD,
 } from "../actions/card";
 
 const initialState = {
@@ -36,6 +37,33 @@ const initialState = {
 
 const card = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_CARD:
+      return {
+        cardData: {
+          id: action.cardData.id,
+          title: action.cardData.title,
+          services: action.cardData.services,
+          city: action.cardData.city,
+          state: action.cardData.state,
+          email: action.cardData.email,
+          phoneNumber: action.cardData.phoneNumber,
+          imgUrl: action.cardData.imgUrl,
+          pathToCard: action.cardData.pathToCard,
+          isPublic: action.cardData.isPublic,
+          facebookLink: action.cardData.facebookLink,
+          instagramLink: action.cardData.instagramLink,
+          twitterLink: action.cardData.twitterLink,
+          snapchatLink: action.cardData.snapchatLink,
+          themeId: action.cardData.themeId,
+          industry: action.cardData.industry,
+          userId: action.cardData.userId,
+          photos: action.cardData.photos,
+        },
+        cardTheme: {
+          primaryColor: action.cardTheme.primaryColor,
+          transparentColor: action.cardTheme.transparentColor,
+        },
+      };
     case SET_CARD:
       return {
         cardData: {

@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
 
+import { Animated } from "react-animated-css";
 import { connect, useSelector } from "react-redux";
 
 import MdPin from "react-ionicons/lib/MdPin";
@@ -288,55 +289,62 @@ class Card extends Component {
   }
 
   render() {
+    if (this.props.loader) {
+      return null;
+    }
+
     return (
-      <div className="primary-light-bg card-wrapper">
-        <div className="card-container">
-          <CardLink
-            pathToCard={this.props.cardData.pathToCard}
-            primaryColor={this.props.cardTheme.primaryColor}
-            transparentColor={this.props.cardTheme.transparentColor}
-          />
-          <div className="primary-color-bg card-business-img-container">
-            <img
-              className="card-business-img"
-              src={this.props.cardData.imgUrl}
+      <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
+        <div className="primary-light-bg card-wrapper">
+          <div className="card-container">
+            <CardLink
+              pathToCard={this.props.cardData.pathToCard}
+              primaryColor={this.props.cardTheme.primaryColor}
+              transparentColor={this.props.cardTheme.transparentColor}
+            />
+            <div className="primary-color-bg card-business-img-container">
+              <img
+                className="card-business-img"
+                src={this.props.cardData.imgUrl}
+              />
+            </div>
+            <h1 className="card-business-name">{this.props.cardData.title}</h1>
+            <CardLocation
+              city={this.props.cardData.city}
+              state={this.props.cardData.state}
+              primaryColor={this.props.cardTheme.primaryColor}
+              transparentColor={this.props.cardTheme.transparentColor}
+            />
+            <CardIndustry
+              industry={this.props.cardData.industry}
+              primaryColor={this.props.cardTheme.primaryColor}
+              transparentColor={this.props.cardTheme.transparentColor}
+            />
+            <CardServices services={this.props.cardData.services} />
+            <CardContactDetails
+              primaryColor={this.props.cardTheme.primaryColor}
+              transparentColor={this.props.cardTheme.transparentColor}
+              phoneNumber={this.props.cardData.phoneNumber}
+              email={this.props.cardData.email}
+            />
+            <CardSocialMedias
+              primaryColor={this.props.cardTheme.primaryColor}
+              transparentColor={this.props.cardTheme.transparentColor}
+              facebookLink={this.props.cardData.facebookLink}
+              instagramLink={this.props.cardData.instagramLink}
+              twitterLink={this.props.cardData.twitterLink}
+              snapchatLink={this.props.cardData.snapchatLink}
             />
           </div>
-          <h1 className="card-business-name">{this.props.cardData.title}</h1>
-          <CardLocation
-            city={this.props.cardData.city}
-            state={this.props.cardData.state}
-            primaryColor={this.props.cardTheme.primaryColor}
-            transparentColor={this.props.cardTheme.transparentColor}
-          />
-          <CardIndustry
-            industry={this.props.cardData.industry}
-            primaryColor={this.props.cardTheme.primaryColor}
-            transparentColor={this.props.cardTheme.transparentColor}
-          />
-          <CardServices services={this.props.cardData.services} />
-          <CardContactDetails
-            primaryColor={this.props.cardTheme.primaryColor}
-            transparentColor={this.props.cardTheme.transparentColor}
-            phoneNumber={this.props.cardData.phoneNumber}
-            email={this.props.cardData.email}
-          />
-          <CardSocialMedias
-            primaryColor={this.props.cardTheme.primaryColor}
-            transparentColor={this.props.cardTheme.transparentColor}
-            facebookLink={this.props.cardData.facebookLink}
-            instagramLink={this.props.cardData.instagramLink}
-            twitterLink={this.props.cardData.twitterLink}
-            snapchatLink={this.props.cardData.snapchatLink}
-          />
         </div>
-      </div>
+      </Animated>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    loader: state.loader,
     cardData: state.card.cardData,
     cardTheme: state.card.cardTheme,
     industries: state.industries,

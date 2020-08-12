@@ -1,3 +1,4 @@
+import { IS_LOADING, IS_NOT_LOADING } from "./loader";
 import {
   REQUEST_TIMEOUT_ERR,
   INVALID_LOGIN_CREDENTIALS_ERR,
@@ -24,6 +25,7 @@ export const userLogin = (username, password, history) => {
       body: JSON.stringify(loginData),
     };
 
+    dispatch({ type: IS_LOADING });
     fetch("http://localhost:5000/api/v1/login", reqObj)
       .then((resp) => {
         if (resp.status === 401) {
@@ -38,8 +40,13 @@ export const userLogin = (username, password, history) => {
       })
       .then((json) => {
         localStorage.setItem("userToken", json.token);
+        localStorage.setItem("userId", json.user.id);
+
         dispatch({ type: USER_LOGIN, user: json.user });
+
         history.push("/home");
+
+        dispatch({ type: IS_NOT_LOADING });
       })
       .catch((err) => console.log(err));
   };
