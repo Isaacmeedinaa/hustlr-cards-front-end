@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.props.fetchIndustries();
+    this.props.fetchIndustries();
     // window.addEventListener("beforeunload", this.keepOnPage);
   }
 

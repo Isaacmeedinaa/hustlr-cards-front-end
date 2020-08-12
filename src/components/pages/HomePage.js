@@ -61,6 +61,7 @@ class HomeContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    cardData: state.card.cardData,
   };
 };
 

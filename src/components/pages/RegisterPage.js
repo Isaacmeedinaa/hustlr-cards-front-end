@@ -46,15 +46,19 @@ class RegisterPage extends Component {
                   className="block auth-input full-width"
                   placeholder="Email"
                   name="email"
+                  type="email"
                   value={this.state.email}
                   onChange={this.inputChangeHandler}
+                  required
                 />
                 <input
                   className="block auth-input full-width"
                   placeholder="Username"
                   name="username"
+                  type="name"
                   value={this.state.username}
                   onChange={this.inputChangeHandler}
+                  required
                 />
                 <input
                   className="block auth-input full-width"
@@ -63,6 +67,7 @@ class RegisterPage extends Component {
                   name="password"
                   value={this.state.password}
                   onChange={this.inputChangeHandler}
+                  required
                 />
                 <input
                   className="block auth-input full-width"
@@ -71,6 +76,7 @@ class RegisterPage extends Component {
                   name="confirmPassword"
                   value={this.state.confirmPassword}
                   onChange={this.inputChangeHandler}
+                  required
                 />
                 <input
                   className="primary-color-bg primary-light block auth-btn full-width"
