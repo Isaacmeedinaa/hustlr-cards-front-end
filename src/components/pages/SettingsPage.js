@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 
+import { connect } from "react-redux";
+
 import SideToolbar from "../UI/SideToolbar";
 
 import "./pages.css";
@@ -7,6 +9,7 @@ import "../../constants/colors.css";
 
 class SettingsPage extends Component {
   render() {
+    console.log(this.props.cardData);
     return (
       <Fragment>
         <div className="container-fluid h-100 no-padding">
@@ -27,4 +30,10 @@ class SettingsPage extends Component {
   }
 }
 
-export default SettingsPage;
+const mapStateToProps = (state) => {
+  return {
+    cardData: state.card.cardData,
+  };
+};
+
+export default connect(mapStateToProps)(SettingsPage);

@@ -8,6 +8,7 @@ import {
 
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
+export const USER_LOGOUT = "USER_LOGOUT";
 
 export const userLogin = (username, password, history) => {
   return (dispatch) => {
@@ -49,5 +50,21 @@ export const userLogin = (username, password, history) => {
         dispatch({ type: IS_NOT_LOADING });
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const userRegister = (email, username, password, confirmPassword) => {
+  return (dispatch) => {};
+};
+
+export const userLogout = (history) => {
+  return (dispatch) => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("card");
+
+    history.push("/login");
+
+    dispatch({ type: USER_LOGOUT });
   };
 };

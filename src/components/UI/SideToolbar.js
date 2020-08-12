@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+import { userLogout } from "../../store/actions/user";
+
 import MdHome from "react-ionicons/lib/MdHome";
 import MdSettings from "react-ionicons/lib/MdSettings";
 import MdLogOut from "react-ionicons/lib/MdLogOut";
@@ -84,9 +87,8 @@ class SideToolbar extends Component {
             <MdLogOut
               className="sidetoolbar-icon"
               onClick={() => {
-                this.props.history.push("/login");
-                localStorage.removeItem("card");
-                console.log("dispatch logout action");
+                const history = this.props.history;
+                this.props.userLogout(history);
               }}
               fontSize="30px"
               color={this.state.secondary}
@@ -118,4 +120,10 @@ class SideToolbar extends Component {
   }
 }
 
-export default SideToolbar;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLogout: (history) => dispatch(userLogout(history)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SideToolbar);
