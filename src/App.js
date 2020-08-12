@@ -27,7 +27,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.props.fetchCard();
     // this.props.fetchIndustries();
     // window.addEventListener("beforeunload", this.keepOnPage);
   }
@@ -51,10 +50,6 @@ class App extends Component {
   // };
 
   render() {
-    if (this.props.loader) {
-      return null;
-    }
-
     return (
       <Router>
         <Switch>
@@ -76,7 +71,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loader: state.loader,
+    user: state.user,
     cardData: state.card.cardData,
     themePicker: state.themePicker,
   };
@@ -84,7 +79,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCard: () => dispatch(fetchCard()),
+    fetchCard: (userId) => dispatch(fetchCard(userId)),
     fetchIndustries: () => dispatch(fetchIndustries()),
     closeThemePicker: () => dispatch(closeThemePicker()),
   };

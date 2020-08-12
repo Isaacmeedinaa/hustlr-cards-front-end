@@ -20,6 +20,16 @@ class LoginPage extends Component {
     };
   }
 
+  componentDidMount() {
+    const userToken = localStorage.getItem("userToken");
+
+    if (userToken) {
+      this.props.history.push("/home");
+    } else {
+      return;
+    }
+  }
+
   checkBoxChangeHandler = () => {
     this.setState((prevState) => {
       return {
