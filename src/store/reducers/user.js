@@ -5,7 +5,7 @@ const user = (state = null, action) => {
     case USER_LOGIN:
       return action.user;
     case USER_REGISTER:
-      return state;
+      return action.user;
     case USER_LOGOUT:
       return null;
     default:
