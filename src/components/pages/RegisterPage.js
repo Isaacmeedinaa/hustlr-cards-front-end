@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+import { userRegister } from "../../store/actions/user";
+
 import AuthCard from "../UI/AuthCard";
 import AuthFooter from "../UI/AuthFooter";
 
@@ -27,7 +30,20 @@ class RegisterPage extends Component {
   registerSubmitHandler = (event) => {
     event.preventDefault();
 
+    const email = this.state.email;
+    const username = this.state.username;
+    const password = this.state.password;
+    const confirmPassword = this.state.confirmPassword;
+    const history = this.props.history;
+
     // do a request here
+    this.props.userRegister(
+      email,
+      username,
+      password,
+      confirmPassword,
+      history
+    );
   };
 
   render() {
@@ -41,6 +57,13 @@ class RegisterPage extends Component {
             </div>
 
             <AuthCard>
+              {this.props.errors.length !== 0
+                ? this.props.errors.map((error, index) => (
+                    <p key={index} className="primary-color auth-error-text">
+                      {error}
+                    </p>
+                  ))
+                : null}
               <form onSubmit={this.registerSubmitHandler}>
                 <input
                   className="block auth-input full-width"
@@ -99,4 +122,19 @@ class RegisterPage extends Component {
   }
 }
 
-export default RegisterPage;
+const mapStateToProps = (state) => {
+  return {
+    errors: state.errors,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userRegister: (email, username, password, confirmPassword, history) =>
+      dispatch(
+        userRegister(email, username, password, confirmPassword, history)
+      ),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
