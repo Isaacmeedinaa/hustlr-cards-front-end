@@ -9,6 +9,7 @@ import CardTitle from "./card/CardTitle";
 import CardLocation from "./card/CardLocation";
 import CardIndustry from "./card/CardIndustry";
 import CardServices from "./card/CardServices";
+import CardProductsServices from "./card/CardProductsServices";
 import CardContactDetails from "./card/CardContactDetails";
 import CardSocialMedias from "./card/CardSocialMedias";
 
@@ -44,6 +45,11 @@ class Card extends Component {
               transparentColor={this.props.cardTheme.transparentColor}
             />
             <CardServices services={this.props.cardData.services} />
+            <CardProductsServices
+              productsServices={this.props.cardData.productsServices}
+              primaryColor={this.props.cardTheme.primaryColor}
+              transparentColor={this.props.cardTheme.transparentColor}
+            />
             <CardContactDetails
               primaryColor={this.props.cardTheme.primaryColor}
               transparentColor={this.props.cardTheme.transparentColor}

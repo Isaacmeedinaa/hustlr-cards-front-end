@@ -508,6 +508,9 @@
   -webkit-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
   -moz-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
   box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
 .card-container {
@@ -515,10 +518,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  max-width: 100%;
 }
 
 .card-business-link-container {
-  width: 100%;
+  width: 90%;
+  max-width: 90%;
   height: 40px;
   border: none;
   border-radius: 5px;
@@ -585,6 +591,38 @@
   margin-top: 30px;
 }
 
+.card-business-products-services-container {
+  margin-top: 15px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card-business-product-service-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.card-business-product-service-title {
+  margin-right: 8px;
+  position: relative;
+  top: 8px;
+}
+
+.card-business-product-service-price {
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .card-business-contact-details {
   display: flex;
   flex-direction: column;
@@ -592,6 +630,10 @@
   align-content: center;
   margin-top: 30px;
   width: 80%;
+}
+
+.card-business-product-service-title {
+  font-size: 18px;
 }
 
 .card-business-contact-detail {
