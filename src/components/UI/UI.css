@@ -207,6 +207,9 @@
   -webkit-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
   -moz-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
   box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
 .card-form-container {
@@ -214,6 +217,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 80%;
+  max-width: 80%;
 }
 
 .card-form-business-img-container {
@@ -240,6 +245,10 @@
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+}
+
+.card-form-input:focus {
+  outline: none;
 }
 
 .card-form-location-fields {
@@ -300,13 +309,9 @@
 }
 
 .card-form-dropdown:active {
-  color: #eb4b42;
+  color: #070707;
   border: 0 !important;
   outline: none !important;
-}
-
-.card-form-input:focus {
-  outline: none;
 }
 
 .card-form-input-large {
@@ -370,8 +375,79 @@
   cursor: pointer;
 }
 
+.card-form-products-services-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-form-product-service-inputs-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.card-form-product-service-title-input {
+  width: 100%;
+  margin-top: 10px;
+  margin-right: 10px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.card-form-product-service-price-input {
+  width: 16%;
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.card-form-product-service-text {
+  margin-left: 10px;
+  position: relative;
+  top: 18px;
+  font-size: 18px;
+}
+
+.card-form-product-service-title-input:focus {
+  outline: none;
+}
+
+.card-form-product-service-price-input:focus {
+  outline: none;
+}
+
 .card-form-social-media-inputs-animation-wrapper {
   width: 100%;
+}
+
+.card-form-product-service-buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+.card-form-produdct-service-button {
+  border: none;
+  background: white;
+  padding: 0;
+  font-size: 14px;
+  margin-bottom: 0 !important;
+}
+
+.card-form-produdct-service-button:focus {
+  outline: none;
+}
+
+#cardFormProductServiceDeleteBtn {
+  margin-left: 10px;
 }
 
 .card-form-social-media-inputs-container {
@@ -395,6 +471,35 @@
 
 .card-form-social-media-input:focus {
   outline: none;
+}
+
+.card-form-path-to-card-container {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.card-form-path-to-card-input {
+  width: 100%;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  align-self: flex-end;
+  margin-left: 3px;
+}
+
+.card-form-path-to-card-input:focus {
+  outline: none;
+}
+
+.card-form-path-to-card-url {
+  position: relative;
+  top: 10px;
+  margin-right: 3px;
 }
 
 .card-wrapper {

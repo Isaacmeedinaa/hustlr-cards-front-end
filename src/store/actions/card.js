@@ -7,6 +7,9 @@ export const SET_CARD = "SET_CARD";
 export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
 export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
 export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
+export const ADD_PRODUCT_SERVICE = "ADD_PRODUCT_SERVICE";
+export const DELETE_PRODUCT_SERVICE_ID = "DELETE_PRODUCT_SERVICE_ID";
+export const DELETE_PRODUCT_SERVICE_INDEX = "DELETE_PRODUCT_SERVICE_INDEX";
 
 export const fetchCard = (userId) => {
   return (dispatch, getState) => {
@@ -22,10 +25,17 @@ export const fetchCard = (userId) => {
         }
       })
       .then((card) => {
+        const productsServices = [
+          { id: 1, title: "One Page Website", price: 5.79 },
+          { id: 2, title: "Multi Page Website", price: 9.99 },
+          { id: 3, title: "Ecommerce Website", price: 0.85 },
+        ];
+
         const cardDataModel = new Card(
           card.id,
           card.title,
           card.services,
+          productsServices,
           card.city,
           card.state,
           card.email,
@@ -60,6 +70,7 @@ export const setCard = (
   id,
   title,
   services,
+  productsServices,
   city,
   state,
   email,
@@ -83,6 +94,7 @@ export const setCard = (
       id,
       title,
       services,
+      productsServices,
       city,
       state,
       email,
@@ -118,11 +130,30 @@ export const setCardThemeId = (id) => {
 
 export const setIsPublic = (isPublic) => {
   return (dispatch) => {
-    console.log("dispatch:", isPublic);
     if (!isPublic) {
       dispatch({ type: SET_CARD_NOT_PUBLIC });
     } else {
       dispatch({ type: SET_CARD_PUBLIC });
+    }
+  };
+};
+
+export const addProductService = () => {
+  return {
+    type: ADD_PRODUCT_SERVICE,
+    productService: { id: 0, title: "", price: null },
+  };
+};
+
+export const deleteProductService = (id, index) => {
+  return (dispatch) => {
+    if (id !== 0) {
+      // do fetch delete
+      // call dispatch action
+      dispatch({ type: DELETE_PRODUCT_SERVICE_ID, id: id });
+      console.log("testing");
+    } else {
+      dispatch({ type: DELETE_PRODUCT_SERVICE_INDEX, index: index });
     }
   };
 };
