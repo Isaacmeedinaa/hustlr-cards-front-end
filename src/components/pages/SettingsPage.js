@@ -9,7 +9,6 @@ import "../../constants/colors.css";
 
 class SettingsPage extends Component {
   render() {
-    console.log(this.props.cardData);
     return (
       <Fragment>
         <div className="container-fluid h-100 no-padding">

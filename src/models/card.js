@@ -3,6 +3,7 @@ class Card {
     id,
     title,
     services,
+    productsServices,
     city,
     state,
     email,
@@ -22,6 +23,7 @@ class Card {
     this.id = id;
     this.title = title;
     this.services = services;
+    this.productsServices = productsServices;
     this.city = city;
     this.state = state;
     this.email = email;

@@ -67,7 +67,7 @@ const CardIndustry = (props) => {
       style={{ color: props.primaryColor }}
       className="card-business-industry"
     >
-      {props.industry.name}
+      {props.industry.title}
     </h5>
   );
 };
