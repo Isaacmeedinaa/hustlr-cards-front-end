@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 
 import { Animated } from "react-animated-css";
-import Select from "react-select";
 
 import { connect } from "react-redux";
 import {
@@ -10,8 +9,20 @@ import {
   deleteProductService,
 } from "../../store/actions/card";
 
+import CardFormImageSelector from "./cardform/CardFormImageSelector";
+import CardFormTitleInput from "./cardform/CardFormTitleInput";
+import CardFormLocationInputs from "./cardform/CardFormLocationInputs";
+import CardFormIndustrySelect from "./cardform/CardFormIndustrySelect";
+import CardFormBioInput from "./cardform/CardFormBioInput";
+import CardFormAddProductServiceButton from "./cardform/CardFormAddProductServiceButton";
+import CardFormContactInputs from "./cardform/CardFormContactInputs";
+import CardFormShowSocialMediasButton from "./cardform/CardFormShowSocialMediasButton";
+import CardFormSocialMediaInputs from "./cardform/CardFormSocialMediaInputs";
+import CardFormCardPathInput from "./cardform/CardFormCardPathInput";
+
 import "../../constants/colors.css";
 import "./UI.css";
+import CardFormProductServiceInput from "./cardform/CardFormProductServiceInput";
 
 function buildFileSelector() {
   const fileSelector = document.createElement("input");
@@ -139,62 +150,28 @@ class CardForm extends Component {
   renderServiceProductInputs = () => {
     return this.state.productsServices.map((productService, index) => {
       return (
-        <div key={index} className="card-form-products-services-container">
-          <div className="card-form-product-service-inputs-container">
-            <input
-              className="card-form-product-service-title-input"
-              placeholder="Product or Service Title"
-              value={productService.title}
-              onChange={(event) =>
-                this.cardFormProductServiceTitleChangeHandler(index, event)
-              }
-            />
-            <p className="primary-color card-form-product-service-text">$</p>
-            <input
-              className="card-form-product-service-price-input"
-              placeholder="0.00"
-              value={productService.price}
-              onChange={(event) =>
-                this.cardFormProductServicePriceChangeHandler(index, event)
-              }
-            />
-          </div>
-          <div className="card-form-product-service-buttons-container">
-            <button
-              className="primary-color card-form-produdct-service-button"
-              id="cardFormProductServiceDeleteBtn"
-              onClick={() =>
-                this.props.deleteProductService(productService.id, index)
-              }
-            >
-              Delete
-            </button>
-          </div>
-        </div>
+        <CardFormProductServiceInput
+          key={index}
+          productService={productService}
+          index={index}
+          cardFormProductServiceChangeHandler={
+            this.cardFormProductServiceChangeHandler
+          }
+          deleteProductService={this.props.deleteProductService}
+        />
       );
     });
   };
 
-  cardFormProductServiceTitleChangeHandler = async (index, event) => {
+  cardFormProductServiceChangeHandler = async (index, event) => {
     const productsServices = [...this.state.productsServices];
-
     const productService = productsServices[index];
 
-    productService.title = event.target.value;
-
-    await this.setState({
-      productsServices: productsServices,
-    });
-
-    this.setCardHandler();
-  };
-
-  cardFormProductServicePriceChangeHandler = async (index, event) => {
-    const productsServices = [...this.state.productsServices];
-
-    const productService = productsServices[index];
-
-    productService.price = event.target.value;
+    if (event.target.name === "productServiceTitle") {
+      productService.title = event.target.value;
+    } else if (event.target.name === "productServicePrice") {
+      productService.price = event.target.value;
+    }
 
     await this.setState({
       productsServices: productsServices,
@@ -204,7 +181,6 @@ class CardForm extends Component {
   };
 
   render() {
-    console.log(this.props.cardData.productsServices);
     if (this.props.loader) {
       return null;
     }
@@ -212,157 +188,57 @@ class CardForm extends Component {
       <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-form-wrapper">
           <div className="card-form-container">
-            <div className="primary-color-bg card-form-business-img-container">
-              <img className="card-form-business-img" src={this.state.imgUrl} />
-            </div>
-            <div
-              className="card-form-button"
-              onClick={this.handleImageSelectorClick}
-            >
-              <span className="primary-color card-form-button-text">
-                Choose New Photo
-              </span>
-            </div>
-            <input
-              className="card-form-input"
-              name="title"
-              placeholder="Business Name"
-              value={this.state.title}
-              onChange={this.cardFormInputChangeHandler}
+            <CardFormImageSelector
+              imgUrl={this.state.imgUrl}
+              handleImageSelectorClick={this.handleImageSelectorClick}
             />
-            <div className="card-form-location-fields">
-              <input
-                className="card-form-input-location"
-                name="city"
-                placeholder="City"
-                value={this.state.city}
-                onChange={this.cardFormInputChangeHandler}
-              />
-              <input
-                id="cardFormInputState"
-                className="card-form-input-location"
-                name="state"
-                placeholder="State"
-                value={this.state.state}
-                onChange={this.cardFormInputChangeHandler}
-              />
-            </div>
-            <div className="card-form-dropdown-container">
-              <Select
-                classNamePrefix="card-form-dropdown"
-                theme={(theme) => ({
-                  ...theme,
-                  borderRadius: 0,
-                  colors: {
-                    ...theme.colors,
-                    primary25: "#f1f1f1",
-                    primary: "rgba(255, 83, 73, 0.3)",
-                  },
-                })}
-                options={this.props.dropdownIndustries}
-                value={this.props.dropdownIndustries.filter(
-                  (industry) =>
-                    industry.label === this.props.cardData.industry.title
-                )}
-                onChange={this.cardFormSelectorChangeHandler}
-              />
-            </div>
-            <textarea
-              className="card-form-input-large"
-              name="services"
-              placeholder="Business Bio"
-              value={this.state.services}
-              onChange={this.cardFormInputChangeHandler}
+            <CardFormTitleInput
+              title={this.state.title}
+              cardFormInputChangeHandler={this.cardFormInputChangeHandler}
             />
-            <div
-              className="card-form-button"
-              onClick={() => this.props.addProductService()}
-            >
-              <span className="primary-color card-form-button-text">
-                + Add Products or Services
-              </span>
-            </div>
+            <CardFormLocationInputs
+              city={this.state.city}
+              state={this.state.state}
+              cardFormInputChangeHandler={this.cardFormInputChangeHandler}
+            />
+            <CardFormIndustrySelect
+              dropdownIndustries={this.props.dropdownIndustries}
+              industry={this.props.dropdownIndustries.filter(
+                (industry) =>
+                  industry.label === this.props.cardData.industry.title
+              )}
+              cardFormSelectorChangeHandler={this.cardFormSelectorChangeHandler}
+            />
+            <CardFormBioInput
+              services={this.state.services}
+              cardFormInputChangeHandler={this.cardFormInputChangeHandler}
+            />
+            <CardFormAddProductServiceButton
+              addProductService={this.props.addProductService}
+            />
             {this.renderServiceProductInputs()}
-            <div className="card-form-contact-fields">
-              <input
-                id="cardFormInputPhoneNumber"
-                className="card-form-input-contact"
-                name="phoneNumber"
-                placeholder="+1 (773) 555-0000"
-                maxLength={16}
-                value={this.state.phoneNumber}
-                onChange={this.cardFormInputChangeHandler}
-              />
-              <input
-                id="cardFormInputEmail"
-                className="card-form-input-contact"
-                name="email"
-                placeholder="youremail@email.com"
-                value={this.state.email}
-                onChange={this.cardFormInputChangeHandler}
-              />
-            </div>
-            <div
-              className="card-form-button"
-              onClick={this.showSocialMediaLinks}
-            >
-              <span className="primary-color card-form-button-text">
-                {this.state.isHidden ? "Edit Social Media Links" : "Close"}
-              </span>
-            </div>
+            <CardFormContactInputs
+              phoneNumber={this.state.phoneNumber}
+              email={this.state.email}
+              cardFormInputChangeHandler={this.cardFormInputChangeHandler}
+            />
+            <CardFormShowSocialMediasButton
+              showSocialMediaLinks={this.showSocialMediaLinks}
+              isHidden={this.state.isHidden}
+            />
             {this.state.isHidden ? null : (
-              <Animated
-                className="card-form-social-media-inputs-animation-wrapper"
-                animationIn="bounceIn"
-                animationOut="fadeOut"
-                isVisible={true}
-              >
-                <div className="card-form-social-media-inputs-container">
-                  <input
-                    className="card-form-social-media-input"
-                    name="facebookLink"
-                    placeholder="https://www.facebook.com/your_username"
-                    value={this.state.facebookLink}
-                    onChange={this.cardFormInputChangeHandler}
-                  />
-                  <input
-                    className="card-form-social-media-input"
-                    name="instagramLink"
-                    placeholder="https://www.instagram.com/your_username"
-                    value={this.state.instagramLink}
-                    onChange={this.cardFormInputChangeHandler}
-                  />
-                  <input
-                    className="card-form-social-media-input"
-                    name="twitterLink"
-                    placeholder="https://www.twitter.com/your_username"
-                    value={this.state.twitterLink}
-                    onChange={this.cardFormInputChangeHandler}
-                  />
-                  <input
-                    className="card-form-social-media-input"
-                    name="snapchatLink"
-                    placeholder="https://www.snapchat.com/add/your_username"
-                    value={this.state.snapchatLink}
-                    onChange={this.cardFormInputChangeHandler}
-                  />
-                </div>
-              </Animated>
-            )}
-            <div className="card-form-path-to-card-container">
-              <div>
-                <p className="primary-color card-form-path-to-card-url">
-                  https://www.hustlr.cards/
-                </p>
-              </div>
-              <input
-                className="card-form-path-to-card-input"
-                placeholder="Business Username"
-                name="pathToCard"
-                value={this.state.pathToCard}
-                onChange={this.cardFormInputChangeHandler}
+              <CardFormSocialMediaInputs
+                facebookLink={this.state.facebookLink}
+                instagramLink={this.state.instagramLink}
+                twitterLink={this.state.twitterLink}
+                snapchatLink={this.state.snapchatLink}
+                cardFormInputChangeHandler={this.cardFormInputChangeHandler}
               />
-            </div>
+            )}
+            <CardFormCardPathInput
+              pathToCard={this.state.pathToCard}
+              cardFormInputChangeHandler={this.cardFormInputChangeHandler}
+            />
           </div>
         </div>
       </Animated>
