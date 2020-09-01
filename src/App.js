@@ -81,7 +81,7 @@ class App extends Component {
           ref={(ref) => {
             this.idleTimer = ref;
           }}
-          timeout={960000}
+          timeout={1800000}
           onActive={this.handleOnActive}
           onIdle={this.handleOnIdle}
           onAction={this.handleOnAction}

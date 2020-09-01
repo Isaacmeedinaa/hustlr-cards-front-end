@@ -4,7 +4,7 @@ import "../../../constants/colors.css";
 import "../UI.css";
 
 const CardIndustry = (props) => {
-  if (!props.industry || props.industry.id === 1) {
+  if (!props.industry || !props.industry.id) {
     return null;
   }
   return (

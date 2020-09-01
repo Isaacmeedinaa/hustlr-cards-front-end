@@ -12,6 +12,9 @@ export const fetchIndustries = () => {
       .then((resp) => resp.json())
       .then((industries) => {
         const originalIndustries = [];
+        const firstOption = new Industry(null, "Select Industry");
+
+        originalIndustries.push(firstOption);
 
         for (const key in industries) {
           originalIndustries.push(
@@ -19,7 +22,7 @@ export const fetchIndustries = () => {
           );
         }
 
-        const dropdownIndustries = industries.map((industry) => ({
+        const dropdownIndustries = originalIndustries.map((industry) => ({
           value: industry.id,
           label: industry.title,
         }));
