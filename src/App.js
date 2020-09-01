@@ -1,14 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+
 import { connect } from "react-redux";
-import { fetchCard } from "./store/actions/card";
 import { fetchIndustries } from "./store/actions/industries";
-import { closeThemePicker } from "./store/actions/themePicker";
+
+import IdleTimer from "react-idle-timer";
 
 import "./App.css";
 
@@ -22,8 +23,13 @@ import SupportPage from "./components/pages/SupportPage";
 import ShowCardPage from "./components/pages/ShowCardPage";
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.idleTimer = null;
+    this.handleOnAction = this.handleOnAction.bind(this);
+    this.handleOnActive = this.handleOnActive.bind(this);
+    this.handleOnIdle = this.handleOnIdle.bind(this);
   }
 
   componentDidMount() {
@@ -49,40 +55,61 @@ class App extends Component {
   //   }
   // };
 
+  handleOnAction(event) {
+    this.idleTimer.reset();
+  }
+
+  handleOnActive(event) {}
+
+  handleOnIdle(event) {
+    const userToken = localStorage.getItem("userToken");
+    const userId = localStorage.getItem("userId");
+
+    if (userToken && userId) {
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("userId");
+    } else {
+      return;
+    }
+  }
+
   render() {
+    console.log(this.props);
     return (
-      <Router>
-        <Switch>
-          <Route path="/404" component={NotFoundPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/home" component={HomePage} />
-          <Route exact path="/settings" component={SettingsPage} />
-          <Route exact path="/support" component={SupportPage} />
-          <Route exact path="/landing" component={LandingPage} />
-          <Route exact path="/:username" component={ShowCardPage} />
-          <Route exact path="/" component={LandingPage} />
-          <Redirect to="/404" />
-        </Switch>
-      </Router>
+      <Fragment>
+        <IdleTimer
+          ref={(ref) => {
+            this.idleTimer = ref;
+          }}
+          timeout={960000}
+          onActive={this.handleOnActive}
+          onIdle={this.handleOnIdle}
+          onAction={this.handleOnAction}
+          debounce={250}
+        />
+        <Router>
+          <Switch>
+            <Route path="/404" component={NotFoundPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/home" component={HomePage} />
+            <Route exact path="/settings" component={SettingsPage} />
+            <Route exact path="/support" component={SupportPage} />
+            <Route exact path="/landing" component={LandingPage} />
+            <Route exact path="/:username" component={ShowCardPage} />
+            <Route exact path="/" component={LandingPage} />
+            <Redirect to="/404" />
+          </Switch>
+        </Router>
+      </Fragment>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    cardData: state.card.cardData,
-    themePicker: state.themePicker,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCard: (userId) => dispatch(fetchCard(userId)),
     fetchIndustries: () => dispatch(fetchIndustries()),
-    closeThemePicker: () => dispatch(closeThemePicker()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
