@@ -434,7 +434,7 @@
   align-items: flex-start;
   margin-top: 10px;
 }
-.card-form-produdct-service-button {
+.card-form-offering-button {
   border: none;
   background: white;
   padding: 0;
@@ -442,12 +442,49 @@
   margin-bottom: 0 !important;
 }
 
-.card-form-produdct-service-button:focus {
+.card-form-offering-button:focus {
   outline: none;
 }
 
 #cardFormProductServiceDeleteBtn {
   margin-left: 10px;
+}
+
+.card-form-delete-offering-modal {
+  height: 80px;
+  width: 150px;
+  margin-left: 65px;
+  padding: 10px 10px;
+  position: absolute;
+  z-index: 10000 !important;
+  border-radius: 5px;
+  border-top: 1px solid #d1d2d5;
+  border-right: 1px solid #d1d2d5;
+  border-left: 1px solid #d1d2d5;
+  -webkit-box-shadow: 0px 5px 0px -1px #cdcdd2;
+  -moz-box-shadow: 0px 5px 0px -1px #cdcdd2;
+  box-shadow: 0px 5px 0px -1px #cdcdd2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-form-delete-offering-modal-question {
+  font-size: 15px;
+}
+
+.card-form-delete-offering-modal-button {
+  margin: 10px;
+  border: none;
+  background: white;
+  padding: 0;
+  font-size: 14px;
+  margin-bottom: 0 !important;
+}
+
+.card-form-delete-offering-modal-button:focus {
+  outline: none;
 }
 
 .card-form-social-media-inputs-container {

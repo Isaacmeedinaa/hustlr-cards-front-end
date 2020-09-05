@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-class CardFormAddProductServiceButton extends Component {
+class CardFormAddOfferingButton extends Component {
   render() {
     return (
       <div
         className="card-form-button"
-        onClick={() => this.props.addProductService()}
+        onClick={() => this.props.addOffering()}
       >
         <span className="primary-color card-form-button-text">
           + Add Products or Services
@@ -15,4 +15,4 @@ class CardFormAddProductServiceButton extends Component {
   }
 }
 
-export default CardFormAddProductServiceButton;
+export default CardFormAddOfferingButton;

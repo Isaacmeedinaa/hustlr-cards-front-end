@@ -3,24 +3,24 @@ import React from "react";
 import "../../../constants/colors.css";
 import "../UI.css";
 
-const CardProductsServices = (props) => {
-  const renderProductService = () => {
-    return props.productsServices.map((productService, index) => {
-      if (productService.title === "") {
+const CardOfferings = (props) => {
+  const renderOfferings = () => {
+    return props.offerings.map((offering, index) => {
+      if (offering.title === "") {
         return null;
       }
       return (
         <div key={index} className="card-business-product-service-container">
           <p className="card-business-product-service-title">
-            {productService.title}
+            {offering.title}
           </p>
-          {!productService.price ? null : (
+          {!offering.price ? null : (
             <div
               style={{ backgroundColor: props.transparentColor }}
               className="card-business-product-service-price"
             >
               <span style={{ color: props.primaryColor }}>
-                ${productService.price}
+                ${offering.price}
               </span>
             </div>
           )}
@@ -31,9 +31,9 @@ const CardProductsServices = (props) => {
 
   return (
     <div className="card-business-products-services-container">
-      {renderProductService()}
+      {renderOfferings()}
     </div>
   );
 };
 
-export default CardProductsServices;
+export default CardOfferings;

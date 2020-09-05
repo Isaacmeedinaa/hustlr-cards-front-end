@@ -7,9 +7,9 @@ export const SET_CARD = "SET_CARD";
 export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
 export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
 export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
-export const ADD_PRODUCT_SERVICE = "ADD_PRODUCT_SERVICE";
-export const DELETE_PRODUCT_SERVICE_ID = "DELETE_PRODUCT_SERVICE_ID";
-export const DELETE_PRODUCT_SERVICE_INDEX = "DELETE_PRODUCT_SERVICE_INDEX";
+export const ADD_OFFERING = "ADD_OFFERING";
+export const DELETE_OFFERING_ID = "DELETE_OFFERING_ID";
+export const DELETE_OFFERING_INDEX = "DELETE_OFFERING_INDEX";
 
 export const fetchCard = (userId) => {
   return (dispatch, getState) => {
@@ -25,17 +25,16 @@ export const fetchCard = (userId) => {
         }
       })
       .then((card) => {
-        const productsServices = [
-          { id: 1, title: "One Page Website", price: 5.79 },
-          { id: 2, title: "Multi Page Website", price: 9.99 },
-          { id: 3, title: "Ecommerce Website", price: 0.85 },
-        ];
+        // const offerings = [
+        //   { id: 1, title: "One Page Website", price: 5.79 },
+        //   { id: 2, title: "Multi Page Website", price: 9.99 },
+        //   { id: 3, title: "Ecommerce Website", price: 0.85 },
+        // ];
 
         const cardDataModel = new Card(
           card.id,
           card.title,
-          card.services,
-          productsServices,
+          card.offerings,
           card.city,
           card.state,
           card.email,
@@ -69,8 +68,7 @@ export const fetchCard = (userId) => {
 export const setCard = (
   id,
   title,
-  services,
-  productsServices,
+  offerings,
   city,
   state,
   email,
@@ -93,8 +91,7 @@ export const setCard = (
     const cardModel = new Card(
       id,
       title,
-      services,
-      productsServices,
+      offerings,
       city,
       state,
       email,
@@ -138,22 +135,22 @@ export const setIsPublic = (isPublic) => {
   };
 };
 
-export const addProductService = () => {
+export const addOffering = () => {
   return {
-    type: ADD_PRODUCT_SERVICE,
-    productService: { id: 0, title: "", price: null },
+    type: ADD_OFFERING,
+    offering: { id: 0, title: "", price: "" },
   };
 };
 
-export const deleteProductService = (id, index) => {
+export const deleteOffering = (id, index) => {
   return (dispatch) => {
     if (id !== 0) {
       // do fetch delete
       // call dispatch action
-      dispatch({ type: DELETE_PRODUCT_SERVICE_ID, id: id });
+      dispatch({ type: DELETE_OFFERING_ID, id: id });
       console.log("testing");
     } else {
-      dispatch({ type: DELETE_PRODUCT_SERVICE_INDEX, index: index });
+      dispatch({ type: DELETE_OFFERING_INDEX, index: index });
     }
   };
 };
