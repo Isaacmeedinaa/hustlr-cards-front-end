@@ -3,18 +3,15 @@ import React, { Component, Fragment } from "react";
 import { Animated } from "react-animated-css";
 
 import { connect } from "react-redux";
-import {
-  setCard,
-  addProductService,
-  deleteProductService,
-} from "../../store/actions/card";
+import { setCard, addOffering, deleteOffering } from "../../store/actions/card";
 
 import CardFormImageSelector from "./cardform/CardFormImageSelector";
 import CardFormTitleInput from "./cardform/CardFormTitleInput";
 import CardFormLocationInputs from "./cardform/CardFormLocationInputs";
 import CardFormIndustrySelect from "./cardform/CardFormIndustrySelect";
 import CardFormBioInput from "./cardform/CardFormBioInput";
-import CardFormAddProductServiceButton from "./cardform/CardFormAddProductServiceButton";
+import CardFormAddOfferingButton from "./cardform/CardFormAddOfferingButton";
+import CardFormOfferingInput from "./cardform/CardFormOfferingInput";
 import CardFormContactInputs from "./cardform/CardFormContactInputs";
 import CardFormShowSocialMediasButton from "./cardform/CardFormShowSocialMediasButton";
 import CardFormSocialMediaInputs from "./cardform/CardFormSocialMediaInputs";
@@ -22,7 +19,6 @@ import CardFormCardPathInput from "./cardform/CardFormCardPathInput";
 
 import "../../constants/colors.css";
 import "./UI.css";
-import CardFormProductServiceInput from "./cardform/CardFormProductServiceInput";
 
 function buildFileSelector() {
   const fileSelector = document.createElement("input");
@@ -38,8 +34,7 @@ class CardForm extends Component {
       isHidden: true,
       id: "",
       title: "",
-      services: "",
-      productsServices: [],
+      offerings: [],
       city: "",
       state: "",
       email: "",
@@ -69,8 +64,7 @@ class CardForm extends Component {
       themeId: nextProps.cardData.themeId,
       id: nextProps.cardData.id,
       title: nextProps.cardData.title,
-      services: nextProps.cardData.services,
-      productsServices: nextProps.cardData.productsServices,
+      offerings: nextProps.cardData.offerings,
       city: nextProps.cardData.city,
       state: nextProps.cardData.state,
       email: nextProps.cardData.email,
@@ -99,8 +93,7 @@ class CardForm extends Component {
     this.props.setCard(
       this.state.id,
       this.state.title,
-      this.state.services,
-      this.state.productsServices,
+      this.state.offerings,
       this.state.city,
       this.state.state,
       this.state.email,
@@ -147,40 +140,59 @@ class CardForm extends Component {
     });
   };
 
-  renderServiceProductInputs = () => {
-    return this.state.productsServices.map((productService, index) => {
+  renderOfferingsInputs = () => {
+    return this.state.offerings.map((offering, index) => {
       return (
-        <CardFormProductServiceInput
+        <CardFormOfferingInput
           key={index}
-          productService={productService}
+          id={offering.id}
+          title={offering.title}
+          price={offering.price}
           index={index}
-          cardFormProductServiceChangeHandler={
-            this.cardFormProductServiceChangeHandler
+          cardFormOfferingTitleChangeHandler={
+            this.cardFormOfferingTitleChangeHandler
           }
-          deleteProductService={this.props.deleteProductService}
+          cardFormOfferingPriceChangeHandler={
+            this.cardFormOfferingPriceChangeHandler
+          }
+          deleteOffering={this.props.deleteOffering}
         />
       );
     });
   };
 
-  cardFormProductServiceChangeHandler = async (index, event) => {
-    const productsServices = [...this.state.productsServices];
-    const productService = productsServices[index];
+  cardFormOfferingTitleChangeHandler = async (index, event) => {
+    const offerings = [...this.state.offerings];
+    const offering = offerings[index];
 
-    if (event.target.name === "productServiceTitle") {
-      productService.title = event.target.value;
-    } else if (event.target.name === "productServicePrice") {
-      productService.price = event.target.value;
+    if (event.target.name === "offeringTitle") {
+      offering.title = event.target.value;
     }
 
     await this.setState({
-      productsServices: productsServices,
+      offerings: offerings,
+    });
+
+    this.setCardHandler();
+  };
+
+  cardFormOfferingPriceChangeHandler = async (index, event) => {
+    const offerings = [...this.state.offerings];
+    const offering = offerings[index];
+
+    if (event.target.name === "offeringPrice") {
+      offering.price = event.target.value;
+    }
+
+    await this.setState({
+      offerings: offerings,
     });
 
     this.setCardHandler();
   };
 
   render() {
+    console.log(this.state.offerings);
     if (this.props.loader) {
       return null;
     }
@@ -213,10 +225,8 @@ class CardForm extends Component {
               services={this.state.services}
               cardFormInputChangeHandler={this.cardFormInputChangeHandler}
             />
-            <CardFormAddProductServiceButton
-              addProductService={this.props.addProductService}
-            />
-            {this.renderServiceProductInputs()}
+            <CardFormAddOfferingButton addOffering={this.props.addOffering} />
+            {this.renderOfferingsInputs()}
             <CardFormContactInputs
               phoneNumber={this.state.phoneNumber}
               email={this.state.email}
@@ -261,7 +271,7 @@ const mapDispatchToProps = (dispatch) => {
     setCard: (
       id,
       title,
-      services,
+      offerings,
       city,
       state,
       email,
@@ -282,7 +292,7 @@ const mapDispatchToProps = (dispatch) => {
         setCard(
           id,
           title,
-          services,
+          offerings,
           city,
           state,
           email,
@@ -300,9 +310,8 @@ const mapDispatchToProps = (dispatch) => {
           photos
         )
       ),
-    addProductService: () => dispatch(addProductService()),
-    deleteProductService: (id, index) =>
-      dispatch(deleteProductService(id, index)),
+    addOffering: () => dispatch(addOffering()),
+    deleteOffering: (id, index) => dispatch(deleteOffering(id, index)),
   };
 };
 

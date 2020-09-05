@@ -9,7 +9,7 @@ import CardTitle from "./card/CardTitle";
 import CardLocation from "./card/CardLocation";
 import CardIndustry from "./card/CardIndustry";
 import CardServices from "./card/CardServices";
-import CardProductsServices from "./card/CardProductsServices";
+import CardOfferings from "./card/CardOfferings";
 import CardContactDetails from "./card/CardContactDetails";
 import CardSocialMedias from "./card/CardSocialMedias";
 
@@ -45,8 +45,8 @@ class Card extends Component {
               transparentColor={this.props.cardTheme.transparentColor}
             />
             <CardServices services={this.props.cardData.services} />
-            <CardProductsServices
-              productsServices={this.props.cardData.productsServices}
+            <CardOfferings
+              offerings={this.props.cardData.offerings}
               primaryColor={this.props.cardTheme.primaryColor}
               transparentColor={this.props.cardTheme.transparentColor}
             />
