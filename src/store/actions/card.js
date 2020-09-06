@@ -7,9 +7,9 @@ export const SET_CARD = "SET_CARD";
 export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
 export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
 export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
-export const ADD_OFFERING = "ADD_OFFERING";
-export const DELETE_OFFERING_ID = "DELETE_OFFERING_ID";
-export const DELETE_OFFERING_INDEX = "DELETE_OFFERING_INDEX";
+export const CREATE_OFFERING = "CREATE_OFFERING";
+export const UPDATE_OFFERING = "UPDATE_OFFERING";
+export const DELETE_OFFERING = "DELETE_OFFERING";
 
 export const fetchCard = (userId) => {
   return (dispatch, getState) => {
@@ -25,15 +25,10 @@ export const fetchCard = (userId) => {
         }
       })
       .then((card) => {
-        // const offerings = [
-        //   { id: 1, title: "One Page Website", price: 5.79 },
-        //   { id: 2, title: "Multi Page Website", price: 9.99 },
-        //   { id: 3, title: "Ecommerce Website", price: 0.85 },
-        // ];
-
         const cardDataModel = new Card(
           card.id,
           card.title,
+          card.services,
           card.offerings,
           card.city,
           card.state,
@@ -68,6 +63,7 @@ export const fetchCard = (userId) => {
 export const setCard = (
   id,
   title,
+  about,
   offerings,
   city,
   state,
@@ -91,6 +87,7 @@ export const setCard = (
     const cardModel = new Card(
       id,
       title,
+      about,
       offerings,
       city,
       state,
@@ -135,22 +132,95 @@ export const setIsPublic = (isPublic) => {
   };
 };
 
-export const addOffering = () => {
-  return {
-    type: ADD_OFFERING,
-    offering: { id: 0, title: "", price: "" },
+export const createOffering = (cardId) => {
+  return (dispatch) => {
+    const offeringData = {
+      title: "Your Service or Product Title",
+      description: "",
+      price: "",
+      offerType: 0,
+      cardId: cardId,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(offeringData),
+    };
+
+    fetch("http://localhost:5000/api/v1/offerings", reqObj)
+      .then((resp) => resp.json())
+      .then((offering) => {
+        dispatch({ type: CREATE_OFFERING, offering: offering });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateOffering = (id, title, price, cardId) => {
+  return (dispatch) => {
+    const offeringData = {
+      id: id,
+      title: title,
+      description: "",
+      price: price,
+      offerType: 0,
+      cardId: cardId,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(offeringData),
+    };
+
+    fetch(`http://localhost:5000/api/v1/offerings/${id}`, reqObj)
+      .then((resp) => resp.json())
+      .then((offering) => {
+        dispatch({
+          type: UPDATE_OFFERING,
+          id: offering.id,
+          offering: offering,
+        });
+      })
+      .catch((err) => console.log(err));
   };
 };
 
 export const deleteOffering = (id, index) => {
-  return (dispatch) => {
-    if (id !== 0) {
-      // do fetch delete
-      // call dispatch action
-      dispatch({ type: DELETE_OFFERING_ID, id: id });
-      console.log("testing");
-    } else {
-      dispatch({ type: DELETE_OFFERING_INDEX, index: index });
-    }
+  return async (dispatch) => {
+    const offeringData = {
+      id: id,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(offeringData),
+    };
+
+    await fetch(
+      `http://localhost:5000/api/v1/offerings/${id}`,
+      reqObj
+    ).catch((err) => console.log(err));
+    dispatch({ type: DELETE_OFFERING, id: id });
   };
 };
