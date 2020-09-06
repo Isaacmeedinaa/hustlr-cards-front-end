@@ -4,10 +4,10 @@ import "../../../constants/colors.css";
 import "../UI.css";
 
 const CardServices = (props) => {
-  if (!props.services) {
+  if (!props.about) {
     return null;
   }
-  return <h4 className="card-business-services">{props.services}</h4>;
+  return <h4 className="card-business-services">{props.about}</h4>;
 };
 
 export default CardServices;

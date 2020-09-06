@@ -3,15 +3,20 @@ import React, { Component, Fragment } from "react";
 import { Animated } from "react-animated-css";
 
 import { connect } from "react-redux";
-import { setCard, addOffering, deleteOffering } from "../../store/actions/card";
+import {
+  setCard,
+  createOffering,
+  updateOffering,
+  deleteOffering,
+} from "../../store/actions/card";
 
 import CardFormImageSelector from "./cardform/CardFormImageSelector";
 import CardFormTitleInput from "./cardform/CardFormTitleInput";
 import CardFormLocationInputs from "./cardform/CardFormLocationInputs";
 import CardFormIndustrySelect from "./cardform/CardFormIndustrySelect";
-import CardFormBioInput from "./cardform/CardFormBioInput";
+import CardFormAboutInput from "./cardform/CardFormAboutInput";
 import CardFormAddOfferingButton from "./cardform/CardFormAddOfferingButton";
-import CardFormOfferingInput from "./cardform/CardFormOfferingInput";
+import CardFormOfferingInputs from "./cardform/CardFormOfferingInputs";
 import CardFormContactInputs from "./cardform/CardFormContactInputs";
 import CardFormShowSocialMediasButton from "./cardform/CardFormShowSocialMediasButton";
 import CardFormSocialMediaInputs from "./cardform/CardFormSocialMediaInputs";
@@ -32,8 +37,10 @@ class CardForm extends Component {
 
     this.state = {
       isHidden: true,
+      deleteModalShown: false,
       id: "",
       title: "",
+      about: "",
       offerings: [],
       city: "",
       state: "",
@@ -64,6 +71,7 @@ class CardForm extends Component {
       themeId: nextProps.cardData.themeId,
       id: nextProps.cardData.id,
       title: nextProps.cardData.title,
+      about: nextProps.cardData.about,
       offerings: nextProps.cardData.offerings,
       city: nextProps.cardData.city,
       state: nextProps.cardData.state,
@@ -93,6 +101,7 @@ class CardForm extends Component {
     this.props.setCard(
       this.state.id,
       this.state.title,
+      this.state.about,
       this.state.offerings,
       this.state.city,
       this.state.state,
@@ -143,18 +152,22 @@ class CardForm extends Component {
   renderOfferingsInputs = () => {
     return this.state.offerings.map((offering, index) => {
       return (
-        <CardFormOfferingInput
+        <CardFormOfferingInputs
           key={index}
+          offering={offering}
+          index={index}
           id={offering.id}
           title={offering.title}
           price={offering.price}
-          index={index}
+          cardId={offering.cardId}
           cardFormOfferingTitleChangeHandler={
             this.cardFormOfferingTitleChangeHandler
           }
           cardFormOfferingPriceChangeHandler={
             this.cardFormOfferingPriceChangeHandler
           }
+          createOffering={this.props.createOffering}
+          updateOffering={this.props.updateOffering}
           deleteOffering={this.props.deleteOffering}
         />
       );
@@ -192,7 +205,6 @@ class CardForm extends Component {
   };
 
   render() {
-    console.log(this.state.offerings);
     if (this.props.loader) {
       return null;
     }
@@ -221,11 +233,14 @@ class CardForm extends Component {
               )}
               cardFormSelectorChangeHandler={this.cardFormSelectorChangeHandler}
             />
-            <CardFormBioInput
-              services={this.state.services}
+            <CardFormAboutInput
+              about={this.state.about}
               cardFormInputChangeHandler={this.cardFormInputChangeHandler}
             />
-            <CardFormAddOfferingButton addOffering={this.props.addOffering} />
+            <CardFormAddOfferingButton
+              cardId={this.state.id}
+              createOffering={this.props.createOffering}
+            />
             {this.renderOfferingsInputs()}
             <CardFormContactInputs
               phoneNumber={this.state.phoneNumber}
@@ -271,6 +286,7 @@ const mapDispatchToProps = (dispatch) => {
     setCard: (
       id,
       title,
+      about,
       offerings,
       city,
       state,
@@ -292,6 +308,7 @@ const mapDispatchToProps = (dispatch) => {
         setCard(
           id,
           title,
+          about,
           offerings,
           city,
           state,
@@ -310,8 +327,10 @@ const mapDispatchToProps = (dispatch) => {
           photos
         )
       ),
-    addOffering: () => dispatch(addOffering()),
-    deleteOffering: (id, index) => dispatch(deleteOffering(id, index)),
+    createOffering: (cardId) => dispatch(createOffering(cardId)),
+    updateOffering: (id, title, price, cardId) =>
+      dispatch(updateOffering(id, title, price, cardId)),
+    deleteOffering: (id) => dispatch(deleteOffering(id)),
   };
 };
 

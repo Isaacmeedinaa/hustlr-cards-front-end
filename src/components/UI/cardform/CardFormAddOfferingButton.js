@@ -5,7 +5,7 @@ class CardFormAddOfferingButton extends Component {
     return (
       <div
         className="card-form-button"
-        onClick={() => this.props.addOffering()}
+        onClick={() => this.props.createOffering(this.props.cardId)}
       >
         <span className="primary-color card-form-button-text">
           + Add Products or Services

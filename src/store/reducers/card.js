@@ -1,19 +1,18 @@
-import { THEMES } from "../../data/theme";
-
 import {
   SET_CARD,
   SET_CARD_THEME_ID,
   SET_CARD_PUBLIC,
   SET_CARD_NOT_PUBLIC,
-  ADD_OFFERING,
-  DELETE_OFFERING_INDEX,
-  DELETE_OFFERING_ID,
+  CREATE_OFFERING,
+  UPDATE_OFFERING,
+  DELETE_OFFERING,
 } from "../actions/card";
 
 const initialState = {
   cardData: {
     id: null,
     title: "",
+    about: "",
     offerings: [],
     city: "",
     state: "",
@@ -44,6 +43,7 @@ const card = (state = initialState, action) => {
         cardData: {
           id: action.cardData.id,
           title: action.cardData.title,
+          about: action.cardData.about,
           offerings: action.cardData.offerings,
           city: action.cardData.city,
           state: action.cardData.state,
@@ -97,7 +97,7 @@ const card = (state = initialState, action) => {
         },
       };
 
-    case ADD_OFFERING:
+    case CREATE_OFFERING:
       return {
         ...state,
         cardData: {
@@ -106,25 +106,31 @@ const card = (state = initialState, action) => {
         },
       };
 
-    case DELETE_OFFERING_ID:
+    case UPDATE_OFFERING:
+      const offeringIndex = state.cardData.offerings.findIndex(
+        (offering) => offering.id === action.id
+      );
+      const updatedOfferings = [...state.cardData.offerings];
+      updatedOfferings[offeringIndex] = action.offering;
+
       return {
         ...state,
         cardData: {
           ...state.cardData,
-          offering: state.cardData.offering.filter(
-            (offering) => offering.id !== action.id
-          ),
+          offerings: updatedOfferings,
         },
       };
 
-    case DELETE_OFFERING_INDEX:
-      state.cardData.offerings.splice(action.index, 1);
+    case DELETE_OFFERING:
+      const filteredOfferings = state.cardData.offerings.filter(
+        (offering) => offering.id !== action.id
+      );
 
       return {
         ...state,
         cardData: {
           ...state.cardData,
-          offerings: state.cardData.offerings,
+          offerings: filteredOfferings,
         },
       };
 

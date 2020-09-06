@@ -453,7 +453,7 @@
 .card-form-delete-offering-modal {
   height: 80px;
   width: 150px;
-  margin-left: 65px;
+  margin-top: 85px;
   padding: 10px 10px;
   position: absolute;
   z-index: 10000 !important;
@@ -468,6 +468,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  align-self: flex-start;
 }
 
 .card-form-delete-offering-modal-question {
