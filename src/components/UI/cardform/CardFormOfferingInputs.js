@@ -36,8 +36,8 @@ class CardFormOfferingInputs extends Component {
       showDeleteModal: false,
     });
 
-    const userId = localStorage.getItem("userId");
-    this.props.fetchCard(userId);
+    // const userId = localStorage.getItem("userId");
+    // this.props.fetchCard(userId);
   };
 
   render() {

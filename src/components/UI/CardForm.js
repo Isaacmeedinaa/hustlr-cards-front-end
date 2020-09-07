@@ -153,6 +153,7 @@ class CardForm extends Component {
     return this.state.offerings.map((offering, index) => {
       return (
         <CardFormOfferingInputs
+          key={offering.id}
           offering={offering}
           index={index}
           id={offering.id}
