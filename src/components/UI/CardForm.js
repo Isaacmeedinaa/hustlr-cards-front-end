@@ -14,7 +14,7 @@ import CardFormImageSelector from "./cardform/CardFormImageSelector";
 import CardFormTitleInput from "./cardform/CardFormTitleInput";
 import CardFormLocationInputs from "./cardform/CardFormLocationInputs";
 import CardFormIndustrySelect from "./cardform/CardFormIndustrySelect";
-import CardFormAboutInput from "./cardform/CardFormAboutInput";
+import CardFormDescriptionInput from "./cardform/CardFormDescriptionInput";
 import CardFormAddOfferingButton from "./cardform/CardFormAddOfferingButton";
 import CardFormOfferingInputs from "./cardform/CardFormOfferingInputs";
 import CardFormContactInputs from "./cardform/CardFormContactInputs";
@@ -40,7 +40,7 @@ class CardForm extends Component {
       deleteModalShown: false,
       id: "",
       title: "",
-      about: "",
+      description: "",
       offerings: [],
       city: "",
       state: "",
@@ -71,7 +71,7 @@ class CardForm extends Component {
       themeId: nextProps.cardData.themeId,
       id: nextProps.cardData.id,
       title: nextProps.cardData.title,
-      about: nextProps.cardData.about,
+      description: nextProps.cardData.description,
       offerings: nextProps.cardData.offerings,
       city: nextProps.cardData.city,
       state: nextProps.cardData.state,
@@ -101,7 +101,7 @@ class CardForm extends Component {
     this.props.setCard(
       this.state.id,
       this.state.title,
-      this.state.about,
+      this.state.description,
       this.state.offerings,
       this.state.city,
       this.state.state,
@@ -153,7 +153,6 @@ class CardForm extends Component {
     return this.state.offerings.map((offering, index) => {
       return (
         <CardFormOfferingInputs
-          key={index}
           offering={offering}
           index={index}
           id={offering.id}
@@ -233,8 +232,8 @@ class CardForm extends Component {
               )}
               cardFormSelectorChangeHandler={this.cardFormSelectorChangeHandler}
             />
-            <CardFormAboutInput
-              about={this.state.about}
+            <CardFormDescriptionInput
+              description={this.state.description}
               cardFormInputChangeHandler={this.cardFormInputChangeHandler}
             />
             <CardFormAddOfferingButton

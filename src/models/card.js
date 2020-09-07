@@ -2,7 +2,7 @@ class Card {
   constructor(
     id,
     title,
-    about,
+    description,
     offerings,
     city,
     state,
@@ -22,7 +22,7 @@ class Card {
   ) {
     this.id = id;
     this.title = title;
-    this.about = about;
+    this.description = description;
     this.offerings = offerings;
     this.city = city;
     this.state = state;
