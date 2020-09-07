@@ -12,7 +12,7 @@ const initialState = {
   cardData: {
     id: null,
     title: "",
-    about: "",
+    description: "",
     offerings: [],
     city: "",
     state: "",
@@ -43,7 +43,7 @@ const card = (state = initialState, action) => {
         cardData: {
           id: action.cardData.id,
           title: action.cardData.title,
-          about: action.cardData.about,
+          description: action.cardData.description,
           offerings: action.cardData.offerings,
           city: action.cardData.city,
           state: action.cardData.state,

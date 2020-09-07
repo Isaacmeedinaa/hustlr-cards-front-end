@@ -3,18 +3,18 @@ import React, { Component } from "react";
 import "../../../constants/colors.css";
 import "../UI.css";
 
-class CardFormAboutInput extends Component {
+class CardFormDescriptionInput extends Component {
   render() {
     return (
       <textarea
         className="card-form-input-large"
-        name="about"
-        placeholder="About Business"
-        value={this.props.about}
+        name="description"
+        placeholder="Business Description"
+        value={this.props.description}
         onChange={(event) => this.props.cardFormInputChangeHandler(event)}
       />
     );
   }
 }
 
-export default CardFormAboutInput;
+export default CardFormDescriptionInput;

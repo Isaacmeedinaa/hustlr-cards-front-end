@@ -8,7 +8,7 @@ import CardImage from "./card/CardImage";
 import CardTitle from "./card/CardTitle";
 import CardLocation from "./card/CardLocation";
 import CardIndustry from "./card/CardIndustry";
-import CardAbout from "./card/CardAbout";
+import CardDescription from "./card/CardDescription";
 import CardOfferings from "./card/CardOfferings";
 import CardContactDetails from "./card/CardContactDetails";
 import CardSocialMedias from "./card/CardSocialMedias";
@@ -44,7 +44,7 @@ class Card extends Component {
               primaryColor={this.props.cardTheme.primaryColor}
               transparentColor={this.props.cardTheme.transparentColor}
             />
-            <CardAbout about={this.props.cardData.about} />
+            <CardDescription description={this.props.cardData.description} />
             <CardOfferings
               offerings={this.props.cardData.offerings}
               primaryColor={this.props.cardTheme.primaryColor}

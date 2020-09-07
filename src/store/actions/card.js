@@ -7,6 +7,7 @@ export const SET_CARD = "SET_CARD";
 export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
 export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
 export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
+export const FETCH_OFFERINGS = "FETCH_OFFERINGS";
 export const CREATE_OFFERING = "CREATE_OFFERING";
 export const UPDATE_OFFERING = "UPDATE_OFFERING";
 export const DELETE_OFFERING = "DELETE_OFFERING";
@@ -28,7 +29,7 @@ export const fetchCard = (userId) => {
         const cardDataModel = new Card(
           card.id,
           card.title,
-          card.services,
+          card.description,
           card.offerings,
           card.city,
           card.state,
@@ -63,7 +64,7 @@ export const fetchCard = (userId) => {
 export const setCard = (
   id,
   title,
-  about,
+  description,
   offerings,
   city,
   state,
@@ -87,7 +88,7 @@ export const setCard = (
     const cardModel = new Card(
       id,
       title,
-      about,
+      description,
       offerings,
       city,
       state,

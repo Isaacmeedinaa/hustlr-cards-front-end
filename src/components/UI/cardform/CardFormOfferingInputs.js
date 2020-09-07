@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
 
+import { connect } from "react-redux";
 import { fetchCard } from "../../../store/actions/card";
+
+import { Animated } from "react-animated-css";
 
 import "../../../constants/colors.css";
 
@@ -33,6 +35,9 @@ class CardFormOfferingInputs extends Component {
     await this.setState({
       showDeleteModal: false,
     });
+
+    const userId = localStorage.getItem("userId");
+    this.props.fetchCard(userId);
   };
 
   render() {
