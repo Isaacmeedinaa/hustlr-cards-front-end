@@ -113,16 +113,16 @@ class ThemePicker extends Component {
     super(props);
 
     this.state = {
-      themeId: props.cardData.themeId,
+      themeId: props.themeId,
     };
   }
 
-  pickColorClickHandler = async (id) => {
+  pickColorClickHandler = async (themeId) => {
     await this.setState({
-      themeId: id,
+      themeId: themeId,
     });
 
-    this.props.setCardThemeId(id);
+    this.props.setThemeIdHandler(themeId);
   };
 
   render() {
@@ -147,15 +147,8 @@ class ThemePicker extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cardData: state.card.cardData,
     themes: state.themes,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCardThemeId: (id) => dispatch(setCardThemeId(id)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ThemePicker);
+export default connect(mapStateToProps)(ThemePicker);
