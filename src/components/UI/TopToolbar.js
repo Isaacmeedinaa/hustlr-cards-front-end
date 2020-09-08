@@ -1,10 +1,7 @@
 import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
-import {
-  openThemePicker,
-  closeThemePicker,
-} from "../../store/actions/themePicker";
+import { setIsPublic } from "../../store/actions/card";
 
 import MdBrush from "react-ionicons/lib/MdBrush";
 import MdCloseCircle from "react-ionicons/lib/MdCloseCircle";
@@ -20,15 +17,28 @@ class TopToolbar extends Component {
 
     this.state = {
       primary: "#ff5349",
+      themePickerIsOpen: false,
+      isPublic: null,
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...this.state,
+      isPublic: nextProps.cardData.isPublic,
+    });
+  }
+
   openCloseThemePickerHandler = () => {
-    if (!this.props.themePicker) {
-      this.props.openThemePicker();
-    } else {
-      this.props.closeThemePicker();
-    }
+    this.setState((prevState) => {
+      return {
+        themePickerIsOpen: !prevState.themePickerIsOpen,
+      };
+    });
+  };
+
+  setIsPublicHandler = (isPublic) => {
+    this.props.setIsPublic(isPublic);
   };
 
   render() {
@@ -40,7 +50,7 @@ class TopToolbar extends Component {
               className="toptoolbar-theme-icon-container"
               onClick={this.openCloseThemePickerHandler}
             >
-              {!this.props.themePicker ? (
+              {!this.state.themePickerIsOpen ? (
                 <MdBrush
                   className="toptoolbar-theme-icon"
                   fontSize="18px"
@@ -54,10 +64,13 @@ class TopToolbar extends Component {
                 />
               )}
             </div>
-            <PublicToggle />
+            <PublicToggle
+              isPublic={this.state.isPublic}
+              setIsPublicHandler={this.setIsPublicHandler}
+            />
           </div>
         </div>
-        {!this.props.themePicker ? null : <ThemePicker />}
+        {!this.state.themePickerIsOpen ? null : <ThemePicker />}
       </Fragment>
     );
   }
@@ -65,15 +78,13 @@ class TopToolbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    themePicker: state.themePicker,
-    themes: state.themes,
+    cardData: state.card.cardData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    openThemePicker: () => dispatch(openThemePicker()),
-    closeThemePicker: () => dispatch(closeThemePicker()),
+    setIsPublic: (isPublic) => dispatch(setIsPublic(isPublic)),
   };
 };
 
