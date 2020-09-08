@@ -7,7 +7,8 @@ export const SET_CARD = "SET_CARD";
 export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
 export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
 export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
-export const FETCH_OFFERINGS = "FETCH_OFFERINGS";
+export const UPLOAD_BUSINESS_PROFILE_PICTURE =
+  "UPLOAD_BUSINESS_PROFILE_PICTURE";
 export const CREATE_OFFERING = "CREATE_OFFERING";
 export const UPDATE_OFFERING = "UPDATE_OFFERING";
 export const DELETE_OFFERING = "DELETE_OFFERING";
@@ -130,6 +131,40 @@ export const setIsPublic = (isPublic) => {
     } else {
       dispatch({ type: SET_CARD_PUBLIC });
     }
+  };
+};
+
+export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
+  return (dispatch) => {
+    const body = new FormData();
+    body.append("CardId", cardId);
+    body.append("File", reqImgData);
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        Accepts: "application/json",
+      },
+      body: body,
+    };
+
+    fetch("http://localhost:5000/api/v1/photos/profile", reqObj)
+      .then((resp) => {
+        if (!resp.ok) {
+          return;
+        }
+        return resp.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: UPLOAD_BUSINESS_PROFILE_PICTURE,
+          imgUrl: data.url,
+        });
+      })
+      .catch((err) => console.log(err));
   };
 };
 

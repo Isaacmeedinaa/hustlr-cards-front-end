@@ -10,14 +10,19 @@ class CardFormImageSelector extends Component {
         <div className="primary-color-bg card-form-business-img-container">
           <img className="card-form-business-img" src={this.props.imgUrl} />
         </div>
-        <div
-          className="card-form-button"
-          onClick={(event) => this.props.handleImageSelectorClick(event)}
+        <label
+          className="primary-color card-form-file-label"
+          htmlFor="businessProfileImgSelector"
         >
-          <span className="primary-color card-form-button-text">
-            Choose New Photo
-          </span>
-        </div>
+          Choose New Businesss Image
+        </label>
+        <input
+          className="card-form-file-button"
+          id="businessProfileImgSelector"
+          onChange={(event) => this.props.handleImageSelectorClick(event)}
+          type="file"
+          accept="image/x-png,image/jpeg"
+        />
       </Fragment>
     );
   }

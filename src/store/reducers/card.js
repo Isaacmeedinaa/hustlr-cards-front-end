@@ -3,6 +3,7 @@ import {
   SET_CARD_THEME_ID,
   SET_CARD_PUBLIC,
   SET_CARD_NOT_PUBLIC,
+  UPLOAD_BUSINESS_PROFILE_PICTURE,
   CREATE_OFFERING,
   UPDATE_OFFERING,
   DELETE_OFFERING,
@@ -94,6 +95,15 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           isPublic: false,
+        },
+      };
+
+    case UPLOAD_BUSINESS_PROFILE_PICTURE:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          imgUrl: action.imgUrl,
         },
       };
 

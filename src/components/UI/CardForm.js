@@ -5,6 +5,7 @@ import { Animated } from "react-animated-css";
 import { connect } from "react-redux";
 import {
   setCard,
+  uploadBusinessProfilePicture,
   createOffering,
   updateOffering,
   deleteOffering,
@@ -24,12 +25,6 @@ import CardFormCardPathInput from "./cardform/CardFormCardPathInput";
 
 import "../../constants/colors.css";
 import "./UI.css";
-
-function buildFileSelector() {
-  const fileSelector = document.createElement("input");
-  fileSelector.setAttribute("type", "file");
-  return fileSelector;
-}
 
 class CardForm extends Component {
   constructor(props) {
@@ -61,10 +56,6 @@ class CardForm extends Component {
     };
   }
 
-  componentDidMount() {
-    this.fileSelector = buildFileSelector();
-  }
-
   componentWillReceiveProps(nextProps) {
     this.setState({
       ...this.state,
@@ -92,11 +83,6 @@ class CardForm extends Component {
     });
   }
 
-  handleImageSelectorClick = (event) => {
-    event.preventDefault();
-    this.fileSelector.click();
-  };
-
   setCardHandler = () => {
     this.props.setCard(
       this.state.id,
@@ -119,6 +105,16 @@ class CardForm extends Component {
       this.state.userId,
       this.state.photos
     );
+  };
+
+  handleImageSelectorClick = async (event) => {
+    const reqImgData = event.target.files[0];
+    const cardId = this.state.id;
+
+    let reader = new FileReader();
+    reader.readAsDataURL(reqImgData);
+
+    this.props.uploadBusinessProfilePicture(reqImgData, cardId);
   };
 
   cardFormInputChangeHandler = async (event) => {
@@ -327,6 +323,8 @@ const mapDispatchToProps = (dispatch) => {
           photos
         )
       ),
+    uploadBusinessProfilePicture: (imgData, cardId) =>
+      dispatch(uploadBusinessProfilePicture(imgData, cardId)),
     createOffering: (cardId) => dispatch(createOffering(cardId)),
     updateOffering: (id, title, price, cardId) =>
       dispatch(updateOffering(id, title, price, cardId)),
