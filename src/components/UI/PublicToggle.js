@@ -1,19 +1,23 @@
 import React, { Component, Fragment } from "react";
 import ToggleButton from "react-toggle-button";
 
-import { connect } from "react-redux";
-import { setIsPublic } from "../../store/actions/card";
-
 import "./UI.css";
 import "../../constants/colors.css";
 
 class PublicToggle extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
-      isPublic: props.cardData.isPublic,
+      isPublic: null,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...this.state,
+      isPublic: nextProps.isPublic,
+    });
   }
 
   isPublicChangeHandler = async () => {
@@ -22,6 +26,8 @@ class PublicToggle extends Component {
         isPublic: !prevState.isPublic,
       };
     });
+
+    this.props.setIsPublicHandler(this.state.isPublic);
   };
 
   render() {
@@ -56,17 +62,4 @@ class PublicToggle extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    cardData: state.card.cardData,
-    cardTheme: state.card.cardTheme,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setIsPublic: (isPublic) => dispatch(setIsPublic(isPublic)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PublicToggle);
+export default PublicToggle;
