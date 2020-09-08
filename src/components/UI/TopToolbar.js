@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import { setIsPublic } from "../../store/actions/card";
+import { setCardThemeId } from "../../store/actions/card";
 
 import MdBrush from "react-ionicons/lib/MdBrush";
 import MdCloseCircle from "react-ionicons/lib/MdCloseCircle";
@@ -18,6 +19,7 @@ class TopToolbar extends Component {
     this.state = {
       primary: "#ff5349",
       themePickerIsOpen: false,
+      themeId: null,
       isPublic: null,
     };
   }
@@ -25,6 +27,7 @@ class TopToolbar extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       ...this.state,
+      themeId: nextProps.cardData.themeId,
       isPublic: nextProps.cardData.isPublic,
     });
   }
@@ -39,6 +42,10 @@ class TopToolbar extends Component {
 
   setIsPublicHandler = (isPublic) => {
     this.props.setIsPublic(isPublic);
+  };
+
+  setThemeIdHandler = (themeId) => {
+    this.props.setCardThemeId(themeId);
   };
 
   render() {
@@ -70,7 +77,12 @@ class TopToolbar extends Component {
             />
           </div>
         </div>
-        {!this.state.themePickerIsOpen ? null : <ThemePicker />}
+        {!this.state.themePickerIsOpen ? null : (
+          <ThemePicker
+            themeId={this.state.themeId}
+            setThemeIdHandler={this.setThemeIdHandler}
+          />
+        )}
       </Fragment>
     );
   }
@@ -84,6 +96,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setCardThemeId: (themeId) => dispatch(setCardThemeId(themeId)),
     setIsPublic: (isPublic) => dispatch(setIsPublic(isPublic)),
   };
 };
