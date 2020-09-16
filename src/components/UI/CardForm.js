@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 import { Animated } from "react-animated-css";
 
@@ -27,8 +27,8 @@ import "../../constants/colors.css";
 import "./UI.css";
 
 class CardForm extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       isHidden: true,
@@ -59,7 +59,6 @@ class CardForm extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       ...this.state,
-      themeId: nextProps.cardData.themeId,
       id: nextProps.cardData.id,
       title: nextProps.cardData.title,
       description: nextProps.cardData.description,
@@ -107,7 +106,7 @@ class CardForm extends Component {
     );
   };
 
-  handleImageSelectorClick = async (event) => {
+  handleImageSelectorClick = (event) => {
     const reqImgData = event.target.files[0];
     const cardId = this.state.id;
 
@@ -137,8 +136,8 @@ class CardForm extends Component {
     this.setCardHandler();
   };
 
-  showSocialMediaLinks = () => {
-    this.setState((prevState) => {
+  showSocialMediaLinks = async () => {
+    await this.setState((prevState) => {
       return {
         isHidden: !prevState.isHidden,
       };
@@ -162,9 +161,6 @@ class CardForm extends Component {
           cardFormOfferingPriceChangeHandler={
             this.cardFormOfferingPriceChangeHandler
           }
-          createOffering={this.props.createOffering}
-          updateOffering={this.props.updateOffering}
-          deleteOffering={this.props.deleteOffering}
         />
       );
     });
@@ -212,37 +208,16 @@ class CardForm extends Component {
               imgUrl={this.state.imgUrl}
               handleImageSelectorClick={this.handleImageSelectorClick}
             />
-            <CardFormTitleInput
-              title={this.state.title}
-              cardFormInputChangeHandler={this.cardFormInputChangeHandler}
-            />
-            <CardFormLocationInputs
-              city={this.state.city}
-              state={this.state.state}
-              cardFormInputChangeHandler={this.cardFormInputChangeHandler}
-            />
-            <CardFormIndustrySelect
-              dropdownIndustries={this.props.dropdownIndustries}
-              industry={this.props.dropdownIndustries.filter(
-                (industry) =>
-                  industry.label === this.props.cardData.industry.title
-              )}
-              cardFormSelectorChangeHandler={this.cardFormSelectorChangeHandler}
-            />
-            <CardFormDescriptionInput
-              description={this.state.description}
-              cardFormInputChangeHandler={this.cardFormInputChangeHandler}
-            />
+            <CardFormTitleInput />
+            <CardFormLocationInputs />
+            <CardFormIndustrySelect />
+            <CardFormDescriptionInput />
             <CardFormAddOfferingButton
               cardId={this.state.id}
               createOffering={this.props.createOffering}
             />
             {this.renderOfferingsInputs()}
-            <CardFormContactInputs
-              phoneNumber={this.state.phoneNumber}
-              email={this.state.email}
-              cardFormInputChangeHandler={this.cardFormInputChangeHandler}
-            />
+            <CardFormContactInputs />
             <CardFormShowSocialMediasButton
               showSocialMediaLinks={this.showSocialMediaLinks}
               isHidden={this.state.isHidden}

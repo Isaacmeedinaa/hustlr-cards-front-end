@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { setCardThemeId } from "../../store/actions/card";
 
 import { Animated } from "react-animated-css";
 

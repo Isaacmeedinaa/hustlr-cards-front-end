@@ -12,10 +12,6 @@ import "./pages.css";
 import "../../constants/colors.css";
 
 class HomeContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const userToken = localStorage.getItem("userToken");
 

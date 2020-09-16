@@ -10,7 +10,11 @@ const CardImage = (props) => {
 
   return (
     <div className="primary-color-bg card-business-img-container">
-      <img className="card-business-img" src={props.imgUrl} />
+      <img
+        className="card-business-img"
+        src={props.imgUrl}
+        alt="business-profile"
+      />
     </div>
   );
 };

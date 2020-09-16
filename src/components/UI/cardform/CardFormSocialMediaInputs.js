@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+
 import { Animated } from "react-animated-css";
 
 import "../../../constants/colors.css";
