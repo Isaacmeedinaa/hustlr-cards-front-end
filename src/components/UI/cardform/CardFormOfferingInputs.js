@@ -1,21 +1,38 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { fetchCard } from "../../../store/actions/card";
-
-import { Animated } from "react-animated-css";
+import {
+  setCardOfferingTitle,
+  setCardOfferingPrice,
+  updateOffering,
+  deleteOffering,
+} from "../../../store/actions/card";
 
 import "../../../constants/colors.css";
 
 class CardFormOfferingInputs extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    showDeleteModal: false,
+    title: this.props.offering.title,
+    price: this.props.offering.price,
+    offeringSnapshot: { ...this.props.offering },
+  };
 
-    this.state = {
-      showDeleteModal: false,
-      offeringSnapshot: { ...props.offering },
-    };
-  }
+  onCardTitleChangeHandler = async (event) => {
+    await this.setState({
+      title: event.target.value,
+    });
+
+    this.props.setCardOfferingTitle(this.props.index, this.state.title);
+  };
+
+  onCardPriceChangeHandler = async (event) => {
+    await this.setState({
+      price: event.target.value,
+    });
+
+    this.props.setCardOfferingPrice(this.props.index, this.state.price);
+  };
 
   updateOfferingInputsHandler = async () => {
     await this.props.updateOffering(
@@ -25,19 +42,16 @@ class CardFormOfferingInputs extends Component {
       this.props.cardId
     );
 
-    await this.setState({
+    this.setState({
       offeringSnapshot: { ...this.props.offering },
     });
   };
 
   deleteOfferingInputsHandler = async () => {
     await this.props.deleteOffering(this.props.id);
-    await this.setState({
+    this.setState({
       showDeleteModal: false,
     });
-
-    // const userId = localStorage.getItem("userId");
-    // this.props.fetchCard(userId);
   };
 
   render() {
@@ -48,26 +62,16 @@ class CardFormOfferingInputs extends Component {
             className="card-form-product-service-title-input"
             name="offeringTitle"
             placeholder="Product or Service Title"
-            value={this.props.title}
-            onChange={(event) =>
-              this.props.cardFormOfferingTitleChangeHandler(
-                this.props.index,
-                event
-              )
-            }
+            value={this.state.title}
+            onChange={this.onCardTitleChangeHandler}
           />
           <p className="primary-color card-form-product-service-text">$</p>
           <input
             className="card-form-product-service-price-input"
             name="offeringPrice"
             placeholder="0.00"
-            value={this.props.price}
-            onChange={(event) =>
-              this.props.cardFormOfferingPriceChangeHandler(
-                this.props.index,
-                event
-              )
-            }
+            value={this.state.price}
+            onChange={this.onCardPriceChangeHandler}
           />
         </div>
         <div className="card-form-product-service-buttons-container">
@@ -117,7 +121,13 @@ class CardFormOfferingInputs extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCard: (userId) => dispatch(fetchCard(userId)),
+    setCardOfferingTitle: (offeringIndex, offeringTitle) =>
+      dispatch(setCardOfferingTitle(offeringIndex, offeringTitle)),
+    setCardOfferingPrice: (offeringIndex, offeringPrice) =>
+      dispatch(setCardOfferingPrice(offeringIndex, offeringPrice)),
+    updateOffering: (id, title, price, cardId) =>
+      dispatch(updateOffering(id, title, price, cardId)),
+    deleteOffering: (id) => dispatch(deleteOffering(id)),
   };
 };
 

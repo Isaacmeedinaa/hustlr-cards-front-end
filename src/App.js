@@ -23,8 +23,8 @@ import SupportPage from "./components/pages/SupportPage";
 import ShowCardPage from "./components/pages/ShowCardPage";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.idleTimer = null;
     this.handleOnAction = this.handleOnAction.bind(this);
@@ -34,26 +34,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchIndustries();
-    // window.addEventListener("beforeunload", this.keepOnPage);
   }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener("beforeunload", this.keepOnPage);
-  // }
-
-  // keepOnPage = (event) => {
-  //   const localStorageCard = JSON.parse(localStorage.getItem("card"));
-
-  //   for (const key in localStorageCard) {
-  //     if (localStorageCard.hasOwnProperty(key)) {
-  //       if (localStorageCard[key] !== this.props.card[key]) {
-  //         let message;
-  //         event.returnValue = message;
-  //         return message;
-  //       }
-  //     }
-  //   }
-  // };
 
   handleOnAction(event) {
     this.idleTimer.reset();
@@ -74,7 +55,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <Fragment>
         <IdleTimer

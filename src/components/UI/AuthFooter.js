@@ -17,6 +17,7 @@ class AuthFooter extends Component {
         <a
           href="https://www.zenyx.io/"
           target="_blank"
+          rel="noopener noreferrer"
           className="primary-color auth-footer-link"
         >
           Zenyx LLC

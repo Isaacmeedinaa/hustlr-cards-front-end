@@ -9,9 +9,17 @@ export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
 export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
 export const UPLOAD_BUSINESS_PROFILE_PICTURE =
   "UPLOAD_BUSINESS_PROFILE_PICTURE";
+export const SET_CARD_TITLE = "SET_CARD_TITLE";
+export const SET_CARD_LOCATION = "SET_CARD_LOCATION";
+export const SET_CARD_INDUSTRY = "SET_CARD_INDUSTRY";
+export const SET_CARD_DESCRIPTION = "SET_CARD_DESCRIPTION";
+export const SET_CARD_OFFERING_TITLE = "SET_CARD_OFFERING_TITLE";
+export const SET_CARD_OFFERING_PRICE = "SET_CARD_OFFERING_PRICE";
 export const CREATE_OFFERING = "CREATE_OFFERING";
 export const UPDATE_OFFERING = "UPDATE_OFFERING";
 export const DELETE_OFFERING = "DELETE_OFFERING";
+export const SET_CARD_EMAIL = "SET_CARD_EMAIL";
+export const SET_CARD_PHONE_NUMBER = "SET_CARD_PHONE_NUMBER";
 
 export const fetchCard = (userId) => {
   return (dispatch, getState) => {
@@ -168,6 +176,51 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
   };
 };
 
+export const setCardTitle = (title) => {
+  return {
+    type: SET_CARD_TITLE,
+    title: title,
+  };
+};
+
+export const setCardLocation = (city, state) => {
+  return {
+    type: SET_CARD_LOCATION,
+    city: city,
+    state: state,
+  };
+};
+
+export const setCardIndustry = (industry) => {
+  return {
+    type: SET_CARD_INDUSTRY,
+    industry: industry,
+  };
+};
+
+export const setCardDescription = (description) => {
+  return {
+    type: SET_CARD_DESCRIPTION,
+    description: description,
+  };
+};
+
+export const setCardOfferingTitle = (offeringIndex, offeringTitle) => {
+  return {
+    type: SET_CARD_OFFERING_TITLE,
+    offeringIndex: offeringIndex,
+    offeringTitle: offeringTitle,
+  };
+};
+
+export const setCardOfferingPrice = (offeringIndex, offeringPrice) => {
+  return {
+    type: SET_CARD_OFFERING_PRICE,
+    offeringIndex: offeringIndex,
+    offeringPrice: offeringPrice,
+  };
+};
+
 export const createOffering = (cardId) => {
   return (dispatch) => {
     const offeringData = {
@@ -258,5 +311,19 @@ export const deleteOffering = (id, index) => {
       reqObj
     ).catch((err) => console.log(err));
     dispatch({ type: DELETE_OFFERING, id: id });
+  };
+};
+
+export const setCardEmail = (email) => {
+  return {
+    type: SET_CARD_EMAIL,
+    email: email,
+  };
+};
+
+export const setCardPhoneNumber = (phoneNumber) => {
+  return {
+    type: SET_CARD_PHONE_NUMBER,
+    phoneNumber: phoneNumber,
   };
 };

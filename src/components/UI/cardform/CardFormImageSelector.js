@@ -8,7 +8,13 @@ class CardFormImageSelector extends Component {
     return (
       <Fragment>
         <div className="primary-color-bg card-form-business-img-container">
-          <img className="card-form-business-img" src={this.props.imgUrl} />
+          {this.props.imgUrl === "" || !this.props.imgUrl ? null : (
+            <img
+              className="card-form-business-img"
+              src={this.props.imgUrl}
+              alt="business-profile"
+            />
+          )}
         </div>
         <label
           className="primary-color card-form-file-label"

@@ -4,9 +4,17 @@ import {
   SET_CARD_PUBLIC,
   SET_CARD_NOT_PUBLIC,
   UPLOAD_BUSINESS_PROFILE_PICTURE,
+  SET_CARD_TITLE,
+  SET_CARD_LOCATION,
+  SET_CARD_INDUSTRY,
+  SET_CARD_DESCRIPTION,
+  SET_CARD_OFFERING_TITLE,
+  SET_CARD_OFFERING_PRICE,
   CREATE_OFFERING,
   UPDATE_OFFERING,
   DELETE_OFFERING,
+  SET_CARD_EMAIL,
+  SET_CARD_PHONE_NUMBER,
 } from "../actions/card";
 
 const initialState = {
@@ -107,6 +115,69 @@ const card = (state = initialState, action) => {
         },
       };
 
+    case SET_CARD_TITLE:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          title: action.title,
+        },
+      };
+
+    case SET_CARD_LOCATION:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          city: action.city,
+          state: action.state,
+        },
+      };
+
+    case SET_CARD_INDUSTRY:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          industry: action.industry,
+        },
+      };
+
+    case SET_CARD_DESCRIPTION:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          description: action.description,
+        },
+      };
+
+    case SET_CARD_OFFERING_TITLE:
+      const offeringsSnapshotOne = [...state.cardData.offerings];
+      const offeringSnapshotOne = offeringsSnapshotOne[action.offeringIndex];
+      offeringSnapshotOne.title = action.offeringTitle;
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          offerings: offeringsSnapshotOne,
+        },
+      };
+
+    case SET_CARD_OFFERING_PRICE:
+      const offeringsSnapshotTwo = [...state.cardData.offerings];
+      const offeringSnapshotTwo = offeringsSnapshotTwo[action.offeringIndex];
+      offeringSnapshotTwo.price = action.offeringPrice;
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          offerings: offeringsSnapshotTwo,
+        },
+      };
+
     case CREATE_OFFERING:
       return {
         ...state,
@@ -141,6 +212,24 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           offerings: filteredOfferings,
+        },
+      };
+
+    case SET_CARD_EMAIL:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          email: action.email,
+        },
+      };
+
+    case SET_CARD_PHONE_NUMBER:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          phoneNumber: action.phoneNumber,
         },
       };
 

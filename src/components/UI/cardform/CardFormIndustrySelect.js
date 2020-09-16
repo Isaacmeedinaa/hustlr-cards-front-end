@@ -1,11 +1,29 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+import { setCardIndustry } from "../../../store/actions/card";
+
 import Select from "react-select";
 
 import "../../../constants/colors.css";
 import "../UI.css";
 
 class CardFormIndustrySelect extends Component {
+  state = {
+    industry: { ...this.props.industry },
+  };
+
+  onCardIndustryChangeHandler = async (event) => {
+    await this.setState({
+      industry: {
+        id: parseInt(event.value),
+        title: event.label,
+      },
+    });
+
+    this.props.setCardIndustry(this.state.industry);
+  };
+
   render() {
     return (
       <div className="card-form-dropdown-container">
@@ -21,12 +39,30 @@ class CardFormIndustrySelect extends Component {
             },
           })}
           options={this.props.dropdownIndustries}
-          value={this.props.industry}
-          onChange={(event) => this.props.cardFormSelectorChangeHandler(event)}
+          value={this.props.dropdownIndustries.filter(
+            (industry) => industry.label === this.props.industry.title
+          )}
+          onChange={this.onCardIndustryChangeHandler}
         />
       </div>
     );
   }
 }
 
-export default CardFormIndustrySelect;
+const mapStateToProps = (state) => {
+  return {
+    industry: state.card.cardData.industry,
+    dropdownIndustries: state.industries.dropdownIndustries,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCardIndustry: (industry) => dispatch(setCardIndustry(industry)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardFormIndustrySelect);
