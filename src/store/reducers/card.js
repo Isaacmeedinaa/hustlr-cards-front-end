@@ -15,6 +15,8 @@ import {
   DELETE_OFFERING,
   SET_CARD_EMAIL,
   SET_CARD_PHONE_NUMBER,
+  SET_CARD_SOCIAL_MEDIAS_LINK,
+  SET_CARD_PATH,
 } from "../actions/card";
 
 const initialState = {
@@ -230,6 +232,27 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           phoneNumber: action.phoneNumber,
+        },
+      };
+
+    case SET_CARD_SOCIAL_MEDIAS_LINK:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          facebookLink: action.facebookLink,
+          instagramLink: action.instagramLink,
+          twitterLink: action.twitterLink,
+          snapchatLink: action.snapchatLink,
+        },
+      };
+
+    case SET_CARD_PATH:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          pathToCard: action.pathToCard,
         },
       };
 

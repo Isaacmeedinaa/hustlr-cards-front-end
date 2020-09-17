@@ -1,17 +1,43 @@
 import React, { Component, Fragment } from "react";
 
+import { connect } from "react-redux";
+import { uploadBusinessProfilePicture } from "../../../store/actions/card";
+
 import "../../../constants/colors.css";
 import "../UI.css";
 
 class CardFormImageSelector extends Component {
+  state = {
+    imgUrl: this.props.imgUrl,
+    cardId: this.props.cardId,
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.imgUrl !== this.props.imgUrl) {
+      this.setState({
+        imgUrl: this.props.imgUrl,
+      });
+    }
+  }
+
+  onImageChangeHandler = (event) => {
+    const reqImgData = event.target.files[0];
+    const cardId = this.state.cardId;
+
+    let reader = new FileReader();
+    reader.readAsDataURL(reqImgData);
+
+    this.props.uploadBusinessProfilePicture(reqImgData, cardId);
+  };
+
   render() {
     return (
       <Fragment>
         <div className="primary-color-bg card-form-business-img-container">
-          {this.props.imgUrl === "" || !this.props.imgUrl ? null : (
+          {this.state.imgUrl === "" || !this.state.imgUrl ? null : (
             <img
               className="card-form-business-img"
-              src={this.props.imgUrl}
+              src={this.state.imgUrl}
               alt="business-profile"
             />
           )}
@@ -25,7 +51,7 @@ class CardFormImageSelector extends Component {
         <input
           className="card-form-file-button"
           id="businessProfileImgSelector"
-          onChange={(event) => this.props.handleImageSelectorClick(event)}
+          onChange={this.onImageChangeHandler}
           type="file"
           accept="image/x-png,image/jpeg"
         />
@@ -34,4 +60,21 @@ class CardFormImageSelector extends Component {
   }
 }
 
-export default CardFormImageSelector;
+const mapStateToProps = (state) => {
+  return {
+    imgUrl: state.card.cardData.imgUrl,
+    cardId: state.card.cardData.id,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    uploadBusinessProfilePicture: (imgData, cardId) =>
+      dispatch(uploadBusinessProfilePicture(imgData, cardId)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardFormImageSelector);

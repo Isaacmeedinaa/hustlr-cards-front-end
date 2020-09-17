@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+import { createOffering } from "../../../store/actions/card";
+
 class CardFormAddOfferingButton extends Component {
   render() {
     return (
@@ -15,4 +18,19 @@ class CardFormAddOfferingButton extends Component {
   }
 }
 
-export default CardFormAddOfferingButton;
+const mapStateToProps = (state) => {
+  return {
+    cardId: state.card.cardData.id,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createOffering: (cardId) => dispatch(createOffering(cardId)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardFormAddOfferingButton);
