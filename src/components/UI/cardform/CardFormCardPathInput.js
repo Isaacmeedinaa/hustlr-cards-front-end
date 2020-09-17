@@ -1,11 +1,23 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+import { setCardPath } from "../../../store/actions/card";
+
 import "../../../constants/colors.css";
 import "../UI.css";
 
 class CardFormCardPathInput extends Component {
   state = {
+    pathToCard: this.props.pathToCard,
     pathToCardSnapshot: this.props.pathToCard,
+  };
+
+  onCardPathChangeHandler = async (event) => {
+    await this.setState({
+      pathToCard: event.target.value,
+    });
+
+    this.props.setCardPath(this.state.pathToCard);
   };
 
   render() {
@@ -20,10 +32,10 @@ class CardFormCardPathInput extends Component {
           className="card-form-path-to-card-input"
           placeholder="Business Username"
           name="pathToCard"
-          value={this.props.pathToCard}
-          onChange={(event) => this.props.cardFormInputChangeHandler(event)}
+          value={this.state.pathToCard}
+          onChange={this.onCardPathChangeHandler}
         />
-        {/* {this.state.pathToCardSnapshot !== this.props.pathToCard ? (
+        {this.state.pathToCardSnapshot !== this.props.pathToCard ? (
           <button
             className="primary-color card-form-offering-button"
             id="cardFormProductServiceDeleteBtn"
@@ -31,10 +43,25 @@ class CardFormCardPathInput extends Component {
           >
             Save Changes
           </button>
-        ) : null} */}
+        ) : null}
       </div>
     );
   }
 }
 
-export default CardFormCardPathInput;
+const mapStateToProps = (state) => {
+  return {
+    pathToCard: state.card.cardData.pathToCard,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCardPath: (pathToCard) => dispatch(setCardPath(pathToCard)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardFormCardPathInput);

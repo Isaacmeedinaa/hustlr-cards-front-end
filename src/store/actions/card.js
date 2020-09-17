@@ -20,6 +20,8 @@ export const UPDATE_OFFERING = "UPDATE_OFFERING";
 export const DELETE_OFFERING = "DELETE_OFFERING";
 export const SET_CARD_EMAIL = "SET_CARD_EMAIL";
 export const SET_CARD_PHONE_NUMBER = "SET_CARD_PHONE_NUMBER";
+export const SET_CARD_SOCIAL_MEDIAS_LINK = "SET_CARD_SOCIAL_MEDIAS_LINK";
+export const SET_CARD_PATH = "SET_CARD_PATH";
 
 export const fetchCard = (userId) => {
   return (dispatch, getState) => {
@@ -325,5 +327,27 @@ export const setCardPhoneNumber = (phoneNumber) => {
   return {
     type: SET_CARD_PHONE_NUMBER,
     phoneNumber: phoneNumber,
+  };
+};
+
+export const setCardSocialMediaLinks = (
+  facebookLink,
+  instagramLink,
+  twitterLink,
+  snapchatLink
+) => {
+  return {
+    type: SET_CARD_SOCIAL_MEDIAS_LINK,
+    facebookLink: facebookLink,
+    instagramLink: instagramLink,
+    twitterLink: twitterLink,
+    snapchatLink: snapchatLink,
+  };
+};
+
+export const setCardPath = (pathToCard) => {
+  return {
+    type: SET_CARD_PATH,
+    pathToCard: pathToCard,
   };
 };
