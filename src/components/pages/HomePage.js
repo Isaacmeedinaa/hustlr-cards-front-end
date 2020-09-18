@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
+import { userAutoLogin } from "../../store/actions/user";
 import { fetchCard } from "../../store/actions/card";
 
 import SideToolbar from "../UI/SideToolbar";
@@ -14,12 +15,12 @@ import "../../constants/colors.css";
 class HomeContainer extends Component {
   componentDidMount() {
     const userToken = localStorage.getItem("userToken");
+    const history = this.props.history;
 
     if (userToken) {
-      const userId = localStorage.getItem("userId");
-      this.props.fetchCard(parseInt(userId));
+      this.props.userAutoLogin(history);
     } else {
-      this.props.history.push("/login");
+      history.push("/login");
     }
   }
 
@@ -63,6 +64,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    userAutoLogin: (history) => dispatch(userAutoLogin(history)),
     fetchCard: (userId) => dispatch(fetchCard(userId)),
   };
 };

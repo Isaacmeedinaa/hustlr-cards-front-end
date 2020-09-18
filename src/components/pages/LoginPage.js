@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { userLogin } from "../../store/actions/user";
+import { userLogin, userAutoLogin } from "../../store/actions/user";
 
 import AuthCard from "../UI/AuthCard";
 import AuthFooter from "../UI/AuthFooter";
@@ -22,11 +22,10 @@ class LoginPage extends Component {
 
   componentDidMount() {
     const userToken = localStorage.getItem("userToken");
+    const history = this.props.history;
 
     if (userToken) {
-      this.props.history.push("/home");
-    } else {
-      return;
+      this.props.userAutoLogin(history);
     }
   }
 
@@ -136,6 +135,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     userLogin: (username, password, history) =>
       dispatch(userLogin(username, password, history)),
+    userAutoLogin: (history) => dispatch(userAutoLogin(history)),
   };
 };
 

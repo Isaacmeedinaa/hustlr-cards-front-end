@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { userRegister } from "../../store/actions/user";
+import { userRegister, userAutoLogin } from "../../store/actions/user";
 
 import AuthCard from "../UI/AuthCard";
 import AuthFooter from "../UI/AuthFooter";
@@ -19,6 +19,15 @@ class RegisterPage extends Component {
       password: "",
       confirmPassword: "",
     };
+  }
+
+  componentDidMount() {
+    const userToken = localStorage.getItem("userToken");
+    const history = this.props.history;
+
+    if (userToken) {
+      this.props.userAutoLogin(history);
+    }
   }
 
   inputChangeHandler = (event) => {
@@ -138,6 +147,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         userRegister(email, username, password, confirmPassword, history)
       ),
+    userAutoLogin: (history) => dispatch(userAutoLogin(history)),
   };
 };
 

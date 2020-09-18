@@ -13,6 +13,8 @@ export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
 export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
 export const UPLOAD_BUSINESS_PROFILE_PICTURE =
   "UPLOAD_BUSINESS_PROFILE_PICTURE";
+export const DELETE_BUSINESS_PROFILE_PICTURE =
+  "DELETE_BUSINESS_PROFILE_PICTURE";
 export const SET_CARD_TITLE = "SET_CARD_TITLE";
 export const SET_CARD_LOCATION = "SET_CARD_LOCATION";
 export const SET_CARD_INDUSTRY = "SET_CARD_INDUSTRY";
@@ -76,58 +78,6 @@ export const fetchCard = (userId) => {
   };
 };
 
-export const setCard = (
-  id,
-  title,
-  description,
-  offerings,
-  city,
-  state,
-  email,
-  phoneNumber,
-  imgUrl,
-  pathToCard,
-  isPublic,
-  facebookLink,
-  instagramLink,
-  twitterLink,
-  snapchatLink,
-  themeId,
-  industry,
-  userId,
-  photos
-) => {
-  return (dispatch, getState) => {
-    const { themes } = getState();
-
-    const cardModel = new Card(
-      id,
-      title,
-      description,
-      offerings,
-      city,
-      state,
-      email,
-      phoneNumber,
-      imgUrl,
-      pathToCard,
-      isPublic,
-      facebookLink,
-      instagramLink,
-      twitterLink,
-      snapchatLink,
-      themeId,
-      industry,
-      userId,
-      photos
-    );
-
-    const cardTheme = themes.find((theme) => theme.id === themeId);
-
-    dispatch({ type: SET_CARD, cardData: cardModel, cardTheme: cardTheme });
-  };
-};
-
 export const setCardThemeId = (id) => {
   return (dispatch, getState) => {
     const { themes } = getState();
@@ -175,6 +125,7 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
         return resp.json();
       })
       .then((data) => {
+        console.log(data);
         dispatch({
           type: UPLOAD_BUSINESS_PROFILE_PICTURE,
           imgUrl: data.url,
@@ -182,6 +133,24 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
         dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const deleteBusinessImage = (imgId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        Accepts: "application/json",
+      },
+    };
+
+    fetch(`http://localhost:5000/api/v1/photos/${imgId}`, reqObj)
+      .then((resp) => resp.json())
+      .then((data) => console.log(data));
   };
 };
 
