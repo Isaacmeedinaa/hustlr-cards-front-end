@@ -36,7 +36,6 @@ class RegisterPage extends Component {
     const confirmPassword = this.state.confirmPassword;
     const history = this.props.history;
 
-    // do a request here
     this.props.userRegister(
       email,
       username,
@@ -47,6 +46,10 @@ class RegisterPage extends Component {
   };
 
   render() {
+    if (this.props.registerLoader) {
+      return null;
+    }
+
     return (
       <div className="secondary-light-bg container h-100">
         <div className="row h-100 justify-content-center align-items-center">
@@ -125,6 +128,7 @@ class RegisterPage extends Component {
 const mapStateToProps = (state) => {
   return {
     errors: state.errors,
+    registerLoader: state.registerLoader,
   };
 };
 

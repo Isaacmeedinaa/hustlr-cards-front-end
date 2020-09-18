@@ -1,14 +1,15 @@
-import { IS_LOADING, IS_NOT_LOADING } from "./loader";
+import { CARD_IS_LOADING, CARD_IS_NOT_LOADING } from "./loaders/cardLoader";
 
 export const SET_PUBLIC_CARD = "SET_PUBLIC_CARD";
 
 export const fetchPublicCard = (pathname, history) => {
   return (dispatch) => {
-    dispatch({ type: IS_LOADING });
-    fetch(`http://localhost:4000/publicCards/${pathname}`)
+    dispatch({ type: CARD_IS_LOADING });
+    fetch(`http://localhost:5000/api/v1/cards/path/${pathname}`)
       .then((resp) => {
         if (!resp.ok) {
           history.push("/404");
+          return;
         } else {
           return resp.json();
         }
@@ -18,7 +19,7 @@ export const fetchPublicCard = (pathname, history) => {
           return;
         }
         dispatch({ type: SET_PUBLIC_CARD, publicCard: publicCard });
-        dispatch({ type: IS_NOT_LOADING });
+        dispatch({ type: CARD_IS_NOT_LOADING });
       });
   };
 };

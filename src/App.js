@@ -36,13 +36,13 @@ class App extends Component {
     this.props.fetchIndustries();
   }
 
-  handleOnAction(event) {
+  handleOnAction() {
     this.idleTimer.reset();
   }
 
-  handleOnActive(event) {}
+  handleOnActive() {}
 
-  handleOnIdle(event) {
+  handleOnIdle() {
     const userToken = localStorage.getItem("userToken");
     const userId = localStorage.getItem("userId");
 
@@ -55,6 +55,10 @@ class App extends Component {
   }
 
   render() {
+    if (this.props.industriesLoader) {
+      return null;
+    }
+
     return (
       <Fragment>
         <IdleTimer
@@ -86,10 +90,16 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    industriesLoader: state.industriesLoader,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchIndustries: () => dispatch(fetchIndustries()),
   };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

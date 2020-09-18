@@ -18,7 +18,7 @@ import "./UI.css";
 
 class Card extends Component {
   render() {
-    if (this.props.loader) {
+    if (this.props.cardLoader) {
       return null;
     }
 
@@ -31,7 +31,10 @@ class Card extends Component {
               primaryColor={this.props.cardTheme.primaryColor}
               transparentColor={this.props.cardTheme.transparentColor}
             />
-            <CardImage imgUrl={this.props.cardData.imgUrl} />
+            <CardImage
+              imgUrl={this.props.cardData.imgUrl}
+              cardImageLoader={this.props.cardImageLoader}
+            />
             <CardTitle title={this.props.cardData.title} />
             <CardLocation
               city={this.props.cardData.city}
@@ -73,7 +76,8 @@ class Card extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loader: state.loader,
+    cardLoader: state.cardLoader,
+    cardImageLoader: state.cardImageLoader,
     cardData: state.card.cardData,
     cardTheme: state.card.cardTheme,
     industries: state.industries,

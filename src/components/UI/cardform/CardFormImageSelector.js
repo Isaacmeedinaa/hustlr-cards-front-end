@@ -3,6 +3,8 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { uploadBusinessProfilePicture } from "../../../store/actions/card";
 
+import Loader from "react-loader-spinner";
+
 import "../../../constants/colors.css";
 import "../UI.css";
 
@@ -34,7 +36,9 @@ class CardFormImageSelector extends Component {
     return (
       <Fragment>
         <div className="primary-color-bg card-form-business-img-container">
-          {this.state.imgUrl === "" || !this.state.imgUrl ? null : (
+          {this.props.cardImageLoader ? (
+            <Loader type="TailSpin" color="#fff" width={50} height={50} />
+          ) : (
             <img
               className="card-form-business-img"
               src={this.state.imgUrl}
@@ -64,6 +68,7 @@ const mapStateToProps = (state) => {
   return {
     imgUrl: state.card.cardData.imgUrl,
     cardId: state.card.cardData.id,
+    cardImageLoader: state.cardImageLoader,
   };
 };
 

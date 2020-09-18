@@ -6,13 +6,13 @@ import { fetchPublicCard } from "../../store/actions/publicCard";
 
 class ShowCardPage extends Component {
   componentWillMount() {
-    const username = this.props.location.pathname.slice(1);
+    const pathname = this.props.location.pathname.slice(1);
     const history = this.props.history;
-    this.props.fetchPublicCard(username, history);
+    this.props.fetchPublicCard(pathname, history);
   }
 
   render() {
-    if (this.props.loader) {
+    if (this.props.cardLoader) {
       return null;
     }
 
@@ -22,7 +22,7 @@ class ShowCardPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loader: state.loader,
+    cardLoader: state.cardLoader,
     publicCard: state.publicCard,
   };
 };
