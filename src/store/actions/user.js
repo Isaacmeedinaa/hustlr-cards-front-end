@@ -1,3 +1,4 @@
+import { fetchCard } from "./card";
 import { IS_LOGGING_IN, IS_NOT_LOGGING_IN } from "./loaders/loginLoader";
 import { IS_REGISTERING, IS_NOT_REGISTERING } from "./loaders/registerLoader";
 import {
@@ -56,6 +57,46 @@ export const userLogin = (username, password, history) => {
         dispatch({ type: IS_NOT_LOGGING_IN });
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const userAutoLogin = (history) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    if (userToken) {
+      const reqObj = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          Accepts: "application/json",
+        },
+      };
+
+      dispatch({ type: IS_LOGGING_IN });
+      fetch(`http://localhost:5000/api/v1/autologin`, reqObj)
+        .then((resp) => {
+          if (!resp.ok) {
+            localStorage.clear();
+            history.push("/login");
+            dispatch({ type: IS_NOT_LOGGING_IN });
+          } else if (resp.ok) {
+            return resp.json();
+          }
+        })
+        .then((user) => {
+          if (!user) {
+            return;
+          }
+          dispatch({ type: USER_LOGIN, user: user });
+          dispatch(fetchCard(user.id));
+          history.push("/home");
+          dispatch({ type: IS_NOT_LOGGING_IN });
+        });
+    } else {
+      history.push("/login");
+      dispatch({ type: IS_NOT_LOGGING_IN });
+    }
   };
 };
 

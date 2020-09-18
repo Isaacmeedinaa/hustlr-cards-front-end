@@ -1,7 +1,10 @@
 import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
-import { uploadBusinessProfilePicture } from "../../../store/actions/card";
+import {
+  uploadBusinessProfilePicture,
+  deleteBusinessImage,
+} from "../../../store/actions/card";
 
 import Loader from "react-loader-spinner";
 
@@ -46,6 +49,13 @@ class CardFormImageSelector extends Component {
             />
           )}
         </div>
+        {!this.state.imgUrl || this.state.imgUrl === "" ? null : (
+          <div className="card-form-button" onClick={null}>
+            <span className="primary-color card-form-button-text">
+              Remove Current Business Image
+            </span>
+          </div>
+        )}
         <label
           className="primary-color card-form-file-label"
           htmlFor="businessProfileImgSelector"
@@ -76,6 +86,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     uploadBusinessProfilePicture: (imgData, cardId) =>
       dispatch(uploadBusinessProfilePicture(imgData, cardId)),
+    deleteBusinessImage: (imgId) => dispatch(deleteBusinessImage(imgId)),
   };
 };
 
