@@ -1,0 +1,2 @@
+export const CARD_IS_LOADING = "CARD_IS_LOADING";
+export const CARD_IS_NOT_LOADING = "CARD_IS_NOT_LOADING";

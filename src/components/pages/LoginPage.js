@@ -55,6 +55,10 @@ class LoginPage extends Component {
   };
 
   render() {
+    if (this.props.loginLoader) {
+      return null;
+    }
+
     return (
       <div className="secondary-light-bg login-auth-container">
         <div>
@@ -124,6 +128,7 @@ class LoginPage extends Component {
 const mapStateToProps = (state) => {
   return {
     errors: state.errors,
+    loginLoader: state.loginLoader,
   };
 };
 

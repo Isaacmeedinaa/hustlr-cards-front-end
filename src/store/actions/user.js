@@ -1,4 +1,5 @@
-import { IS_LOADING, IS_NOT_LOADING } from "./loader";
+import { IS_LOGGING_IN, IS_NOT_LOGGING_IN } from "./loaders/loginLoader";
+import { IS_REGISTERING, IS_NOT_REGISTERING } from "./loaders/registerLoader";
 import {
   REQUEST_TIMEOUT_ERR,
   INVALID_LOGIN_CREDENTIALS_ERR,
@@ -29,7 +30,7 @@ export const userLogin = (username, password, history) => {
       body: JSON.stringify(loginData),
     };
 
-    dispatch({ type: IS_LOADING });
+    dispatch({ type: IS_LOGGING_IN });
     fetch("http://localhost:5000/api/v1/login", reqObj)
       .then((resp) => {
         if (resp.status === 401) {
@@ -38,6 +39,7 @@ export const userLogin = (username, password, history) => {
             type: INVALID_LOGIN_CREDENTIALS_ERR,
             message: message,
           });
+          dispatch({ type: IS_NOT_LOGGING_IN });
         } else if (resp.ok) {
           dispatch({ type: NO_LOGIN_ERRORS });
           return resp.json();
@@ -51,7 +53,7 @@ export const userLogin = (username, password, history) => {
 
         history.push("/home");
 
-        dispatch({ type: IS_NOT_LOADING });
+        dispatch({ type: IS_NOT_LOGGING_IN });
       })
       .catch((err) => console.log(err));
   };
@@ -88,7 +90,7 @@ export const userRegister = (
         message: message,
       });
     } else {
-      dispatch({ type: IS_LOADING });
+      dispatch({ type: IS_REGISTERING });
       fetch("http://localhost:5000/api/v1/register", reqObj)
         .then((resp) => {
           if (!resp.ok) {
@@ -96,6 +98,7 @@ export const userRegister = (
               type: TAKEN_REGISTER_USERNAME_EMAIL_ERR,
               message: ["Error creating account"],
             });
+            dispatch({ type: IS_NOT_REGISTERING });
           } else {
             dispatch({ type: NO_REGISTER_ERRORS });
             return resp.json();
@@ -110,7 +113,7 @@ export const userRegister = (
           // uncomment this once card creation is handled
           // history.push("/home");
 
-          dispatch({ type: IS_NOT_LOADING });
+          dispatch({ type: IS_NOT_REGISTERING });
         })
         .catch((err) => console.log(err));
     }

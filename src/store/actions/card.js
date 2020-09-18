@@ -1,6 +1,10 @@
 import Card from "../../models/card";
 
-import { IS_LOADING, IS_NOT_LOADING } from "./loader";
+import { CARD_IS_LOADING, CARD_IS_NOT_LOADING } from "./loaders/cardLoader";
+import {
+  CARD_IMAGE_IS_UPLOADING,
+  CARD_IMAGE_IS_NOT_UPLOADING,
+} from "./loaders/cardImageLoader";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -27,7 +31,7 @@ export const fetchCard = (userId) => {
   return (dispatch, getState) => {
     const { themes } = getState();
 
-    dispatch({ type: IS_LOADING });
+    dispatch({ type: CARD_IS_LOADING });
     fetch(`http://localhost:5000/api/v1/cards/${userId}`)
       .then((resp) => {
         if (resp.status === 401) {
@@ -67,7 +71,7 @@ export const fetchCard = (userId) => {
           cardTheme: cardTheme,
         });
         localStorage.setItem("card", JSON.stringify(cardDataModel));
-        dispatch({ type: IS_NOT_LOADING });
+        dispatch({ type: CARD_IS_NOT_LOADING });
       });
   };
 };
@@ -161,9 +165,11 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
       body: body,
     };
 
+    dispatch({ type: CARD_IMAGE_IS_UPLOADING });
     fetch("http://localhost:5000/api/v1/photos/profile", reqObj)
       .then((resp) => {
         if (!resp.ok) {
+          dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
           return;
         }
         return resp.json();
@@ -173,6 +179,7 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
           type: UPLOAD_BUSINESS_PROFILE_PICTURE,
           imgUrl: data.url,
         });
+        dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
       })
       .catch((err) => console.log(err));
   };

@@ -225,6 +225,9 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-form-business-img {
@@ -605,6 +608,9 @@
   height: 100px;
   border-radius: 50%;
   margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-business-img {

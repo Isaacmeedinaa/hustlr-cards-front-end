@@ -1,13 +1,16 @@
 import Industry from "../../models/industry";
 
-import { IS_LOADING, IS_NOT_LOADING } from "./loader";
+import {
+  INDUSTRIES_ARE_LOADING,
+  INDUSTRIES_ARE_NOT_LOADING,
+} from "./loaders/industriesLoader";
 
 export const SET_ORIGINAL_INDUSTRIES = "SET_ORIGINAL_INDUSTRIES";
 export const SET_DROPDOWN_INDUSTRIES = "SET_DROPDOWN_INDUSTRIES";
 
 export const fetchIndustries = () => {
   return (dispatch) => {
-    dispatch({ type: IS_LOADING });
+    dispatch({ type: INDUSTRIES_ARE_LOADING });
     fetch("http://localhost:5000/api/v1/industries")
       .then((resp) => resp.json())
       .then((industries) => {
@@ -35,7 +38,7 @@ export const fetchIndustries = () => {
           type: SET_DROPDOWN_INDUSTRIES,
           dropdownIndustries: dropdownIndustries,
         });
-        dispatch({ type: IS_NOT_LOADING });
+        dispatch({ type: INDUSTRIES_ARE_NOT_LOADING });
       });
   };
 };

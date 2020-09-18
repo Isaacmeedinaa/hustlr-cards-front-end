@@ -69,9 +69,10 @@ class CardForm extends Component {
   };
 
   render() {
-    if (this.props.loader) {
+    if (this.props.cardLoader) {
       return null;
     }
+
     return (
       <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-form-wrapper">
@@ -99,7 +100,7 @@ class CardForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loader: state.loader,
+    cardLoader: state.cardLoader,
     cardData: state.card.cardData,
   };
 };
