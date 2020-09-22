@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
+import { setCardThemeId } from "../../store/actions/card";
 
 import { Animated } from "react-animated-css";
 
@@ -108,20 +109,16 @@ const Colors = (props) => {
 };
 
 class ThemePicker extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      themeId: props.themeId,
-    };
-  }
+  state = {
+    themeId: this.props.themeId,
+  };
 
   pickColorClickHandler = async (themeId) => {
     await this.setState({
       themeId: themeId,
     });
 
-    this.props.setThemeIdHandler(themeId);
+    this.props.setCardThemeId(themeId);
   };
 
   render() {
@@ -147,7 +144,14 @@ class ThemePicker extends Component {
 const mapStateToProps = (state) => {
   return {
     themes: state.themes,
+    themeId: state.card.cardData.themeId,
   };
 };
 
-export default connect(mapStateToProps)(ThemePicker);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCardThemeId: (themeId) => dispatch(setCardThemeId(themeId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThemePicker);

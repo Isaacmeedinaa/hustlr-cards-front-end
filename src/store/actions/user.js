@@ -81,6 +81,8 @@ export const userAutoLogin = (history) => {
             history.push("/login");
             dispatch({ type: IS_NOT_LOGGING_IN });
           } else if (resp.ok) {
+            const userId = localStorage.getItem("userId");
+            dispatch(fetchCard(userId));
             return resp.json();
           }
         })
@@ -89,7 +91,6 @@ export const userAutoLogin = (history) => {
             return;
           }
           dispatch({ type: USER_LOGIN, user: user });
-          dispatch(fetchCard(user.id));
           history.push("/home");
           dispatch({ type: IS_NOT_LOGGING_IN });
         });
@@ -152,7 +153,7 @@ export const userRegister = (
           dispatch({ type: USER_REGISTER, user: json.user });
 
           // uncomment this once card creation is handled
-          // history.push("/home");
+          history.push("/home");
 
           dispatch({ type: IS_NOT_REGISTERING });
         })
