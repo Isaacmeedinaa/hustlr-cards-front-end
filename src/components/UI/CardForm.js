@@ -77,6 +77,11 @@ class CardForm extends Component {
       <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-form-wrapper">
           <div className="card-form-container">
+            {!this.props.cardErrors ? null : (
+              <p className="primary-color card-form-error-text">
+                {this.props.cardErrors}
+              </p>
+            )}
             <CardFormImageSelector />
             <CardFormTitleInput />
             <CardFormLocationInputs />
@@ -102,6 +107,7 @@ const mapStateToProps = (state) => {
   return {
     cardLoader: state.cardLoader,
     cardData: state.card.cardData,
+    cardErrors: state.cardErrors,
   };
 };
 

@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import { userAutoLogin } from "../../store/actions/user";
-import { fetchCard } from "../../store/actions/card";
 
 import SideToolbar from "../UI/SideToolbar";
 import TopToolbar from "../UI/TopToolbar";
@@ -24,10 +23,6 @@ class HomeContainer extends Component {
     }
   }
 
-  componentWillUnmount() {
-    // send fetch request to save current card state
-  }
-
   render() {
     return (
       <Fragment>
@@ -37,17 +32,19 @@ class HomeContainer extends Component {
               pathname={this.props.location.pathname}
               history={this.props.history}
             />
-            <div className="secondary-light-bg card-form-col-wrapper">
-              <TopToolbar />
-              <div className="card-form-col-container">
-                <CardForm />
+            <Fragment>
+              <div className="secondary-light-bg card-form-col-wrapper">
+                <TopToolbar />
+                <div className="card-form-col-container">
+                  <CardForm />
+                </div>
               </div>
-            </div>
-            <div className="secondary-light-bg card-show-col-wrapper">
-              <div className="card-show-col-container">
-                <Card />
+              <div className="secondary-light-bg card-show-col-wrapper">
+                <div className="card-show-col-container">
+                  <Card />
+                </div>
               </div>
-            </div>
+            </Fragment>
           </div>
         </div>
       </Fragment>
@@ -59,13 +56,13 @@ const mapStateToProps = (state) => {
   return {
     user: state.user,
     cardData: state.card.cardData,
+    cardLoader: state.cardLoader,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     userAutoLogin: (history) => dispatch(userAutoLogin(history)),
-    fetchCard: (userId) => dispatch(fetchCard(userId)),
   };
 };
 

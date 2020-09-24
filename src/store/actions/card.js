@@ -5,6 +5,15 @@ import {
   CARD_IMAGE_IS_UPLOADING,
   CARD_IMAGE_IS_NOT_UPLOADING,
 } from "./loaders/cardImageLoader";
+import {
+  CARD_IS_UPDATING,
+  CARD_IS_NOT_UPDATING,
+} from "./loaders/cardUpdatingLoader";
+import {
+  CARD_PATH_IS_TAKEN_ERROR,
+  CARD_INVALID_INDUSTRY_ERROR,
+  CARD_NO_ERRORS,
+} from "./errors/cardErrors";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -47,22 +56,24 @@ export const fetchCard = (userId) => {
           card.id,
           card.title,
           card.description,
-          card.offerings,
           card.city,
           card.state,
           card.email,
           card.phoneNumber,
           card.imgUrl,
+          card.imgId,
           card.pathToCard,
           card.isPublic,
           card.facebookLink,
           card.instagramLink,
-          card.twitterLink,
           card.snapchatLink,
+          card.twitterLink,
           card.themeId,
-          card.industry,
+          card.industryId,
           card.userId,
-          card.photos
+          card.industry,
+          card.photos,
+          card.offerings
         );
 
         const cardTheme = themes.find((theme) => theme.id === card.themeId);
@@ -72,8 +83,84 @@ export const fetchCard = (userId) => {
           cardData: cardDataModel,
           cardTheme: cardTheme,
         });
+
         localStorage.setItem("card", JSON.stringify(cardDataModel));
         dispatch({ type: CARD_IS_NOT_LOADING });
+      });
+  };
+};
+
+export const saveCard = (cardId) => {
+  return (dispatch, getState) => {
+    const { cardData } = getState().card;
+
+    const updateCardData = {
+      id: cardData.id,
+      title: cardData.title,
+      description: cardData.description,
+      city: cardData.city,
+      state: cardData.state,
+      email: cardData.email,
+      phoneNumber: cardData.phoneNumber,
+      imgUrl: cardData.imgUrl,
+      imgId: cardData.imgId,
+      pathToCard: cardData.pathToCard,
+      isPublic: cardData.isPublic,
+      facebookLink: cardData.facebookLink,
+      instagramLink: cardData.instagramLink,
+      snapchatLink: cardData.snapchatLink,
+      twitterLink: cardData.twitterLink,
+      themeId: cardData.themeId,
+      industryId:
+        cardData.industry === null || !cardData.industry.id
+          ? null
+          : cardData.industry.id,
+      userId: cardData.userId,
+    };
+
+    console.log(updateCardData);
+
+    const userToken = localStorage.getItem("userToken");
+
+    dispatch({ type: CARD_IS_UPDATING });
+    const reqObj = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(updateCardData),
+    };
+
+    fetch(`http://localhost:5000/api/v1/cards/${cardId}`, reqObj)
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((data) => {
+        if (data.code === 3) {
+          setTimeout(() => {
+            dispatch({ type: CARD_IS_NOT_UPDATING });
+            dispatch({
+              type: CARD_PATH_IS_TAKEN_ERROR,
+              message: "Card path is already taken!",
+            });
+          }, 1000);
+          return;
+        } else if (data.code === 0) {
+          setTimeout(() => {
+            dispatch({ type: CARD_IS_NOT_UPDATING });
+            dispatch({
+              type: CARD_INVALID_INDUSTRY_ERROR,
+              message: "You must choose an industry!",
+            });
+          }, 1000);
+          return;
+        }
+        setTimeout(() => {
+          dispatch({ type: CARD_IS_NOT_UPDATING });
+          dispatch({ type: CARD_NO_ERRORS });
+        }, 1000);
       });
   };
 };
@@ -125,10 +212,10 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
         return resp.json();
       })
       .then((data) => {
-        console.log(data);
         dispatch({
           type: UPLOAD_BUSINESS_PROFILE_PICTURE,
           imgUrl: data.url,
+          imgId: data.id,
         });
         dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
       })

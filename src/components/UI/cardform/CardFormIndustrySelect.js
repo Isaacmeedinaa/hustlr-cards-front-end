@@ -39,9 +39,13 @@ class CardFormIndustrySelect extends Component {
             },
           })}
           options={this.props.dropdownIndustries}
-          value={this.props.dropdownIndustries.filter(
-            (industry) => industry.label === this.props.industry.title
-          )}
+          value={
+            !this.props.industry || this.props.industry.id === null
+              ? this.props.dropdownIndustries[0]
+              : this.props.dropdownIndustries.filter(
+                  (industry) => industry.label === this.props.industry.title
+                )
+          }
           onChange={this.onCardIndustryChangeHandler}
         />
       </div>

@@ -9,6 +9,8 @@ import industries from "./industries";
 import themes from "./themes";
 import cardLoader from "./loaders/cardLoader";
 import cardImageLoader from "./loaders/cardImageLoader";
+import cardUpdatingLoader from "./loaders/cardUpdatingLoader";
+import cardErrors from "./errors/cardErrors";
 import card from "./card";
 import publicCard from "./publicCard";
 
@@ -22,6 +24,8 @@ const rootReducer = combineReducers({
   themes,
   cardLoader,
   cardImageLoader,
+  cardUpdatingLoader,
+  cardErrors,
   card,
   publicCard,
 });
