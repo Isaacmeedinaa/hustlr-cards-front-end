@@ -31,6 +31,7 @@ class TopToolbar extends Component {
     return (
       <Fragment>
         <div className="primary-light-bg toptoolbar">
+          {/* {this.props.cardLoader ? null : ( */}
           <div className="toptoolbar-container">
             <div
               className="toptoolbar-theme-icon-container"
@@ -53,6 +54,7 @@ class TopToolbar extends Component {
             <PublicToggle />
             <SaveCardButton />
           </div>
+          {/* )} */}
         </div>
         {!this.state.themePickerIsOpen ? null : <ThemePicker />}
       </Fragment>

@@ -3,42 +3,46 @@ class Card {
     id,
     title,
     description,
-    offerings,
     city,
     state,
     email,
     phoneNumber,
     imgUrl,
+    imgId,
     pathToCard,
     isPublic,
     facebookLink,
     instagramLink,
-    twitterLink,
     snapchatLink,
+    twitterLink,
     themeId,
-    industry,
+    industryId,
     userId,
-    photos
+    industry,
+    photos,
+    offerings
   ) {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.offerings = offerings;
     this.city = city;
     this.state = state;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.imgUrl = imgUrl;
+    this.imgId = imgId;
     this.pathToCard = pathToCard;
     this.isPublic = isPublic;
     this.facebookLink = facebookLink;
     this.instagramLink = instagramLink;
-    this.twitterLink = twitterLink;
     this.snapchatLink = snapchatLink;
+    this.twitterLink = twitterLink;
     this.themeId = themeId;
-    this.industry = industry;
+    this.industryId = industryId;
     this.userId = userId;
+    this.industry = industry;
     this.photos = photos;
+    this.offerings = offerings;
   }
 }
 
