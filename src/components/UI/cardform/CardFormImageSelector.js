@@ -50,7 +50,10 @@ class CardFormImageSelector extends Component {
           )}
         </div>
         {!this.state.imgUrl || this.state.imgUrl === "" ? null : (
-          <div className="card-form-button" onClick={null}>
+          <div
+            className="card-form-button"
+            onClick={() => this.props.deleteBusinessImage(this.props.imgId)}
+          >
             <span className="primary-color card-form-button-text">
               Remove Current Business Image
             </span>
@@ -77,6 +80,7 @@ class CardFormImageSelector extends Component {
 const mapStateToProps = (state) => {
   return {
     imgUrl: state.card.cardData.imgUrl,
+    imgId: state.card.cardData.imgId,
     cardId: state.card.cardData.id,
     cardImageLoader: state.cardImageLoader,
   };

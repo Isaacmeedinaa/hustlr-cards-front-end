@@ -4,6 +4,7 @@ import {
   SET_CARD_PUBLIC,
   SET_CARD_NOT_PUBLIC,
   UPLOAD_BUSINESS_PROFILE_PICTURE,
+  DELETE_BUSINESS_PROFILE_PICTURE,
   SET_CARD_TITLE,
   SET_CARD_LOCATION,
   SET_CARD_INDUSTRY,
@@ -119,6 +120,16 @@ const card = (state = initialState, action) => {
           ...state.cardData,
           imgUrl: action.imgUrl,
           imgId: action.imgId,
+        },
+      };
+
+    case DELETE_BUSINESS_PROFILE_PICTURE:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          imgUrl: "",
+          imgId: null,
         },
       };
 

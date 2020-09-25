@@ -9,7 +9,6 @@ import "../UI.css";
 class CardFormCardPathInput extends Component {
   state = {
     pathToCard: this.props.pathToCard,
-    pathToCardSnapshot: this.props.pathToCard,
   };
 
   onCardPathChangeHandler = async (event) => {
@@ -35,15 +34,6 @@ class CardFormCardPathInput extends Component {
           value={this.state.pathToCard}
           onChange={this.onCardPathChangeHandler}
         />
-        {this.state.pathToCardSnapshot !== this.props.pathToCard ? (
-          <button
-            className="primary-color card-form-offering-button"
-            id="cardFormProductServiceDeleteBtn"
-            onClick={this.updateOfferingInputsHandler}
-          >
-            Save Changes
-          </button>
-        ) : null}
       </div>
     );
   }
