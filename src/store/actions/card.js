@@ -138,6 +138,7 @@ export const saveCard = (cardId) => {
         return resp.json();
       })
       .then((data) => {
+        console.log(data);
         if (data.code === 3) {
           setTimeout(() => {
             dispatch({ type: CARD_IS_NOT_UPDATING });
@@ -235,9 +236,13 @@ export const deleteBusinessImage = (imgId) => {
       },
     };
 
-    fetch(`http://localhost:5000/api/v1/photos/${imgId}`, reqObj)
-      .then((resp) => resp.json())
-      .then((data) => console.log(data));
+    fetch(`http://localhost:5000/api/v1/photos/${imgId}`, reqObj).then(
+      (resp) => {
+        if (resp.ok) {
+          dispatch({ type: DELETE_BUSINESS_PROFILE_PICTURE });
+        }
+      }
+    );
   };
 };
 
