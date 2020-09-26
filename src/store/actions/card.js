@@ -213,13 +213,15 @@ export const deleteBusinessImage = (imgId) => {
       },
     };
 
-    fetch(`http://localhost:5000/api/v1/photos/${imgId}`, reqObj).then(
-      (resp) => {
+    dispatch({ type: CARD_IMAGE_IS_UPLOADING });
+    fetch(`http://localhost:5000/api/v1/photos/${imgId}`, reqObj)
+      .then((resp) => {
         if (resp.ok) {
           dispatch({ type: DELETE_BUSINESS_PROFILE_PICTURE });
+          dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
         }
-      }
-    );
+      })
+      .catch((err) => console.log(err));
   };
 };
 
