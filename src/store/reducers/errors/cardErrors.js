@@ -1,17 +1,11 @@
-import {
-  CARD_PATH_IS_TAKEN_ERROR,
-  CARD_INVALID_INDUSTRY_ERROR,
-  CARD_NO_ERRORS,
-} from "../../actions/errors/cardErrors";
+import { CARD_ERRORS, CARD_NO_ERRORS } from "../../actions/errors/cardErrors";
 
-const cardErrors = (state = null, action) => {
+const cardErrors = (state = [], action) => {
   switch (action.type) {
-    case CARD_PATH_IS_TAKEN_ERROR:
-      return action.message;
-    case CARD_INVALID_INDUSTRY_ERROR:
-      return action.message;
+    case CARD_ERRORS:
+      return action.errors;
     case CARD_NO_ERRORS:
-      return null;
+      return [];
     default:
       return state;
   }

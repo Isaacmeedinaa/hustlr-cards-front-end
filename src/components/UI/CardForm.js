@@ -69,6 +69,7 @@ class CardForm extends Component {
   };
 
   render() {
+    console.log(this.props.cardErrors);
     if (this.props.cardLoader) {
       return null;
     }
@@ -77,11 +78,11 @@ class CardForm extends Component {
       <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-form-wrapper">
           <div className="card-form-container">
-            {!this.props.cardErrors ? null : (
-              <p className="primary-color card-form-error-text">
-                {this.props.cardErrors}
+            {this.props.cardErrors.map((error, index) => (
+              <p key={index} className="primary-color card-form-error-text">
+                {error.message}
               </p>
-            )}
+            ))}
             <CardFormImageSelector />
             <CardFormTitleInput />
             <CardFormLocationInputs />
