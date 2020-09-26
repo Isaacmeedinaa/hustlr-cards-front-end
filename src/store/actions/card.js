@@ -9,11 +9,7 @@ import {
   CARD_IS_UPDATING,
   CARD_IS_NOT_UPDATING,
 } from "./loaders/cardUpdatingLoader";
-import {
-  CARD_PATH_IS_TAKEN_ERROR,
-  CARD_INVALID_INDUSTRY_ERROR,
-  CARD_NO_ERRORS,
-} from "./errors/cardErrors";
+import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -118,8 +114,6 @@ export const saveCard = (cardId) => {
       userId: cardData.userId,
     };
 
-    console.log(updateCardData);
-
     const userToken = localStorage.getItem("userToken");
 
     dispatch({ type: CARD_IS_UPDATING });
@@ -138,30 +132,13 @@ export const saveCard = (cardId) => {
         return resp.json();
       })
       .then((data) => {
-        console.log(data);
-        if (data.code === 3) {
-          setTimeout(() => {
-            dispatch({ type: CARD_IS_NOT_UPDATING });
-            dispatch({
-              type: CARD_PATH_IS_TAKEN_ERROR,
-              message: "Card path is already taken!",
-            });
-          }, 1000);
-          return;
-        } else if (data.code === 0) {
-          setTimeout(() => {
-            dispatch({ type: CARD_IS_NOT_UPDATING });
-            dispatch({
-              type: CARD_INVALID_INDUSTRY_ERROR,
-              message: "You must choose an industry!",
-            });
-          }, 1000);
+        if (data.errors) {
+          dispatch({ type: CARD_ERRORS, errors: data.errors });
+          dispatch({ type: CARD_IS_NOT_UPDATING });
           return;
         }
-        setTimeout(() => {
-          dispatch({ type: CARD_IS_NOT_UPDATING });
-          dispatch({ type: CARD_NO_ERRORS });
-        }, 1000);
+        dispatch({ type: CARD_NO_ERRORS });
+        dispatch({ type: CARD_IS_NOT_UPDATING });
       });
   };
 };
