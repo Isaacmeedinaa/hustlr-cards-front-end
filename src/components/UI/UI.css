@@ -262,6 +262,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .card-form-business-img:hover {
@@ -645,6 +646,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .card-business-name {
