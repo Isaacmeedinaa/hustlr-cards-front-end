@@ -32,6 +32,8 @@ export const DELETE_OFFERING = "DELETE_OFFERING";
 export const SET_CARD_EMAIL = "SET_CARD_EMAIL";
 export const SET_CARD_PHONE_NUMBER = "SET_CARD_PHONE_NUMBER";
 export const SET_CARD_SOCIAL_MEDIAS_LINK = "SET_CARD_SOCIAL_MEDIAS_LINK";
+export const UPLOAD_CARD_GALLERY_PICTURE = "UPLOAD_CARD_GALLERY_PICTURE";
+export const DELETE_CARD_GALLERY_PICTURE = "DELETE_CARD_GALLERY_PICTURE";
 export const SET_CARD_PATH = "SET_CARD_PATH";
 
 export const fetchCard = (userId) => {
@@ -391,6 +393,34 @@ export const setCardSocialMediaLinks = (
     snapchatLink: snapchatLink,
   };
 };
+
+export const uploadGalleryPicture = (reqImgData, cardId) => {
+  return (dispatch) => {
+    const body = new FormData();
+    body.append("CardId", cardId);
+    body.append("File", reqImgData);
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        Accepts: "application/json",
+      },
+      body: body,
+    };
+
+    fetch("http://localhost:5000/api/v1/photos", reqObj)
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const deleteGalleryPicture = () => {};
 
 export const setCardPath = (pathToCard) => {
   return {

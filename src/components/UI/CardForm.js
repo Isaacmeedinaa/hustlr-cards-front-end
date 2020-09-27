@@ -15,6 +15,7 @@ import CardFormOfferingInputs from "./cardform/CardFormOfferingInputs";
 import CardFormContactInputs from "./cardform/CardFormContactInputs";
 import CardFormShowSocialMediasButton from "./cardform/CardFormShowSocialMediasButton";
 import CardFormSocialMediaInputs from "./cardform/CardFormSocialMediaInputs";
+import CardFormGallerySlider from "./cardform/CardFormGallerySlider";
 import CardFormCardPathInput from "./cardform/CardFormCardPathInput";
 
 import "../../constants/colors.css";
@@ -69,7 +70,6 @@ class CardForm extends Component {
   };
 
   render() {
-    console.log(this.props.cardErrors);
     if (this.props.cardLoader) {
       return null;
     }
@@ -96,6 +96,7 @@ class CardForm extends Component {
               isHidden={this.state.isHidden}
             />
             {this.state.isHidden ? null : <CardFormSocialMediaInputs />}
+            <CardFormGallerySlider />
             <CardFormCardPathInput />
           </div>
         </div>

@@ -479,10 +479,6 @@
   outline: none;
 }
 
-.card-form-social-media-inputs-animation-wrapper {
-  width: 100%;
-}
-
 .card-form-product-service-buttons-container {
   display: flex;
   flex-direction: row;
@@ -543,6 +539,10 @@
   outline: none;
 }
 
+.card-form-social-media-inputs-animation-wrapper {
+  width: 100%;
+}
+
 .card-form-social-media-inputs-container {
   width: 100%;
   margin-top: 2px;
@@ -564,6 +564,15 @@
 
 .card-form-social-media-input:focus {
   outline: none;
+}
+
+.card-form-gallery-slider-container {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.card-form-gallery-slider {
+  border-radius: 5px;
 }
 
 .card-form-path-to-card-container {
