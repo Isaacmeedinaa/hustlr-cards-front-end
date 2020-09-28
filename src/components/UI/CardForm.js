@@ -15,6 +15,7 @@ import CardFormOfferingInputs from "./cardform/CardFormOfferingInputs";
 import CardFormContactInputs from "./cardform/CardFormContactInputs";
 import CardFormShowSocialMediasButton from "./cardform/CardFormShowSocialMediasButton";
 import CardFormSocialMediaInputs from "./cardform/CardFormSocialMediaInputs";
+import CardFormAddImageButton from "./cardform/CardFormAddImageButton";
 import CardFormGallerySlider from "./cardform/CardFormGallerySlider";
 import CardFormCardPathInput from "./cardform/CardFormCardPathInput";
 
@@ -96,6 +97,7 @@ class CardForm extends Component {
               isHidden={this.state.isHidden}
             />
             {this.state.isHidden ? null : <CardFormSocialMediaInputs />}
+            <CardFormAddImageButton />
             <CardFormGallerySlider />
             <CardFormCardPathInput />
           </div>
