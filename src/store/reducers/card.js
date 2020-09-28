@@ -17,6 +17,8 @@ import {
   SET_CARD_EMAIL,
   SET_CARD_PHONE_NUMBER,
   SET_CARD_SOCIAL_MEDIAS_LINK,
+  UPLOAD_CARD_GALLERY_PICTURE,
+  DELETE_CARD_GALLERY_PICTURE,
   SET_CARD_PATH,
 } from "../actions/card";
 
@@ -260,6 +262,15 @@ const card = (state = initialState, action) => {
           instagramLink: action.instagramLink,
           twitterLink: action.twitterLink,
           snapchatLink: action.snapchatLink,
+        },
+      };
+
+    case UPLOAD_CARD_GALLERY_PICTURE:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          photos: [action.photo, ...state.cardData.photos],
         },
       };
 

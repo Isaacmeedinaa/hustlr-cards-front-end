@@ -13,17 +13,35 @@ class CardFormGallerySlider extends Component {
     photos: this.props.photos,
   };
 
-  renderSliderPhotos = () => {
-    return this.state.photos.map((photo) => {
-      return <div key={photo.id} data-src={photo.url}></div>;
-    });
+  componentDidUpdate(prevProps) {
+    if (this.props.photos.length !== prevProps.photos.length) {
+      this.setState({
+        photos: this.props.photos,
+      });
+    }
+  }
+
+  renderSliderImages = () => {
+    return this.state.photos.map((photo) => (
+      <div
+        key={photo.id}
+        style={{
+          backgroundImage: `url('${photo.url}')`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+        }}
+      >
+        <button onClick={() => console.log(photo.id)}>hi</button>
+      </div>
+    ));
   };
 
   render() {
     return (
       <div className="card-form-gallery-slider-container">
-        <AwesomeSlider className="card-form-gallery-slider" bullets={false}>
-          {this.renderSliderPhotos()}
+        <AwesomeSlider bullets={false}>
+          {this.renderSliderImages()}
         </AwesomeSlider>
       </div>
     );

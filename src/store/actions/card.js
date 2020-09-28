@@ -182,6 +182,8 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
       body: body,
     };
 
+    console.log("hitting this endpoint");
+
     dispatch({ type: CARD_IMAGE_IS_UPLOADING });
     fetch("http://localhost:5000/api/v1/photos/profile", reqObj)
       .then((resp) => {
@@ -394,13 +396,15 @@ export const setCardSocialMediaLinks = (
   };
 };
 
-export const uploadGalleryPicture = (reqImgData, cardId) => {
+export const uploadGalleryImage = (reqImgData, cardId) => {
   return (dispatch) => {
     const body = new FormData();
     body.append("CardId", cardId);
     body.append("File", reqImgData);
 
     const userToken = localStorage.getItem("userToken");
+
+    console.log("hitting this endpoint");
 
     const reqObj = {
       method: "POST",
@@ -415,6 +419,7 @@ export const uploadGalleryPicture = (reqImgData, cardId) => {
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
+        dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
       })
       .catch((err) => console.log(err));
   };
