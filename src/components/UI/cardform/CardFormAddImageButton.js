@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 
+import Loader from "react-loader-spinner";
+
 import { connect } from "react-redux";
 import { uploadGalleryImage } from "../../../store/actions/card";
 
@@ -29,7 +31,11 @@ class CardFormAddImageButton extends Component {
           // style={{ marginTop: 30 }}
           htmlFor="businessGalleryImgSelector"
         >
-          Upload New Gallery Image
+          {this.props.cardGalleryImageLoader ? (
+            <Loader type="TailSpin" color="#ff5349" width={15} height={15} />
+          ) : (
+            "Upload New Gallery Image"
+          )}
         </label>
         <input
           className="card-form-file-button"
@@ -46,6 +52,7 @@ class CardFormAddImageButton extends Component {
 const mapStateToProps = (state) => {
   return {
     cardId: state.card.cardData.id,
+    cardGalleryImageLoader: state.cardGalleryImageLoader,
   };
 };
 
