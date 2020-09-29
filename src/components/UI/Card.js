@@ -11,6 +11,7 @@ import CardIndustry from "./card/CardIndustry";
 import CardDescription from "./card/CardDescription";
 import CardOfferings from "./card/CardOfferings";
 import CardContactDetails from "./card/CardContactDetails";
+import CardGallerySlider from "./card/CardGallerySlider";
 import CardSocialMedias from "./card/CardSocialMedias";
 
 import "../../constants/colors.css";
@@ -59,6 +60,7 @@ class Card extends Component {
               phoneNumber={this.props.cardData.phoneNumber}
               email={this.props.cardData.email}
             />
+            <CardGallerySlider photos={this.props.cardData.photos} />
             <CardSocialMedias
               primaryColor={this.props.cardTheme.primaryColor}
               transparentColor={this.props.cardTheme.transparentColor}
