@@ -2,13 +2,17 @@ import Card from "../../models/card";
 
 import { CARD_IS_LOADING, CARD_IS_NOT_LOADING } from "./loaders/cardLoader";
 import {
+  CARD_IS_UPDATING,
+  CARD_IS_NOT_UPDATING,
+} from "./loaders/cardUpdatingLoader";
+import {
   CARD_IMAGE_IS_UPLOADING,
   CARD_IMAGE_IS_NOT_UPLOADING,
 } from "./loaders/cardImageLoader";
 import {
-  CARD_IS_UPDATING,
-  CARD_IS_NOT_UPDATING,
-} from "./loaders/cardUpdatingLoader";
+  CARD_GALLERY_IMAGE_IS_LOADING,
+  CARD_GALLERY_IMAGE_IS_NOT_LOADING,
+} from "./loaders/cardGalleryImageLoader";
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 
 export const FETCH_CARD = "FETCH_CARD";
@@ -404,8 +408,6 @@ export const uploadGalleryImage = (reqImgData, cardId) => {
 
     const userToken = localStorage.getItem("userToken");
 
-    console.log("hitting this endpoint");
-
     const reqObj = {
       method: "POST",
       headers: {
@@ -415,17 +417,46 @@ export const uploadGalleryImage = (reqImgData, cardId) => {
       body: body,
     };
 
+    dispatch({ type: CARD_GALLERY_IMAGE_IS_LOADING });
     fetch("http://localhost:5000/api/v1/photos", reqObj)
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
+        dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+      });
   };
 };
 
-export const deleteGalleryPicture = () => {};
+export const deleteGalleryImage = (photoId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
+
+    dispatch({ type: CARD_GALLERY_IMAGE_IS_LOADING });
+    fetch(`http://localhost:5000/api/v1/photos/${photoId}`, reqObj)
+      .then((resp) => {
+        if (resp.ok) {
+          dispatch({ type: DELETE_CARD_GALLERY_PICTURE, photoId: photoId });
+          dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+        }
+        dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+      });
+  };
+};
 
 export const setCardPath = (pathToCard) => {
   return {

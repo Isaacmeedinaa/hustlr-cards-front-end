@@ -274,6 +274,19 @@ const card = (state = initialState, action) => {
         },
       };
 
+    case DELETE_CARD_GALLERY_PICTURE:
+      const filteredGalleryPhotos = state.cardData.photos.filter(
+        (photo) => photo.id !== action.photoId
+      );
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          photos: filteredGalleryPhotos,
+        },
+      };
+
     case SET_CARD_PATH:
       return {
         ...state,

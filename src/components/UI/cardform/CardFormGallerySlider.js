@@ -3,6 +3,9 @@ import React, { Component } from "react";
 import AwesomeSlider from "react-awesome-slider";
 
 import { connect } from "react-redux";
+import { deleteGalleryImage } from "../../../store/actions/card";
+
+import MdTrash from "react-ionicons/lib/MdTrash";
 
 import "../../../constants/colors.css";
 import "../UI.css";
@@ -32,12 +35,21 @@ class CardFormGallerySlider extends Component {
           backgroundSize: "cover",
         }}
       >
-        <button onClick={() => console.log(photo.id)}>hi</button>
+        <div
+          className="card-form-gallery-slider-image-delete-btn"
+          onClick={() => this.props.deleteGalleryImage(photo.id)}
+        >
+          <MdTrash color="#ff5349" fontSize="24px" />
+        </div>
       </div>
     ));
   };
 
   render() {
+    if (this.props.photos.length === 0) {
+      return null;
+    }
+
     return (
       <div className="card-form-gallery-slider-container">
         <AwesomeSlider bullets={false}>
@@ -54,4 +66,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CardFormGallerySlider);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteGalleryImage: (photoId) => dispatch(deleteGalleryImage(photoId)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardFormGallerySlider);
