@@ -14,12 +14,17 @@ class CardGallerySlider extends Component {
   };
 
   render() {
-    return (
+    
+    const view = this.props.photos.length === 0 ? null : (
       <div className="card-business-gallery-slider-container">
         <AwesomeSlider bullets={false}>
           {this.renderGallerySliderImages()}
         </AwesomeSlider>
       </div>
+    );
+
+    return (
+      view
     );
   }
 }

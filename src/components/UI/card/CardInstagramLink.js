@@ -16,11 +16,9 @@ const CardInstagramLink = (props) => {
       className="card-business-social-media-icon-container"
     >
       <a href={props.instagramLink} target="_black">
-        <LogoInstagram
-          className="card-business-social-media-icon"
-          fontSize="28px"
-          color={props.primaryColor}
-        />
+        <i  className="instagram icon card-business-social-media-icon" 
+            style={{ color: props.primaryColor, fontSize: '16px' }}>
+        </i>
       </a>
     </div>
   );

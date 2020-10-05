@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   setCardOfferingTitle,
   setCardOfferingPrice,
+  setCardOfferingDescription,
   updateOffering,
   deleteOffering,
 } from "../../../store/actions/card";
@@ -15,7 +16,8 @@ class CardFormOfferingInputs extends Component {
     showDeleteModal: false,
     title: this.props.offering.title,
     price: this.props.offering.price,
-    offeringSnapshot: { ...this.props.offering },
+    description: this.props.offering.description,
+    offeringSnapshot: { ...this.props.offering }
   };
 
   onCardTitleChangeHandler = async (event) => {
@@ -34,10 +36,19 @@ class CardFormOfferingInputs extends Component {
     this.props.setCardOfferingPrice(this.props.index, this.state.price);
   };
 
+  onOfferingDescriptionChangeHandler = async (event) => {
+    await this.setState({
+      description: event.target.value,
+    });
+
+    this.props.setCardOfferingDescription(this.props.index, this.state.description);
+  };
+
   updateOfferingInputsHandler = async () => {
     await this.props.updateOffering(
       this.props.id,
       this.props.title,
+      this.props.description,
       this.props.price,
       this.props.cardId
     );
@@ -74,9 +85,17 @@ class CardFormOfferingInputs extends Component {
             onChange={this.onCardPriceChangeHandler}
           />
         </div>
+        <textarea
+        className="card-form-input-large"
+        name="description"
+        placeholder="Explain your product or service.."
+        value={this.state.description}
+        onChange={this.onOfferingDescriptionChangeHandler}
+      />
         <div className="card-form-product-service-buttons-container">
           {this.state.offeringSnapshot.title !== this.props.offering.title ||
-          this.state.offeringSnapshot.price !== this.props.offering.price ? (
+          this.state.offeringSnapshot.price !== this.props.offering.price ||
+          this.state.offeringSnapshot.description !== this.props.offering.description ? (
             <button
               className="primary-color card-form-offering-button"
               id="cardFormProductServiceDeleteBtn"
@@ -125,8 +144,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setCardOfferingTitle(offeringIndex, offeringTitle)),
     setCardOfferingPrice: (offeringIndex, offeringPrice) =>
       dispatch(setCardOfferingPrice(offeringIndex, offeringPrice)),
-    updateOffering: (id, title, price, cardId) =>
-      dispatch(updateOffering(id, title, price, cardId)),
+      setCardOfferingDescription: (offeringIndex, offeringDescription) =>
+      dispatch(setCardOfferingDescription(offeringIndex, offeringDescription)),
+    updateOffering: (id, title, description, price, cardId) =>
+      dispatch(updateOffering(id, title, description, price, cardId)),
     deleteOffering: (id) => dispatch(deleteOffering(id)),
   };
 };

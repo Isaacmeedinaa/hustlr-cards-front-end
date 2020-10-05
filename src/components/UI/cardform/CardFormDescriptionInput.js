@@ -23,7 +23,7 @@ class CardFormDescriptionInput extends Component {
       <textarea
         className="card-form-input-large"
         name="description"
-        placeholder="Business Description"
+        placeholder="Write your hook here!"
         value={this.state.description}
         onChange={this.onCardDescriptionChangeHandler}
       />

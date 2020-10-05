@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import "../../../constants/colors.css";
 import "../UI.css";
@@ -10,29 +10,33 @@ const CardOfferings = (props) => {
         return null;
       }
       return (
-        <div key={index} className="card-business-product-service-container">
-          <p className="card-business-product-service-title">
-            {offering.title}
-          </p>
-          {!offering.price ? null : (
-            <div
-              style={{ backgroundColor: props.transparentColor }}
-              className="card-business-product-service-price"
-            >
-              <span style={{ color: props.primaryColor }}>
-                ${offering.price}
-              </span>
-            </div>
-          )}
-        </div>
+          <div  key={index} className="card-business-product-service-container"
+                style={{ backgroundColor: props.transparentColor }}>
+            <p  style={{ color: props.primaryColor }} 
+                className="card-business-product-service-title">
+                {offering.title}
+            </p>
+              <div className="card-business-product-service-price"
+              >
+                <span style={{ color: props.primaryColor}}>
+                {!offering.price ? null : '$' + offering.price}
+                </span>
+              </div>
+            
+          </div>
       );
     });
   };
 
   return (
-    <div className="card-business-products-services-container">
-      {renderOfferings()}
-    </div>
+    <Fragment>
+      <div className="card-business-products-services-title-text">
+        Products & Services
+      </div>
+      <div className="card-business-products-services-container">
+        {renderOfferings()}
+      </div>
+    </Fragment>
   );
 };
 

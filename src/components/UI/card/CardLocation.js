@@ -12,16 +12,7 @@ const CardLocation = (props) => {
 
   return (
     <div className="card-business-location-container">
-      <div
-        style={{ backgroundColor: props.transparentColor }}
-        className="card-business-location-icon-container"
-      >
-        <MdPin
-          className="card-business-contact-icon"
-          fontSize="18px"
-          color={props.primaryColor}
-        />
-      </div>
+      <i className="map marker alternate icon" style={{color: props.primaryColor}}></i>
       <p
         style={{ color: props.primaryColor }}
         className="card-business-location-text"

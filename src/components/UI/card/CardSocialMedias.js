@@ -1,9 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import CardFacebookLink from "./CardFacebookLink";
 import CardInstagramLink from "./CardInstagramLink";
 import CardTwitterLink from "./CardTwitterLink";
 import CardSnapchatLink from "./CardSnapchatLink";
+import CardPhoneNumber from "./CardPhoneNumber";
+import CardEmail from "./CardEmail";
 
 import "../../../constants/colors.css";
 import "../UI.css";
@@ -13,13 +15,28 @@ const CardSocialMedias = (props) => {
     !props.facebookLink &&
     !props.instagramLink &&
     !props.twitterLink &&
-    !props.snapchatLink
+    !props.snapchatLink &&
+    !props.email &&
+    !props.phoneNumber
   ) {
     return null;
   }
 
+  console.log(props)
+
   return (
+    <Fragment>
     <div className="card-business-social-media-links-container">
+      <CardPhoneNumber
+        primaryColor={props.primaryColor}
+        transparentColor={props.transparentColor}
+        phoneNumber={props.phoneNumber}
+      />
+      <CardEmail
+        primaryColor={props.primaryColor}
+        transparentColor={props.transparentColor}
+        email={props.email}
+      />
       <CardFacebookLink
         primaryColor={props.primaryColor}
         transparentColor={props.transparentColor}
@@ -41,6 +58,7 @@ const CardSocialMedias = (props) => {
         snapchatLink={props.snapchatLink}
       />
     </div>
+    </Fragment>
   );
 };
 

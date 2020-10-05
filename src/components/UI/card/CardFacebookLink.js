@@ -16,11 +16,9 @@ const CardFacebookLink = (props) => {
       className="card-business-social-media-icon-container"
     >
       <a href={props.facebookLink} target="_black">
-        <LogoFacebook
-          className="card-business-social-media-icon"
-          fontSize="28px"
-          color={props.primaryColor}
-        />
+        <i  className="facebook icon card-business-social-media-icon" 
+            style={{ color: props.primaryColor, fontSize: '16px' }}>
+        </i>
       </a>
     </div>
   );

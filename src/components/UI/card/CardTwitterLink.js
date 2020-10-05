@@ -16,11 +16,9 @@ const CardTwitterLink = (props) => {
       className="card-business-social-media-icon-container"
     >
       <a href={props.twitterLink} target="_black">
-        <LogoTwitter
-          className="card-business-social-media-icon"
-          fontSize="28px"
-          color={props.primaryColor}
-        />
+        <i  className="twitter icon card-business-social-media-icon" 
+            style={{ color: props.primaryColor, fontSize: '16px' }}>
+        </i>
       </a>
     </div>
   );

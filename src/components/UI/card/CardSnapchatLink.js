@@ -1,7 +1,5 @@
 import React from "react";
 
-import LogoSnapchat from "react-ionicons/lib/LogoSnapchat";
-
 import "../../../constants/colors.css";
 import "../UI.css";
 
@@ -15,12 +13,11 @@ const CardSnapchatLink = (props) => {
       style={{ backgroundColor: props.transparentColor }}
       className="card-business-social-media-icon-container"
     >
+      
       <a href={props.snapchatLink} target="_black">
-        <LogoSnapchat
-          className="card-business-social-media-icon"
-          fontSize="28px"
-          color={props.primaryColor}
-        />
+        <i  className="snapchat ghost icon card-business-social-media-icon" 
+            style={{ color: props.primaryColor, fontSize: '16px' }}>
+        </i>
       </a>
     </div>
   );

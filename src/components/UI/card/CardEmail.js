@@ -1,7 +1,5 @@
 import React from "react";
 
-import MdMail from "react-ionicons/lib/MdMail";
-
 import "../../../constants/colors.css";
 import "../UI.css";
 
@@ -12,25 +10,13 @@ const CardEmail = (props) => {
 
   return (
     <div
-      className="card-business-contact-detail"
-      id="cardBusinessContactDetailEmail"
+      style={{ backgroundColor: props.transparentColor }}
+      className="card-business-social-media-icon-container"
     >
-      <div
-        style={{ backgroundColor: props.transparentColor }}
-        className="card-business-contact-detail-icon-container"
-      >
-        <MdMail
-          className="card-business-contact-icon"
-          fontSize="18px"
-          color={props.primaryColor}
-        />
-      </div>
-      <a
-        href={"mailto:" + props.email}
-        style={{ color: props.primaryColor }}
-        className="card-business-contact-text"
-      >
-        {props.email}
+      <a href={"mailto:" + props.email} target="_black">
+        <i  className="envelope icon card-business-social-media-icon" 
+            style={{ color: props.primaryColor, fontSize: '16px' }}>
+        </i>
       </a>
     </div>
   );

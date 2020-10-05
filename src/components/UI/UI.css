@@ -662,7 +662,6 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -678,15 +677,16 @@
 .card-business-name {
   text-align: center;
   margin-top: 30px;
+  font-size: 28px;
 }
 
 .card-business-location-container {
-  width: 80%;
-  margin-top: 15px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-content: center;
+}
+
+.card-business-location-container > i {
+  margin-top: 6px;
 }
 
 .card-business-location-icon-container {
@@ -696,22 +696,36 @@
   border-radius: 50%;
   height: 30px;
   width: 30px;
+  margin-top: 0px;
 }
 
 .card-business-location-text {
-  margin-left: 15px;
+  margin-bottom: 2px;
   margin-top: 2px;
-  font-size: 18px;
+  margin-left: 5px;
+}
+
+.card-business-industry-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-business-industry-container > i {
+  margin-top: 5px;
 }
 
 .card-business-industry {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 2px;
+  margin-left: 5px;
 }
 
 .card-business-services {
   text-align: center;
   margin-top: 30px;
+  color: #808080;
+  font-size: 20px;
+  width: 80%;
 }
 
 .card-business-products-services-container {
@@ -726,28 +740,25 @@
 .card-business-product-service-container {
   margin-top: 15px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: row;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .card-business-product-service-title {
   margin-right: 8px;
-  position: relative;
-  top: 8px;
+  margin-left: 20px;
+  padding-top: 8px;
 }
 
 .card-business-product-service-price {
-  margin-left: 8px;
   display: flex;
-  align-items: center;
   justify-content: center;
   border-radius: 5px;
-  padding-left: 10px;
   padding-right: 10px;
-}
-
-.card-business-product-service-title {
-  font-size: 18px;
+  padding-top: 8px;
 }
 
 .card-business-contact-details {
@@ -782,8 +793,10 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  height: 30px;
-  width: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 45px;
+  width: 45px;
 }
 
 #cardBusinessContactDetailEmail {
@@ -791,13 +804,15 @@
 }
 
 .card-business-gallery-slider-container {
-  margin-top: 30px;
+  margin-top: 15px;
   width: 80%;
 }
 
 .card-business-social-media-links-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  width: 60%;
   margin-top: 40px;
 }
 
@@ -805,9 +820,72 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 20px;
-  margin-right: 20px;
   border-radius: 50%;
-  height: 45px;
-  width: 45px;
+  height: 35px;
+  width: 35px;
+  padding-left: 5px;
+}
+
+a > i {
+  text-decoration: none !important;
+}
+
+.flex-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0px;
+}
+
+.flex-container > div {
+  margin-left: 10px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 4px;
+  padding-top: 3px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+
+}
+
+.industry-grid-container {
+  grid-area: industry;
+  text-align: center;
+}
+
+.location-grid-container {
+  grid-area: location;
+  text-align: center;
+}
+
+.industry-icon {
+  margin-top: 6px;
+  border-color: red;
+}
+
+.card-business-contact-us-container {
+  width: 80%;
+  margin-top: 40px;
+}
+
+.card-business-contact-us-title-text {
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+.card-business-products-services-title-text {
+  width: 80%;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 40px;
+  margin-left: 40px;
+}
+
+@media only screen and (max-width: 500px) {
+
 }

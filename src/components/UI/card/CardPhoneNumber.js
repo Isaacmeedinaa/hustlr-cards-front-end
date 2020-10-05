@@ -11,25 +11,17 @@ const CardPhoneNumber = (props) => {
   }
 
   return (
-    <div className="card-business-contact-detail">
-      <div
-        style={{ backgroundColor: props.transparentColor }}
-        className="card-business-contact-detail-icon-container"
-      >
-        <MdCall
-          className="card-business-contact-icon"
-          fontSize="18px"
-          color={props.primaryColor}
-        />
-      </div>
-      <a
-        href={"tel:" + props.phoneNumber}
-        style={{ color: props.primaryColor }}
-        className="card-business-contact-text"
-      >
-        {props.phoneNumber}
+    <div
+      style={{ backgroundColor: props.transparentColor }}
+      className="card-business-social-media-icon-container"
+    >
+      <a href={"tel:" + props.phoneNumber} target="_black">
+        <i  className="phone alternate icon card-business-social-media-icon" 
+            style={{ color: props.primaryColor, fontSize: '16px' }}>
+        </i>
       </a>
     </div>
+    
   );
 };
 
