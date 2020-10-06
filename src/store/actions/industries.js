@@ -15,20 +15,37 @@ export const fetchIndustries = () => {
       .then((resp) => resp.json())
       .then((industries) => {
         const originalIndustries = [];
-        const firstOption = new Industry(null, "Select Industry");
+        const firstOption = new Industry(null, "Select Industry", null);
 
         originalIndustries.push(firstOption);
 
         for (const key in industries) {
           originalIndustries.push(
-            new Industry(industries[key].id, industries[key].title)
+            new Industry(industries[key].id, industries[key].title, industries[key].icon)
           );
         }
 
-        const dropdownIndustries = originalIndustries.map((industry) => ({
+        let dropdownIndustries = originalIndustries.map((industry) => ({
           value: industry.id,
           label: industry.title,
+          icon: industry.icon
         }));
+
+        dropdownIndustries.sort((a, b) =>  {
+          if (a.value === null) {
+            return -1
+          }
+          if (b.value === null) {
+            return 1;
+          }
+          if ( a.label < b.label ){
+            return -1;
+          }
+          if ( a.label > b.label ){
+            return 1;
+          }
+          return 0;
+        });
 
         dispatch({
           type: SET_ORIGINAL_INDUSTRIES,

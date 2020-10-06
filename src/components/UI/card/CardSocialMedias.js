@@ -22,8 +22,6 @@ const CardSocialMedias = (props) => {
     return null;
   }
 
-  console.log(props)
-
   return (
     <Fragment>
     <div className="card-business-social-media-links-container">

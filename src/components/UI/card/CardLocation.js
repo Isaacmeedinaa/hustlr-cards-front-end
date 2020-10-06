@@ -6,9 +6,11 @@ import "../../../constants/colors.css";
 import "../UI.css";
 
 const CardLocation = (props) => {
-  if (!props.city || !props.state) {
+  if (!props.city && !props.state) {
     return null;
   }
+
+  const stateView = !props.state ? null : !props.city ? props.state : ", " + props.state;
 
   return (
     <div className="card-business-location-container">
@@ -17,7 +19,7 @@ const CardLocation = (props) => {
         style={{ color: props.primaryColor }}
         className="card-business-location-text"
       >
-        {props.city}, {props.state}
+        {props.city} {stateView}
       </p>
     </div>
   );

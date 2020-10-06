@@ -27,8 +27,8 @@ const CardOfferings = (props) => {
       );
     });
   };
-
-  return (
+  
+  const view = !props.offerings || props.offerings.length === 0 ? null : (
     <Fragment>
       <div className="card-business-products-services-title-text">
         Products & Services
@@ -38,6 +38,8 @@ const CardOfferings = (props) => {
       </div>
     </Fragment>
   );
+
+  return view;
 };
 
 export default CardOfferings;

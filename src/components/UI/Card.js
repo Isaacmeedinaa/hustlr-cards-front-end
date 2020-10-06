@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 
 import CardImage from "./card/CardImage";
 import CardTitle from "./card/CardTitle";
-import CardLocation from "./card/CardLocation";
-import CardIndustry from "./card/CardIndustry";
 import CardDescription from "./card/CardDescription";
 import CardOfferings from "./card/CardOfferings";
 import CardGallerySlider from "./card/CardGallerySlider";
@@ -15,6 +13,7 @@ import '../../../node_modules/html5-device-mockups/dist/device-mockups.css'
 
 import "../../constants/colors.css";
 import "./UI.css";
+import CardBadges from "./card/CardBadges";
 
 class Card extends Component {
   render() {
@@ -31,23 +30,6 @@ class Card extends Component {
                 cardImageLoader={this.props.cardImageLoader}
               />
               <CardTitle title={this.props.cardData.title} />
-              <div className="flex-container">
-                <div style={{backgroundColor: this.props.cardTheme.transparentColor}}>
-                  <CardIndustry
-                    industry={this.props.cardData.industry}
-                    primaryColor={this.props.cardTheme.primaryColor}
-                    transparentColor={this.props.cardTheme.transparentColor}
-                />
-                </div>
-                <div style={{backgroundColor: this.props.cardTheme.transparentColor}}>
-                  <CardLocation
-                    city={this.props.cardData.city}
-                    state={this.props.cardData.state}
-                    primaryColor={this.props.cardTheme.primaryColor}
-                    transparentColor={this.props.cardTheme.transparentColor}
-                  />
-                </div>
-              </div>
               <CardSocialMedias
                 primaryColor={this.props.cardTheme.primaryColor}
                 transparentColor={this.props.cardTheme.transparentColor}
@@ -58,7 +40,13 @@ class Card extends Component {
                 twitterLink={this.props.cardData.twitterLink}
                 snapchatLink={this.props.cardData.snapchatLink}
               />
-              <CardDescription description={this.props.cardData.description} />
+              <CardBadges 
+                cardData = {this.props.cardData}
+                cardTheme = {this.props.cardTheme}
+              />
+              <CardDescription 
+                description={this.props.cardData.description} 
+                primaryColor={this.props.cardTheme.primaryColor} />
               <CardGallerySlider photos={this.props.cardData.photos} />
               <CardOfferings
                 offerings={this.props.cardData.offerings}
