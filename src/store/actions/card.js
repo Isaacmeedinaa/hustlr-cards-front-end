@@ -30,6 +30,7 @@ export const SET_CARD_INDUSTRY = "SET_CARD_INDUSTRY";
 export const SET_CARD_DESCRIPTION = "SET_CARD_DESCRIPTION";
 export const SET_CARD_OFFERING_TITLE = "SET_CARD_OFFERING_TITLE";
 export const SET_CARD_OFFERING_PRICE = "SET_CARD_OFFERING_PRICE";
+export const SET_CARD_OFFERING_DESCRIPTION = "SET_CARD_OFFERING_DESCRIPTION";
 export const CREATE_OFFERING = "CREATE_OFFERING";
 export const UPDATE_OFFERING = "UPDATE_OFFERING";
 export const DELETE_OFFERING = "DELETE_OFFERING";
@@ -278,6 +279,14 @@ export const setCardOfferingPrice = (offeringIndex, offeringPrice) => {
   };
 };
 
+export const setCardOfferingDescription = (offeringIndex, offeringDescription) => {
+  return {
+    type: SET_CARD_OFFERING_DESCRIPTION,
+    offeringIndex: offeringIndex,
+    offeringDescription: offeringDescription,
+  };
+};
+
 export const createOffering = (cardId) => {
   return (dispatch) => {
     const offeringData = {
@@ -309,12 +318,12 @@ export const createOffering = (cardId) => {
   };
 };
 
-export const updateOffering = (id, title, price, cardId) => {
+export const updateOffering = (id, title, description, price, cardId) => {
   return (dispatch) => {
     const offeringData = {
       id: id,
       title: title,
-      description: "",
+      description: description,
       price: price,
       offerType: 0,
       cardId: cardId,

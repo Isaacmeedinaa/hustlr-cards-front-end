@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import "../../../constants/colors.css";
 import "../UI.css";
@@ -7,13 +7,17 @@ const CardIndustry = (props) => {
   if (!props.industry || !props.industry.id) {
     return null;
   }
+  
   return (
-    <h5
-      style={{ color: props.primaryColor }}
-      className="card-business-industry"
-    >
-      {props.industry.title}
-    </h5>
+    <div className="card-business-industry-container">
+      <i className={props.industry.icon} style={{color: props.primaryColor}}></i>
+      <p
+        style={{ color: props.primaryColor }}
+        className="card-business-industry"
+      >
+        {props.industry.title}
+      </p>
+    </div>
   );
 };
 

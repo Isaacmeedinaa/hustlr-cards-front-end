@@ -63,6 +63,7 @@ class CardForm extends Component {
           index={index}
           id={offering.id}
           title={offering.title}
+          description={offering.description}
           price={offering.price}
           cardId={offering.cardId}
         />

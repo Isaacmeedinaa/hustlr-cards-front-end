@@ -11,6 +11,7 @@ import {
   SET_CARD_DESCRIPTION,
   SET_CARD_OFFERING_TITLE,
   SET_CARD_OFFERING_PRICE,
+  SET_CARD_OFFERING_DESCRIPTION,
   CREATE_OFFERING,
   UPDATE_OFFERING,
   DELETE_OFFERING,
@@ -197,6 +198,19 @@ const card = (state = initialState, action) => {
           offerings: offeringsSnapshotTwo,
         },
       };
+
+      case SET_CARD_OFFERING_DESCRIPTION:
+        const offeringsSnapshotThree = [...state.cardData.offerings];
+        const offeringSnapshotThree = offeringsSnapshotThree[action.offeringIndex];
+        offeringSnapshotThree.description = action.offeringDescription;
+  
+        return {
+          ...state,
+          cardData: {
+            ...state.cardData,
+            offerings: offeringsSnapshotThree,
+          },
+        };
 
     case CREATE_OFFERING:
       return {

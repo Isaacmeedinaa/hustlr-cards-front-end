@@ -14,10 +14,13 @@ class CardFormIndustrySelect extends Component {
   };
 
   onCardIndustryChangeHandler = async (event) => {
+    const icon = this.props.dropdownIndustries.find(dropdown => dropdown.label === event.label).icon;
+    
     await this.setState({
       industry: {
         id: parseInt(event.value),
         title: event.label,
+        icon: icon
       },
     });
 
