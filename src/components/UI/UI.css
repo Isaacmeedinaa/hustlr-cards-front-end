@@ -420,6 +420,7 @@
 .card-form-button-text {
   width: 100%;
   text-align: center;
+  color: #ff5349;
 }
 
 .card-form-button:hover {
@@ -687,6 +688,7 @@
 
 .card-business-location-container > i {
   margin-top: 6px;
+  padding-top: 4px;
 }
 
 .card-business-location-icon-container {
@@ -712,6 +714,7 @@
 
 .card-business-industry-container > i {
   margin-top: 5px;
+  padding-top: 4px;
 }
 
 .card-business-industry {
@@ -806,6 +809,10 @@
 .card-business-gallery-slider-container {
   margin-top: 15px;
   width: 80%;
+  border-radius: 15px;
+  -webkit-box-shadow: 10px 10px 19px 1px rgba(128,128,128,0.4);
+-moz-box-shadow: 10px 10px 19px 1px rgba(128,128,128,0.4);
+box-shadow: 10px 10px 19px 1px rgba(128,128,128,0.4);
 }
 
 .card-business-social-media-links-container {
@@ -851,7 +858,6 @@ a > i {
   border: none;
   border-radius: 5px;
   font-size: 16px;
-
 }
 
 .industry-grid-container {
@@ -886,6 +892,10 @@ a > i {
   font-weight: 500;
   margin-top: 40px;
   margin-left: 40px;
+}
+
+.awssld__container {
+  border-radius: 15px !important;
 }
 
 @media only screen and (max-width: 500px) {

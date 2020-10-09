@@ -30,7 +30,7 @@ const CardOfferings = (props) => {
   
   const view = !props.offerings || props.offerings.length === 0 ? null : (
     <Fragment>
-      <div className="card-business-products-services-title-text">
+      <div className="card-business-products-services-title-text" style={{color: props.primaryColor}}>
         Products & Services
       </div>
       <div className="card-business-products-services-container">

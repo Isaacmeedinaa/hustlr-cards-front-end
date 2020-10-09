@@ -6,6 +6,10 @@ import {
   CARD_IS_NOT_UPDATING,
 } from "./loaders/cardUpdatingLoader";
 import {
+  CARD_SAVED_SUCCESSFULLY,
+  CARD_SAVE_UNSUCCESSFUL,
+} from "./notifications/cardSavedNotifications";
+import {
   CARD_IMAGE_IS_UPLOADING,
   CARD_IMAGE_IS_NOT_UPLOADING,
 } from "./loaders/cardImageLoader";
@@ -142,8 +146,10 @@ export const saveCard = (cardId) => {
         if (data.errors) {
           dispatch({ type: CARD_ERRORS, errors: data.errors });
           dispatch({ type: CARD_IS_NOT_UPDATING });
+          dispatch({type: CARD_SAVE_UNSUCCESSFUL});
           return;
         }
+        dispatch({type: CARD_SAVED_SUCCESSFULLY});
         dispatch({ type: CARD_NO_ERRORS });
         dispatch({ type: CARD_IS_NOT_UPDATING });
       });

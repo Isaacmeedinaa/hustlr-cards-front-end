@@ -14,6 +14,7 @@ import cardUpdatingLoader from "./loaders/cardUpdatingLoader";
 import cardErrors from "./errors/cardErrors";
 import card from "./card";
 import publicCard from "./publicCard";
+import cardSavedNotification from './notifications/cardSavedNotifications';
 
 const rootReducer = combineReducers({
   errors,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   cardErrors,
   card,
   publicCard,
+  cardSavedNotification
 });
 
 export default rootReducer;
