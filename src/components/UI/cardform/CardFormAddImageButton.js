@@ -27,14 +27,14 @@ class CardFormAddImageButton extends Component {
     return (
       <Fragment>
         <label
-          className="primary-color card-form-file-label"
+          className="card-form-button card-form-file-label"
           // style={{ marginTop: 30 }}
           htmlFor="businessGalleryImgSelector"
         >
           {this.props.cardGalleryImageLoader ? (
             <Loader type="TailSpin" color="#ff5349" width={15} height={15} />
           ) : (
-            "Upload New Gallery Image"
+            <span className="card-form-button-text">Upload New Gallery Image</span>
           )}
         </label>
         <input

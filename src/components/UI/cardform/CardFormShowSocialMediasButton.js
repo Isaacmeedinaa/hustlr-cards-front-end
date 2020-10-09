@@ -7,11 +7,11 @@ class CardFormShowSocialMediasButton extends Component {
   render() {
     return (
       <div
-        className="card-form-button"
+        className="primary color card-form-button"
         onClick={() => this.props.showSocialMediaLinks()}
       >
-        <span className="primary-color card-form-button-text">
-          {this.props.isHidden ? "Edit Social Media Links" : "Close"}
+        <span className="card-form-button-text">
+          {this.props.isHidden ? <span className="card-form-button-text">Edit Social Media Links</span>: "Close"}
         </span>
       </div>
     );

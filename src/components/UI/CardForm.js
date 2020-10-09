@@ -4,6 +4,7 @@ import { Animated } from "react-animated-css";
 
 import { connect } from "react-redux";
 import { uploadBusinessProfilePicture } from "../../store/actions/card";
+import { hideNotification } from '../../store/actions/notifications/cardSavedNotifications';
 
 import CardFormImageSelector from "./cardform/CardFormImageSelector";
 import CardFormTitleInput from "./cardform/CardFormTitleInput";
@@ -19,6 +20,8 @@ import CardFormAddImageButton from "./cardform/CardFormAddImageButton";
 import CardFormGallerySlider from "./cardform/CardFormGallerySlider";
 import CardFormCardPathInput from "./cardform/CardFormCardPathInput";
 
+import $ from 'jquery';
+
 import "../../constants/colors.css";
 import "./UI.css";
 
@@ -26,13 +29,37 @@ class CardForm extends Component {
   state = {
     isHidden: true,
     deleteModalShown: false,
-    offerings: [],
+    offerings: []
   };
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       ...this.state,
       offerings: nextProps.cardData.offerings,
+    });
+  }
+
+  componentDidUpdate() {
+    if (this.props.cardSavedNotification.showNotification) {
+      this.displayToast();
+      this.props.hideNotification();
+    }
+  }
+
+  displayToast() {
+    const success = this.props.cardSavedNotification.success;
+    $('body').toast({
+      class: success ? 'success' : 'error',
+      position: 'bottom center',
+      message: success ? 'Your card has been saved!' : 'Oops, your card was not saved!',
+      showIcon: success ? 'check circle' : 'exclamation',
+      displayTime: 3000,
+      transition: {
+        showMethod   : 'fade',
+        showDuration : 1000,
+        hideMethod   : 'fade',
+        hideDuration : 1000
+      }
     });
   }
 
@@ -113,6 +140,7 @@ const mapStateToProps = (state) => {
     cardLoader: state.cardLoader,
     cardData: state.card.cardData,
     cardErrors: state.cardErrors,
+    cardSavedNotification: state.cardSavedNotification
   };
 };
 
@@ -120,6 +148,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     uploadBusinessProfilePicture: (imgData, cardId) =>
       dispatch(uploadBusinessProfilePicture(imgData, cardId)),
+    hideNotification: () => dispatch(hideNotification())
   };
 };
 

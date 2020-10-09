@@ -9,7 +9,6 @@ import CardDescription from "./card/CardDescription";
 import CardOfferings from "./card/CardOfferings";
 import CardGallerySlider from "./card/CardGallerySlider";
 import CardSocialMedias from "./card/CardSocialMedias";
-import '../../../node_modules/html5-device-mockups/dist/device-mockups.css'
 
 import "../../constants/colors.css";
 import "./UI.css";

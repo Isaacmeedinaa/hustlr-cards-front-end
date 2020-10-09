@@ -54,16 +54,16 @@ class CardFormImageSelector extends Component {
             className="card-form-button"
             onClick={() => this.props.deleteBusinessImage(this.props.imgId)}
           >
-            <span className="primary-color card-form-button-text">
+            <span className="card-form-button-text">
               Remove Current Business Image
             </span>
           </div>
         )}
         <label
-          className="primary-color card-form-file-label"
+          className="card-form-button card-form-file-label"
           htmlFor="businessProfileImgSelector"
         >
-          Choose New Businesss Image
+          <span className="card-form-button-text">Choose New Businesss Image</span>
         </label>
         <input
           className="card-form-file-button"
