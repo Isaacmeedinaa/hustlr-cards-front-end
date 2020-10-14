@@ -8,6 +8,8 @@ import {
 
 import Loader from "react-loader-spinner";
 
+import $ from 'jquery';
+
 import "../../../constants/colors.css";
 import "../UI.css";
 
@@ -23,6 +25,10 @@ class CardFormImageSelector extends Component {
         imgUrl: this.props.imgUrl,
       });
     }
+  }
+
+  componentDidMount() {
+    $('.ui.dropdown').dropdown();
   }
 
   onImageChangeHandler = (event) => {
@@ -49,29 +55,23 @@ class CardFormImageSelector extends Component {
             />
           )}
         </div>
-        {!this.state.imgUrl || this.state.imgUrl === "" ? null : (
-          <div
-            className="card-form-button"
-            onClick={() => this.props.deleteBusinessImage(this.props.imgId)}
-          >
-            <span className="card-form-button-text">
-              Remove Current Business Image
-            </span>
+          <div className="ui floating dropdown button card-form-button edit-image-dropdown primary-font">
+            <span className='card-form-button-text'>Edit Profile Image</span>
+            <div className="menu">
+                <div className='item'><i className="add icon"></i>Upload new photo
+                  <input
+                        className="file-upload"
+                        id="businessProfileImgSelector"
+                        onChange={this.onImageChangeHandler}
+                        type="file"
+                        accept="image/x-png,image/jpeg"
+                  />
+                </div>
+                {!this.state.imgUrl || this.state.imgUrl === "" ? null : (
+                  <div className="item" onClick={() => this.props.deleteBusinessImage(this.props.imgId)}><i className="delete icon"></i> Remove Photo</div>
+                )}
+            </div>
           </div>
-        )}
-        <label
-          className="card-form-button card-form-file-label"
-          htmlFor="businessProfileImgSelector"
-        >
-          <span className="card-form-button-text">Choose New Businesss Image</span>
-        </label>
-        <input
-          className="card-form-file-button"
-          id="businessProfileImgSelector"
-          onChange={this.onImageChangeHandler}
-          type="file"
-          accept="image/x-png,image/jpeg"
-        />
       </Fragment>
     );
   }
