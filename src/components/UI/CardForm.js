@@ -120,13 +120,13 @@ class CardForm extends Component {
             <CardFormAddOfferingButton />
             {this.renderOfferingsInputs()}
             <CardFormContactInputs />
+            <CardFormAddImageButton />
+            <CardFormGallerySlider />
             <CardFormShowSocialMediasButton
               showSocialMediaLinks={this.showSocialMediaLinks}
               isHidden={this.state.isHidden}
             />
             {this.state.isHidden ? null : <CardFormSocialMediaInputs />}
-            <CardFormAddImageButton />
-            <CardFormGallerySlider />
             <CardFormCardPathInput />
           </div>
         </div>

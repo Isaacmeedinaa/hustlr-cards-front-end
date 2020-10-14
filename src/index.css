@@ -5,7 +5,9 @@ body,
   height: 100%;
   width: 100%;
   max-width: 100%;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  color: #2F3640;
   background-color: #f6f7fb;
 }
 

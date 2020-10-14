@@ -10,8 +10,11 @@ const CardOfferings = (props) => {
         return null;
       }
       return (
-          <div  key={index} className="card-business-product-service-container"
-                style={{ backgroundColor: props.transparentColor }}>
+        <div  key={index} 
+              style={{ backgroundColor: props.transparentColor }}
+              className="card-business-product-service-container">
+          <div  className="card-business-product-service-header"
+                >
             <p  style={{ color: props.primaryColor }} 
                 className="card-business-product-service-title">
                 {offering.title}
@@ -22,7 +25,12 @@ const CardOfferings = (props) => {
                 {!offering.price ? null : '$' + offering.price}
                 </span>
               </div>
-            
+          </div>
+          <div className="card-business-product-service-description word-wrap">
+            <span style={{ color: props.primaryColor}}>
+                {!offering.description ? null : offering.description}
+            </span>
+          </div>
           </div>
       );
     });
@@ -30,7 +38,7 @@ const CardOfferings = (props) => {
   
   const view = !props.offerings || props.offerings.length === 0 ? null : (
     <Fragment>
-      <div className="card-business-products-services-title-text" style={{color: props.primaryColor}}>
+      <div className="card-business-products-services-title-text">
         Products & Services
       </div>
       <div className="card-business-products-services-container">

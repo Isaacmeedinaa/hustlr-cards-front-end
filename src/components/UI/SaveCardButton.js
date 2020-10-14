@@ -16,9 +16,9 @@ class SaveCardButton extends Component {
           className="save-card-button"
           onClick={() => this.props.saveCard(this.props.cardId)}
         >
-          <span className="primary-color card-form-button-text">
+          <span className="card-form-button-text">
             {this.props.cardUpdatingLoader ? (
-              <Loader type="TailSpin" color="#ff5349" width={15} height={15} />
+              <Loader type="TailSpin" color="#ffffff" width={15} height={15} />
             ) : (
               "Save"
             )}

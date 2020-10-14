@@ -192,8 +192,8 @@
   align-self: flex-end;
   position: relative;
   right: 0;
-  background-color: rgba(255, 83, 73, 0.3);
-  border-radius: 5px;
+  background-color: rgba(255, 83, 73, 0.85);
+  border-radius: 10px;
 }
 
 .selected {
@@ -230,6 +230,39 @@
   display: flex;
   justify-content: center;
   align-content: center;
+}
+
+.card-form-wrapper input, .card-form-wrapper textarea, .card-form-dropdown__control {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: #2F3640;
+  font-size: 15px;
+  border-radius: 10px !important;
+  background-color: rgba(112, 112, 112, .06) !important;
+
+  
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  color:    #A3A3A3;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+ color:    #A3A3A3;
+ opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+ color:    #A3A3A3;
+ opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color:    #A3A3A3;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+ color:    #A3A3A3;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+ color:    #A3A3A3;
 }
 
 .card-form-container {
@@ -335,17 +368,15 @@
 .card-form-dropdown__control {
   width: 100% !important;
   height: 45px !important;
-  background-color: #f1f1f1 !important;
   border: none !important;
-  border-radius: 5px !important;
 }
 
 .card-form-dropdown__single-value {
-  color: black !important;
+  color: #2F3640 !important;
 }
 
 .card-form-dropdown__option--is-disabled {
-  color: black !important;
+  color: #2F3640 !important;
 }
 
 .card-form-dropdown__option--is-selected {
@@ -364,7 +395,7 @@
 }
 
 .card-form-dropdown:active {
-  color: #070707;
+  color: #2F3640;
   border: 0 !important;
   outline: none !important;
 }
@@ -405,22 +436,22 @@
 }
 
 .card-form-button {
-  margin-top: 30px;
-  width: 100%;
-  height: 40px;
-  background-color: rgba(255, 83, 73, 0.3);
-  border: none;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
+  margin-top: 30px !important;
+  width: 100% !important;
+  height: 40px !important;
+  background-color: rgba(255, 83, 73, .85) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-content: center !important;
 }
 
 .card-form-button-text {
-  width: 100%;
-  text-align: center;
-  color: #ff5349;
+  width: 100% !important;
+  text-align: center !important;
+  color: #ffffff;
 }
 
 .card-form-button:hover {
@@ -678,7 +709,8 @@
 .card-business-name {
   text-align: center;
   margin-top: 30px;
-  font-size: 28px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
 }
 
 .card-business-location-container {
@@ -726,8 +758,8 @@
 .card-business-services {
   text-align: center;
   margin-top: 30px;
-  color: #808080;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 600;
   width: 80%;
 }
 
@@ -741,27 +773,44 @@
 }
 
 .card-business-product-service-container {
-  margin-top: 15px;
+  margin-top: 25px;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 100%;
+  border-radius: 20px; 
+  word-wrap: break-word; 
+}
+
+.card-business-product-service-header {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  width: 100%;
-  border-radius: 5px;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .card-business-product-service-title {
-  margin-right: 8px;
-  margin-left: 20px;
-  padding-top: 8px;
+  margin-bottom: 10px;
+}
+
+.card-business-product-service-description {
+  
 }
 
 .card-business-product-service-price {
   display: flex;
   justify-content: center;
   border-radius: 5px;
-  padding-right: 10px;
-  padding-top: 8px;
+}
+
+.wordwrap { 
+  white-space: pre-wrap;      /* CSS3 */   
+  white-space: -moz-pre-wrap; /* Firefox */    
+  white-space: -pre-wrap;     /* Opera <7 */   
+  white-space: -o-pre-wrap;   /* Opera 7 */    
+  word-wrap: break-word;      /* IE */
 }
 
 .card-business-contact-details {
@@ -778,12 +827,6 @@
   flex-direction: row;
   align-content: center;
   justify-content: center;
-}
-
-.card-business-contact-text {
-  margin-left: 15px;
-  margin-top: 2px;
-  font-size: 18px;
 }
 
 .card-business-contact-text:hover {
@@ -810,9 +853,6 @@
   margin-top: 15px;
   width: 80%;
   border-radius: 15px;
-  -webkit-box-shadow: 10px 10px 19px 1px rgba(128,128,128,0.4);
--moz-box-shadow: 10px 10px 19px 1px rgba(128,128,128,0.4);
-box-shadow: 10px 10px 19px 1px rgba(128,128,128,0.4);
 }
 
 .card-business-social-media-links-container {
@@ -856,7 +896,7 @@ a > i {
   padding-bottom: 4px;
   padding-top: 3px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 16px;
 }
 
@@ -870,34 +910,54 @@ a > i {
   text-align: center;
 }
 
-.industry-icon {
-  margin-top: 6px;
-  border-color: red;
-}
 
 .card-business-contact-us-container {
   width: 80%;
   margin-top: 40px;
 }
 
-.card-business-contact-us-title-text {
-  font-size: 18px;
-  font-weight: 600;
-  margin-left: 20px;
-}
-
 .card-business-products-services-title-text {
   width: 80%;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   margin-top: 40px;
   margin-left: 40px;
 }
 
-.awssld__container {
-  border-radius: 15px !important;
+.edit-image-dropdown, .edit-image-dropdown > .icon {
+  background-color: rgba(255, 83, 73, 0.85) !important;
+  color: white !important;
+  font-weight: 600 !important;
 }
 
-@media only screen and (max-width: 500px) {
+.file-upload {
+  opacity: 0.0;
 
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=0);
+
+  /* Netscape or and older firefox browsers */
+  -moz-opacity: 0.0;
+
+  /* older Safari browsers */
+  -khtml-opacity: 0.0;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height:100%;
+}
+
+.file-upload:hover {
+  cursor: pointer;
+}
+
+.primary-font {
+  font-family: 'Montserrat', sans-serif !important;
 }
