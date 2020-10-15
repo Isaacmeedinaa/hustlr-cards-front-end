@@ -10,6 +10,26 @@ import {
   CARD_SAVE_UNSUCCESSFUL,
 } from "./notifications/cardSavedNotifications";
 import {
+  OFFERING_CREATED_SUCCESSFULLY,
+  OFFERING_CREATED_UNSUCCESSFULLY,
+  OFFERING_SAVED_SUCCESSFULLY,
+  OFFERING_SAVED_UNSUCCESSFULLY,
+  OFFERING_DELETED_SUCCESSFULLY,
+  OFFERING_DELETED_UNSUCCESSFULLY
+} from "./notifications/offeringNotifications";
+import {
+  GALLERY_IMAGE_UPLOADED_SUCCESSFULLY,
+  GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY,
+  GALLERY_IMAGE_DELETED_SUCCESSFULLY,
+  GALLERY_IMAGE_DELETED_UNSUCCESSFULLY
+} from "./notifications/galleryNotifications";
+import {
+  PROFILE_IMAGE_UPLOADED_SUCCESSFULLY,
+  PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY,
+  PROFILE_IMAGE_DELETED_SUCCESSFULLY,
+  PROFILE_IMAGE_DELETED_UNSUCCESSFULLY
+} from "./notifications/profileImageNotifications";
+import {
   CARD_IMAGE_IS_UPLOADING,
   CARD_IMAGE_IS_NOT_UPLOADING,
 } from "./loaders/cardImageLoader";
@@ -193,13 +213,12 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
       body: body,
     };
 
-    console.log("hitting this endpoint");
-
     dispatch({ type: CARD_IMAGE_IS_UPLOADING });
     fetch("http://localhost:5000/api/v1/photos/profile", reqObj)
       .then((resp) => {
         if (!resp.ok) {
           dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
+          dispatch({type: PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY});
           return;
         }
         return resp.json();
@@ -211,8 +230,12 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
           imgId: data.id,
         });
         dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
+        dispatch({type: PROFILE_IMAGE_UPLOADED_SUCCESSFULLY});
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        dispatch({type: PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY});
+        console.log(err)
+      });
   };
 };
 
@@ -234,9 +257,13 @@ export const deleteBusinessImage = (imgId) => {
         if (resp.ok) {
           dispatch({ type: DELETE_BUSINESS_PROFILE_PICTURE });
           dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
+          dispatch({type: PROFILE_IMAGE_DELETED_SUCCESSFULLY});
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        dispatch({type: PROFILE_IMAGE_DELETED_UNSUCCESSFULLY});
+        console.log(err)
+      });
   };
 };
 
@@ -319,8 +346,12 @@ export const createOffering = (cardId) => {
       .then((resp) => resp.json())
       .then((offering) => {
         dispatch({ type: CREATE_OFFERING, offering: offering });
+        dispatch({type: OFFERING_CREATED_SUCCESSFULLY});
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        dispatch({type: OFFERING_CREATED_UNSUCCESSFULLY});
+        console.log(err)
+      });
   };
 };
 
@@ -355,8 +386,13 @@ export const updateOffering = (id, title, description, price, cardId) => {
           id: offering.id,
           offering: offering,
         });
+        dispatch({type: OFFERING_SAVED_SUCCESSFULLY});
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+          dispatch({type: OFFERING_SAVED_UNSUCCESSFULLY});
+          console.log(err)
+        }
+      );
   };
 };
 
@@ -378,11 +414,17 @@ export const deleteOffering = (id, index) => {
       body: JSON.stringify(offeringData),
     };
 
-    await fetch(
-      `http://localhost:5000/api/v1/offerings/${id}`,
-      reqObj
-    ).catch((err) => console.log(err));
-    dispatch({ type: DELETE_OFFERING, id: id });
+    await fetch(`http://localhost:5000/api/v1/offerings/${id}`, reqObj)
+      .then(() => {})
+      .then(() => {
+        dispatch({ type: DELETE_OFFERING, id: id });
+        dispatch({type: OFFERING_DELETED_SUCCESSFULLY});
+      })
+      .catch((err) => {
+        dispatch({type: OFFERING_DELETED_UNSUCCESSFULLY});
+        console.log(err)
+      }
+    );
   };
 };
 
@@ -438,10 +480,12 @@ export const uploadGalleryImage = (reqImgData, cardId) => {
       .then((data) => {
         dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+        dispatch({type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY});
       })
       .catch((err) => {
         console.log(err);
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+        dispatch({type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY});
       });
   };
 };
@@ -462,13 +506,14 @@ export const deleteGalleryImage = (photoId) => {
       .then((resp) => {
         if (resp.ok) {
           dispatch({ type: DELETE_CARD_GALLERY_PICTURE, photoId: photoId });
-          dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
         }
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+        dispatch({type: GALLERY_IMAGE_DELETED_SUCCESSFULLY});
       })
       .catch((err) => {
         console.log(err);
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+        dispatch({type: GALLERY_IMAGE_DELETED_UNSUCCESSFULLY});
       });
   };
 };

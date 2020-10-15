@@ -4,7 +4,10 @@ import { Animated } from "react-animated-css";
 
 import { connect } from "react-redux";
 import { uploadBusinessProfilePicture } from "../../store/actions/card";
-import { hideNotification } from '../../store/actions/notifications/cardSavedNotifications';
+import { hideNotification as hideCardSavedNotification } from '../../store/actions/notifications/cardSavedNotifications';
+import { hideOfferingCreatedNotification, hideOfferingSavedNotification, hideOfferingDeletedNotification } from '../../store/actions/notifications/offeringNotifications';
+import { hideGalleryImageUploadedNotification, hideGalleryImageDeletedNotification } from '../../store/actions/notifications/galleryNotifications';
+import { hideProfileImageUploadedNotification, hideProfileImageDeletedNotification } from '../../store/actions/notifications/profileImageNotifications';
 
 import CardFormImageSelector from "./cardform/CardFormImageSelector";
 import CardFormTitleInput from "./cardform/CardFormTitleInput";
@@ -40,18 +43,52 @@ class CardForm extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.cardSavedNotification.showNotification) {
-      this.displayToast();
-      this.props.hideNotification();
+    if (this.props.cardSavedNotification.show) {
+      this.displayNotification(this.props.cardSavedNotification.success, this.props.cardSavedNotification.message);
+      this.props.hideCardSavedNotification();
+    }
+
+    if (this.props.offeringNotifications.created.show) {
+      this.displayNotification(this.props.offeringNotifications.created.success, this.props.offeringNotifications.created.message);
+      this.props.hideOfferingCreatedNotification();
+    }
+
+    if (this.props.offeringNotifications.saved.show) {
+      this.displayNotification(this.props.offeringNotifications.saved.success, this.props.offeringNotifications.saved.message);
+      this.props.hideOfferingSavedNotification();
+    }
+
+    if (this.props.offeringNotifications.deleted.show) {
+      this.displayNotification(this.props.offeringNotifications.deleted.success, this.props.offeringNotifications.deleted.message);
+      this.props.hideOfferingDeletedNotification();
+    }
+
+    if (this.props.galleryNotifications.uploaded.show) {
+      this.displayNotification(this.props.galleryNotifications.uploaded.success, this.props.galleryNotifications.uploaded.message);
+      this.props.hideGalleryImageUploadedNotification();
+    }
+
+    if (this.props.galleryNotifications.deleted.show) {
+      this.displayNotification(this.props.galleryNotifications.deleted.success, this.props.galleryNotifications.deleted.message);
+      this.props.hideGalleryImageDeletedNotification();
+    }
+
+    if (this.props.profileImageNotifications.uploaded.show) {
+      this.displayNotification(this.props.profileImageNotifications.uploaded.success, this.props.profileImageNotifications.uploaded.message);
+      this.props.hideProfileImageUploadedNotification();
+    }
+
+    if (this.props.profileImageNotifications.deleted.show) {
+      this.displayNotification(this.props.profileImageNotifications.deleted.success, this.props.profileImageNotifications.deleted.message);
+      this.props.hideProfileImageDeletedNotification();
     }
   }
 
-  displayToast() {
-    const success = this.props.cardSavedNotification.success;
+  displayNotification(success, message) {
     $('body').toast({
       class: success ? 'success' : 'error',
       position: 'bottom center',
-      message: success ? 'Your card has been saved!' : 'Oops, your card was not saved!',
+      message: message,
       showIcon: success ? 'check circle' : 'exclamation',
       displayTime: 3000,
       transition: {
@@ -140,7 +177,10 @@ const mapStateToProps = (state) => {
     cardLoader: state.cardLoader,
     cardData: state.card.cardData,
     cardErrors: state.cardErrors,
-    cardSavedNotification: state.cardSavedNotification
+    cardSavedNotification: state.cardSavedNotification,
+    offeringNotifications: state.offeringNotifications,
+    galleryNotifications: state.galleryNotifications,
+    profileImageNotifications: state.profileImageNotifications
   };
 };
 
@@ -148,7 +188,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     uploadBusinessProfilePicture: (imgData, cardId) =>
       dispatch(uploadBusinessProfilePicture(imgData, cardId)),
-    hideNotification: () => dispatch(hideNotification())
+    hideCardSavedNotification: () => dispatch(hideCardSavedNotification()),
+    hideOfferingCreatedNotification: () => dispatch(hideOfferingCreatedNotification()),
+    hideOfferingSavedNotification: () => dispatch(hideOfferingSavedNotification()),
+    hideOfferingDeletedNotification: () => dispatch(hideOfferingDeletedNotification()),
+    hideGalleryImageUploadedNotification: () => dispatch(hideGalleryImageUploadedNotification()),
+    hideGalleryImageDeletedNotification: () => dispatch(hideGalleryImageDeletedNotification()),
+    hideProfileImageUploadedNotification: () => dispatch(hideProfileImageUploadedNotification()),
+    hideProfileImageDeletedNotification: () => dispatch(hideProfileImageDeletedNotification())
   };
 };
 
