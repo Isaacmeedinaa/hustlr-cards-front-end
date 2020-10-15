@@ -5,20 +5,21 @@ import {
 } from "../../actions/notifications/cardSavedNotifications";
 
 const intialState = {
-  showNotification: false,
-  success: false
+  show: false,
+  success: false,
+  message: ''
 };
 
 const cardSavedNotification = (state = intialState, action) => {
   switch (action.type) {
     case CARD_SAVED_SUCCESSFULLY:
-      return {showNotification: true, success: true};
+      return {show: true, success: true, message: 'Your card was saved!'};
 
     case CARD_SAVE_UNSUCCESSFUL:
-      return {showNotification: true, success: false};
+      return {show: true, success: false, message: 'Oops, something went wrong. Try again later!'};
 
     case HIDE_NOTIFICATION:
-      return {showNotification: false, success: undefined};
+      return {show: false, success: undefined, message: ''};
 
     default:
       return state;
