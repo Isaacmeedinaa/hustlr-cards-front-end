@@ -365,6 +365,10 @@
   width: 100%;
 }
 
+.card-form-state-dropdown-container {
+  width: 48%;
+}
+
 .card-form-dropdown__control {
   width: 100% !important;
   height: 45px !important;
