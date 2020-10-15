@@ -15,9 +15,6 @@ export const fetchIndustries = () => {
       .then((resp) => resp.json())
       .then((industries) => {
         const originalIndustries = [];
-        const firstOption = new Industry(null, "Select Industry", null);
-
-        originalIndustries.push(firstOption);
 
         for (const key in industries) {
           originalIndustries.push(

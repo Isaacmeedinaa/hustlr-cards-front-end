@@ -4,7 +4,7 @@ import CardIndustry  from './CardIndustry';
 
 const CardBadges = (props) => {
 
-    const industryView = !props.cardData.industry.id ? null : (
+    const industryView = !props.cardData.industry || !props.cardData.industry.id ? null : (
       <div className="card-business-badge" style={{backgroundColor: props.cardTheme.transparentColor}}>
         <CardIndustry
           industry={props.cardData.industry}
