@@ -46,7 +46,7 @@ class CardFormLocationInputs extends Component {
         <div className="card-form-state-dropdown-container">
         <Select
           classNamePrefix="card-form-dropdown"
-          placeholder={<div>City</div>}
+          placeholder={<div>State</div>}
           theme={(theme) => ({
             ...theme,
             borderRadius: 0,

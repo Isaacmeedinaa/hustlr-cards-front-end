@@ -32,6 +32,7 @@ class CardFormIndustrySelect extends Component {
       <div className="card-form-dropdown-container">
         <Select
           classNamePrefix="card-form-dropdown"
+          placeholder={<div>Select an industry</div>}
           theme={(theme) => ({
             ...theme,
             borderRadius: 0,
@@ -44,7 +45,7 @@ class CardFormIndustrySelect extends Component {
           options={this.props.dropdownIndustries}
           value={
             !this.props.industry || this.props.industry.id === null
-              ? this.props.dropdownIndustries[0]
+              ? null
               : this.props.dropdownIndustries.filter(
                   (industry) => industry.label === this.props.industry.title
                 )
