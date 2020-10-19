@@ -140,16 +140,25 @@
 .grid-container-settings {
   min-height: 100%;
   display: grid;
-  grid-template-columns: minmax(75px, 75px) 1fr;
+  grid-template-columns: minmax(75px, 75px) 1fr 1fr;
   /* grid-template-rows: 1fr; */
-  grid-template-areas: "sidetoolbar settings";
+  grid-template-areas: "sidetoolbar user-settings subscription-settings";
 }
 
-.settings-wrapper {
-  grid-area: settings;
+.user-settings-col-wrapper {
+  grid-area: user-settings;
 }
 
-.settings-container {
+.subscription-settings-col-wrapper {
+  grid-area: subscription-settings;
+  border-left: 1px solid #d1d2d5;
+}
+
+.user-settings-col-container {
+  padding: 15px 20px 15px 20px;
+}
+
+.subscription-settings-col-container {
   padding: 15px 20px 15px 20px;
 }
 
@@ -171,7 +180,7 @@
 }
 
 /* 770 breakpoint for the home page */
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1000px) {
   .grid-container-home {
     grid-template-columns: minmax(75px, 75px) 1fr;
     grid-template-areas:
@@ -179,6 +188,15 @@
       "sidetoolbar cardshow";
   }
   .card-show-col-wrapper {
+    border: none;
+  }
+  .grid-container-settings {
+    grid-template-columns: minmax(75px, 75px) 1fr;
+    grid-template-areas:
+      "sidetoolbar user-settings"
+      "sidetoolbar subscription-settings";
+  }
+  .subscription-settings-col-wrapper {
     border: none;
   }
 }

@@ -152,7 +152,6 @@ export const userRegister = (
 
           dispatch({ type: USER_REGISTER, user: json.user });
 
-          // uncomment this once card creation is handled
           history.push("/home");
 
           dispatch({ type: IS_NOT_REGISTERING });
@@ -163,12 +162,12 @@ export const userRegister = (
 };
 
 export const userLogout = (history) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     localStorage.removeItem("userId");
     localStorage.removeItem("userToken");
     localStorage.removeItem("card");
 
-    history.push("/login");
+    await history.push("/login");
 
     dispatch({ type: USER_LOGOUT });
   };

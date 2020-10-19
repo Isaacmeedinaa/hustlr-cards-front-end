@@ -13,15 +13,11 @@ import "../../constants/colors.css";
 import "./UI.css";
 
 class SideToolbar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      pathname: props.pathname,
-      primary: "#ff5349",
-      secondary: "#ccc",
-    };
-  }
+  state = {
+    pathname: this.props.pathname,
+    primary: "#ff5349",
+    secondary: "#ccc",
+  };
 
   componentDidMount() {
     this.setState({
