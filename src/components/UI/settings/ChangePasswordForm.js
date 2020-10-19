@@ -49,7 +49,7 @@ class ChangePasswordForm extends Component {
           onChange={this.onChangePasswordFormChangeHandler}
         />
         <input
-          className="primary-color change-password-form-button"
+          className="white-text change-password-form-button"
           value="Update Password"
           type="submit"
         />

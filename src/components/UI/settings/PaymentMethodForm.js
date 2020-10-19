@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
 import "../../../constants/colors.css";
 import "../UI.css";
@@ -108,7 +107,7 @@ class PaymentMethodForm extends Component {
           />
         </div>
         <input
-          className="primary-color payment-button-form-button"
+          className="white-text payment-button-form-button"
           value="Update Payment Method"
           type="submit"
         />

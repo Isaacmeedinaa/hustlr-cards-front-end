@@ -1012,6 +1012,7 @@ a > i {
 .user-settings-header {
   width: 100%;
   text-align: start;
+  font-size: 18px;
 }
 
 .personal-info-form-container {
@@ -1038,6 +1039,7 @@ a > i {
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+  font-weight: 500;
 }
 
 .personal-info-form-full-name-input:focus {
@@ -1052,6 +1054,7 @@ a > i {
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+  font-weight: 500;
 }
 
 .personal-info-form-input:focus {
@@ -1062,10 +1065,12 @@ a > i {
   margin-top: 30px;
   width: 100%;
   height: 40px;
-  background-color: rgba(255, 83, 73, 0.3);
+  background-color: #2ecc71 !important;
   border: none;
   border-radius: 5px;
   text-align: center;
+  color: "#fff";
+  font-weight: 500;
 }
 
 .personal-info-form-button:focus {
@@ -1090,6 +1095,7 @@ a > i {
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+  font-weight: 500;
 }
 
 .payment-method-form-input:focus {
@@ -1111,6 +1117,7 @@ a > i {
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+  font-weight: 500;
 }
 
 .payment-method-form-mm-yy-input:focus {
@@ -1132,6 +1139,7 @@ a > i {
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+  font-weight: 500;
 }
 
 .payment-method-form-address-lines-input:focus {
@@ -1153,6 +1161,7 @@ a > i {
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+  font-weight: 500;
 }
 
 .payment-method-form-location-input:focus {
@@ -1163,10 +1172,11 @@ a > i {
   margin-top: 30px;
   width: 100%;
   height: 40px;
-  background-color: rgba(255, 83, 73, 0.3);
+  background-color: #2ecc71;
   border: none;
   border-radius: 5px;
   text-align: center;
+  font-weight: 500;
 }
 
 .payment-button-form-button:focus {
@@ -1191,6 +1201,7 @@ a > i {
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+  font-weight: 500;
 }
 
 .change-password-form-input:focus {
@@ -1201,10 +1212,11 @@ a > i {
   margin-top: 30px;
   width: 100%;
   height: 40px;
-  background-color: rgba(255, 83, 73, 0.3);
+  background-color: #2ecc71;
   border: none;
   border-radius: 5px;
   text-align: center;
+  font-weight: 500;
 }
 
 .change-password-form-button:focus {

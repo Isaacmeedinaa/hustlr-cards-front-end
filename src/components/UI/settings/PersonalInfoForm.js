@@ -52,7 +52,7 @@ class PersonalInfoForm extends Component {
           onChange={this.onPersonalInfoFormChangeHandler}
         />
         <input
-          className="primary-color personal-info-form-button"
+          className="white-text personal-info-form-button"
           value="Update Pesonal Information"
           type="submit"
         />
