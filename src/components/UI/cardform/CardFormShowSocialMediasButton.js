@@ -6,14 +6,20 @@ import "../UI.css";
 class CardFormShowSocialMediasButton extends Component {
   render() {
     return (
-      <div
+      <button
         className="primary color card-form-button"
         onClick={() => this.props.showSocialMediaLinks()}
       >
         <span className="card-form-button-text">
-          {this.props.isHidden ? <span className="card-form-button-text">Edit Social Media Links</span>: "Close"}
+          {this.props.isHidden ? (
+            <span className="card-form-button-text">
+              Edit Social Media Links
+            </span>
+          ) : (
+            "Close"
+          )}
         </span>
-      </div>
+      </button>
     );
   }
 }

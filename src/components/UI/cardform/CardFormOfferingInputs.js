@@ -17,7 +17,7 @@ class CardFormOfferingInputs extends Component {
     title: this.props.offering.title,
     price: this.props.offering.price,
     description: this.props.offering.description,
-    offeringSnapshot: { ...this.props.offering }
+    offeringSnapshot: { ...this.props.offering },
   };
 
   onCardTitleChangeHandler = async (event) => {
@@ -41,7 +41,10 @@ class CardFormOfferingInputs extends Component {
       description: event.target.value,
     });
 
-    this.props.setCardOfferingDescription(this.props.index, this.state.description);
+    this.props.setCardOfferingDescription(
+      this.props.index,
+      this.state.description
+    );
   };
 
   updateOfferingInputsHandler = async () => {
@@ -86,16 +89,17 @@ class CardFormOfferingInputs extends Component {
           />
         </div>
         <textarea
-        className="card-form-input-large"
-        name="description"
-        placeholder="Explain your product or service.."
-        value={this.state.description}
-        onChange={this.onOfferingDescriptionChangeHandler}
-      />
+          className="card-form-input-large"
+          name="description"
+          placeholder="Explain your product or service.."
+          value={this.state.description}
+          onChange={this.onOfferingDescriptionChangeHandler}
+        />
         <div className="card-form-product-service-buttons-container">
           {this.state.offeringSnapshot.title !== this.props.offering.title ||
           this.state.offeringSnapshot.price !== this.props.offering.price ||
-          this.state.offeringSnapshot.description !== this.props.offering.description ? (
+          this.state.offeringSnapshot.description !==
+            this.props.offering.description ? (
             <button
               className="primary-color card-form-offering-button"
               id="cardFormProductServiceDeleteBtn"
@@ -144,7 +148,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setCardOfferingTitle(offeringIndex, offeringTitle)),
     setCardOfferingPrice: (offeringIndex, offeringPrice) =>
       dispatch(setCardOfferingPrice(offeringIndex, offeringPrice)),
-      setCardOfferingDescription: (offeringIndex, offeringDescription) =>
+    setCardOfferingDescription: (offeringIndex, offeringDescription) =>
       dispatch(setCardOfferingDescription(offeringIndex, offeringDescription)),
     updateOffering: (id, title, description, price, cardId) =>
       dispatch(updateOffering(id, title, description, price, cardId)),

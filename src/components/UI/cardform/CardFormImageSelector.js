@@ -8,7 +8,7 @@ import {
 
 import Loader from "react-loader-spinner";
 
-import $ from 'jquery';
+import $ from "jquery";
 
 import "../../../constants/colors.css";
 import "../UI.css";
@@ -28,7 +28,7 @@ class CardFormImageSelector extends Component {
   }
 
   componentDidMount() {
-    $('.ui.dropdown').dropdown();
+    $(".ui.dropdown").dropdown();
   }
 
   onImageChangeHandler = (event) => {
@@ -55,23 +55,29 @@ class CardFormImageSelector extends Component {
             />
           )}
         </div>
-          <div className="ui floating dropdown button card-form-button edit-image-dropdown primary-font">
-            <span className='card-form-button-text'>Edit Profile Image</span>
-            <div className="menu">
-                <div className='item'><i className="add icon"></i>Upload new photo
-                  <input
-                        className="file-upload"
-                        id="businessProfileImgSelector"
-                        onChange={this.onImageChangeHandler}
-                        type="file"
-                        accept="image/x-png,image/jpeg"
-                  />
-                </div>
-                {!this.state.imgUrl || this.state.imgUrl === "" ? null : (
-                  <div className="item" onClick={() => this.props.deleteBusinessImage(this.props.imgId)}><i className="delete icon"></i> Remove Photo</div>
-                )}
+        <button className="ui floating dropdown button card-form-button edit-image-dropdown primary-font">
+          <span className="card-form-button-text">Edit Profile Image</span>
+          <div className="menu">
+            <div className="item">
+              <i className="add icon"></i>Upload new photo
+              <input
+                className="file-upload"
+                id="businessProfileImgSelector"
+                onChange={this.onImageChangeHandler}
+                type="file"
+                accept="image/x-png,image/jpeg"
+              />
             </div>
+            {!this.state.imgUrl || this.state.imgUrl === "" ? null : (
+              <div
+                className="item"
+                onClick={() => this.props.deleteBusinessImage(this.props.imgId)}
+              >
+                <i className="delete icon"></i> Remove Photo
+              </div>
+            )}
           </div>
+        </button>
       </Fragment>
     );
   }

@@ -42,7 +42,7 @@ class PublicToggle extends Component {
               base: "rgb(250,250,250)",
             },
             active: {
-              base: "rgb(255,83,73)",
+              base: "rgb(46, 204, 113)",
             },
             inactive: {
               base: "rgb(204,204,204)",

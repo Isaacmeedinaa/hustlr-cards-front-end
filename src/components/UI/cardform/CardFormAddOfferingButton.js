@@ -6,14 +6,14 @@ import { createOffering } from "../../../store/actions/card";
 class CardFormAddOfferingButton extends Component {
   render() {
     return (
-      <div
+      <button
         className="card-form-button"
         onClick={() => this.props.createOffering(this.props.cardId)}
       >
         <span className="card-form-button-text">
           + Add Products or Services
         </span>
-      </div>
+      </button>
     );
   }
 }
