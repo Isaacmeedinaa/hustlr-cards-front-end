@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 
-import { connect } from "react-redux";
-
 import SideToolbar from "../UI/SideToolbar";
+import UserSettings from "../UI/settings/UserSettings";
+import SubscriptionSettings from "../UI/settings/SubscriptionSettings";
 
 import "./pages.css";
 import "../../constants/colors.css";
@@ -17,9 +17,14 @@ class SettingsPage extends Component {
               pathname={this.props.location.pathname}
               history={this.props.history}
             />
-            <div className="secondary-light-bg settings-wrapper">
-              <div className="settings-container">
-                <h1>col 1</h1>
+            <div className="secondary-light-bg user-settings-col-wrapper">
+              <div className="user-settings-col-container">
+                <UserSettings />
+              </div>
+            </div>
+            <div className="secondary-light-bg subscription-settings-col-wrapper">
+              <div className="subscription-settings-col-container">
+                <SubscriptionSettings />
               </div>
             </div>
           </div>
@@ -29,10 +34,4 @@ class SettingsPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    cardData: state.card.cardData,
-  };
-};
-
-export default connect(mapStateToProps)(SettingsPage);
+export default SettingsPage;
