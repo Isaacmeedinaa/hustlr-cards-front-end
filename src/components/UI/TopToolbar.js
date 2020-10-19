@@ -41,13 +41,13 @@ class TopToolbar extends Component {
                 <MdBrush
                   className="toptoolbar-theme-icon"
                   fontSize="18px"
-                  color="#ff5349"
+                  color="#2ecc71"
                 />
               ) : (
                 <MdCloseCircle
                   className="toptoolbar-theme-icon"
                   fontSize="18px"
-                  color="#ff5349"
+                  color="#2ecc71"
                 />
               )}
             </div>

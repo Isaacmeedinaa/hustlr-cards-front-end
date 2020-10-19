@@ -12,7 +12,7 @@ class SaveCardButton extends Component {
   render() {
     return (
       <div className="save-card-button-container">
-        <div
+        <button
           className="save-card-button"
           onClick={() => this.props.saveCard(this.props.cardId)}
         >
@@ -23,7 +23,7 @@ class SaveCardButton extends Component {
               "Save"
             )}
           </span>
-        </div>
+        </button>
       </div>
     );
   }

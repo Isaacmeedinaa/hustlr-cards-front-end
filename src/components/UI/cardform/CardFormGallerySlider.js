@@ -39,7 +39,7 @@ class CardFormGallerySlider extends Component {
           className="card-form-gallery-slider-image-delete-btn"
           onClick={() => this.props.deleteGalleryImage(photo.id)}
         >
-          <MdTrash color="#ff5349" fontSize="24px" />
+          <MdTrash color="#2ecc71" fontSize="24px" />
         </div>
       </div>
     ));

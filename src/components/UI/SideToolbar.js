@@ -15,7 +15,7 @@ import "./UI.css";
 class SideToolbar extends Component {
   state = {
     pathname: this.props.pathname,
-    primary: "#ff5349",
+    primary: "#2ecc71",
     secondary: "#ccc",
   };
 

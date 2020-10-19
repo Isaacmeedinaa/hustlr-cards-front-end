@@ -1,21 +1,21 @@
 .primary-color {
-  color: #ff5349;
+  color: #2ecc71;
 }
 
 .primary-color-hover {
-  color: #ff5349;
+  color: #2ecc71;
 }
 
 .primary-color-hover:hover {
-  color: #eb4b42;
+  color: #2bc16b;
 }
 
-.primary-color:hover {
-  color: #eb4b42;
-}
+/* .primary-color:hover {
+  color: #2bc16b;
+} */
 
 .primary-color-bg {
-  background-color: #ff5349;
+  background-color: #2ecc71;
 }
 
 .primary-light {

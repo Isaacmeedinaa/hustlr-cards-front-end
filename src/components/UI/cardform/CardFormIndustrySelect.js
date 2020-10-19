@@ -14,13 +14,15 @@ class CardFormIndustrySelect extends Component {
   };
 
   onCardIndustryChangeHandler = async (event) => {
-    const icon = this.props.dropdownIndustries.find(dropdown => dropdown.label === event.label).icon;
-    
+    const icon = this.props.dropdownIndustries.find(
+      (dropdown) => dropdown.label === event.label
+    ).icon;
+
     await this.setState({
       industry: {
         id: parseInt(event.value),
         title: event.label,
-        icon: icon
+        icon: icon,
       },
     });
 
@@ -31,17 +33,34 @@ class CardFormIndustrySelect extends Component {
     return (
       <div className="card-form-dropdown-container">
         <Select
+          className="card-form-dropdown"
           classNamePrefix="card-form-dropdown"
+          styles={{
+            control: (base, state) => ({
+              ...base,
+              background: "#f1f1f1",
+              border: "none",
+              boxShadow: null,
+              fontWeight: 500,
+            }),
+            menu: (base) => ({ ...base, color: "#000" }),
+            option: (base, state) => ({
+              ...base,
+              color: state.isSelected ? "#2ecc71" : "black",
+              backgroundColor: state.isSelected
+                ? "rgba(46, 204, 113, 0.25)"
+                : "white",
+              "&:hover": {
+                backgroundColor: "#f1f1f1",
+                cursor: "pointer",
+              },
+              "&:active": {
+                color: "#2ecc71",
+                backgroundColor: "rgba(46, 204, 113, 0.25)",
+              },
+            }),
+          }}
           placeholder={<div>Select an industry</div>}
-          theme={(theme) => ({
-            ...theme,
-            borderRadius: 0,
-            colors: {
-              ...theme.colors,
-              primary25: "#f1f1f1",
-              primary: "rgba(255, 83, 73, 0.3)",
-            },
-          })}
           options={this.props.dropdownIndustries}
           value={
             !this.props.industry || this.props.industry.id === null
