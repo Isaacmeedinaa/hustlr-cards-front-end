@@ -211,6 +211,14 @@
   cursor: pointer;
 }
 
+.save-card-button:focus {
+  outline: none !important;
+}
+
+.save-card-button:active {
+  outline: none !important;
+}
+
 .sidetoolbar-icon-wrapper {
   display: flex;
   align-items: center;
@@ -577,7 +585,7 @@
 
 .card-form-delete-offering-modal-button:hover {
   background-color: #a3a3a32f;
-  border-radius: 7px;
+  border-radius: 5px;
 }
 
 .card-form-social-media-inputs-animation-wrapper {
@@ -665,7 +673,10 @@
 }
 
 .card-wrapper {
-  padding: 35px;
+  padding-top: 35px;
+  padding-bottom: 35px;
+  padding-left: 100px;
+  padding-right: 100px;
   border-radius: 5px;
   -webkit-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
   -moz-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
@@ -685,8 +696,8 @@
 }
 
 .card-business-link-container {
-  width: 90%;
-  max-width: 90%;
+  width: 100%;
+  max-width: 100%;
   height: 40px;
   border: none;
   border-radius: 5px;
@@ -695,6 +706,12 @@
   justify-content: center;
   align-content: center;
   text-align: center;
+  margin-top: 30px;
+}
+
+.card-business-link {
+  font-weight: 500;
+  font-size: 16px;
 }
 
 .card-business-link:hover {
@@ -719,7 +736,7 @@
 
 .card-business-name {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 30px !important;
   font-family: "Montserrat", sans-serif;
   font-size: 30px;
 }
@@ -771,12 +788,12 @@
   margin-top: 30px;
   font-size: 18px;
   font-weight: 600;
-  width: 80%;
+  width: 100%;
 }
 
 .card-business-products-services-container {
   margin-top: 15px;
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -785,16 +802,13 @@
 
 .card-business-product-service-container {
   margin-top: 25px;
-  padding-left: 35px;
-  padding-right: 35px;
+  padding-left: 16px;
+  padding-right: 16px;
   padding-top: 20px;
   padding-bottom: 20px;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 5px;
   word-wrap: break-word;
-  -webkit-box-shadow: 0px 5px 0px -1px #cdcdd2;
-  -moz-box-shadow: 0px 5px 0px -1px #cdcdd2;
-  box-shadow: 0px 5px 0px -1px #cdcdd2;
 }
 
 .card-business-product-service-header {
@@ -806,16 +820,18 @@
 }
 
 .card-business-product-service-title {
-  margin-bottom: 10px;
-}
-
-.card-business-product-service-description {
+  margin-bottom: 0px !important;
 }
 
 .card-business-product-service-price {
   display: flex;
   justify-content: center;
   border-radius: 5px;
+  margin-top: 2px;
+}
+
+.card-business-product-service-description {
+  margin-top: 10px;
 }
 
 .wordwrap {
@@ -864,7 +880,7 @@
 
 .card-business-gallery-slider-container {
   margin-top: 15px;
-  width: 80%;
+  width: 100%;
   border-radius: 15px;
 }
 
@@ -885,6 +901,7 @@
   width: 45px;
   padding-left: 4px;
   margin: 15px;
+  font-size: 19px;
 }
 
 a > i {
@@ -929,11 +946,11 @@ a > i {
 }
 
 .card-business-products-services-title-text {
-  width: 80%;
+  width: 100%;
   font-size: 18px;
   font-weight: 700;
-  margin-top: 40px;
-  margin-left: 40px;
+  margin-top: 30px;
+  margin-left: 30px;
 }
 
 .edit-image-dropdown,

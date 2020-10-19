@@ -13,11 +13,11 @@ const CardSnapchatLink = (props) => {
       style={{ backgroundColor: props.transparentColor }}
       className="card-business-social-media-icon-container"
     >
-      
       <a href={props.snapchatLink} target="_black">
-        <i  className="snapchat ghost icon card-business-social-media-icon" 
-            style={{ color: props.primaryColor, fontSize: '16px' }}>
-        </i>
+        <i
+          className="snapchat ghost icon card-business-social-media-icon"
+          style={{ color: props.primaryColor }}
+        ></i>
       </a>
     </div>
   );
