@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateUser } from '../../../store/actions/user';
-import { HIDE_USER_UPDATED_NOTIFICATION } from '../../../store/actions/notifications/userUpdatedNotifications';
+import { hideUserUpdatedNotification } from '../../../store/actions/notifications/userUpdatedNotifications';
+import { clearPersonalInfoErrors } from '../../../store/actions/errors/personalInfoErrors';
 
 import $ from 'jquery';
 
@@ -32,10 +33,15 @@ class PersonalInfoForm extends Component {
   }
 
   componentDidUpdate() {
+    
     if (this.props.userUpdatedNotifications.show) {
       this.displayNotification(this.props.userUpdatedNotifications.success, this.props.userUpdatedNotifications.message);
       this.props.hideUserUpdatedNotification();
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearErrors();
   }
 
   displayNotification(success, message) {
@@ -56,9 +62,9 @@ class PersonalInfoForm extends Component {
 
   render() {
 
-    let settingsErrors = (this.props.settingsErrors.length > 0 ? 
+    let personalInfoErrors = (this.props.personalInfoErrors.length > 0 ? 
       <div style={{paddingTop: '20px'}}>
-        {this.props.settingsErrors.map((error, index) => (
+        {this.props.personalInfoErrors.map((error, index) => (
           <p key={index} className="card-form-error-text">
             {error.message}
           </p>
@@ -72,7 +78,7 @@ class PersonalInfoForm extends Component {
         onSubmit={this.onPersonalInfoFormSubmitHandler}
       >
         <h5 className="user-settings-header">Personal Information</h5>
-        {settingsErrors}
+        {personalInfoErrors}
         <div className="personal-info-form-group-fields">
           <input
             className="personal-info-form-input-field"
@@ -107,12 +113,10 @@ class PersonalInfoForm extends Component {
         </div>
         <button
           className="white-text personal-info-form-button"
-          value="Update Personal Information"
-          type="submit"
           onClick={this.onSubmitPersonalInfoHandler}
         >
           { this.props.userUpdatingLoader ? 
-            <div class="ui active white inline loader"></div> 
+            <div className="ui active white inline loader"></div> 
             : 'Update Personal Information'
           }
         </button>
@@ -129,14 +133,15 @@ const mapStateToProps = (state) => {
     username: state.user.username,
     userUpdatingLoader: state.userUpdatingLoader,
     userUpdatedNotifications: state.userUpdatedNotifications,
-    settingsErrors: state.settingsErrors
+    personalInfoErrors: state.personalInfoErrors
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (firstName, lastName, username, email) =>  dispatch(updateUser(firstName, lastName, username, email)),
-    hideUserUpdatedNotification: () => dispatch({type: HIDE_USER_UPDATED_NOTIFICATION})
+    hideUserUpdatedNotification: () => dispatch(hideUserUpdatedNotification()),
+    clearErrors: () => dispatch(clearPersonalInfoErrors())
   };
 };
 

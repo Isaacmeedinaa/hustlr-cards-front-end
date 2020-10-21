@@ -3,7 +3,10 @@ import { IS_LOGGING_IN, IS_NOT_LOGGING_IN } from "./loaders/loginLoader";
 import { IS_REGISTERING, IS_NOT_REGISTERING } from "./loaders/registerLoader";
 import { USER_IS_UPDATING, USER_IS_NOT_UPDATING } from "./loaders/userUpdatingLoader";
 import { USER_UPDATED_SUCCESSFULLY, USER_UPDATED_UNSUCCESSFULLY } from './notifications/userUpdatedNotifications';
-import { SETTINGS_ERRORS, SETTINGS_NO_ERRORS } from './errors/settingsErrors';
+import { PERSONAL_INFO_ERRORS, PERSONAL_INFO_NO_ERRORS } from './errors/personalInfoErrors';
+import { CHANGE_PASSWORD_ERRORS, CHANGE_PASSWORD_NO_ERRORS } from './errors/changePasswordErrors';
+import { PASSWORD_CHANGED_SUCCESSFULLY, PASSWORD_CHANGED_UNSUCCESSFULLY } from './notifications/changePasswordNotifications';
+import { PASSWORD_IS_UPDATING, PASSWORD_IS_NOT_UPDATING } from "./loaders/changePasswordLoader";
 import {
   REQUEST_TIMEOUT_ERR,
   INVALID_LOGIN_CREDENTIALS_ERR,
@@ -94,7 +97,7 @@ export const userAutoLogin = (history) => {
           if (!user) {
             return;
           }
-          console.log(user);
+
           dispatch({ type: USER_LOGIN, user: user });
           history.push("/home");
           dispatch({ type: IS_NOT_LOGGING_IN });
@@ -205,31 +208,94 @@ export const updateUser = (firstName, lastName, username, email) => {
     fetch("http://localhost:5000/api/v1/users", reqObj)
       .then((resp) => {
          if (resp.ok) {
+          dispatch({type: PERSONAL_INFO_NO_ERRORS});
+          dispatch({ type: USER_IS_NOT_UPDATING });
+          dispatch({ type: USER_UPDATED_SUCCESSFULLY });
           return resp.json();
         }
         else {
           dispatch({ type: USER_IS_NOT_UPDATING });
-          resp.json().then((json) => {dispatch({type: SETTINGS_ERRORS, errors: json.errors})})
+          resp.json().then((json) => {dispatch({type: PERSONAL_INFO_ERRORS, errors: json.errors})})
           dispatch({ type: USER_UPDATED_UNSUCCESSFULLY });
+          return;
         }
       })
       .then((json) => {
-
-        dispatch({type: SETTINGS_NO_ERRORS})
-        const user = {
-          id: json.id,
-          firstName: json.firstName,
-          lastName: json.lastName,
-          username: json.username,
-          email: json.email
-        };
-
-        dispatch({ type: USER_UPDATED, user: user });
-        dispatch({ type: USER_IS_NOT_UPDATING });
-        dispatch({ type: USER_UPDATED_SUCCESSFULLY });
+        if (json) { // need this bc this method is still called even when request fails 
+          const user = {
+            id: json.id,
+            firstName: json.firstName,
+            lastName: json.lastName,
+            username: json.username,
+            email: json.email
+          };
+          dispatch({ type: USER_UPDATED, user: user });
+        }
       })
       .catch((err) => {
         dispatch({ type: USER_IS_NOT_UPDATING });
+        console.log(err)
+      });
+  };
+};
+
+export const changePassword = (oldPassword, newPassword, confirmPassword) => {
+  return (dispatch, getState) => {
+
+    const inputErrors = []
+    if (!oldPassword) {
+      inputErrors.push({message: "'Current Password' cannot be empty."})
+    }
+    if (newPassword !== confirmPassword) {
+      inputErrors.push({message: "Passwords do not match."});
+    }
+    if (inputErrors.length > 0) {
+      dispatch({type: CHANGE_PASSWORD_ERRORS, errors: inputErrors});
+      dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
+      return;
+    }
+
+    const user = getState().user;
+    const userToken = localStorage.getItem("userToken");
+    const userId = localStorage.getItem("userId");
+
+    const passwordData = {
+      username: user.username,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      recoveryCode: ''
+    };
+
+    const reqObj = {
+      method: "PUT",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          "Content-Type": "application/json",
+          Accepts: "application/json",
+        },
+      body: JSON.stringify(passwordData)
+    };
+
+    dispatch({ type: PASSWORD_IS_UPDATING });
+    fetch("http://localhost:5000/api/v1/changepassword", reqObj)
+      .then((resp) => {
+        dispatch({ type: PASSWORD_IS_NOT_UPDATING });
+         if (resp.ok) {
+          dispatch({type: CHANGE_PASSWORD_NO_ERRORS})
+          dispatch({ type: PASSWORD_CHANGED_SUCCESSFULLY });
+          return resp.json();
+        }
+        else if (resp.status === 401) {
+          dispatch({type: CHANGE_PASSWORD_ERRORS, errors: [{message: "Invalid 'Current Password'."}]})
+          dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
+        }
+        else {
+          resp.json().then((json) => {dispatch({type: CHANGE_PASSWORD_ERRORS, errors: json.errors})})
+          dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
+        }
+      })
+      .catch((err) => {
+        dispatch({ type: PASSWORD_IS_NOT_UPDATING });
         console.log(err)
       });
   };
