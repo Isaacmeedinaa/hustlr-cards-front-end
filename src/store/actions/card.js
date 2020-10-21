@@ -155,7 +155,7 @@ export const saveCard = (cardId) => {
         "Content-Type": "application/json",
         Accepts: "application/json",
       },
-      body: JSON.stringify(updateCardData),
+      body: JSON.stringify(updateCardData)
     };
 
     fetch(`http://localhost:5000/api/v1/cards/${cardId}`, reqObj)

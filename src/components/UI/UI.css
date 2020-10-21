@@ -293,7 +293,8 @@
 }
 
 .card-form-error-text {
-  font-size: 18px;
+  font-size: 16px;
+  color: rgb(252, 86, 86);
 }
 
 .card-form-business-img-container {
@@ -1024,7 +1025,7 @@ a > i {
   max-width: 100%;
 }
 
-.personal-info-form-full-name-fields {
+.personal-info-form-group-fields {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1032,7 +1033,7 @@ a > i {
   margin-top: 30px;
 }
 
-.personal-info-form-full-name-input {
+.personal-info-form-input-field {
   width: 48%;
   height: 40px;
   background-color: #f1f1f1;
@@ -1042,7 +1043,7 @@ a > i {
   font-weight: 500;
 }
 
-.personal-info-form-full-name-input:focus {
+.personal-info-form-input-field:focus {
   outline: none;
 }
 

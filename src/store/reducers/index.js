@@ -18,6 +18,12 @@ import cardSavedNotification from './notifications/cardSavedNotifications';
 import offeringNotifications from './notifications/offeringNotifications';
 import galleryNotifications from './notifications/galleryNotifications';
 import profileImageNotifications from './notifications/profileImageNotifications';
+import userUpdatingLoader from './loaders/userUpdatingLoader';
+import userUpdatedNotifications from './notifications/userUpdatedNotifications';
+import personalInfoErrors from './errors/personalInfoErrors';
+import changePasswordErrors from './errors/changePasswordErrors';
+import changePasswordNotifications from './notifications/changePasswordNotifications';
+import changePasswordLoader from './loaders/changePasswordLoader';
 
 const rootReducer = combineReducers({
   errors,
@@ -37,7 +43,13 @@ const rootReducer = combineReducers({
   cardSavedNotification,
   offeringNotifications,
   galleryNotifications,
-  profileImageNotifications
+  profileImageNotifications,
+  userUpdatingLoader,
+  userUpdatedNotifications,
+  personalInfoErrors,
+  changePasswordLoader,
+  changePasswordErrors,
+  changePasswordNotifications
 });
 
 export default rootReducer;
