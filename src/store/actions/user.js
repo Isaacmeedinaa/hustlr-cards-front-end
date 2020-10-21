@@ -1,6 +1,9 @@
 import { fetchCard } from "./card";
 import { IS_LOGGING_IN, IS_NOT_LOGGING_IN } from "./loaders/loginLoader";
 import { IS_REGISTERING, IS_NOT_REGISTERING } from "./loaders/registerLoader";
+import { USER_IS_UPDATING, USER_IS_NOT_UPDATING } from "./loaders/userUpdatingLoader";
+import { USER_UPDATED_SUCCESSFULLY, USER_UPDATED_UNSUCCESSFULLY } from './notifications/userUpdatedNotifications';
+import { SETTINGS_ERRORS, SETTINGS_NO_ERRORS } from './errors/settingsErrors';
 import {
   REQUEST_TIMEOUT_ERR,
   INVALID_LOGIN_CREDENTIALS_ERR,
@@ -14,6 +17,7 @@ import {
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGOUT = "USER_LOGOUT";
+export const USER_UPDATED = "USER_UPDATED";
 
 export const userLogin = (username, password, history) => {
   return (dispatch) => {
@@ -90,6 +94,7 @@ export const userAutoLogin = (history) => {
           if (!user) {
             return;
           }
+          console.log(user);
           dispatch({ type: USER_LOGIN, user: user });
           history.push("/home");
           dispatch({ type: IS_NOT_LOGGING_IN });
@@ -170,5 +175,62 @@ export const userLogout = (history) => {
     await history.push("/login");
 
     dispatch({ type: USER_LOGOUT });
+  };
+};
+
+export const updateUser = (firstName, lastName, username, email) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+    const userId = localStorage.getItem("userId");
+
+    const userData = {
+      id: +userId,
+      firstName: firstName, 
+      lastName: lastName,
+      username: username,
+      email: email
+    };
+
+    const reqObj = {
+      method: "PUT",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          "Content-Type": "application/json",
+          Accepts: "application/json",
+        },
+      body: JSON.stringify(userData)
+    };
+
+    dispatch({ type: USER_IS_UPDATING });
+    fetch("http://localhost:5000/api/v1/users", reqObj)
+      .then((resp) => {
+         if (resp.ok) {
+          return resp.json();
+        }
+        else {
+          dispatch({ type: USER_IS_NOT_UPDATING });
+          resp.json().then((json) => {dispatch({type: SETTINGS_ERRORS, errors: json.errors})})
+          dispatch({ type: USER_UPDATED_UNSUCCESSFULLY });
+        }
+      })
+      .then((json) => {
+
+        dispatch({type: SETTINGS_NO_ERRORS})
+        const user = {
+          id: json.id,
+          firstName: json.firstName,
+          lastName: json.lastName,
+          username: json.username,
+          email: json.email
+        };
+
+        dispatch({ type: USER_UPDATED, user: user });
+        dispatch({ type: USER_IS_NOT_UPDATING });
+        dispatch({ type: USER_UPDATED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: USER_IS_NOT_UPDATING });
+        console.log(err)
+      });
   };
 };

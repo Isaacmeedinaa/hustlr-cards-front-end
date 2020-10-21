@@ -18,6 +18,9 @@ import cardSavedNotification from './notifications/cardSavedNotifications';
 import offeringNotifications from './notifications/offeringNotifications';
 import galleryNotifications from './notifications/galleryNotifications';
 import profileImageNotifications from './notifications/profileImageNotifications';
+import userUpdatingLoader from './loaders/userUpdatingLoader';
+import userUpdatedNotifications from './notifications/userUpdatedNotifications';
+import settingsErrors from './errors/settingsErrors';
 
 const rootReducer = combineReducers({
   errors,
@@ -37,7 +40,10 @@ const rootReducer = combineReducers({
   cardSavedNotification,
   offeringNotifications,
   galleryNotifications,
-  profileImageNotifications
+  profileImageNotifications,
+  userUpdatingLoader,
+  userUpdatedNotifications,
+  settingsErrors
 });
 
 export default rootReducer;

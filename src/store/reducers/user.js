@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_REGISTER, USER_LOGOUT } from "../actions/user";
+import { USER_LOGIN, USER_REGISTER, USER_LOGOUT, USER_UPDATED } from "../actions/user";
 
 const user = (state = null, action) => {
   switch (action.type) {
@@ -8,6 +8,8 @@ const user = (state = null, action) => {
       return action.user;
     case USER_LOGOUT:
       return null;
+    case USER_UPDATED:
+      return action.user;
     default:
       return state;
   }
