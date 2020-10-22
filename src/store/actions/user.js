@@ -148,10 +148,10 @@ export const userRegister = (
       fetch("http://localhost:5000/api/v1/register", reqObj)
         .then((resp) => {
           if (!resp.ok) {
-            dispatch({
-              type: TAKEN_REGISTER_USERNAME_EMAIL_ERR,
-              message: ["Error creating account"],
-            });
+            resp.json().then((json) => {
+              let errors = json.errors.map((err) => err.message);
+              dispatch({type: TAKEN_REGISTER_USERNAME_EMAIL_ERR, message: errors})
+            })
             dispatch({ type: IS_NOT_REGISTERING });
           } else {
             dispatch({ type: NO_REGISTER_ERRORS });

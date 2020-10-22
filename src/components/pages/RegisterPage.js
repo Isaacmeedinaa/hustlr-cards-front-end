@@ -70,7 +70,7 @@ class RegisterPage extends Component {
             <AuthCard>
               {this.props.errors.length !== 0
                 ? this.props.errors.map((error, index) => (
-                    <p key={index} className="primary-color auth-error-text">
+                    <p key={index} className="auth-error-text">
                       {error}
                     </p>
                   ))
