@@ -24,6 +24,7 @@ import personalInfoErrors from './errors/personalInfoErrors';
 import changePasswordErrors from './errors/changePasswordErrors';
 import changePasswordNotifications from './notifications/changePasswordNotifications';
 import changePasswordLoader from './loaders/changePasswordLoader';
+import auth from './auth';
 
 const rootReducer = combineReducers({
   errors,
@@ -49,7 +50,8 @@ const rootReducer = combineReducers({
   personalInfoErrors,
   changePasswordLoader,
   changePasswordErrors,
-  changePasswordNotifications
+  changePasswordNotifications,
+  auth
 });
 
 export default rootReducer;

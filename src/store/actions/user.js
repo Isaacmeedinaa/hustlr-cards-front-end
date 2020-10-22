@@ -7,6 +7,7 @@ import { PERSONAL_INFO_ERRORS, PERSONAL_INFO_NO_ERRORS } from './errors/personal
 import { CHANGE_PASSWORD_ERRORS, CHANGE_PASSWORD_NO_ERRORS } from './errors/changePasswordErrors';
 import { PASSWORD_CHANGED_SUCCESSFULLY, PASSWORD_CHANGED_UNSUCCESSFULLY } from './notifications/changePasswordNotifications';
 import { PASSWORD_IS_UPDATING, PASSWORD_IS_NOT_UPDATING } from "./loaders/changePasswordLoader";
+import { SET_IS_AUTHENTICATED, SET_IS_NOT_AUTHENTICATED } from './auth';
 import {
   REQUEST_TIMEOUT_ERR,
   INVALID_LOGIN_CREDENTIALS_ERR,
@@ -47,16 +48,20 @@ export const userLogin = (username, password, history) => {
             type: INVALID_LOGIN_CREDENTIALS_ERR,
             message: message,
           });
+          dispatch({ type: SET_IS_NOT_AUTHENTICATED })
           dispatch({ type: IS_NOT_LOGGING_IN });
         } else if (resp.ok) {
           dispatch({ type: NO_LOGIN_ERRORS });
+          dispatch({ type: SET_IS_AUTHENTICATED })
           return resp.json();
         }
       })
       .then((json) => {
         localStorage.setItem("userToken", json.token);
         localStorage.setItem("userId", json.user.id);
+        const userId = json.user.id;
 
+        dispatch(fetchCard(userId));
         dispatch({ type: USER_LOGIN, user: json.user });
 
         history.push("/home");
@@ -67,7 +72,7 @@ export const userLogin = (username, password, history) => {
   };
 };
 
-export const userAutoLogin = (history) => {
+export const userAutoLogin = () => {
   return (dispatch) => {
     const userToken = localStorage.getItem("userToken");
 
@@ -85,10 +90,11 @@ export const userAutoLogin = (history) => {
         .then((resp) => {
           if (!resp.ok) {
             localStorage.clear();
-            history.push("/login");
+            dispatch({ type: SET_IS_NOT_AUTHENTICATED })
             dispatch({ type: IS_NOT_LOGGING_IN });
           } else if (resp.ok) {
             const userId = localStorage.getItem("userId");
+            dispatch({ type: SET_IS_AUTHENTICATED })
             dispatch(fetchCard(userId));
             return resp.json();
           }
@@ -99,11 +105,9 @@ export const userAutoLogin = (history) => {
           }
 
           dispatch({ type: USER_LOGIN, user: user });
-          history.push("/home");
           dispatch({ type: IS_NOT_LOGGING_IN });
         });
     } else {
-      history.push("/login");
       dispatch({ type: IS_NOT_LOGGING_IN });
     }
   };
@@ -151,6 +155,7 @@ export const userRegister = (
             dispatch({ type: IS_NOT_REGISTERING });
           } else {
             dispatch({ type: NO_REGISTER_ERRORS });
+            
             return resp.json();
           }
         })
@@ -158,6 +163,10 @@ export const userRegister = (
           localStorage.setItem("userToken", json.token);
           localStorage.setItem("userId", json.user.id);
 
+          const userId = json.user.id;
+
+          dispatch({ type: SET_IS_AUTHENTICATED })
+          dispatch(fetchCard(userId));
           dispatch({ type: USER_REGISTER, user: json.user });
 
           history.push("/home");
@@ -174,6 +183,7 @@ export const userLogout = (history) => {
     localStorage.removeItem("userId");
     localStorage.removeItem("userToken");
     localStorage.removeItem("card");
+    dispatch({ type: SET_IS_NOT_AUTHENTICATED })
 
     await history.push("/login");
 
