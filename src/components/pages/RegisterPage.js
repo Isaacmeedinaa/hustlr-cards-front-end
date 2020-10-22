@@ -22,11 +22,10 @@ class RegisterPage extends Component {
   }
 
   componentDidMount() {
-    const userToken = localStorage.getItem("userToken");
     const history = this.props.history;
 
-    if (userToken) {
-      this.props.userAutoLogin(history);
+    if (this.props.auth.isAuthenticated) {
+      history.push('/home');
     }
   }
 
@@ -138,6 +137,7 @@ const mapStateToProps = (state) => {
   return {
     errors: state.errors,
     registerLoader: state.registerLoader,
+    auth: state.auth
   };
 };
 

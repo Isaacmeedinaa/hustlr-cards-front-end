@@ -13,14 +13,7 @@ import "../../constants/colors.css";
 
 class HomeContainer extends Component {
   componentDidMount() {
-    const userToken = localStorage.getItem("userToken");
     const history = this.props.history;
-
-    if (userToken) {
-      this.props.userAutoLogin(history);
-    } else {
-      history.push("/login");
-    }
   }
 
   render() {
