@@ -1,7 +1,5 @@
 import React from "react";
 
-import LogoInstagram from "react-ionicons/lib/LogoInstagram";
-
 import "../../../constants/colors.css";
 import "../UI.css";
 
