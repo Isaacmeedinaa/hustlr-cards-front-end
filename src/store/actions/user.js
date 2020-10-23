@@ -1,4 +1,5 @@
 import { fetchCard } from "./card";
+import { API_BASE_URL } from '../../constants/urls';
 import { IS_LOGGING_IN, IS_NOT_LOGGING_IN } from "./loaders/loginLoader";
 import { IS_REGISTERING, IS_NOT_REGISTERING } from "./loaders/registerLoader";
 import { USER_IS_UPDATING, USER_IS_NOT_UPDATING } from "./loaders/userUpdatingLoader";
@@ -40,7 +41,7 @@ export const userLogin = (username, password, history) => {
     };
 
     dispatch({ type: IS_LOGGING_IN });
-    fetch("http://localhost:5000/api/v1/login", reqObj)
+    fetch(`${API_BASE_URL}/login`, reqObj)
       .then((resp) => {
         if (resp.status === 401) {
           const message = ["Invalid username or password!"];
@@ -86,7 +87,7 @@ export const userAutoLogin = () => {
       };
 
       dispatch({ type: IS_LOGGING_IN });
-      fetch(`http://localhost:5000/api/v1/autologin`, reqObj)
+      fetch(`${API_BASE_URL}/autologin`, reqObj)
         .then((resp) => {
           if (!resp.ok) {
             localStorage.clear();
@@ -145,7 +146,7 @@ export const userRegister = (
       });
     } else {
       dispatch({ type: IS_REGISTERING });
-      fetch("http://localhost:5000/api/v1/register", reqObj)
+      fetch(`${API_BASE_URL}/register`, reqObj)
         .then((resp) => {
           if (!resp.ok) {
             resp.json().then((json) => {
@@ -215,7 +216,7 @@ export const updateUser = (firstName, lastName, username, email) => {
     };
 
     dispatch({ type: USER_IS_UPDATING });
-    fetch("http://localhost:5000/api/v1/users", reqObj)
+    fetch(`${API_BASE_URL}/users`, reqObj)
       .then((resp) => {
          if (resp.ok) {
           dispatch({type: PERSONAL_INFO_NO_ERRORS});
@@ -287,7 +288,7 @@ export const changePassword = (oldPassword, newPassword, confirmPassword) => {
     };
 
     dispatch({ type: PASSWORD_IS_UPDATING });
-    fetch("http://localhost:5000/api/v1/changepassword", reqObj)
+    fetch(`${API_BASE_URL}/changepassword`, reqObj)
       .then((resp) => {
         dispatch({ type: PASSWORD_IS_NOT_UPDATING });
          if (resp.ok) {
