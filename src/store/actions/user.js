@@ -10,10 +10,8 @@ import { PASSWORD_CHANGED_SUCCESSFULLY, PASSWORD_CHANGED_UNSUCCESSFULLY } from '
 import { PASSWORD_IS_UPDATING, PASSWORD_IS_NOT_UPDATING } from "./loaders/changePasswordLoader";
 import { SET_IS_AUTHENTICATED, SET_IS_NOT_AUTHENTICATED } from './auth';
 import {
-  REQUEST_TIMEOUT_ERR,
   INVALID_LOGIN_CREDENTIALS_ERR,
   TAKEN_REGISTER_USERNAME_EMAIL_ERR,
-  INVALID_REGISTER_EMAIL_PASSWORD_ERR,
   NOT_MATCH_REGISTER_PASSWORDS_ERR,
   NO_LOGIN_ERRORS,
   NO_REGISTER_ERRORS,
@@ -268,7 +266,7 @@ export const changePassword = (oldPassword, newPassword, confirmPassword) => {
 
     const user = getState().user;
     const userToken = localStorage.getItem("userToken");
-    const userId = localStorage.getItem("userId");
+    localStorage.getItem("userId");
 
     const passwordData = {
       username: user.username,

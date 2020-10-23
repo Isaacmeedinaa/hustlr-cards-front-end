@@ -1,7 +1,5 @@
 import React from "react";
 
-import LogoFacebook from "react-ionicons/lib/LogoFacebook";
-
 import "../../../constants/colors.css";
 import "../UI.css";
 
