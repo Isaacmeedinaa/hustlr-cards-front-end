@@ -13,7 +13,6 @@ import "../../constants/colors.css";
 
 class HomeContainer extends Component {
   componentDidMount() {
-    const history = this.props.history;
   }
 
   render() {

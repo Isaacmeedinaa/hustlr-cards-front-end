@@ -1,7 +1,5 @@
 import React from "react";
 
-import LogoTwitter from "react-ionicons/lib/LogoTwitter";
-
 import "../../../constants/colors.css";
 import "../UI.css";
 

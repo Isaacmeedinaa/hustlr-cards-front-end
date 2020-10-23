@@ -1,7 +1,5 @@
 import React from "react";
 
-import MdPin from "react-ionicons/lib/MdPin";
-
 import "../../../constants/colors.css";
 import "../UI.css";
 

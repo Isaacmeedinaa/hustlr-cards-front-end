@@ -1,7 +1,5 @@
 import React from "react";
 
-import MdCall from "react-ionicons/lib/MdCall";
-
 import "../../../constants/colors.css";
 import "../UI.css";
 
