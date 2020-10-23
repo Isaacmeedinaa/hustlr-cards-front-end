@@ -1,11 +1,12 @@
 import { CARD_IS_LOADING, CARD_IS_NOT_LOADING } from "./loaders/cardLoader";
+import { API_BASE_URL } from '../../constants/urls';
 
 export const SET_PUBLIC_CARD = "SET_PUBLIC_CARD";
 
 export const fetchPublicCard = (pathname, history) => {
   return (dispatch) => {
     dispatch({ type: CARD_IS_LOADING });
-    fetch(`http://localhost:5000/api/v1/cards/path/${pathname}`)
+    fetch(`${API_BASE_URL}/cards/path/${pathname}`)
       .then((resp) => {
         if (!resp.ok) {
           history.push("/404");

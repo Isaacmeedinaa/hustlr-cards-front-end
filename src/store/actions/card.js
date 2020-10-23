@@ -1,4 +1,5 @@
 import Card from "../../models/card";
+import { API_BASE_URL } from '../../constants/urls';
 
 import { CARD_IS_LOADING, CARD_IS_NOT_LOADING } from "./loaders/cardLoader";
 import {
@@ -70,7 +71,7 @@ export const fetchCard = (userId) => {
     const { themes } = getState();
 
     dispatch({ type: CARD_IS_LOADING });
-    fetch(`http://localhost:5000/api/v1/cards/${userId}`)
+    fetch(`${API_BASE_URL}/cards/${userId}`)
       .then((resp) => {
         if (resp.status === 401) {
           console.log("error");
@@ -158,7 +159,7 @@ export const saveCard = (cardId) => {
       body: JSON.stringify(updateCardData)
     };
 
-    fetch(`http://localhost:5000/api/v1/cards/${cardId}`, reqObj)
+    fetch(`${API_BASE_URL}/cards/${cardId}`, reqObj)
       .then((resp) => {
         return resp.json();
       })
@@ -214,7 +215,7 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
     };
 
     dispatch({ type: CARD_IMAGE_IS_UPLOADING });
-    fetch("http://localhost:5000/api/v1/photos/profile", reqObj)
+    fetch(`${API_BASE_URL}/photos/profile`, reqObj)
       .then((resp) => {
         if (!resp.ok) {
           dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
@@ -252,7 +253,7 @@ export const deleteBusinessImage = (imgId) => {
     };
 
     dispatch({ type: CARD_IMAGE_IS_UPLOADING });
-    fetch(`http://localhost:5000/api/v1/photos/${imgId}`, reqObj)
+    fetch(`${API_BASE_URL}/photos/${imgId}`, reqObj)
       .then((resp) => {
         if (resp.ok) {
           dispatch({ type: DELETE_BUSINESS_PROFILE_PICTURE });
@@ -342,7 +343,7 @@ export const createOffering = (cardId) => {
       body: JSON.stringify(offeringData),
     };
 
-    fetch("http://localhost:5000/api/v1/offerings", reqObj)
+    fetch(`${API_BASE_URL}/offerings`, reqObj)
       .then((resp) => resp.json())
       .then((offering) => {
         dispatch({ type: CREATE_OFFERING, offering: offering });
@@ -378,7 +379,7 @@ export const updateOffering = (id, title, description, price, cardId) => {
       body: JSON.stringify(offeringData),
     };
 
-    fetch(`http://localhost:5000/api/v1/offerings/${id}`, reqObj)
+    fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
       .then((resp) => resp.json())
       .then((offering) => {
         dispatch({
@@ -414,7 +415,7 @@ export const deleteOffering = (id, index) => {
       body: JSON.stringify(offeringData),
     };
 
-    await fetch(`http://localhost:5000/api/v1/offerings/${id}`, reqObj)
+    await fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
       .then(() => {})
       .then(() => {
         dispatch({ type: DELETE_OFFERING, id: id });
@@ -475,7 +476,7 @@ export const uploadGalleryImage = (reqImgData, cardId) => {
     };
 
     dispatch({ type: CARD_GALLERY_IMAGE_IS_LOADING });
-    fetch("http://localhost:5000/api/v1/photos", reqObj)
+    fetch(`${API_BASE_URL}/photos`, reqObj)
       .then((resp) => resp.json())
       .then((data) => {
         dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
@@ -502,7 +503,7 @@ export const deleteGalleryImage = (photoId) => {
     };
 
     dispatch({ type: CARD_GALLERY_IMAGE_IS_LOADING });
-    fetch(`http://localhost:5000/api/v1/photos/${photoId}`, reqObj)
+    fetch(`${API_BASE_URL}/photos/${photoId}`, reqObj)
       .then((resp) => {
         if (resp.ok) {
           dispatch({ type: DELETE_CARD_GALLERY_PICTURE, photoId: photoId });

@@ -1,4 +1,5 @@
 import Industry from "../../models/industry";
+import { API_BASE_URL } from '../../constants/urls';
 
 import {
   INDUSTRIES_ARE_LOADING,
@@ -11,7 +12,7 @@ export const SET_DROPDOWN_INDUSTRIES = "SET_DROPDOWN_INDUSTRIES";
 export const fetchIndustries = () => {
   return (dispatch) => {
     dispatch({ type: INDUSTRIES_ARE_LOADING });
-    fetch("http://localhost:5000/api/v1/industries")
+    fetch(`${API_BASE_URL}/industries`)
       .then((resp) => resp.json())
       .then((industries) => {
         const originalIndustries = [];
