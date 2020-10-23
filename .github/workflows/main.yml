@@ -1,6 +1,7 @@
 name: Build and Deploy to Firebase
 on:
   push:
+    # Trigger the build on commits into the release branch
     branches:
       - release
 
