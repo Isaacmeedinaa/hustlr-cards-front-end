@@ -146,6 +146,8 @@ export const saveCard = (cardId) => {
       phoneNumber: cardData.phoneNumber,
       imgUrl: cardData.imgUrl,
       imgId: cardData.imgId,
+      backdropImgUrl: cardData.backdropImgUrl,
+      backdropImgId: cardData.backdropImgId,
       pathToCard: cardData.pathToCard,
       isPublic: cardData.isPublic,
       facebookLink: cardData.facebookLink,
@@ -187,6 +189,7 @@ export const saveCard = (cardId) => {
         dispatch({ type: CARD_SAVED_SUCCESSFULLY });
         dispatch({ type: CARD_NO_ERRORS });
         dispatch({ type: CARD_IS_NOT_UPDATING });
+        console.log(data);
       });
   };
 };
