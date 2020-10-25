@@ -4,7 +4,7 @@ import "./pages.css";
 import { connect } from "react-redux";
 import { fetchPublicCard } from "../../store/actions/publicCard";
 
-class ShowCardPage extends Component {
+class PublicCardPage extends Component {
   componentWillMount() {
     const pathname = this.props.location.pathname.slice(1);
     const history = this.props.history;
@@ -16,7 +16,7 @@ class ShowCardPage extends Component {
       return null;
     }
 
-    return <div>ShowCardPage.js</div>;
+    return <div>PublicCardPage.js</div>;
   }
 }
 
@@ -34,4 +34,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowCardPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PublicCardPage);
