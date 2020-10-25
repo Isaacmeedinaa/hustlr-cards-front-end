@@ -3,6 +3,8 @@ import {
   SET_CARD_THEME_ID,
   SET_CARD_PUBLIC,
   SET_CARD_NOT_PUBLIC,
+  UPLOAD_BACKDROP_IMAGE,
+  DELETE_BACKDROP_IMAGE,
   UPLOAD_BUSINESS_PROFILE_PICTURE,
   DELETE_BUSINESS_PROFILE_PICTURE,
   SET_CARD_TITLE,
@@ -34,6 +36,8 @@ const initialState = {
     phoneNumber: "",
     imgUrl: "",
     imgId: null,
+    backdropImgUrl: "",
+    backdropImgId: null,
     pathToCard: "",
     isPublic: null,
     facebookLink: "",
@@ -67,6 +71,8 @@ const card = (state = initialState, action) => {
           phoneNumber: action.cardData.phoneNumber,
           imgUrl: action.cardData.imgUrl,
           imgId: action.cardData.imgId,
+          backdropImgUrl: action.cardData.backdropImgUrl,
+          backdropImgId: action.cardData.backdropImgId,
           pathToCard: action.cardData.pathToCard,
           isPublic: action.cardData.isPublic,
           facebookLink: action.cardData.facebookLink,
@@ -113,6 +119,26 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           isPublic: false,
+        },
+      };
+
+    case UPLOAD_BACKDROP_IMAGE:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          backdropImgId: action.backdropImgId,
+          backdropImgUrl: action.backdropImgUrl,
+        },
+      };
+
+    case DELETE_BACKDROP_IMAGE:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          backdropImgUrl: "",
+          backdropImgId: null,
         },
       };
 
@@ -199,18 +225,19 @@ const card = (state = initialState, action) => {
         },
       };
 
-      case SET_CARD_OFFERING_DESCRIPTION:
-        const offeringsSnapshotThree = [...state.cardData.offerings];
-        const offeringSnapshotThree = offeringsSnapshotThree[action.offeringIndex];
-        offeringSnapshotThree.description = action.offeringDescription;
-  
-        return {
-          ...state,
-          cardData: {
-            ...state.cardData,
-            offerings: offeringsSnapshotThree,
-          },
-        };
+    case SET_CARD_OFFERING_DESCRIPTION:
+      const offeringsSnapshotThree = [...state.cardData.offerings];
+      const offeringSnapshotThree =
+        offeringsSnapshotThree[action.offeringIndex];
+      offeringSnapshotThree.description = action.offeringDescription;
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          offerings: offeringsSnapshotThree,
+        },
+      };
 
     case CREATE_OFFERING:
       return {

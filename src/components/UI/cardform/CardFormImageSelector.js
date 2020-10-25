@@ -44,16 +44,13 @@ class CardFormImageSelector extends Component {
   render() {
     return (
       <Fragment>
-        <div className="primary-color-bg card-form-business-img-container">
+        <div
+          className="primary-color-bg card-form-business-img-container"
+          style={{ backgroundImage: `url(${this.props.imgUrl})` }}
+        >
           {this.props.cardImageLoader ? (
             <Loader type="TailSpin" color="#fff" width={50} height={50} />
-          ) : (
-            <img
-              className="card-form-business-img"
-              src={this.state.imgUrl}
-              alt="business-profile"
-            />
-          )}
+          ) : null}
         </div>
         <button className="ui floating dropdown button card-form-button edit-image-dropdown primary-font">
           <span className="card-form-button-text">Edit Profile Image</span>

@@ -9,6 +9,8 @@ class Card {
     phoneNumber,
     imgUrl,
     imgId,
+    backdropImgUrl,
+    backdropImgId,
     pathToCard,
     isPublic,
     facebookLink,
@@ -31,6 +33,8 @@ class Card {
     this.phoneNumber = phoneNumber;
     this.imgUrl = imgUrl;
     this.imgId = imgId;
+    this.backdropImgUrl = backdropImgUrl;
+    this.backdropImgId = backdropImgId;
     this.pathToCard = pathToCard;
     this.isPublic = isPublic;
     this.facebookLink = facebookLink;
