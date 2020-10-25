@@ -1092,9 +1092,32 @@ a > i {
 }
 
 .user-settings-header {
-  width: 100%;
   text-align: start;
   font-size: 18px;
+}
+
+.settings-accordion-icon-container {
+  background: rgba(46, 204, 113, 0.25);
+  border-radius: 50%;
+  display: flex;
+  width: 25px;
+  height: 25px;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-accordion-icon-container:hover {
+  cursor: pointer;
+}
+
+.personal-info-form-header-btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings-form-animation-container {
+  width: 100% !important;
 }
 
 .personal-info-form-container {
@@ -1159,6 +1182,13 @@ a > i {
   outline: none;
 }
 
+.payment-method-form-header-btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
 .payment-method-form-container {
   display: flex;
   flex-direction: column;
@@ -1166,7 +1196,6 @@ a > i {
   justify-content: center;
   width: 100%;
   max-width: 100%;
-  margin-top: 30px;
 }
 
 .payment-method-form-input {
@@ -1265,6 +1294,13 @@ a > i {
   outline: none;
 }
 
+.change-password-form-header-btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
 .change-password-form-container {
   display: flex;
   flex-direction: column;
@@ -1272,7 +1308,6 @@ a > i {
   justify-content: center;
   width: 100%;
   max-width: 100%;
-  margin-top: 30px;
 }
 
 .change-password-form-input {

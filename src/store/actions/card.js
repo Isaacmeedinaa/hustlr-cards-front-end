@@ -146,6 +146,8 @@ export const saveCard = (cardId) => {
       phoneNumber: cardData.phoneNumber,
       imgUrl: cardData.imgUrl,
       imgId: cardData.imgId,
+      backdropImgUrl: cardData.backdropImgUrl,
+      backdropImgId: cardData.backdropImgId,
       pathToCard: cardData.pathToCard,
       isPublic: cardData.isPublic,
       facebookLink: cardData.facebookLink,
