@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 
+import { Animated } from "react-animated-css";
+
 class SubscriptionSettingsForm extends Component {
   render() {
     return (
-      <div className="primary-light-bg subscription-settings-wrapper">
-        <div className="subscription-settings-text-container">
-          <h4>Subscription Settings</h4>
-          <p>
-            You currently are in the <b>BETA</b> subcription.
-          </p>
+      <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
+        <div className="primary-light-bg subscription-settings-wrapper">
+          <div className="subscription-settings-text-container">
+            <h4>Subscription Settings</h4>
+            <p>
+              You currently are in the <b>BETA</b> subcription.
+            </p>
+          </div>
         </div>
-      </div>
+      </Animated>
     );
   }
 }
