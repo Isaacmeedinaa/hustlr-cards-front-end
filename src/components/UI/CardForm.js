@@ -4,11 +4,26 @@ import { Animated } from "react-animated-css";
 
 import { connect } from "react-redux";
 import { uploadBusinessProfilePicture } from "../../store/actions/card";
-import { hideNotification as hideCardSavedNotification } from '../../store/actions/notifications/cardSavedNotifications';
-import { hideOfferingCreatedNotification, hideOfferingSavedNotification, hideOfferingDeletedNotification } from '../../store/actions/notifications/offeringNotifications';
-import { hideGalleryImageUploadedNotification, hideGalleryImageDeletedNotification } from '../../store/actions/notifications/galleryNotifications';
-import { hideProfileImageUploadedNotification, hideProfileImageDeletedNotification } from '../../store/actions/notifications/profileImageNotifications';
+import { hideNotification as hideCardSavedNotification } from "../../store/actions/notifications/cardSavedNotifications";
+import {
+  hideOfferingCreatedNotification,
+  hideOfferingSavedNotification,
+  hideOfferingDeletedNotification,
+} from "../../store/actions/notifications/offeringNotifications";
+import {
+  hideGalleryImageUploadedNotification,
+  hideGalleryImageDeletedNotification,
+} from "../../store/actions/notifications/galleryNotifications";
+import {
+  hideProfileImageUploadedNotification,
+  hideProfileImageDeletedNotification,
+} from "../../store/actions/notifications/profileImageNotifications";
+import {
+  hideBackdropImageUploadedNotification,
+  hideBackdropImageDeletedNotification,
+} from "../../store/actions/notifications/backdropImageNotifications";
 
+import CardFormBackdropImageSelector from "./cardform/CardFormBackdropImageSelector";
 import CardFormImageSelector from "./cardform/CardFormImageSelector";
 import CardFormTitleInput from "./cardform/CardFormTitleInput";
 import CardFormLocationInputs from "./cardform/CardFormLocationInputs";
@@ -23,7 +38,7 @@ import CardFormAddImageButton from "./cardform/CardFormAddImageButton";
 import CardFormGallerySlider from "./cardform/CardFormGallerySlider";
 import CardFormCardPathInput from "./cardform/CardFormCardPathInput";
 
-import $ from 'jquery';
+import $ from "jquery";
 
 import "../../constants/colors.css";
 import "./UI.css";
@@ -32,7 +47,7 @@ class CardForm extends Component {
   state = {
     isHidden: true,
     deleteModalShown: false,
-    offerings: []
+    offerings: [],
   };
 
   componentWillReceiveProps(nextProps) {
@@ -44,59 +59,99 @@ class CardForm extends Component {
 
   componentDidUpdate() {
     if (this.props.cardSavedNotification.show) {
-      this.displayNotification(this.props.cardSavedNotification.success, this.props.cardSavedNotification.message);
+      this.displayNotification(
+        this.props.cardSavedNotification.success,
+        this.props.cardSavedNotification.message
+      );
       this.props.hideCardSavedNotification();
     }
 
     if (this.props.offeringNotifications.created.show) {
-      this.displayNotification(this.props.offeringNotifications.created.success, this.props.offeringNotifications.created.message);
+      this.displayNotification(
+        this.props.offeringNotifications.created.success,
+        this.props.offeringNotifications.created.message
+      );
       this.props.hideOfferingCreatedNotification();
     }
 
     if (this.props.offeringNotifications.saved.show) {
-      this.displayNotification(this.props.offeringNotifications.saved.success, this.props.offeringNotifications.saved.message);
+      this.displayNotification(
+        this.props.offeringNotifications.saved.success,
+        this.props.offeringNotifications.saved.message
+      );
       this.props.hideOfferingSavedNotification();
     }
 
     if (this.props.offeringNotifications.deleted.show) {
-      this.displayNotification(this.props.offeringNotifications.deleted.success, this.props.offeringNotifications.deleted.message);
+      this.displayNotification(
+        this.props.offeringNotifications.deleted.success,
+        this.props.offeringNotifications.deleted.message
+      );
       this.props.hideOfferingDeletedNotification();
     }
 
     if (this.props.galleryNotifications.uploaded.show) {
-      this.displayNotification(this.props.galleryNotifications.uploaded.success, this.props.galleryNotifications.uploaded.message);
+      this.displayNotification(
+        this.props.galleryNotifications.uploaded.success,
+        this.props.galleryNotifications.uploaded.message
+      );
       this.props.hideGalleryImageUploadedNotification();
     }
 
     if (this.props.galleryNotifications.deleted.show) {
-      this.displayNotification(this.props.galleryNotifications.deleted.success, this.props.galleryNotifications.deleted.message);
+      this.displayNotification(
+        this.props.galleryNotifications.deleted.success,
+        this.props.galleryNotifications.deleted.message
+      );
       this.props.hideGalleryImageDeletedNotification();
     }
 
     if (this.props.profileImageNotifications.uploaded.show) {
-      this.displayNotification(this.props.profileImageNotifications.uploaded.success, this.props.profileImageNotifications.uploaded.message);
+      this.displayNotification(
+        this.props.profileImageNotifications.uploaded.success,
+        this.props.profileImageNotifications.uploaded.message
+      );
       this.props.hideProfileImageUploadedNotification();
     }
 
     if (this.props.profileImageNotifications.deleted.show) {
-      this.displayNotification(this.props.profileImageNotifications.deleted.success, this.props.profileImageNotifications.deleted.message);
+      this.displayNotification(
+        this.props.profileImageNotifications.deleted.success,
+        this.props.profileImageNotifications.deleted.message
+      );
       this.props.hideProfileImageDeletedNotification();
+    }
+
+    if (this.props.backdropImageNotifications.uploaded.show) {
+      this.displayNotification(
+        this.props.backdropImageNotifications.uploaded.success,
+        this.props.backdropImageNotifications.uploaded.message
+      );
+      this.props.hideBackdropImageUploadedNotification();
+    }
+
+    if (this.props.backdropImageNotifications.deleted.show) {
+      this.displayNotification(
+        this.props.backdropImageNotifications.deleted.success,
+        this.props.backdropImageNotifications.deleted.message
+      );
+      this.props.hideBackdropImageDeletedNotification();
     }
   }
 
   displayNotification(success, message) {
-    $('body').toast({
-      class: success ? 'success' : 'error',
-      position: 'bottom center',
+    $("body").toast({
+      class: success ? "success" : "error",
+      position: "bottom center",
       message: message,
-      showIcon: success ? 'check circle' : 'exclamation',
+      showIcon: success ? "check circle" : "exclamation",
       displayTime: 3000,
       transition: {
-        showMethod   : 'fade',
-        showDuration : 1000,
-        hideMethod   : 'fade',
-        hideDuration : 1000
-      }
+        showMethod: "fade",
+        showDuration: 1000,
+        hideMethod: "fade",
+        hideDuration: 1000,
+      },
     });
   }
 
@@ -149,6 +204,7 @@ class CardForm extends Component {
                 {error.message}
               </p>
             ))}
+            <CardFormBackdropImageSelector />
             <CardFormImageSelector />
             <CardFormTitleInput />
             <CardFormLocationInputs />
@@ -180,7 +236,8 @@ const mapStateToProps = (state) => {
     cardSavedNotification: state.cardSavedNotification,
     offeringNotifications: state.offeringNotifications,
     galleryNotifications: state.galleryNotifications,
-    profileImageNotifications: state.profileImageNotifications
+    profileImageNotifications: state.profileImageNotifications,
+    backdropImageNotifications: state.backdropImageNotifications,
   };
 };
 
@@ -189,13 +246,24 @@ const mapDispatchToProps = (dispatch) => {
     uploadBusinessProfilePicture: (imgData, cardId) =>
       dispatch(uploadBusinessProfilePicture(imgData, cardId)),
     hideCardSavedNotification: () => dispatch(hideCardSavedNotification()),
-    hideOfferingCreatedNotification: () => dispatch(hideOfferingCreatedNotification()),
-    hideOfferingSavedNotification: () => dispatch(hideOfferingSavedNotification()),
-    hideOfferingDeletedNotification: () => dispatch(hideOfferingDeletedNotification()),
-    hideGalleryImageUploadedNotification: () => dispatch(hideGalleryImageUploadedNotification()),
-    hideGalleryImageDeletedNotification: () => dispatch(hideGalleryImageDeletedNotification()),
-    hideProfileImageUploadedNotification: () => dispatch(hideProfileImageUploadedNotification()),
-    hideProfileImageDeletedNotification: () => dispatch(hideProfileImageDeletedNotification())
+    hideOfferingCreatedNotification: () =>
+      dispatch(hideOfferingCreatedNotification()),
+    hideOfferingSavedNotification: () =>
+      dispatch(hideOfferingSavedNotification()),
+    hideOfferingDeletedNotification: () =>
+      dispatch(hideOfferingDeletedNotification()),
+    hideGalleryImageUploadedNotification: () =>
+      dispatch(hideGalleryImageUploadedNotification()),
+    hideGalleryImageDeletedNotification: () =>
+      dispatch(hideGalleryImageDeletedNotification()),
+    hideProfileImageUploadedNotification: () =>
+      dispatch(hideProfileImageUploadedNotification()),
+    hideProfileImageDeletedNotification: () =>
+      dispatch(hideProfileImageDeletedNotification()),
+    hideBackdropImageUploadedNotification: () =>
+      dispatch(hideBackdropImageUploadedNotification()),
+    hideBackdropImageDeletedNotification: () =>
+      dispatch(hideBackdropImageDeletedNotification()),
   };
 };
 

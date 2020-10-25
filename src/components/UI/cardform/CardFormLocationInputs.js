@@ -56,7 +56,13 @@ class CardFormLocationInputs extends Component {
                   fontWeight: 500,
                   height: 40,
                 }),
-                menu: (base) => ({ ...base, color: "#000" }),
+                menu: (base) => ({
+                  ...base,
+                  color: "#000",
+                  boxShadow: "0px 5px 0px -1px #cdcdd2",
+                  borderRadius: 5,
+                  border: "1px solid #cdcdd2",
+                }),
                 option: (base, state) => ({
                   ...base,
                   color: state.isSelected ? "#2ecc71" : "black",

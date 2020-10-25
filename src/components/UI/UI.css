@@ -297,13 +297,68 @@
   color: rgb(252, 86, 86);
 }
 
+.card-form-backdrop-image-container {
+  width: 127.5%;
+  height: 180px;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-form-backdrop-image-btns-container {
+  display: flex;
+  align-self: flex-end;
+}
+
+.card-form-backdrop-image-btn {
+  height: 35px;
+  width: 35px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(46, 204, 113, 0.25);
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.card-form-backdrop-image-btn:hover {
+  cursor: pointer;
+}
+
+.card-form-backdrop-image-btn:focus {
+  outline: none;
+}
+
+.card-form-backdrop-image-spinner-loader-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .card-form-business-img-container {
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  margin-top: -65px;
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 6px solid #ffffff;
 }
 
 .card-form-delete-business-img {
@@ -719,13 +774,39 @@
   text-decoration: none;
 }
 
+.card-business-backdrop-image-container {
+  width: 127.5%;
+  height: 180px;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+}
+
+.card-business-backdrop-image-spinner-loader-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .card-business-img-container {
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  /* margin-top: -65px; */
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 6px solid #ffffff;
 }
 
 .card-business-img {

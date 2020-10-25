@@ -1,5 +1,5 @@
 import Card from "../../models/card";
-import { API_BASE_URL } from '../../constants/urls';
+import { API_BASE_URL } from "../../constants/urls";
 
 import { CARD_IS_LOADING, CARD_IS_NOT_LOADING } from "./loaders/cardLoader";
 import {
@@ -16,20 +16,30 @@ import {
   OFFERING_SAVED_SUCCESSFULLY,
   OFFERING_SAVED_UNSUCCESSFULLY,
   OFFERING_DELETED_SUCCESSFULLY,
-  OFFERING_DELETED_UNSUCCESSFULLY
+  OFFERING_DELETED_UNSUCCESSFULLY,
 } from "./notifications/offeringNotifications";
 import {
   GALLERY_IMAGE_UPLOADED_SUCCESSFULLY,
   GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY,
   GALLERY_IMAGE_DELETED_SUCCESSFULLY,
-  GALLERY_IMAGE_DELETED_UNSUCCESSFULLY
+  GALLERY_IMAGE_DELETED_UNSUCCESSFULLY,
 } from "./notifications/galleryNotifications";
 import {
   PROFILE_IMAGE_UPLOADED_SUCCESSFULLY,
   PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY,
   PROFILE_IMAGE_DELETED_SUCCESSFULLY,
-  PROFILE_IMAGE_DELETED_UNSUCCESSFULLY
+  PROFILE_IMAGE_DELETED_UNSUCCESSFULLY,
 } from "./notifications/profileImageNotifications";
+import {
+  BACKDROP_IMAGE_UPLOADED_SUCCESSFULLY,
+  BACKDROP_IMAGE_UPLOADED_UNSUCCESSFULLY,
+  BACKDROP_IMAGE_DELETED_SUCCESSFULLY,
+  BACKDROP_IMAGE_DELETED_UNSUCCESSFULLY,
+} from "./notifications/backdropImageNotifications";
+import {
+  CARD_BACKDROP_IMAGE_IS_UPLOADING,
+  CARD_BACKDROP_IMAGE_IS_NOT_UPLOADING,
+} from "./loaders/cardBackdropImageLoader";
 import {
   CARD_IMAGE_IS_UPLOADING,
   CARD_IMAGE_IS_NOT_UPLOADING,
@@ -45,6 +55,8 @@ export const SET_CARD = "SET_CARD";
 export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
 export const SET_CARD_PUBLIC = "SET_CARD_PUBLIC";
 export const SET_CARD_NOT_PUBLIC = "SET_CARD_NOT_PUBLIC";
+export const UPLOAD_BACKDROP_IMAGE = "UPLOAD_BACKDROP_IMAGE";
+export const DELETE_BACKDROP_IMAGE = "DELETE_BACKDROP_IMAGE";
 export const UPLOAD_BUSINESS_PROFILE_PICTURE =
   "UPLOAD_BUSINESS_PROFILE_PICTURE";
 export const DELETE_BUSINESS_PROFILE_PICTURE =
@@ -90,6 +102,8 @@ export const fetchCard = (userId) => {
           card.phoneNumber,
           card.imgUrl,
           card.imgId,
+          card.backdropImgUrl,
+          card.backdropImgId,
           card.pathToCard,
           card.isPublic,
           card.facebookLink,
@@ -156,7 +170,7 @@ export const saveCard = (cardId) => {
         "Content-Type": "application/json",
         Accepts: "application/json",
       },
-      body: JSON.stringify(updateCardData)
+      body: JSON.stringify(updateCardData),
     };
 
     fetch(`${API_BASE_URL}/cards/${cardId}`, reqObj)
@@ -167,10 +181,10 @@ export const saveCard = (cardId) => {
         if (data.errors) {
           dispatch({ type: CARD_ERRORS, errors: data.errors });
           dispatch({ type: CARD_IS_NOT_UPDATING });
-          dispatch({type: CARD_SAVE_UNSUCCESSFUL});
+          dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
           return;
         }
-        dispatch({type: CARD_SAVED_SUCCESSFULLY});
+        dispatch({ type: CARD_SAVED_SUCCESSFULLY });
         dispatch({ type: CARD_NO_ERRORS });
         dispatch({ type: CARD_IS_NOT_UPDATING });
       });
@@ -197,6 +211,78 @@ export const setIsPublic = (isPublic) => {
   };
 };
 
+export const uploadBackdropImage = (reqImgData, cardId) => {
+  return (dispatch) => {
+    const body = new FormData();
+    body.append("CardId", cardId);
+    body.append("File", reqImgData);
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        Accepts: "application/json",
+      },
+      body: body,
+    };
+
+    dispatch({ type: CARD_BACKDROP_IMAGE_IS_UPLOADING });
+    fetch(`${API_BASE_URL}/photos/backdrop`, reqObj)
+      .then((resp) => {
+        console.log(resp);
+        if (!resp.ok) {
+          dispatch({ type: CARD_BACKDROP_IMAGE_IS_NOT_UPLOADING });
+          dispatch({ type: BACKDROP_IMAGE_UPLOADED_UNSUCCESSFULLY });
+          return;
+        }
+        return resp.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: UPLOAD_BACKDROP_IMAGE,
+          backdropImgUrl: data.url,
+          backdropImgId: data.id,
+        });
+        dispatch({ type: CARD_BACKDROP_IMAGE_IS_NOT_UPLOADING });
+        dispatch({ type: BACKDROP_IMAGE_UPLOADED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: BACKDROP_IMAGE_UPLOADED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const deleteBackdropImage = (imgId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: CARD_BACKDROP_IMAGE_IS_UPLOADING });
+    fetch(`${API_BASE_URL}/photos/${imgId}`, reqObj)
+      .then((resp) => {
+        if (resp.ok) {
+          dispatch({ type: DELETE_BACKDROP_IMAGE });
+          dispatch({ type: CARD_BACKDROP_IMAGE_IS_NOT_UPLOADING });
+          dispatch({ type: BACKDROP_IMAGE_DELETED_SUCCESSFULLY });
+        }
+      })
+      .catch((err) => {
+        dispatch({ type: BACKDROP_IMAGE_DELETED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
 export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
   return (dispatch) => {
     const body = new FormData();
@@ -219,7 +305,7 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
       .then((resp) => {
         if (!resp.ok) {
           dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
-          dispatch({type: PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY});
+          dispatch({ type: PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY });
           return;
         }
         return resp.json();
@@ -231,11 +317,11 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
           imgId: data.id,
         });
         dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
-        dispatch({type: PROFILE_IMAGE_UPLOADED_SUCCESSFULLY});
+        dispatch({ type: PROFILE_IMAGE_UPLOADED_SUCCESSFULLY });
       })
       .catch((err) => {
-        dispatch({type: PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY});
-        console.log(err)
+        dispatch({ type: PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY });
+        console.log(err);
       });
   };
 };
@@ -258,12 +344,12 @@ export const deleteBusinessImage = (imgId) => {
         if (resp.ok) {
           dispatch({ type: DELETE_BUSINESS_PROFILE_PICTURE });
           dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
-          dispatch({type: PROFILE_IMAGE_DELETED_SUCCESSFULLY});
+          dispatch({ type: PROFILE_IMAGE_DELETED_SUCCESSFULLY });
         }
       })
       .catch((err) => {
-        dispatch({type: PROFILE_IMAGE_DELETED_UNSUCCESSFULLY});
-        console.log(err)
+        dispatch({ type: PROFILE_IMAGE_DELETED_UNSUCCESSFULLY });
+        console.log(err);
       });
   };
 };
@@ -313,7 +399,10 @@ export const setCardOfferingPrice = (offeringIndex, offeringPrice) => {
   };
 };
 
-export const setCardOfferingDescription = (offeringIndex, offeringDescription) => {
+export const setCardOfferingDescription = (
+  offeringIndex,
+  offeringDescription
+) => {
   return {
     type: SET_CARD_OFFERING_DESCRIPTION,
     offeringIndex: offeringIndex,
@@ -347,11 +436,11 @@ export const createOffering = (cardId) => {
       .then((resp) => resp.json())
       .then((offering) => {
         dispatch({ type: CREATE_OFFERING, offering: offering });
-        dispatch({type: OFFERING_CREATED_SUCCESSFULLY});
+        dispatch({ type: OFFERING_CREATED_SUCCESSFULLY });
       })
       .catch((err) => {
-        dispatch({type: OFFERING_CREATED_UNSUCCESSFULLY});
-        console.log(err)
+        dispatch({ type: OFFERING_CREATED_UNSUCCESSFULLY });
+        console.log(err);
       });
   };
 };
@@ -387,13 +476,12 @@ export const updateOffering = (id, title, description, price, cardId) => {
           id: offering.id,
           offering: offering,
         });
-        dispatch({type: OFFERING_SAVED_SUCCESSFULLY});
+        dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });
       })
       .catch((err) => {
-          dispatch({type: OFFERING_SAVED_UNSUCCESSFULLY});
-          console.log(err)
-        }
-      );
+        dispatch({ type: OFFERING_SAVED_UNSUCCESSFULLY });
+        console.log(err);
+      });
   };
 };
 
@@ -419,13 +507,12 @@ export const deleteOffering = (id, index) => {
       .then(() => {})
       .then(() => {
         dispatch({ type: DELETE_OFFERING, id: id });
-        dispatch({type: OFFERING_DELETED_SUCCESSFULLY});
+        dispatch({ type: OFFERING_DELETED_SUCCESSFULLY });
       })
       .catch((err) => {
-        dispatch({type: OFFERING_DELETED_UNSUCCESSFULLY});
-        console.log(err)
-      }
-    );
+        dispatch({ type: OFFERING_DELETED_UNSUCCESSFULLY });
+        console.log(err);
+      });
   };
 };
 
@@ -481,12 +568,12 @@ export const uploadGalleryImage = (reqImgData, cardId) => {
       .then((data) => {
         dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-        dispatch({type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY});
+        dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
       })
       .catch((err) => {
         console.log(err);
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-        dispatch({type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY});
+        dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
       });
   };
 };
@@ -509,12 +596,12 @@ export const deleteGalleryImage = (photoId) => {
           dispatch({ type: DELETE_CARD_GALLERY_PICTURE, photoId: photoId });
         }
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-        dispatch({type: GALLERY_IMAGE_DELETED_SUCCESSFULLY});
+        dispatch({ type: GALLERY_IMAGE_DELETED_SUCCESSFULLY });
       })
       .catch((err) => {
         console.log(err);
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-        dispatch({type: GALLERY_IMAGE_DELETED_UNSUCCESSFULLY});
+        dispatch({ type: GALLERY_IMAGE_DELETED_UNSUCCESSFULLY });
       });
   };
 };

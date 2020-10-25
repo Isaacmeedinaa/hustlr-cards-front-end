@@ -1,14 +1,13 @@
 import {
   PASSWORD_CHANGED_SUCCESSFULLY,
   PASSWORD_CHANGED_UNSUCCESSFULLY,
-  HIDE_PASSWORD_CHANGED_NOTIFICATION
-
+  HIDE_PASSWORD_CHANGED_NOTIFICATION,
 } from "../../actions/notifications/changePasswordNotifications";
 
 const intialState = {
   show: false,
   success: false,
-  message: ''
+  message: "",
 };
 
 const changePasswordNotifications = (state = intialState, action) => {
@@ -16,22 +15,22 @@ const changePasswordNotifications = (state = intialState, action) => {
     case PASSWORD_CHANGED_SUCCESSFULLY:
       return {
         show: true,
-          success: true,
-          message: 'Your password was changed!'
+        success: true,
+        message: "Your password was changed!",
       };
 
     case PASSWORD_CHANGED_UNSUCCESSFULLY:
       return {
         show: true,
         success: false,
-        message: 'Oops, something went wrong.'
+        message: "Oops, something went wrong.",
       };
 
     case HIDE_PASSWORD_CHANGED_NOTIFICATION:
       return {
         show: false,
         success: undefined,
-        message: ''
+        message: "",
       };
     default:
       return state;
