@@ -13,6 +13,7 @@ import auth from "./auth";
 
 // Loaders
 import cardLoader from "./loaders/cardLoader";
+import publicCardLoader from "./loaders/publicCardLoader";
 import cardBackdropImageLoader from "./loaders/cardBackdropImageLoader";
 import cardImageLoader from "./loaders/cardImageLoader";
 import cardGalleryImageLoader from "./loaders/cardGalleryImageLoader";
@@ -62,6 +63,7 @@ const rootReducer = combineReducers({
   changePasswordNotifications,
   auth,
   backdropImageNotifications,
+  publicCardLoader,
 });
 
 export default rootReducer;
