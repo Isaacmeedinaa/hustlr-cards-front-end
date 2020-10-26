@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import "./pages.css";
 
 import { connect } from "react-redux";
 import { fetchPublicCard } from "../../store/actions/publicCard";
+
+import PublicCard from "../UI/publiccard/PublicCard";
+
+import "./pages.css";
 
 class PublicCardPage extends Component {
   componentWillMount() {
@@ -12,17 +15,24 @@ class PublicCardPage extends Component {
   }
 
   render() {
-    if (this.props.cardLoader) {
+    if (!this.props.publicCard) {
       return null;
     }
 
-    return <div>PublicCardPage.js</div>;
+    return (
+      <div
+        className="public-card-page-wrapper"
+        style={{ backgroundColor: this.props.publicCard.primaryColor }}
+      >
+        <PublicCard />
+      </div>
+    );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    cardLoader: state.cardLoader,
+    publicCardLoader: state.publicCardLoader,
     publicCard: state.publicCard,
   };
 };
