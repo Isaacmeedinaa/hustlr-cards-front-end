@@ -25,6 +25,8 @@ import changePasswordLoader from "./loaders/changePasswordLoader";
 import cardErrors from "./errors/cardErrors";
 import personalInfoErrors from "./errors/personalInfoErrors";
 import changePasswordErrors from "./errors/changePasswordErrors";
+import forgotPasswordErrors from "./errors/forgotPasswordErrors";
+import changePasswordCodeErrors from "./errors/changePasswordCodeErrors";
 
 // Notifications
 import changePasswordNotifications from "./notifications/changePasswordNotifications";
@@ -64,6 +66,8 @@ const rootReducer = combineReducers({
   auth,
   backdropImageNotifications,
   publicCardLoader,
+  forgotPasswordErrors,
+  changePasswordCodeErrors,
 });
 
 export default rootReducer;
