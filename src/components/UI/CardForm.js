@@ -47,15 +47,7 @@ class CardForm extends Component {
   state = {
     isHidden: true,
     deleteModalShown: false,
-    offerings: [],
   };
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      ...this.state,
-      offerings: nextProps.cardData.offerings,
-    });
-  }
 
   componentDidUpdate() {
     if (this.props.cardSavedNotification.show) {
@@ -155,16 +147,6 @@ class CardForm extends Component {
     });
   }
 
-  handleImageSelectorClick = (event) => {
-    const reqImgData = event.target.files[0];
-    const cardId = this.state.id;
-
-    let reader = new FileReader();
-    reader.readAsDataURL(reqImgData);
-
-    this.props.uploadBusinessProfilePicture(reqImgData, cardId);
-  };
-
   showSocialMediaLinks = async () => {
     await this.setState((prevState) => {
       return {
@@ -174,7 +156,7 @@ class CardForm extends Component {
   };
 
   renderOfferingsInputs = () => {
-    return this.state.offerings.map((offering, index) => {
+    return this.props.cardData.offerings.map((offering, index) => {
       return (
         <CardFormOfferingInputs
           key={offering.id}

@@ -11,7 +11,7 @@ const CardOfferings = (props) => {
       }
       return (
         <div
-          key={index}
+          key={offering.id}
           style={{ backgroundColor: props.transparentColor }}
           className="card-business-product-service-container"
         >

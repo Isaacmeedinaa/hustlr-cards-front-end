@@ -14,12 +14,12 @@ const CardPhoneNumber = (props) => {
       className="card-business-social-media-icon-container"
     >
       <a href={"tel:" + props.phoneNumber} target="_black">
-        <i  className="phone alternate icon card-business-social-media-icon" 
-            style={{ color: props.primaryColor, fontSize: '16px' }}>
-        </i>
+        <i
+          className="phone alternate icon card-business-social-media-icon"
+          style={{ color: props.primaryColor, fontSize: "16px" }}
+        ></i>
       </a>
     </div>
-    
   );
 };
 
