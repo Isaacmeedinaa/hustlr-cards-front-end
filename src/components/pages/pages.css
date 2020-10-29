@@ -180,6 +180,17 @@
   padding: 15px 20px 15px 20px;
 }
 
+.public-card-page-wrapper {
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+}
+
 /* 770 breakpoint for the home page */
 @media only screen and (max-width: 1000px) {
   .grid-container-home {

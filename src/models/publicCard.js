@@ -1,4 +1,4 @@
-class Card {
+class PublicCard {
   constructor(
     id,
     title,
@@ -22,7 +22,9 @@ class Card {
     userId,
     industry,
     photos,
-    offerings
+    offerings,
+    primaryColor,
+    transparentColor
   ) {
     this.id = id;
     this.title = title;
@@ -47,7 +49,9 @@ class Card {
     this.industry = industry;
     this.photos = photos;
     this.offerings = offerings;
+    this.primaryColor = primaryColor;
+    this.transparentColor = transparentColor;
   }
 }
 
-export default Card;
+export default PublicCard;

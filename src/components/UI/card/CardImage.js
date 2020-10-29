@@ -11,16 +11,17 @@ const CardImage = (props) => {
   }
 
   return (
-    <div className="primary-color-bg card-business-img-container">
+    <div
+      className="primary-color-bg card-business-img-container"
+      style={{
+        backgroundImage: `url(${props.imgUrl})`,
+        marginTop:
+          !props.backdropImgUrl || props.backdropImgUrl === "" ? 0 : -65,
+      }}
+    >
       {props.cardImageLoader ? (
         <Loader type="TailSpin" color="#fff" width={50} height={50} />
-      ) : (
-        <img
-          className="card-business-img"
-          src={props.imgUrl}
-          alt="business-profile"
-        />
-      )}
+      ) : null}
     </div>
   );
 };

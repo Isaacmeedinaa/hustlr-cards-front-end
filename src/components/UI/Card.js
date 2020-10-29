@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Animated } from "react-animated-css";
 import { connect } from "react-redux";
 
+import CardBackdropImage from "./card/CardBackdropImage";
 import CardImage from "./card/CardImage";
 import CardTitle from "./card/CardTitle";
 import CardDescription from "./card/CardDescription";
@@ -25,8 +26,13 @@ class Card extends Component {
       <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-wrapper">
           <div className="card-container">
+            <CardBackdropImage
+              backdropImgUrl={this.props.cardData.backdropImgUrl}
+              cardBackdropImageLoader={this.props.cardBackdropImageLoader}
+            />
             <CardImage
               imgUrl={this.props.cardData.imgUrl}
+              backdropImgUrl={this.props.cardData.backdropImgUrl}
               cardImageLoader={this.props.cardImageLoader}
             />
             <CardTitle title={this.props.cardData.title} />
@@ -70,6 +76,7 @@ const mapStateToProps = (state) => {
   return {
     cardLoader: state.cardLoader,
     cardImageLoader: state.cardImageLoader,
+    cardBackdropImageLoader: state.cardBackdropImageLoader,
     cardData: state.card.cardData,
     cardTheme: state.card.cardTheme,
     industries: state.industries,

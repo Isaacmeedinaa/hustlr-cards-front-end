@@ -8,8 +8,8 @@ import {
 
 import { connect } from "react-redux";
 import { fetchIndustries } from "./store/actions/industries";
-import { userAutoLogin } from './store/actions/user';
-import { setIsNotAuthenticated } from './store/actions/auth';
+import { userAutoLogin } from "./store/actions/user";
+import { setIsNotAuthenticated } from "./store/actions/auth";
 
 import IdleTimer from "react-idle-timer";
 
@@ -22,7 +22,7 @@ import RegisterPage from "./components/pages/RegisterPage";
 import HomePage from "./components/pages/HomePage";
 import SettingsPage from "./components/pages/SettingsPage";
 import SupportPage from "./components/pages/SupportPage";
-import ShowCardPage from "./components/pages/ShowCardPage";
+import PublicCardPage from "./components/pages/PublicCardPage";
 import ProtectedRoute from "./components/hoc/ProtectedRoute";
 
 class App extends Component {
@@ -40,8 +40,7 @@ class App extends Component {
 
     if (userToken) {
       this.props.userAutoLogin();
-    }
-    else {
+    } else {
       this.props.setIsNotAuthenticated();
     }
 
@@ -88,11 +87,26 @@ class App extends Component {
             <Route path="/404" component={NotFoundPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/register" component={RegisterPage} />
-            <ProtectedRoute exact path="/home" component={HomePage} isAuthenticated={this.props.auth.isAuthenticated} />
-            <ProtectedRoute exact path ="/settings" component={SettingsPage} isAuthenticated={this.props.auth.isAuthenticated}/>
-            <ProtectedRoute exact path="/support" component={SupportPage} isAuthenticated={this.props.auth.isAuthenticated}/>
+            <ProtectedRoute
+              exact
+              path="/home"
+              component={HomePage}
+              isAuthenticated={this.props.auth.isAuthenticated}
+            />
+            <ProtectedRoute
+              exact
+              path="/settings"
+              component={SettingsPage}
+              isAuthenticated={this.props.auth.isAuthenticated}
+            />
+            <ProtectedRoute
+              exact
+              path="/support"
+              component={SupportPage}
+              isAuthenticated={this.props.auth.isAuthenticated}
+            />
             <Route exact path="/landing" component={LandingPage} />
-            <Route exact path="/:username" component={ShowCardPage} />
+            <Route exact path="/:pathToCard" component={PublicCardPage} />
             <Route exact path="/" component={LandingPage} />
             <Redirect to="/404" />
           </Switch>
@@ -105,7 +119,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     industriesLoader: state.industriesLoader,
-    auth: state.auth
+    auth: state.auth,
   };
 };
 
@@ -113,7 +127,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchIndustries: () => dispatch(fetchIndustries()),
     userAutoLogin: () => dispatch(userAutoLogin()),
-    setIsNotAuthenticated: () => dispatch(setIsNotAuthenticated())
+    setIsNotAuthenticated: () => dispatch(setIsNotAuthenticated()),
   };
 };
 
