@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import CardFacebookLink from "./CardFacebookLink";
 import CardInstagramLink from "./CardInstagramLink";
@@ -23,7 +23,6 @@ const CardSocialMedias = (props) => {
   }
 
   return (
-    <Fragment>
     <div className="card-business-social-media-links-container">
       <CardPhoneNumber
         primaryColor={props.primaryColor}
@@ -56,7 +55,6 @@ const CardSocialMedias = (props) => {
         snapchatLink={props.snapchatLink}
       />
     </div>
-    </Fragment>
   );
 };
 

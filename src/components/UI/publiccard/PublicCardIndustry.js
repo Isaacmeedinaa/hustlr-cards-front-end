@@ -3,25 +3,22 @@ import React from "react";
 import "../../../constants/colors.css";
 import "../UI.css";
 
-const CardIndustry = (props) => {
+const PublicCardIndustry = (props) => {
   if (!props.industry || !props.industry.id) {
     return null;
   }
 
   return (
-    <div className="card-business-industry-container">
+    <div className="public-card-industry-container">
       <i
         className={props.industry.icon}
         style={{ color: props.primaryColor }}
       ></i>
-      <p
-        style={{ color: props.primaryColor }}
-        className="card-business-industry"
-      >
+      <p style={{ color: props.primaryColor }} className="public-card-industry">
         {props.industry.title}
       </p>
     </div>
   );
 };
 
-export default CardIndustry;
+export default PublicCardIndustry;
