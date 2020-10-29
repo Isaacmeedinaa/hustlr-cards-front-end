@@ -19,6 +19,8 @@ import LandingPage from "./components/pages/LandingPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
 import LoginPage from "./components/pages/LoginPage";
 import RegisterPage from "./components/pages/RegisterPage";
+import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
+import ChangePasswordPage from "./components/pages/ChangePasswordPage";
 import HomePage from "./components/pages/HomePage";
 import SettingsPage from "./components/pages/SettingsPage";
 import SupportPage from "./components/pages/SupportPage";
@@ -87,6 +89,16 @@ class App extends Component {
             <Route path="/404" component={NotFoundPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/register" component={RegisterPage} />
+            <Route
+              exact
+              path="/forgot-password"
+              component={ForgotPasswordPage}
+            />
+            <Route
+              exact
+              path="/change-password"
+              component={ChangePasswordPage}
+            />
             <ProtectedRoute
               exact
               path="/home"
