@@ -84,14 +84,6 @@ class LoginPage extends Component {
                 value={this.state.password}
                 onChange={this.inputChangeHandler}
               />
-              <div className="remember-me-container">
-                <input
-                  type="checkbox"
-                  checked={this.state.isChecked}
-                  onChange={this.checkBoxChangeHandler}
-                />
-                <label className="remember-me-label">Remember me</label>
-              </div>
               <input
                 className="primary-color-bg primary-light block auth-btn full-width"
                 type="submit"
@@ -101,7 +93,7 @@ class LoginPage extends Component {
 
             <div className="question-link-container-one">
               <p className="question-one">Having trouble logging in?</p>
-              <a className="primary-color link-one" href="/">
+              <a className="primary-color link-one" href="/forgot-password">
                 Reset your password
               </a>
             </div>

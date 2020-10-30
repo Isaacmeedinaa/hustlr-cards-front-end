@@ -63,7 +63,7 @@ class ForgotPasswordPage extends Component {
               <input
                 className="primary-color-bg primary-light block auth-btn full-width"
                 type="submit"
-                value="Submit"
+                value="Reset Password"
               />
             </form>
             <div className="question-link-container-one">
