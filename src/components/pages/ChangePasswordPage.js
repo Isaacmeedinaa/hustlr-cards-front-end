@@ -48,7 +48,7 @@ class ChangePasswordPage extends Component {
           <div className="auth-info">
             <h1 className="primary-color app-name">hustlr.cards</h1>
             <h5 className="auth-text">
-              Recovery code has been sent to your email!
+               A recovery code has been sent to your email!
             </h5>
           </div>
           <AuthCard>
