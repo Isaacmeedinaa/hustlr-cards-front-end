@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { userLogin, userAutoLogin } from "../../store/actions/user";
+import { userChangePassword } from "../../store/actions/user";
 
 import AuthCard from "../UI/AuthCard";
 import AuthFooter from "../UI/AuthFooter";
@@ -9,11 +9,11 @@ import AuthFooter from "../UI/AuthFooter";
 import "./pages.css";
 import "../../constants/colors.css";
 
-class LoginPage extends Component {
+class ChangePasswordPage extends Component {
   state = {
-    isChecked: false,
     username: "",
-    password: "",
+    recoveryCode: "",
+    newPassword: "",
   };
 
   componentDidMount() {
@@ -24,51 +24,42 @@ class LoginPage extends Component {
     }
   }
 
-  checkBoxChangeHandler = () => {
-    this.setState((prevState) => {
-      return {
-        isChecked: !prevState.isChecked,
-      };
-    });
-  };
-
-  inputChangeHandler = (event) => {
-    this.setState({
+  inputChangeHandler = async (event) => {
+    await this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  loginSubmitHandler = async (event) => {
+  changePasswordSubmitHandler = (event) => {
     event.preventDefault();
 
     const username = this.state.username;
-    const password = this.state.password;
+    const recoveryCode = this.state.recoveryCode;
+    const newPassword = this.state.newPassword;
     const history = this.props.history;
 
-    this.props.userLogin(username, password, history);
+    this.props.userChangePassword(username, recoveryCode, newPassword, history);
   };
 
   render() {
-    if (this.props.loginLoader) {
-      return null;
-    }
-
     return (
       <div className="secondary-light-bg auth-container">
         <div>
           <div className="auth-info">
             <h1 className="primary-color app-name">hustlr.cards</h1>
-            <h5 className="auth-text">Login to continue</h5>
+            <h5 className="auth-text">
+               A recovery code has been sent to your email!
+            </h5>
           </div>
           <AuthCard>
-            {this.props.errors.length !== 0
-              ? this.props.errors.map((error, index) => (
+            {this.props.changePasswordCodeErrors.length !== 0
+              ? this.props.changePasswordCodeErrors.map((error, index) => (
                   <p key={index} className="auth-error-text">
                     {error}
                   </p>
                 ))
               : null}
-            <form onSubmit={this.loginSubmitHandler}>
+            <form onSubmit={this.changePasswordSubmitHandler}>
               <input
                 className="block auth-input full-width"
                 placeholder="Username"
@@ -78,23 +69,29 @@ class LoginPage extends Component {
               />
               <input
                 className="block auth-input full-width"
-                placeholder="Password"
+                placeholder="Recovery Code"
+                name="recoveryCode"
+                value={this.state.recoveryCode}
+                onChange={this.inputChangeHandler}
+              />
+              <input
+                className="block auth-input full-width"
+                placeholder="New Password"
+                name="newPassword"
                 type="password"
-                name="password"
-                value={this.state.password}
+                value={this.state.newPassword}
                 onChange={this.inputChangeHandler}
               />
               <input
                 className="primary-color-bg primary-light block auth-btn full-width"
                 type="submit"
-                value="Log In"
+                value="Submit"
               />
             </form>
-
             <div className="question-link-container-one">
-              <p className="question-one">Having trouble logging in?</p>
-              <a className="primary-color link-one" href="/forgot-password">
-                Reset your password
+              <p className="question-one">Remembered Password?</p>
+              <a className="primary-color link-one" href="/login">
+                Back to Login
               </a>
             </div>
             <div className="question-link-container-two">
@@ -113,18 +110,18 @@ class LoginPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    errors: state.errors,
-    loginLoader: state.loginLoader,
     auth: state.auth,
+    changePasswordCodeErrors: state.changePasswordCodeErrors,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userLogin: (username, password, history) =>
-      dispatch(userLogin(username, password, history)),
-    userAutoLogin: (history) => dispatch(userAutoLogin(history)),
+    userChangePassword: (username, recoveryCode, newPassword, history) =>
+      dispatch(
+        userChangePassword(username, recoveryCode, newPassword, history)
+      ),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePasswordPage);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { userLogin, userAutoLogin } from "../../store/actions/user";
+import { userForgotPassword } from "../../store/actions/user";
 
 import AuthCard from "../UI/AuthCard";
 import AuthFooter from "../UI/AuthFooter";
@@ -9,11 +9,9 @@ import AuthFooter from "../UI/AuthFooter";
 import "./pages.css";
 import "../../constants/colors.css";
 
-class LoginPage extends Component {
+class ForgotPasswordPage extends Component {
   state = {
-    isChecked: false,
     username: "",
-    password: "",
   };
 
   componentDidMount() {
@@ -24,51 +22,37 @@ class LoginPage extends Component {
     }
   }
 
-  checkBoxChangeHandler = () => {
-    this.setState((prevState) => {
-      return {
-        isChecked: !prevState.isChecked,
-      };
-    });
-  };
-
-  inputChangeHandler = (event) => {
-    this.setState({
+  inputChangeHandler = async (event) => {
+    await this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  loginSubmitHandler = async (event) => {
+  forgotPasswordSubmitHandler = (event) => {
     event.preventDefault();
 
     const username = this.state.username;
-    const password = this.state.password;
     const history = this.props.history;
-
-    this.props.userLogin(username, password, history);
+    this.props.userForgotPassword(username, history);
   };
 
   render() {
-    if (this.props.loginLoader) {
-      return null;
-    }
-
     return (
       <div className="secondary-light-bg auth-container">
         <div>
           <div className="auth-info">
             <h1 className="primary-color app-name">hustlr.cards</h1>
-            <h5 className="auth-text">Login to continue</h5>
+            <h5 className="auth-text">Enter Username</h5>
           </div>
           <AuthCard>
-            {this.props.errors.length !== 0
-              ? this.props.errors.map((error, index) => (
+            {this.props.forgotPasswordErrors.length !== 0
+              ? this.props.forgotPasswordErrors.map((error, index) => (
                   <p key={index} className="auth-error-text">
                     {error}
                   </p>
                 ))
               : null}
-            <form onSubmit={this.loginSubmitHandler}>
+            <form onSubmit={this.forgotPasswordSubmitHandler}>
               <input
                 className="block auth-input full-width"
                 placeholder="Username"
@@ -77,24 +61,15 @@ class LoginPage extends Component {
                 onChange={this.inputChangeHandler}
               />
               <input
-                className="block auth-input full-width"
-                placeholder="Password"
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.inputChangeHandler}
-              />
-              <input
                 className="primary-color-bg primary-light block auth-btn full-width"
                 type="submit"
-                value="Log In"
+                value="Reset Password"
               />
             </form>
-
             <div className="question-link-container-one">
-              <p className="question-one">Having trouble logging in?</p>
-              <a className="primary-color link-one" href="/forgot-password">
-                Reset your password
+              <p className="question-one">Remembered Password?</p>
+              <a className="primary-color link-one" href="/login">
+                Back to Login
               </a>
             </div>
             <div className="question-link-container-two">
@@ -113,18 +88,16 @@ class LoginPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    errors: state.errors,
-    loginLoader: state.loginLoader,
     auth: state.auth,
+    forgotPasswordErrors: state.forgotPasswordErrors,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userLogin: (username, password, history) =>
-      dispatch(userLogin(username, password, history)),
-    userAutoLogin: (history) => dispatch(userAutoLogin(history)),
+    userForgotPassword: (username, history) =>
+      dispatch(userForgotPassword(username, history)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordPage);
