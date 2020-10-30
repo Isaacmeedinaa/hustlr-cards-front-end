@@ -1,10 +1,6 @@
 import { combineReducers } from "redux";
 
-import errors from "./errors";
-import loginLoader from "./loaders/loginLoader";
-import registerLoader from "./loaders/registerLoader";
 import user from "./user";
-import industriesLoader from "./loaders/industriesLoader";
 import industries from "./industries";
 import themes from "./themes";
 import card from "./card";
@@ -12,6 +8,9 @@ import publicCard from "./publicCard";
 import auth from "./auth";
 
 // Loaders
+import loginLoader from "./loaders/loginLoader";
+import registerLoader from "./loaders/registerLoader";
+import industriesLoader from "./loaders/industriesLoader";
 import cardLoader from "./loaders/cardLoader";
 import publicCardLoader from "./loaders/publicCardLoader";
 import cardBackdropImageLoader from "./loaders/cardBackdropImageLoader";
@@ -20,9 +19,14 @@ import cardGalleryImageLoader from "./loaders/cardGalleryImageLoader";
 import cardUpdatingLoader from "./loaders/cardUpdatingLoader";
 import userUpdatingLoader from "./loaders/userUpdatingLoader";
 import changePasswordLoader from "./loaders/changePasswordLoader";
+import forgotPasswordLoader from "./loaders/forgotPasswordLoader";
+import changePasswordCodeLoader from "./loaders/changePasswordCodeLoader";
 
 // Errors
+import errors from "./errors";
 import cardErrors from "./errors/cardErrors";
+import loginErrors from "./errors/loginErrors";
+import registerErrors from "./errors/registerErrors";
 import personalInfoErrors from "./errors/personalInfoErrors";
 import changePasswordErrors from "./errors/changePasswordErrors";
 import forgotPasswordErrors from "./errors/forgotPasswordErrors";
@@ -68,6 +72,10 @@ const rootReducer = combineReducers({
   publicCardLoader,
   forgotPasswordErrors,
   changePasswordCodeErrors,
+  forgotPasswordLoader,
+  changePasswordCodeLoader,
+  loginErrors,
+  registerErrors,
 });
 
 export default rootReducer;

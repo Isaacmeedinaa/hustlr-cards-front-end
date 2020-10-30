@@ -38,7 +38,6 @@
 }
 
 .auth-input:focus {
-  border: 2px solid #2ecc71;
   outline: none;
 }
 
@@ -54,6 +53,11 @@
   padding: 8px 0px 8px 0px;
   border-radius: 5px;
   border: none;
+  height: 40px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .auth-btn:focus {

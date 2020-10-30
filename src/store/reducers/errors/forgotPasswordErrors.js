@@ -6,7 +6,6 @@ import {
 const forgotPasswordErrors = (state = [], action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_ERRORS:
-      console.log(action.errors);
       return action.errors;
 
     case FORGOT_PASSWORD_NO_ERRORS:
