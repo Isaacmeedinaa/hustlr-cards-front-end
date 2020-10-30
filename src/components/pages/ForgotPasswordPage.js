@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
+import Loader from "react-loader-spinner";
 
 import { connect } from "react-redux";
 import { userForgotPassword } from "../../store/actions/user";
@@ -60,23 +63,28 @@ class ForgotPasswordPage extends Component {
                 value={this.state.username}
                 onChange={this.inputChangeHandler}
               />
-              <input
-                className="primary-color-bg primary-light block auth-btn full-width"
+              <button
                 type="submit"
-                value="Reset Password"
-              />
+                className="primary-color-bg primary-light block auth-btn full-width"
+              >
+                {this.props.forgotPasswordLoader ? (
+                  <Loader type="TailSpin" color="#fff" width={15} height={15} />
+                ) : (
+                  "Send Email"
+                )}
+              </button>
             </form>
             <div className="question-link-container-one">
               <p className="question-one">Remembered Password?</p>
-              <a className="primary-color link-one" href="/login">
+              <Link className="primary-color link-one" to="/login">
                 Back to Login
-              </a>
+              </Link>
             </div>
             <div className="question-link-container-two">
               <p className="question-two">New to Hustlr?</p>
-              <a className="primary-color link-two" href="/register">
+              <Link className="primary-color link-two" to="/register">
                 Join us today!
-              </a>
+              </Link>
             </div>
           </AuthCard>
           <AuthFooter />
@@ -90,6 +98,7 @@ const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     forgotPasswordErrors: state.forgotPasswordErrors,
+    forgotPasswordLoader: state.forgotPasswordLoader,
   };
 };
 

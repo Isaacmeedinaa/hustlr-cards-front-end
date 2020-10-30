@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { userRegister, userAutoLogin } from "../../store/actions/user";
+
+import Loader from "react-loader-spinner";
 
 import AuthCard from "../UI/AuthCard";
 import AuthFooter from "../UI/AuthFooter";
@@ -25,7 +28,7 @@ class RegisterPage extends Component {
     const history = this.props.history;
 
     if (this.props.auth.isAuthenticated) {
-      history.push('/home');
+      history.push("/home");
     }
   }
 
@@ -54,10 +57,7 @@ class RegisterPage extends Component {
   };
 
   render() {
-    if (this.props.registerLoader) {
-      return null;
-    }
-
+    console.log(this.props.registerErrors);
     return (
       <div className="secondary-light-bg container h-100">
         <div className="row h-100 justify-content-center align-items-center">
@@ -66,10 +66,9 @@ class RegisterPage extends Component {
               <h1 className="primary-color app-name">hustlr.cards</h1>
               <h5 className="auth-text">Join us today!</h5>
             </div>
-
             <AuthCard>
-              {this.props.errors.length !== 0
-                ? this.props.errors.map((error, index) => (
+              {this.props.registerErrors.length !== 0
+                ? this.props.registerErrors.map((error, index) => (
                     <p key={index} className="auth-error-text">
                       {error}
                     </p>
@@ -83,7 +82,6 @@ class RegisterPage extends Component {
                   type="email"
                   value={this.state.email}
                   onChange={this.inputChangeHandler}
-                  required
                 />
                 <input
                   className="block auth-input full-width"
@@ -92,7 +90,6 @@ class RegisterPage extends Component {
                   type="name"
                   value={this.state.username}
                   onChange={this.inputChangeHandler}
-                  required
                 />
                 <input
                   className="block auth-input full-width"
@@ -101,7 +98,6 @@ class RegisterPage extends Component {
                   name="password"
                   value={this.state.password}
                   onChange={this.inputChangeHandler}
-                  required
                 />
                 <input
                   className="block auth-input full-width"
@@ -110,19 +106,28 @@ class RegisterPage extends Component {
                   name="confirmPassword"
                   value={this.state.confirmPassword}
                   onChange={this.inputChangeHandler}
-                  required
                 />
-                <input
-                  className="primary-color-bg primary-light block auth-btn full-width"
+                <button
                   type="submit"
-                  value="Register"
-                />
+                  className="primary-color-bg primary-light block auth-btn full-width"
+                >
+                  {this.props.registerLoader ? (
+                    <Loader
+                      type="TailSpin"
+                      color="#fff"
+                      width={15}
+                      height={15}
+                    />
+                  ) : (
+                    "Register"
+                  )}
+                </button>
               </form>
               <div className="question-link-container-two">
                 <p className="question-two">Already have an account?</p>
-                <a className="primary-color link-two" href="/login">
+                <Link className="primary-color link-two" to="/login">
                   Log In
-                </a>
+                </Link>
               </div>
             </AuthCard>
             <AuthFooter />
@@ -135,9 +140,9 @@ class RegisterPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    errors: state.errors,
+    registerErrors: state.registerErrors,
     registerLoader: state.registerLoader,
-    auth: state.auth
+    auth: state.auth,
   };
 };
 
