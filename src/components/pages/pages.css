@@ -71,13 +71,13 @@
 
 .public-card-page-wrapper {
   width: 100%;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding: 30px 5px 30px 5px;
   display: flex;
   align-content: center;
   align-items: center;
   justify-content: center;
   justify-items: center;
+  overflow: hidden;
 }
 
 /* 770 breakpoint for the home page */

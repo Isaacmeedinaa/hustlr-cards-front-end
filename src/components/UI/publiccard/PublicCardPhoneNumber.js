@@ -20,7 +20,7 @@ const PublicCardPhoneNumber = (props) => {
       >
         <i
           className="phone alternate icon"
-          style={{ color: props.primaryColor, fontSize: "16px" }}
+          style={{ color: props.primaryColor, fontSize: "14px" }}
         ></i>
       </a>
     </div>
