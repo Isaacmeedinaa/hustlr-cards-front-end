@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { userLogin, userAutoLogin } from "../../store/actions/user";
+import { userLogin, userAutoLogin } from "../../../store/actions/user";
 
 import Loader from "react-loader-spinner";
 
-import AuthCard from "../UI/AuthCard";
-import AuthFooter from "../UI/AuthFooter";
+import AuthCard from "./AuthCard";
+import AuthFooter from "./AuthFooter";
 
-import "./pages.css";
-import "../../constants/colors.css";
+import "./AuthPages.css";
+import "../../../constants/colors.css";
 
 class LoginPage extends Component {
   state = {
@@ -54,12 +54,12 @@ class LoginPage extends Component {
   render() {
     return (
       <div className="secondary-light-bg auth-container">
-        <div>
+        <div className="mobile-full-width">
+          <AuthCard>
           <div className="auth-info">
             <h1 className="primary-color app-name">hustlr.cards</h1>
             <h5 className="auth-text">Login to continue</h5>
           </div>
-          <AuthCard>
             {this.props.loginErrors.length !== 0
               ? this.props.loginErrors.map((error, index) => (
                   <p key={index} className="auth-error-text">
@@ -88,7 +88,7 @@ class LoginPage extends Component {
                 className="primary-color-bg primary-light block auth-btn full-width"
               >
                 {this.props.loginLoader ? (
-                  <Loader type="TailSpin" color="#fff" width={15} height={15} />
+                  <Loader type="TailSpin" color="#fff" width={28} height={28} />
                 ) : (
                   "Login"
                 )}

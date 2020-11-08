@@ -74,7 +74,7 @@ export const userLogin = (username, password, history) => {
       .then((resp) => {
         if (resp.status === 401) {
           messages = [];
-          messages.push("Invalid username or password!");
+          messages.push("Invalid username or password.");
           dispatch({
             type: LOGIN_ERRORS,
             messages: messages,
@@ -83,7 +83,7 @@ export const userLogin = (username, password, history) => {
           dispatch({ type: IS_NOT_LOGGING_IN });
         } else if (resp.status === 422) {
           messages = [];
-          messages.push("Username and/or Password cannot be empty!");
+          messages.push("Username and Password cannot be empty.");
           dispatch({
             type: LOGIN_ERRORS,
             messages: messages,
@@ -322,7 +322,7 @@ export const userForgotPassword = (username, history) => {
           return;
         } else if (resp.status === 422) {
           errors = [];
-          errors.push("Username cannot be empty");
+          errors.push("Username cannot be empty.");
           dispatch({ type: FORGOT_PASSWORD_ERRORS, errors: errors });
           return;
         } else {
@@ -390,6 +390,7 @@ export const userChangePasswordCode = (
       .then((data) => {
         if (data === undefined) {
           dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
+          return;
         } else if (data.errors) {
           errors = [];
           data.errors.map((error) => errors.push(error.message));

@@ -4,17 +4,19 @@ import { Link } from "react-router-dom";
 import Loader from "react-loader-spinner";
 
 import { connect } from "react-redux";
-import { userForgotPassword } from "../../store/actions/user";
+import { userChangePasswordCode } from "../../../store/actions/user";
 
-import AuthCard from "../UI/AuthCard";
-import AuthFooter from "../UI/AuthFooter";
+import AuthCard from "./AuthCard";
+import AuthFooter from "./AuthFooter";
 
-import "./pages.css";
-import "../../constants/colors.css";
+import "./AuthPages.css";
+import "../../../constants/colors.css";
 
-class ForgotPasswordPage extends Component {
+class ChangePasswordPage extends Component {
   state = {
     username: "",
+    recoveryCode: "",
+    newPassword: "",
   };
 
   componentDidMount() {
@@ -31,31 +33,41 @@ class ForgotPasswordPage extends Component {
     });
   };
 
-  forgotPasswordSubmitHandler = (event) => {
+  changePasswordSubmitHandler = (event) => {
     event.preventDefault();
 
     const username = this.state.username;
+    const recoveryCode = this.state.recoveryCode;
+    const newPassword = this.state.newPassword;
     const history = this.props.history;
-    this.props.userForgotPassword(username, history);
+
+    this.props.userChangePasswordCode(
+      username,
+      recoveryCode,
+      newPassword,
+      history
+    );
   };
 
   render() {
     return (
       <div className="secondary-light-bg auth-container">
-        <div>
+        <div className="mobile-full-width">
+          <AuthCard>
           <div className="auth-info">
             <h1 className="primary-color app-name">hustlr.cards</h1>
-            <h5 className="auth-text">Enter Username</h5>
+            <h5 className="auth-text">
+              Enter the recovery code that was sent to your email.
+            </h5>
           </div>
-          <AuthCard>
-            {this.props.forgotPasswordErrors.length !== 0
-              ? this.props.forgotPasswordErrors.map((error, index) => (
+            {this.props.changePasswordCodeErrors.length !== 0
+              ? this.props.changePasswordCodeErrors.map((error, index) => (
                   <p key={index} className="auth-error-text">
                     {error}
                   </p>
                 ))
               : null}
-            <form onSubmit={this.forgotPasswordSubmitHandler}>
+            <form onSubmit={this.changePasswordSubmitHandler}>
               <input
                 className="block auth-input full-width"
                 placeholder="Username"
@@ -63,14 +75,29 @@ class ForgotPasswordPage extends Component {
                 value={this.state.username}
                 onChange={this.inputChangeHandler}
               />
+              <input
+                className="block auth-input full-width"
+                placeholder="Recovery Code"
+                name="recoveryCode"
+                value={this.state.recoveryCode}
+                onChange={this.inputChangeHandler}
+              />
+              <input
+                className="block auth-input full-width"
+                placeholder="New Password"
+                name="newPassword"
+                type="password"
+                value={this.state.newPassword}
+                onChange={this.inputChangeHandler}
+              />
               <button
                 type="submit"
                 className="primary-color-bg primary-light block auth-btn full-width"
               >
-                {this.props.forgotPasswordLoader ? (
-                  <Loader type="TailSpin" color="#fff" width={15} height={15} />
+                {this.props.changePasswordCodeLoader ? (
+                  <Loader type="TailSpin" color="#fff" width={28} height={28} />
                 ) : (
-                  "Send Email"
+                  "Change Password"
                 )}
               </button>
             </form>
@@ -97,16 +124,18 @@ class ForgotPasswordPage extends Component {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    forgotPasswordErrors: state.forgotPasswordErrors,
-    forgotPasswordLoader: state.forgotPasswordLoader,
+    changePasswordCodeErrors: state.changePasswordCodeErrors,
+    changePasswordCodeLoader: state.changePasswordCodeLoader,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userForgotPassword: (username, history) =>
-      dispatch(userForgotPassword(username, history)),
+    userChangePasswordCode: (username, recoveryCode, newPassword, history) =>
+      dispatch(
+        userChangePasswordCode(username, recoveryCode, newPassword, history)
+      ),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePasswordPage);

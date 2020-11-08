@@ -11,6 +11,10 @@ body,
   background-color: #f6f7fb;
 }
 
+body {
+  overflow-x: hidden !important;
+}
+
 .dropdown-menu {
   min-width: 100% !important;
 }

@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { userRegister, userAutoLogin } from "../../store/actions/user";
+import { userRegister, userAutoLogin } from "../../../store/actions/user";
 
 import Loader from "react-loader-spinner";
 
-import AuthCard from "../UI/AuthCard";
-import AuthFooter from "../UI/AuthFooter";
+import AuthCard from "./AuthCard";
+import AuthFooter from "./AuthFooter";
 
-import "./pages.css";
-import "../../constants/colors.css";
+import "./AuthPages.css";
+import "../../../constants/colors.css";
 
 class RegisterPage extends Component {
   constructor() {
@@ -57,16 +57,14 @@ class RegisterPage extends Component {
   };
 
   render() {
-    console.log(this.props.registerErrors);
     return (
-      <div className="secondary-light-bg container h-100">
-        <div className="row h-100 justify-content-center align-items-center">
-          <div>
+      <div className="secondary-light-bg auth-container">
+          <div className="mobile-full-width">
+            <AuthCard>
             <div className="auth-info">
               <h1 className="primary-color app-name">hustlr.cards</h1>
               <h5 className="auth-text">Join us today!</h5>
             </div>
-            <AuthCard>
               {this.props.registerErrors.length !== 0
                 ? this.props.registerErrors.map((error, index) => (
                     <p key={index} className="auth-error-text">
@@ -115,8 +113,8 @@ class RegisterPage extends Component {
                     <Loader
                       type="TailSpin"
                       color="#fff"
-                      width={15}
-                      height={15}
+                      width={28} 
+                      height={28}
                     />
                   ) : (
                     "Register"
@@ -133,7 +131,6 @@ class RegisterPage extends Component {
             <AuthFooter />
           </div>
         </div>
-      </div>
     );
   }
 }
