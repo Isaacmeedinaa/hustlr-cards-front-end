@@ -1,0 +1,166 @@
+.auth-card {
+  padding: 35px 35px 35px 35px;
+  width: 420px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  -moz-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+}
+
+.auth-footer {
+  width: 420px;
+  text-align: center !important;
+  align-self: flex-end;
+  margin-top: 25px;
+}
+
+.auth-footer-link {
+  display: inline-block;
+  margin-left: 13px;
+  margin-right: 13px;
+}
+
+.auth-footer-link:hover {
+  color: #2bc16b;
+  text-decoration: none;
+}
+
+.auth-text {
+  margin-top: 10px !important;
+}
+
+.login-page {
+  height: 100%;
+}
+
+.auth-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.auth-info {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.auth-wrapper {
+  width: 100%;
+}
+
+.block {
+  display: block;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.auth-error-text {
+  text-align: center;
+  color: rgb(252, 86, 86);
+}
+
+.auth-input {
+  margin-bottom: 25px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.auth-input:focus {
+  outline: none;
+}
+
+.remember-me-container {
+  margin-bottom: 18px;
+}
+
+.remember-me-label {
+  margin-left: 10px;
+}
+
+.auth-btn {
+  padding: 8px 0px 8px 0px;
+  border-radius: 5px;
+  border: none;
+  height: 40px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-btn:focus {
+  outline: 0;
+}
+
+.auth-btn:hover {
+  background-color: #2bc16b;
+}
+
+.question-link-container-one {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.question-link-container-two {
+  margin-top: 13px;
+  text-align: center;
+}
+
+.question-one {
+  display: inline;
+  font-size: 13px;
+  margin-right: 4px;
+}
+
+.link-one {
+  display: inline;
+  font-size: 13px;
+  margin-left: 4px;
+}
+
+.link-one:hover {
+  color: #2bc16b;
+  text-decoration: none;
+}
+
+.question-two {
+  display: inline;
+  font-size: 13px;
+  margin-right: 4px;
+}
+
+.link-two {
+  display: inline;
+  font-size: 13px;
+  margin-left: 4px;
+}
+
+.link-two:hover {
+  color: #2bc16b;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 770px) {
+  .auth-card {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .auth-footer {
+    width: 95%;
+    text-align: center;
+    align-self: flex-end;
+    margin-top: 25px;
+  }
+
+  .mobile-full-width {
+    width: 100%;
+  }
+}

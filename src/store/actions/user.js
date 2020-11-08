@@ -3,6 +3,18 @@ import { API_BASE_URL } from "../../constants/urls";
 import { IS_LOGGING_IN, IS_NOT_LOGGING_IN } from "./loaders/loginLoader";
 import { IS_REGISTERING, IS_NOT_REGISTERING } from "./loaders/registerLoader";
 import {
+  PASSWORD_IS_UPDATING,
+  PASSWORD_IS_NOT_UPDATING,
+} from "./loaders/changePasswordLoader";
+import {
+  FORGOT_PASSWORD_IS_LOADING,
+  FORGOT_PASSWORD_IS_NOT_LOADING,
+} from "./loaders/forgotPasswordLoader";
+import {
+  CHANGE_PASSWORD_CODE_IS_LOADING,
+  CHANGE_PASSWORD_CODE_IS_NOT_LOADING,
+} from "./loaders/changePasswordCodeLoader";
+import {
   USER_IS_UPDATING,
   USER_IS_NOT_UPDATING,
 } from "./loaders/userUpdatingLoader";
@@ -30,18 +42,9 @@ import {
   PASSWORD_CHANGED_SUCCESSFULLY,
   PASSWORD_CHANGED_UNSUCCESSFULLY,
 } from "./notifications/changePasswordNotifications";
-import {
-  PASSWORD_IS_UPDATING,
-  PASSWORD_IS_NOT_UPDATING,
-} from "./loaders/changePasswordLoader";
 import { SET_IS_AUTHENTICATED, SET_IS_NOT_AUTHENTICATED } from "./auth";
-import {
-  INVALID_LOGIN_CREDENTIALS_ERR,
-  TAKEN_REGISTER_USERNAME_EMAIL_ERR,
-  NOT_MATCH_REGISTER_PASSWORDS_ERR,
-  NO_LOGIN_ERRORS,
-  NO_REGISTER_ERRORS,
-} from "./errors";
+import { LOGIN_ERRORS, LOGIN_NO_ERRORS } from "./errors/loginErrors";
+import { REGISTER_ERRORS, REGISTER_NO_ERRORS } from "./errors/registerErrors";
 
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
@@ -50,6 +53,8 @@ export const USER_UPDATED = "USER_UPDATED";
 
 export const userLogin = (username, password, history) => {
   return (dispatch) => {
+    let messages = [];
+
     const loginData = {
       username: username,
       password: password,
@@ -68,15 +73,25 @@ export const userLogin = (username, password, history) => {
     fetch(`${API_BASE_URL}/login`, reqObj)
       .then((resp) => {
         if (resp.status === 401) {
-          const message = ["Invalid username or password!"];
+          messages = [];
+          messages.push("Invalid username or password.");
           dispatch({
-            type: INVALID_LOGIN_CREDENTIALS_ERR,
-            message: message,
+            type: LOGIN_ERRORS,
+            messages: messages,
+          });
+          dispatch({ type: SET_IS_NOT_AUTHENTICATED });
+          dispatch({ type: IS_NOT_LOGGING_IN });
+        } else if (resp.status === 422) {
+          messages = [];
+          messages.push("Username and Password cannot be empty.");
+          dispatch({
+            type: LOGIN_ERRORS,
+            messages: messages,
           });
           dispatch({ type: SET_IS_NOT_AUTHENTICATED });
           dispatch({ type: IS_NOT_LOGGING_IN });
         } else if (resp.ok) {
-          dispatch({ type: NO_LOGIN_ERRORS });
+          dispatch({ type: LOGIN_NO_ERRORS });
           dispatch({ type: SET_IS_AUTHENTICATED });
           return resp.json();
         }
@@ -146,6 +161,8 @@ export const userRegister = (
   history
 ) => {
   return (dispatch) => {
+    let messages = [];
+
     const registerData = {
       email: email,
       username: username,
@@ -163,31 +180,31 @@ export const userRegister = (
     };
 
     if (password !== confirmPassword) {
-      const message = ["Passwords do not match"];
+      messages = [];
+      messages.push("Passwords do not match");
       dispatch({
-        type: NOT_MATCH_REGISTER_PASSWORDS_ERR,
-        message: message,
+        type: REGISTER_ERRORS,
+        messages: messages,
       });
     } else {
       dispatch({ type: IS_REGISTERING });
       fetch(`${API_BASE_URL}/register`, reqObj)
         .then((resp) => {
-          if (!resp.ok) {
-            resp.json().then((json) => {
-              let errors = json.errors.map((err) => err.message);
-              dispatch({
-                type: TAKEN_REGISTER_USERNAME_EMAIL_ERR,
-                message: errors,
-              });
-            });
+          if (resp.status === 422) {
             dispatch({ type: IS_NOT_REGISTERING });
+            return resp.json();
           } else {
-            dispatch({ type: NO_REGISTER_ERRORS });
-
+            dispatch({ type: REGISTER_NO_ERRORS });
             return resp.json();
           }
         })
         .then((json) => {
+          if (json.errors) {
+            json.errors.map((error) => messages.push(error.message));
+            dispatch({ type: REGISTER_ERRORS, messages: messages });
+            return;
+          }
+
           localStorage.setItem("userToken", json.token);
           localStorage.setItem("userId", json.user.id);
 
@@ -281,7 +298,7 @@ export const updateUser = (firstName, lastName, username, email) => {
 
 export const userForgotPassword = (username, history) => {
   return (dispatch) => {
-    const errors = [];
+    let errors = [];
 
     const userForgotPasswordData = {
       username: username,
@@ -296,27 +313,39 @@ export const userForgotPassword = (username, history) => {
       body: JSON.stringify(userForgotPasswordData),
     };
 
+    dispatch({ type: FORGOT_PASSWORD_IS_LOADING });
     fetch(`${API_BASE_URL}/recoverpassword`, reqObj)
       .then((resp) => {
         if (resp.ok) {
-          console.log("success, email sent!");
+          history.push("/change-password");
+          dispatch({ type: FORGOT_PASSWORD_IS_NOT_LOADING });
+          return;
+        } else if (resp.status === 422) {
+          errors = [];
+          errors.push("Username cannot be empty.");
+          dispatch({ type: FORGOT_PASSWORD_ERRORS, errors: errors });
+          return;
         } else {
+          dispatch({ type: FORGOT_PASSWORD_NO_ERRORS });
           return resp.json();
         }
       })
       .then((data) => {
         if (data === undefined) {
-          history.push("/change-password");
-          dispatch({ type: FORGOT_PASSWORD_NO_ERRORS });
+          dispatch({ type: FORGOT_PASSWORD_IS_NOT_LOADING });
         } else if (data.code === 7) {
+          errors = [];
           errors.push(data.message);
           dispatch({ type: FORGOT_PASSWORD_ERRORS, errors: errors });
+          dispatch({ type: FORGOT_PASSWORD_IS_NOT_LOADING });
+          return;
         }
+        dispatch({ type: FORGOT_PASSWORD_IS_NOT_LOADING });
       });
   };
 };
 
-export const userChangePassword = (
+export const userChangePasswordCode = (
   username,
   recoveryCode,
   newPassword,
@@ -340,28 +369,33 @@ export const userChangePassword = (
       body: JSON.stringify(userRecoverPasswordData),
     };
 
+    dispatch({ type: CHANGE_PASSWORD_CODE_IS_LOADING });
     fetch(`${API_BASE_URL}/changepassword`, reqObj)
       .then((resp) => {
         if (resp.status === 401) {
           errors = [];
           errors.push("Invalid recovery code!");
           dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS, errors: errors });
+          dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
           return;
         } else if (resp.status === 404) {
           errors = [];
           errors.push("Invalid username!");
           dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS, errors: errors });
+          dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
           return;
         }
         return resp.json();
       })
       .then((data) => {
         if (data === undefined) {
-          return console.log("undefined!");
+          dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
+          return;
         } else if (data.errors) {
           errors = [];
           data.errors.map((error) => errors.push(error.message));
           dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS, errors: errors });
+          dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
           return;
         }
 
@@ -369,6 +403,7 @@ export const userChangePassword = (
         dispatch(userLogin(username, newPassword, history));
 
         dispatch({ type: CHANGE_PASSWORD_CODE_NO_ERRORS });
+        dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
       })
       .catch((err) => console.log(err));
   };

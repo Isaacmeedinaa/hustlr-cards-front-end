@@ -17,10 +17,10 @@ import "./App.css";
 
 import LandingPage from "./components/pages/LandingPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
-import LoginPage from "./components/pages/LoginPage";
-import RegisterPage from "./components/pages/RegisterPage";
-import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
-import ChangePasswordPage from "./components/pages/ChangePasswordPage";
+import LoginPage from "./components/pages/Auth Pages/LoginPage";
+import RegisterPage from "./components/pages/Auth Pages/RegisterPage";
+import ForgotPasswordPage from "./components/pages/Auth Pages/ForgotPasswordPage";
+import ChangePasswordPage from "./components/pages/Auth Pages/ChangePasswordPage";
 import HomePage from "./components/pages/HomePage";
 import SettingsPage from "./components/pages/SettingsPage";
 import SupportPage from "./components/pages/SupportPage";

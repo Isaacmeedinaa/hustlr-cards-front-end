@@ -1,13 +1,16 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { userLogin, userAutoLogin } from "../../store/actions/user";
+import { userLogin, userAutoLogin } from "../../../store/actions/user";
 
-import AuthCard from "../UI/AuthCard";
-import AuthFooter from "../UI/AuthFooter";
+import Loader from "react-loader-spinner";
 
-import "./pages.css";
-import "../../constants/colors.css";
+import AuthCard from "./AuthCard";
+import AuthFooter from "./AuthFooter";
+
+import "./AuthPages.css";
+import "../../../constants/colors.css";
 
 class LoginPage extends Component {
   state = {
@@ -49,20 +52,16 @@ class LoginPage extends Component {
   };
 
   render() {
-    if (this.props.loginLoader) {
-      return null;
-    }
-
     return (
       <div className="secondary-light-bg auth-container">
-        <div>
+        <div className="mobile-full-width">
+          <AuthCard>
           <div className="auth-info">
             <h1 className="primary-color app-name">hustlr.cards</h1>
             <h5 className="auth-text">Login to continue</h5>
           </div>
-          <AuthCard>
-            {this.props.errors.length !== 0
-              ? this.props.errors.map((error, index) => (
+            {this.props.loginErrors.length !== 0
+              ? this.props.loginErrors.map((error, index) => (
                   <p key={index} className="auth-error-text">
                     {error}
                   </p>
@@ -84,24 +83,29 @@ class LoginPage extends Component {
                 value={this.state.password}
                 onChange={this.inputChangeHandler}
               />
-              <input
-                className="primary-color-bg primary-light block auth-btn full-width"
+              <button
                 type="submit"
-                value="Log In"
-              />
+                className="primary-color-bg primary-light block auth-btn full-width"
+              >
+                {this.props.loginLoader ? (
+                  <Loader type="TailSpin" color="#fff" width={28} height={28} />
+                ) : (
+                  "Login"
+                )}
+              </button>
             </form>
 
             <div className="question-link-container-one">
               <p className="question-one">Having trouble logging in?</p>
-              <a className="primary-color link-one" href="/forgot-password">
+              <Link className="primary-color link-one" to="/forgot-password">
                 Reset your password
-              </a>
+              </Link>
             </div>
             <div className="question-link-container-two">
               <p className="question-two">New to Hustlr?</p>
-              <a className="primary-color link-two" href="/register">
+              <Link className="primary-color link-two" to="register">
                 Join us today!
-              </a>
+              </Link>
             </div>
           </AuthCard>
           <AuthFooter />
@@ -113,7 +117,7 @@ class LoginPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    errors: state.errors,
+    loginErrors: state.loginErrors,
     loginLoader: state.loginLoader,
     auth: state.auth,
   };

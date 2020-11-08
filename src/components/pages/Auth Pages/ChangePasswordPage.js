@@ -1,13 +1,16 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
+import Loader from "react-loader-spinner";
 
 import { connect } from "react-redux";
-import { userChangePassword } from "../../store/actions/user";
+import { userChangePasswordCode } from "../../../store/actions/user";
 
-import AuthCard from "../UI/AuthCard";
-import AuthFooter from "../UI/AuthFooter";
+import AuthCard from "./AuthCard";
+import AuthFooter from "./AuthFooter";
 
-import "./pages.css";
-import "../../constants/colors.css";
+import "./AuthPages.css";
+import "../../../constants/colors.css";
 
 class ChangePasswordPage extends Component {
   state = {
@@ -38,20 +41,25 @@ class ChangePasswordPage extends Component {
     const newPassword = this.state.newPassword;
     const history = this.props.history;
 
-    this.props.userChangePassword(username, recoveryCode, newPassword, history);
+    this.props.userChangePasswordCode(
+      username,
+      recoveryCode,
+      newPassword,
+      history
+    );
   };
 
   render() {
     return (
       <div className="secondary-light-bg auth-container">
-        <div>
+        <div className="mobile-full-width">
+          <AuthCard>
           <div className="auth-info">
             <h1 className="primary-color app-name">hustlr.cards</h1>
             <h5 className="auth-text">
-               A recovery code has been sent to your email!
+              Enter the recovery code that was sent to your email.
             </h5>
           </div>
-          <AuthCard>
             {this.props.changePasswordCodeErrors.length !== 0
               ? this.props.changePasswordCodeErrors.map((error, index) => (
                   <p key={index} className="auth-error-text">
@@ -82,23 +90,28 @@ class ChangePasswordPage extends Component {
                 value={this.state.newPassword}
                 onChange={this.inputChangeHandler}
               />
-              <input
-                className="primary-color-bg primary-light block auth-btn full-width"
+              <button
                 type="submit"
-                value="Submit"
-              />
+                className="primary-color-bg primary-light block auth-btn full-width"
+              >
+                {this.props.changePasswordCodeLoader ? (
+                  <Loader type="TailSpin" color="#fff" width={28} height={28} />
+                ) : (
+                  "Change Password"
+                )}
+              </button>
             </form>
             <div className="question-link-container-one">
               <p className="question-one">Remembered Password?</p>
-              <a className="primary-color link-one" href="/login">
+              <Link className="primary-color link-one" to="/login">
                 Back to Login
-              </a>
+              </Link>
             </div>
             <div className="question-link-container-two">
               <p className="question-two">New to Hustlr?</p>
-              <a className="primary-color link-two" href="/register">
+              <Link className="primary-color link-two" to="/register">
                 Join us today!
-              </a>
+              </Link>
             </div>
           </AuthCard>
           <AuthFooter />
@@ -112,14 +125,15 @@ const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     changePasswordCodeErrors: state.changePasswordCodeErrors,
+    changePasswordCodeLoader: state.changePasswordCodeLoader,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userChangePassword: (username, recoveryCode, newPassword, history) =>
+    userChangePasswordCode: (username, recoveryCode, newPassword, history) =>
       dispatch(
-        userChangePassword(username, recoveryCode, newPassword, history)
+        userChangePasswordCode(username, recoveryCode, newPassword, history)
       ),
   };
 };

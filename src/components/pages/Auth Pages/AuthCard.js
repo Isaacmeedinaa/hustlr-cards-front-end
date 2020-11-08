@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import "./UI.css";
-import "../../constants/colors.css";
+import "./AuthPages.css";
+import "../../../constants/colors.css";
 
 class AuthCard extends Component {
   render() {
