@@ -20,7 +20,7 @@ const PublicCardEmail = (props) => {
       >
         <i
           className="envelope icon"
-          style={{ color: props.primaryColor, fontSize: "16px" }}
+          style={{ color: props.primaryColor, fontSize: "14px" }}
         ></i>
       </a>
     </div>

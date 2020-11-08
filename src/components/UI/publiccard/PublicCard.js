@@ -23,10 +23,10 @@ class PublicCard extends Component {
 
     return (
       <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
-        <div className="primary-light-bg public-card">
-          {!this.props.publicCard.isPublic ? (
-            <h1>This card is not public!</h1>
+        {!this.props.publicCard.isPublic ? (
+            <h1 className="private-card">This card is not public.</h1>
           ) : (
+        <div className="primary-light-bg public-card">
             <div className="public-card-container">
               <PublicCardBackdropImage
                 backdropImgUrl={this.props.publicCard.backdropImgUrl}
@@ -63,8 +63,7 @@ class PublicCard extends Component {
                 transparentColor={this.props.publicCard.transparentColor}
               />
             </div>
-          )}
-        </div>
+        </div>)}
       </Animated>
     );
   }
