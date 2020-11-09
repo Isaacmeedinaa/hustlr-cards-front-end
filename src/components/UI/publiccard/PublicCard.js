@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
-import { Animated } from "react-animated-css";
-
 import PublicCardImage from "./PublicCardImage";
 import PublicCardBackdropImage from "./PublicCardBackdropImage";
 import PublicCardName from "./PublicCardName";
