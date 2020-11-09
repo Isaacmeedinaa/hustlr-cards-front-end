@@ -1374,7 +1374,7 @@ a > i {
   text-align: center;
   margin-top: 15px !important;
   font-family: "Montserrat", sans-serif;
-  font-size: 2rem;
+  font-size: 26px;
 }
 
 .public-card-social-media-container {
@@ -1394,7 +1394,7 @@ a > i {
   height: 40px;
   width: 40px;
   padding-left: 4px;
-  margin-right: 1.5rem;
+  margin-right: 18px;
   font-size: 16px;
 }
 
@@ -1408,8 +1408,7 @@ a > i {
 }
 
 .public-card-industry-container > i {
-  margin-top: 5px;
-  padding-top: 4px;
+  margin-top: 4px !important;
 }
 
 .public-card-industry {
@@ -1424,8 +1423,7 @@ a > i {
 }
 
 .public-card-location-container > i {
-  margin-top: 6px;
-  padding-top: 4px;
+  margin-top: 4px !important;
 }
 
 .public-card-location-text {
@@ -1452,7 +1450,7 @@ a > i {
   padding-top: 3px;
   border: none;
   border-radius: 10px;
-  font-size: 1rem;
+  font-size: 14px;
 }
 
 .public-card-description {
@@ -1469,15 +1467,14 @@ a > i {
 }
 
 .public-card-products-services-title-text {
-  width: 100%;
+  width: 90%;
   font-size: 18px;
   font-weight: 700;
-  margin-top: 30px;
-  margin-left: 30px;
+  margin-top: 50px;
 }
 
 .public-card-products-services-container {
-  margin-top: 15px;
+  margin-top: 0px;
   width: 95%;
   display: flex;
   justify-content: center;
@@ -1493,7 +1490,7 @@ a > i {
   padding-top: 20px;
   padding-bottom: 20px;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
   word-wrap: break-word;
 }
 
@@ -1501,7 +1498,7 @@ a > i {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -1522,5 +1519,7 @@ a > i {
 }
 
 @media only screen and (max-width: 770px) {
-  
+  .public-card {
+    border-radius: 0px;
+  }
 }
