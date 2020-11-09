@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
 import { Animated } from "react-animated-css";
@@ -22,7 +22,7 @@ class PublicCard extends Component {
     }
 
     return (
-      <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
+      <Fragment>
         {!this.props.publicCard.isPublic ? (
             <h1 className="private-card">This card is not public.</h1>
           ) : (
@@ -64,7 +64,7 @@ class PublicCard extends Component {
               />
             </div>
         </div>)}
-      </Animated>
+      </Fragment>
     );
   }
 }
