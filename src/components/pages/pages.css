@@ -3,10 +3,8 @@
 }
 
 .grid-container-home {
-  min-height: 100%;
   display: grid;
   grid-template-columns: minmax(75px, 75px) 1fr 1fr;
-  /* grid-template-rows: 1fr; */
   grid-template-areas: "sidetoolbar cardform cardshow";
 }
 
@@ -15,7 +13,7 @@
 }
 
 .card-form-col-container {
-  padding: 15px 20px 15px 20px;
+  padding: 80px 20px 15px 20px;
 }
 
 .card-show-col-wrapper {
@@ -24,14 +22,13 @@
 }
 
 .card-show-col-container {
-  padding: 15px 20px 15px 20px;
+  padding: 80px 20px 15px 20px;
 }
 
 .grid-container-settings {
   min-height: 100%;
   display: grid;
   grid-template-columns: minmax(75px, 75px) 1fr 1fr;
-  /* grid-template-rows: 1fr; */
   grid-template-areas: "sidetoolbar user-settings subscription-settings";
 }
 
@@ -81,7 +78,7 @@
 }
 
 /* 770 breakpoint for the home page */
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1100px) {
   .grid-container-home {
     grid-template-columns: minmax(75px, 75px) 1fr;
     grid-template-areas:
@@ -99,5 +96,18 @@
   }
   .subscription-settings-col-wrapper {
     border: none;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .grid-container-home {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "cardform"
+      "cardshow";
+  }
+
+  .card-show-col-container {
+    padding: 20px 20px 80px 20px;
   }
 }
