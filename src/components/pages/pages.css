@@ -77,7 +77,7 @@
   align-items: center;
   justify-content: center;
   justify-items: center;
-  overflow: hidden;
+  overflow-x: hidden !important;
 }
 
 /* 770 breakpoint for the home page */
