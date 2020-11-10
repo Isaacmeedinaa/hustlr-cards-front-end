@@ -33,9 +33,7 @@ class ChangePasswordForm extends Component {
 
   onChangePasswordFormSubmit = (event) => {
     event.preventDefault();
-  };
 
-  onChangePasswordHandler = (event) => {
     this.props.changePassword(
       this.state.password,
       this.state.newPassword,
@@ -144,10 +142,7 @@ class ChangePasswordForm extends Component {
                 value={this.state.confirmPassword}
                 onChange={this.onChangePasswordFormChangeHandler}
               />
-              <button
-                className="white-text change-password-form-button"
-                onClick={this.onChangePasswordHandler}
-              >
+              <button className="white-text change-password-form-button">
                 {this.props.changePasswordLoader ? (
                   <Loader type="TailSpin" color="#fff" width={28} height={28} />
                 ) : (
