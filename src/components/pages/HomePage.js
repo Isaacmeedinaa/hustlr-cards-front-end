@@ -13,8 +13,6 @@ import "./pages.css";
 import "../../constants/colors.css";
 
 class HomeContainer extends Component {
-  componentDidMount() {}
-
   render() {
     return (
       <Fragment>
