@@ -7,6 +7,8 @@ import { clearPersonalInfoErrors } from "../../../store/actions/errors/personalI
 
 import $ from "jquery";
 
+import Loader from "react-loader-spinner";
+
 import { Animated } from "react-animated-css";
 
 import MdArrowDropup from "react-ionicons/lib/MdArrowDropup";
@@ -95,19 +97,16 @@ class PersonalInfoForm extends Component {
 
     return (
       <Fragment>
-        <div className="personal-info-form-header-btn-container">
+        <div
+          className="personal-info-form-header-btn-container"
+          onClick={this.onShowFormClickHandler}
+        >
           <h5 className="user-settings-header">Personal Information</h5>
           <div className="settings-accordion-icon-container">
             {this.state.showForm ? (
-              <MdArrowDropdown
-                onClick={this.onShowFormClickHandler}
-                color="#2ecc71"
-              />
+              <MdArrowDropdown color="#2ecc71" />
             ) : (
-              <MdArrowDropup
-                onClick={this.onShowFormClickHandler}
-                color="#2ecc71"
-              />
+              <MdArrowDropup color="#2ecc71" />
             )}
           </div>
         </div>
@@ -160,7 +159,7 @@ class PersonalInfoForm extends Component {
                 onClick={this.onSubmitPersonalInfoHandler}
               >
                 {this.props.userUpdatingLoader ? (
-                  <div className="ui active white inline loader"></div>
+                  <Loader type="TailSpin" color="#fff" width={28} height={28} />
                 ) : (
                   "Update Personal Information"
                 )}
@@ -175,6 +174,7 @@ class PersonalInfoForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.user,
     firstName: state.user.firstName,
     lastName: state.user.lastName,
     email: state.user.email,

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 
 import SideToolbar from "../UI/SideToolbar";
+import BottomToolbar from "../UI/BottomToolbar";
 import UserSettings from "../UI/settings/UserSettings";
 import SubscriptionSettings from "../UI/settings/SubscriptionSettings";
 
@@ -29,6 +30,10 @@ class SettingsPage extends Component {
             </div>
           </div>
         </div>
+        <BottomToolbar
+          pathname={this.props.location.pathname}
+          history={this.props.history}
+        />
       </Fragment>
     );
   }

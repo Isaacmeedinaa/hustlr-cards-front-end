@@ -114,4 +114,19 @@
   .card-show-col-container {
     padding: 20px 10px 80px 10px;
   }
+
+  .grid-container-settings {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "user-settings"
+      "subscription-settings";
+  }
+
+  .user-settings-col-container {
+    padding: 20px 10px 15px 10px;
+  }
+
+  .subscription-settings-col-container {
+    padding: 20px 10px 80px 10px;
+  }
 }
