@@ -52,7 +52,7 @@ class CardFormImageSelector extends Component {
             <Loader type="TailSpin" color="#fff" width={50} height={50} />
           ) : null}
         </div>
-        <button className="ui floating dropdown button card-form-button edit-image-dropdown primary-font">
+        <label className="ui floating dropdown button card-form-button edit-image-dropdown primary-font">
           <span className="card-form-button-text">Edit Profile Image</span>
           <div className="menu">
             <div className="item">
@@ -74,7 +74,7 @@ class CardFormImageSelector extends Component {
               </div>
             )}
           </div>
-        </button>
+        </label>
       </Fragment>
     );
   }

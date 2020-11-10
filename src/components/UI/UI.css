@@ -227,12 +227,6 @@
   margin-left: 10px;
 }
 
-/* .save-card-button-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-} */
-
 .save-card-button {
   width: 80px;
   height: 30px;
@@ -975,8 +969,9 @@
 .card-business-social-media-links-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   margin-top: 10px;
+  justify-content: space-evenly;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -1565,14 +1560,32 @@ a > i {
   font-size: 14px;
 }
 
-@media only screen and (max-width: 770px) {
+@media only screen and (max-width: 650px) {
+  .sidetoolbar {
+    display: none;
+  }
+
+  .toptoolbar-container {
+    margin-left: 0px;
+  }
+
+  .theme-picker-animation-wrapper {
+    margin-left: 35px;
+  }
+
+  .bottomtoolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .public-card {
     border-radius: 0px;
   }
 
   .card-form-wrapper {
     width: 100%;
-    padding: 0px 0px 20px 0px;
+    padding: 20px 0px 20px 0px;
   }
 
   .card-form-backdrop-image-container {
@@ -1594,6 +1607,17 @@ a > i {
     max-width: 100%;
   }
 
+  .card-form-button {
+    text-align: center !important;
+  }
+
+  .card-form-button-text {
+    width: 100% !important;
+    text-align: center !important;
+    color: #ffffff;
+    font-weight: 600;
+  }
+
   .card-container {
     width: 95%;
     max-width: 100%;
@@ -1601,30 +1625,22 @@ a > i {
   }
 
   .card-wrapper {
-    padding: 0px 0px 100px 0px;
+    padding: 20px 0px 20px 0px;
   }
 
   .card-business-backdrop-image-container {
     width: 100%;
   }
-}
 
-@media only screen and (max-width: 650px) {
-  .sidetoolbar {
-    display: none;
+  .card-business-social-media-links-container {
+    margin-top: 25px;
   }
 
-  .toptoolbar-container {
-    margin-left: 0px;
+  .card-business-badges-container {
+    margin-top: 25px;
   }
 
-  .theme-picker-animation-wrapper {
-    margin-left: 35px;
-  }
-
-  .bottomtoolbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .content {
+    font-size: 16px !important;
   }
 }

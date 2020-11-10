@@ -55,14 +55,14 @@ class CardFormBackdropImageSelector extends Component {
               type="file"
               accept="image/x-png,image/jpeg"
             />
-            <button
+            <label
               className="primary-color card-form-backdrop-image-btn"
               onClick={() =>
                 this.props.deleteBackdropImage(this.props.backdropImgId)
               }
             >
               <MdCloseCircle color="#2ecc71" size={16} />
-            </button>
+            </label>
           </div>
         )}
       </div>

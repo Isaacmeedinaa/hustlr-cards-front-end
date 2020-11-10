@@ -6,7 +6,7 @@ import "../UI.css";
 class CardFormShowSocialMediasButton extends Component {
   render() {
     return (
-      <button
+      <label
         className="primary color card-form-button"
         onClick={() => this.props.showSocialMediaLinks()}
       >
@@ -19,7 +19,7 @@ class CardFormShowSocialMediasButton extends Component {
             "Close"
           )}
         </span>
-      </button>
+      </label>
     );
   }
 }

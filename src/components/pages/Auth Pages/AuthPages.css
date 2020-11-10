@@ -147,7 +147,7 @@
   text-decoration: none;
 }
 
-@media only screen and (max-width: 770px) {
+@media only screen and (max-width: 650px) {
   .auth-card {
     width: 95%;
     margin: 0 auto;
