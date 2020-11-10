@@ -25,7 +25,7 @@ class Card extends Component {
     return (
       <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-wrapper">
-          <div className="card-container">
+        <div className="card-container">
             <CardBackdropImage
               backdropImgUrl={this.props.cardData.backdropImgUrl}
               cardBackdropImageLoader={this.props.cardBackdropImageLoader}
