@@ -15,7 +15,7 @@ const CardEmail = (props) => {
     >
       <a href={"mailto:" + props.email} target="_black">
         <i  className="envelope icon card-business-social-media-icon" 
-            style={{ color: props.primaryColor, fontSize: '16px' }}>
+            style={{ color: props.primaryColor, fontSize: '14px' }}>
         </i>
       </a>
     </div>

@@ -977,6 +977,7 @@
   flex-direction: row;
   justify-content: center;
   margin-top: 10px;
+  max-width: 100%;
 }
 
 .card-business-social-media-icon-container {
@@ -984,11 +985,15 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  height: 45px;
-  width: 45px;
-  padding-left: 4px;
-  margin: 15px;
-  font-size: 19px;
+  height: 40px;
+  width: 40px;
+  padding-left: 2px;
+  margin-right: 18px;
+  font-size: 16px;
+}
+
+.card-business-social-media-icon-container :last-child {
+  margin-right: 0px;
 }
 
 a > i {
@@ -1564,6 +1569,44 @@ a > i {
   .public-card {
     border-radius: 0px;
   }
+
+  .card-form-wrapper {
+    width: 100%;
+    padding: 0px 0px 20px 0px;
+  }
+
+  .card-form-backdrop-image-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .card-business-backdrop-image-container {
+    width: 100%;
+  }
+
+  .card-form-business-image-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .card-form-container {
+    width: 95%;
+    max-width: 100%;
+  }
+
+  .card-container {
+    width: 95%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  .card-wrapper {
+    padding: 0px 0px 100px 0px;
+  }
+
+  .card-business-backdrop-image-container {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width: 650px) {
@@ -1583,23 +1626,5 @@ a > i {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .card-form-container {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .card-form-backdrop-image-container {
-    width: 105%;
-  }
-
-  .card-container {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .card-business-backdrop-image-container {
-    width: 105%;
   }
 }

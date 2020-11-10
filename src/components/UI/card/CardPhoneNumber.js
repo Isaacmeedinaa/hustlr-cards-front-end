@@ -16,7 +16,7 @@ const CardPhoneNumber = (props) => {
       <a href={"tel:" + props.phoneNumber} target="_black">
         <i
           className="phone alternate icon card-business-social-media-icon"
-          style={{ color: props.primaryColor, fontSize: "16px" }}
+          style={{ color: props.primaryColor, fontSize: "14px" }}
         ></i>
       </a>
     </div>
