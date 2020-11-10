@@ -7,6 +7,8 @@ import { clearChangePasswordErrors } from "../../../store/actions/errors/changeP
 
 import $ from "jquery";
 
+import Loader from "react-loader-spinner";
+
 import { Animated } from "react-animated-css";
 
 import MdArrowDropup from "react-ionicons/lib/MdArrowDropup";
@@ -93,19 +95,16 @@ class ChangePasswordForm extends Component {
 
     return (
       <Fragment>
-        <div className="change-password-form-header-btn-container">
+        <div
+          className="change-password-form-header-btn-container"
+          onClick={this.onShowFormClickHandler}
+        >
           <h5 className="user-settings-header">Change Password</h5>
           <div className="settings-accordion-icon-container">
             {this.state.showForm ? (
-              <MdArrowDropdown
-                onClick={this.onShowFormClickHandler}
-                color="#2ecc71"
-              />
+              <MdArrowDropdown color="#2ecc71" />
             ) : (
-              <MdArrowDropup
-                onClick={this.onShowFormClickHandler}
-                color="#2ecc71"
-              />
+              <MdArrowDropup color="#2ecc71" />
             )}
           </div>
         </div>
@@ -150,7 +149,7 @@ class ChangePasswordForm extends Component {
                 onClick={this.onChangePasswordHandler}
               >
                 {this.props.changePasswordLoader ? (
-                  <div className="ui active white inline loader"></div>
+                  <Loader type="TailSpin" color="#fff" width={28} height={28} />
                 ) : (
                   "Change Password"
                 )}

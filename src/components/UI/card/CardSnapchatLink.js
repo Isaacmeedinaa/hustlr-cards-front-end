@@ -10,7 +10,7 @@ const CardSnapchatLink = (props) => {
 
   return (
     <div
-      style={{ backgroundColor: props.transparentColor }}
+      style={{ backgroundColor: props.transparentColor, marginRight: 0 }}
       className="card-business-social-media-icon-container"
     >
       <a href={props.snapchatLink} target="_black">

@@ -11,20 +11,20 @@ import "../../constants/colors.css";
 class SaveCardButton extends Component {
   render() {
     return (
-      <div className="save-card-button-container">
-        <button
-          className="save-card-button"
-          onClick={() => this.props.saveCard(this.props.cardId)}
-        >
-          <span className="card-form-button-text">
-            {this.props.cardUpdatingLoader ? (
-              <Loader type="TailSpin" color="#ffffff" width={15} height={15} />
-            ) : (
-              "Save"
-            )}
-          </span>
-        </button>
-      </div>
+      // <div className="save-card-button-container">
+      <button
+        className="save-card-button"
+        onClick={() => this.props.saveCard(this.props.cardId)}
+      >
+        <span className="card-form-button-text">
+          {this.props.cardUpdatingLoader ? (
+            <Loader type="TailSpin" color="#ffffff" width={15} height={15} />
+          ) : (
+            "Save"
+          )}
+        </span>
+      </button>
+      // </div>
     );
   }
 }

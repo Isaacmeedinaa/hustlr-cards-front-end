@@ -5,6 +5,7 @@ import { userAutoLogin } from "../../store/actions/user";
 
 import SideToolbar from "../UI/SideToolbar";
 import TopToolbar from "../UI/TopToolbar";
+import BottomToolbar from "../UI/BottomToolbar";
 import CardForm from "../UI/CardForm";
 import Card from "../UI/Card";
 
@@ -12,33 +13,32 @@ import "./pages.css";
 import "../../constants/colors.css";
 
 class HomeContainer extends Component {
-  componentDidMount() {
-  }
-
   render() {
     return (
       <Fragment>
-        <div className="container-fluid h-100 no-padding">
-          <div className="grid-container-home">
-            <SideToolbar
-              pathname={this.props.location.pathname}
-              history={this.props.history}
-            />
-            <Fragment>
-              <div className="secondary-light-bg card-form-col-wrapper">
-                <TopToolbar />
-                <div className="card-form-col-container">
-                  <CardForm />
-                </div>
+        <TopToolbar />
+        <div className="grid-container-home">
+          <SideToolbar
+            pathname={this.props.location.pathname}
+            history={this.props.history}
+          />
+          <Fragment>
+            <div className="secondary-light-bg card-form-col-wrapper">
+              <div className="card-form-col-container">
+                <CardForm />
               </div>
-              <div className="secondary-light-bg card-show-col-wrapper">
-                <div className="card-show-col-container">
-                  <Card />
-                </div>
+            </div>
+            <div className="secondary-light-bg card-show-col-wrapper">
+              <div className="card-show-col-container">
+                <Card />
               </div>
-            </Fragment>
-          </div>
+            </div>
+          </Fragment>
         </div>
+        <BottomToolbar
+          pathname={this.props.location.pathname}
+          history={this.props.history}
+        />
       </Fragment>
     );
   }
