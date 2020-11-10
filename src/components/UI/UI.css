@@ -1092,8 +1092,8 @@ a > i {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80%;
-  max-width: 80%;
+  width: 100%;
+  max-width: 100%;
 }
 
 .user-settings-header {
@@ -1363,6 +1363,123 @@ a > i {
   justify-content: center;
   align-content: center;
   text-align: center;
+}
+
+.support-header {
+  text-align: left;
+  font-size: 18px;
+  width: 100%;
+}
+
+.support-form-wrapper {
+  width: 100%;
+  padding: 35px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  -moz-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.support-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.support-form-animation-container {
+  width: 100% !important;
+}
+
+.support-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.support-form-group-fields {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.support-form-input-small-field {
+  width: 48%;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.support-form-input-small-field:focus {
+  outline: none;
+}
+
+.support-form-large-input {
+  margin-top: 30px;
+  width: 100%;
+  height: 80px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.support-form-large-input:focus {
+  outline: none;
+}
+
+.support-form-button {
+  margin-top: 30px;
+  width: 100%;
+  height: 40px;
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.support-form-button:focus {
+  outline: none;
+}
+
+.support-form-button:hover {
+  background-color: #2bc16b;
+}
+
+.support-faq-wrapper {
+  width: 100%;
+  padding: 35px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  -moz-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.support-faq-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
 }
 
 .private-card {
@@ -1654,6 +1771,24 @@ a > i {
   }
 
   .subscription-settings-text-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .support-form-wrapper {
+    padding: 20px 20px 20px 20px;
+  }
+
+  .support-form-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .support-faq-wrapper {
+    padding: 20px 20px 20px 20px;
+  }
+
+  .support-faq-container {
     width: 100%;
     max-width: 100%;
   }

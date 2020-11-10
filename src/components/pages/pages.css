@@ -52,17 +52,24 @@
 .grid-container-support {
   min-height: 100%;
   display: grid;
-  grid-template-columns: minmax(75px, 75px) 1fr;
-  /* grid-template-rows: 1fr; */
-  grid-template-areas: "sidetoolbar support";
-  background-color: aliceblue;
+  grid-template-columns: minmax(75px, 75px) 1fr 1fr;
+  grid-template-areas: "sidetoolbar support-form support-faq";
 }
 
-.support-wrapper {
-  grid-area: support;
+.support-form-col-wrapper {
+  grid-area: support-form;
 }
 
-.support-container {
+.support-form-col-container {
+  padding: 15px 20px 15px 20px;
+}
+
+.support-faq-col-wrapper {
+  grid-area: support-faq;
+  border-left: 1px solid #d1d2d5;
+}
+
+.support-faq-col-container {
   padding: 15px 20px 15px 20px;
 }
 
@@ -97,6 +104,17 @@
   .subscription-settings-col-wrapper {
     border: none;
   }
+
+  .grid-container-support {
+    grid-template-columns: minmax(75px, 75px) 1fr;
+    grid-template-areas:
+      "sidetoolbar support-form"
+      "sidetoolbar support-faq";
+  }
+
+  .support-form-col-wrapper {
+    border: none;
+  }
 }
 
 @media only screen and (max-width: 650px) {
@@ -116,6 +134,7 @@
   }
 
   .grid-container-settings {
+    min-height: auto;
     grid-template-columns: 1fr;
     grid-template-areas:
       "user-settings"
@@ -127,6 +146,22 @@
   }
 
   .subscription-settings-col-container {
+    padding: 20px 10px 80px 10px;
+  }
+
+  .grid-container-support {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "support-form"
+      "support-faq";
+  }
+
+  .support-form-col-container {
+    padding: 20px 10px 15px 10px;
+  }
+
+  .support-faq-col-container {
     padding: 20px 10px 80px 10px;
   }
 }
