@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 
+import { connect } from "react-redux";
+
 import SideToolbar from "../UI/SideToolbar";
 import BottomToolbar from "../UI/BottomToolbar";
 import UserSettings from "../UI/settings/UserSettings";
@@ -10,6 +12,10 @@ import "../../constants/colors.css";
 
 class SettingsPage extends Component {
   render() {
+    if (!this.props.user) {
+      return null;
+    }
+
     return (
       <Fragment>
         <div className="container-fluid h-100 no-padding">
@@ -39,4 +45,10 @@ class SettingsPage extends Component {
   }
 }
 
-export default SettingsPage;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(SettingsPage);
