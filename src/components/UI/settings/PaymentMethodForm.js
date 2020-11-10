@@ -43,19 +43,16 @@ class PaymentMethodForm extends Component {
   render() {
     return (
       <Fragment>
-        <div className="payment-method-form-header-btn-container">
+        <div
+          className="payment-method-form-header-btn-container"
+          onClick={this.onShowFormClickHandler}
+        >
           <h5 className="user-settings-header">Payment Method</h5>
           <div className="settings-accordion-icon-container">
             {this.state.showForm ? (
-              <MdArrowDropdown
-                onClick={this.onShowFormClickHandler}
-                color="#2ecc71"
-              />
+              <MdArrowDropdown color="#2ecc71" />
             ) : (
-              <MdArrowDropup
-                onClick={this.onShowFormClickHandler}
-                color="#2ecc71"
-              />
+              <MdArrowDropup color="#2ecc71" />
             )}
           </div>
         </div>
@@ -144,7 +141,7 @@ class PaymentMethodForm extends Component {
                 />
               </div>
               <input
-                className="white-text payment-button-form-button"
+                className="white-text payment-method-button-form-button"
                 value="Update Payment Method"
                 type="submit"
               />
