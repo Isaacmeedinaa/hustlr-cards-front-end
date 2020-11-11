@@ -17,7 +17,7 @@ class SettingsPage extends Component {
     if (!this.props.user) {
       return (
         <div className="page-loader-container">
-          <Loader type="TailSpin" color="#2ecc71" width={28} height={28} />
+          <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
         </div>
       );
     }

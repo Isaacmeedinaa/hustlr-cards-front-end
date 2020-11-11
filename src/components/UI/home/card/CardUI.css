@@ -96,8 +96,7 @@
 }
 
 .card-business-location-container > i {
-  margin-top: 6px;
-  padding-top: 4px;
+  margin-top: 5px !important;
 }
 
 .card-business-location-text {
@@ -112,8 +111,7 @@
 }
 
 .card-business-industry-container > i {
-  margin-top: 5px;
-  padding-top: 4px;
+  margin-top: 5px !important;
 }
 
 .card-business-industry {
@@ -125,8 +123,9 @@
 .card-business-services {
   text-align: center;
   margin-top: 30px;
-  font-size: 18px;
-  font-weight: 600;
+  margin-bottom: 0px !important;
+  font-size: 16px;
+  font-weight: 500 !important;
   width: 100%;
 }
 
@@ -146,7 +145,7 @@
   padding-top: 20px;
   padding-bottom: 20px;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
   word-wrap: break-word;
 }
 
@@ -218,7 +217,7 @@
 }
 
 .card-business-gallery-slider-container {
-  margin-top: 15px;
+  margin-top: 30px;
   width: 100%;
   border-radius: 15px;
 }
@@ -226,8 +225,8 @@
 .card-business-social-media-links-container {
   display: flex;
   flex-direction: row;
-  margin-top: 10px;
-  justify-content: space-evenly;
+  margin-top: 20px;
+  justify-content: center;
   width: 100%;
   max-width: 100%;
 }
@@ -258,7 +257,7 @@ a > i {
   flex-wrap: wrap;
   justify-content: center;
   padding: 0px;
-  margin-top: 25px;
+  margin-top: 10px;
 }
 
 .card-business-badge {
@@ -271,7 +270,7 @@ a > i {
   padding-top: 3px;
   border: none;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .industry-grid-container {
@@ -356,6 +355,6 @@ a > i {
   }
 
   .card-business-badges-container {
-    margin-top: 25px;
+    margin-top: 10px;
   }
 }

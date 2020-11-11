@@ -4,6 +4,11 @@ import "../../../constants/colors.css";
 import "./PublicCardUI.css";
 
 const PublicCardImage = (props) => {
+
+  if (!props.imgUrl) {
+    return null;
+  }
+  
   return (
     <img
       src={props.imgUrl}
