@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+// Main
 import user from "./user";
 import industries from "./industries";
 import themes from "./themes";
@@ -42,40 +43,44 @@ import userUpdatedNotifications from "./notifications/userUpdatedNotifications";
 import backdropImageNotifications from "./notifications/backdropImageNotifications";
 
 const rootReducer = combineReducers({
-  errors,
-  loginLoader,
-  registerLoader,
+  // Main
   user,
-  industriesLoader,
   industries,
   themes,
+  card,
+  publicCard,
+  auth,
+  // Loaders
+  loginLoader,
+  registerLoader,
+  industriesLoader,
   cardLoader,
+  publicCardLoader,
   cardBackdropImageLoader,
   cardImageLoader,
   cardGalleryImageLoader,
   cardUpdatingLoader,
+  userUpdatingLoader,
+  changePasswordLoader,
+  forgotPasswordLoader,
+  changePasswordCodeLoader,
+  // Errors
+  errors,
   cardErrors,
-  card,
-  publicCard,
+  loginErrors,
+  registerErrors,
+  personalInfoErrors,
+  changePasswordErrors,
+  forgotPasswordErrors,
+  changePasswordCodeErrors,
+  // Notifications
+  changePasswordNotifications,
   cardSavedNotification,
   offeringNotifications,
   galleryNotifications,
   profileImageNotifications,
-  userUpdatingLoader,
   userUpdatedNotifications,
-  personalInfoErrors,
-  changePasswordLoader,
-  changePasswordErrors,
-  changePasswordNotifications,
-  auth,
   backdropImageNotifications,
-  publicCardLoader,
-  forgotPasswordErrors,
-  changePasswordCodeErrors,
-  forgotPasswordLoader,
-  changePasswordCodeLoader,
-  loginErrors,
-  registerErrors,
 });
 
 export default rootReducer;
