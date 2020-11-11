@@ -7,13 +7,19 @@ import BottomToolbar from "../UI/BottomToolbar";
 import UserSettings from "../UI/settings/UserSettings";
 import SubscriptionSettings from "../UI/settings/SubscriptionSettings";
 
+import Loader from "react-loader-spinner";
+
 import "./pages.css";
 import "../../constants/colors.css";
 
 class SettingsPage extends Component {
   render() {
     if (!this.props.user) {
-      return null;
+      return (
+        <div className="page-loader-container">
+          <Loader type="TailSpin" color="#2ecc71" width={28} height={28} />
+        </div>
+      );
     }
 
     return (
