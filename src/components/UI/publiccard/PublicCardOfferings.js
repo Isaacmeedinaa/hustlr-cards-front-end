@@ -6,7 +6,7 @@ import "./PublicCardUI.css";
 class PublicCardOfferings extends Component {
   renderOfferings = () => {
     return this.props.offerings.map((offering) => {
-      if (!offering.title || offering.title === "") {
+      if ((!offering.title || offering.title === "") && (!offering.description || offering.description === "")) {
         return null;
       }
 
