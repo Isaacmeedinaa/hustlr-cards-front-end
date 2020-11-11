@@ -1,9 +1,14 @@
 import React from "react";
 
 import "../../../constants/colors.css";
-import "../UI.css";
+import "./PublicCardUI.css";
 
 const PublicCardImage = (props) => {
+
+  if (!props.imgUrl) {
+    return null;
+  }
+  
   return (
     <img
       src={props.imgUrl}

@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../../../constants/colors.css";
-import "../UI.css";
+import "./PublicCardUI.css";
 
 const PublicCardPhoneNumber = (props) => {
   if (!props.phoneNumber || !props.phoneNumber === "") {

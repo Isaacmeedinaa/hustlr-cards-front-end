@@ -4,16 +4,27 @@ import { connect } from "react-redux";
 import { userAutoLogin } from "../../store/actions/user";
 
 import SideToolbar from "../UI/SideToolbar";
-import TopToolbar from "../UI/TopToolbar";
+import TopToolbar from "../UI/home/TopToolbar";
 import BottomToolbar from "../UI/BottomToolbar";
-import CardForm from "../UI/CardForm";
-import Card from "../UI/Card";
+import CardForm from "../UI/home/cardform/CardForm";
+import Card from "../UI/home/card/Card";
 
-import "./pages.css";
+import Loader from "react-loader-spinner";
+
 import "../../constants/colors.css";
+import "./pages.css";
 
 class HomeContainer extends Component {
   render() {
+
+    if (this.props.cardLoader) {
+      return (
+        <div className="page-loader-container">
+          <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
+        </div>
+      );
+    }
+
     return (
       <Fragment>
         <TopToolbar />

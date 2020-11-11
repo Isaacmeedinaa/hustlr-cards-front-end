@@ -1,0 +1,137 @@
+.toptoolbar {
+  border-bottom: 1px solid #d1d2d5;
+  height: 60px;
+  width: 100%;
+  padding: 0px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  z-index: 1000 !important;
+}
+
+.toptoolbar-container {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-self: center;
+  width: 100%;
+  margin-left: 75px;
+}
+
+.toptoolbar-theme-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 30px;
+  min-width: 30px;
+  background-color: rgba(46, 204, 113, 0.25);
+}
+
+.toptoolbar-theme-icon-container:hover {
+  cursor: pointer;
+}
+
+.toptoolbar-theme-icon:hover {
+  cursor: pointer;
+}
+
+.theme-picker-animation-wrapper {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  margin-left: 110px;
+  margin-top: 60px;
+  z-index: 10000 !important;
+}
+
+.theme-picker {
+  height: 150px;
+  width: 150px;
+  padding: 10px 10px;
+  position: absolute;
+  border-radius: 5px;
+  border-top: 1px solid #d1d2d5;
+  border-right: 1px solid #d1d2d5;
+  border-left: 1px solid #d1d2d5;
+  -webkit-box-shadow: 0px 5px 0px -1px #cdcdd2;
+  -moz-box-shadow: 0px 5px 0px -1px #cdcdd2;
+  box-shadow: 0px 5px 0px -1px #cdcdd2;
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+}
+
+.theme-picker-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "colorone colortwo colorthree"
+    "colorfour colorfive colorsix"
+    "colorseven coloreight colornine";
+  grid-gap: 10px;
+}
+
+.theme-picker-color-one {
+  grid-area: colorone;
+}
+
+.theme-picker-color-two {
+  grid-area: colortwo;
+}
+
+.theme-picker-color-three {
+  grid-area: colorthree;
+}
+
+.theme-picker-color-four {
+  grid-area: colorfour;
+}
+
+.theme-picker-color-five {
+  grid-area: colorfive;
+}
+
+.theme-picker-color-six {
+  grid-area: colorsix;
+}
+
+.theme-picker-color-seven {
+  grid-area: colorseven;
+}
+
+.theme-picker-color-eight {
+  grid-area: coloreight;
+}
+
+.theme-picker-color-nine {
+  grid-area: colornine;
+}
+
+.theme-picker-color {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.theme-picker-color-selected {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 2px solid #d1d2d5;
+}
+
+.theme-picker-color:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 650px) {
+  .toptoolbar-container {
+    margin-left: 0px;
+  }
+
+  .theme-picker-animation-wrapper {
+    margin-left: 35px;
+  }
+}

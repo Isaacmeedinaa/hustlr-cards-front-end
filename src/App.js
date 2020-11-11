@@ -6,6 +6,8 @@ import {
   Redirect,
 } from "react-router-dom";
 
+import Loader from "react-loader-spinner";
+
 import { connect } from "react-redux";
 import { fetchIndustries } from "./store/actions/industries";
 import { userAutoLogin } from "./store/actions/user";
@@ -69,7 +71,11 @@ class App extends Component {
 
   render() {
     if (this.props.industriesLoader || !this.props.auth.hasCheckedAuth) {
-      return null;
+      return (
+        <div className="page-loader-container">
+          <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
+        </div>
+      );
     }
 
     return (

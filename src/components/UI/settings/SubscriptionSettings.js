@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { Animated } from "react-animated-css";
 
+import "./SettingsUI.css";
+
 class SubscriptionSettingsForm extends Component {
   render() {
     return (

@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchPublicCard } from "../../store/actions/publicCard";
 
+import Loader from "react-loader-spinner";
+
 import PublicCard from "../UI/publiccard/PublicCard";
 
 import "./pages.css";
@@ -16,7 +18,11 @@ class PublicCardPage extends Component {
 
   render() {
     if (!this.props.publicCard) {
-      return null;
+      return (
+        <div className="page-loader-container">
+          <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
+        </div>
+      );
     }
 
     return (

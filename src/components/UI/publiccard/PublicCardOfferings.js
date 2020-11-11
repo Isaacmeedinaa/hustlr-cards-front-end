@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 
 import "../../../constants/colors.css";
-import "../UI.css";
+import "./PublicCardUI.css";
 
 class PublicCardOfferings extends Component {
   renderOfferings = () => {

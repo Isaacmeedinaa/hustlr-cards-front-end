@@ -8,7 +8,7 @@ import PublicCardTwitterLink from "./PublicCardTwitterLink";
 import PublicCardSnapchatLink from "./PublicCardSnapchatLink";
 
 import "../../../constants/colors.css";
-import "../UI.css";
+import "./PublicCardUI.css";
 
 const PublicCardSocialMedias = (props) => {
   console.log(props);
