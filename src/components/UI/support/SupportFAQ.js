@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Animated } from "react-animated-css";
 
 import "../../../constants/colors.css";
-import "../UI.css";
+import "./SupportUI.css";
 
 class SupportFAQ extends Component {
   render() {

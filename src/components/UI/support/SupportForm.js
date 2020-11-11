@@ -5,7 +5,7 @@ import Loader from "react-loader-spinner";
 import { Animated } from "react-animated-css";
 
 import "../../../constants/colors.css";
-import "../UI.css";
+import "./SupportUI.css";
 
 class SupportForm extends Component {
   state = {

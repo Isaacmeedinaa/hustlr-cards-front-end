@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import AwesomeSlider from "react-awesome-slider";
 
 import "../../../constants/colors.css";
-import "../UI.css";
+import "./PublicCardUI.css";
 import "react-awesome-slider/dist/styles.css";
 
 class PublicCardGallerySlider extends Component {

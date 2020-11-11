@@ -1,0 +1,517 @@
+.card-form-wrapper {
+  width: 100%;
+  padding: 35px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  -moz-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: #a3a3a3;
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #a3a3a3;
+  opacity: 1;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #a3a3a3;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #a3a3a3;
+}
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #a3a3a3;
+}
+
+::placeholder {
+  /* Most modern browsers support this now. */
+  color: #a3a3a3;
+}
+
+.card-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  max-width: 80%;
+}
+
+.card-form-error-text {
+  font-size: 16px;
+  color: rgb(252, 86, 86);
+}
+
+.card-form-backdrop-image-container {
+  width: 127.5%;
+  height: 180px;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-form-backdrop-image-btns-container {
+  display: flex;
+  align-self: flex-end;
+}
+
+.card-form-backdrop-image-btn {
+  height: 35px;
+  width: 35px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(46, 204, 113, 0.25);
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.card-form-backdrop-image-btn:hover {
+  cursor: pointer;
+}
+
+.card-form-backdrop-image-btn:focus {
+  outline: none;
+}
+
+.card-form-backdrop-image-spinner-loader-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-form-business-img-container {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: -65px;
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 6px solid #ffffff;
+}
+
+.card-form-delete-business-img {
+  margin-top: 15px;
+}
+
+.card-form-business-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card-form-business-img:hover {
+  cursor: pointer;
+}
+
+.card-form-file-button {
+  display: none;
+}
+
+.card-form-file-label {
+  margin-top: 15px;
+  margin-bottom: 0px;
+  width: 100%;
+  height: 40px;
+  background-color: rgba(255, 83, 73, 0.3);
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.card-form-file-label:hover {
+  cursor: pointer;
+}
+
+.card-form-input {
+  margin-top: 30px;
+  width: 100%;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.card-form-input:focus {
+  outline: none;
+}
+
+.card-form-location-fields {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.card-form-input-location {
+  width: 48%;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.card-form-input-location:focus {
+  outline: none;
+}
+
+.card-form-dropdown-container {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.card-form-state-dropdown-container {
+  width: 48%;
+}
+
+.card-form-input-large {
+  margin-top: 30px;
+  width: 100%;
+  height: 100px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.card-form-input-large:focus {
+  outline: none;
+}
+
+.card-form-contact-fields {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.card-form-input-contact {
+  width: 48%;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.card-form-input-contact:focus {
+  outline: none;
+}
+
+.card-form-button {
+  margin-top: 30px !important;
+  width: 100% !important;
+  height: 40px !important;
+  background-color: #2ecc71 !important;
+  border: none !important;
+  border-radius: 5px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-content: center !important;
+  outline: none !important;
+}
+
+.card-form-button:hover {
+  background-color: #2bc16b !important;
+}
+
+.card-form-button-text {
+  width: 100% !important;
+  text-align: center !important;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.card-form-button:hover {
+  cursor: pointer;
+}
+
+.card-form-button-text:hover {
+  cursor: pointer;
+}
+
+.card-form-products-services-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.card-form-product-service-inputs-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.card-form-product-service-title-input {
+  width: 100%;
+  margin-top: 10px;
+  margin-right: 10px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.card-form-product-service-price-input {
+  width: 16%;
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.card-form-product-service-text {
+  margin-left: 10px;
+  position: relative;
+  top: 18px;
+  font-size: 18px;
+}
+
+.card-form-product-service-title-input:focus {
+  outline: none;
+}
+
+.card-form-product-service-price-input:focus {
+  outline: none;
+}
+
+.card-form-product-service-buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.card-form-offering-button {
+  border: none;
+  background-color: white;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  font-size: 14px;
+}
+
+.card-form-offering-button:focus {
+  outline: none;
+}
+
+.card-form-offering-button:hover {
+  border-radius: 5px;
+  background-color: rgba(112, 112, 112, 0.06);
+}
+
+#cardFormProductServiceDeleteBtn {
+  margin-left: 10px;
+}
+
+.card-form-delete-offering-modal {
+  height: 80px;
+  width: 150px;
+  margin-top: 100px;
+  padding: 10px 10px;
+  position: absolute;
+  z-index: 1000000 !important;
+  border-radius: 5px;
+  border-top: 1px solid #d1d2d5;
+  border-right: 1px solid #d1d2d5;
+  border-left: 1px solid #d1d2d5;
+  -webkit-box-shadow: 0px 5px 0px -1px #cdcdd2;
+  -moz-box-shadow: 0px 5px 0px -1px #cdcdd2;
+  box-shadow: 0px 5px 0px -1px #cdcdd2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+}
+
+.card-form-delete-offering-modal-question {
+  font-size: 15px;
+}
+
+.card-form-delete-offering-modal-button {
+  margin: 10px;
+  border: none;
+  background: white;
+  font-size: 14px;
+  margin-bottom: 0 !important;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.card-form-delete-offering-modal-button:focus {
+  outline: none;
+}
+
+.card-form-delete-offering-modal-button:hover {
+  background-color: #a3a3a32f;
+  border-radius: 5px;
+}
+
+.card-form-social-media-inputs-animation-wrapper {
+  width: 100%;
+}
+
+.card-form-social-media-inputs-container {
+  width: 100%;
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-form-social-media-input {
+  margin-top: 10px;
+  width: 100%;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.card-form-social-media-input:focus {
+  outline: none;
+}
+
+.card-form-gallery-slider-container {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.card-form-gallery-slider {
+  border-radius: 5px;
+}
+
+.card-form-gallery-slider-image-delete-btn {
+  width: 35px;
+  height: 35px;
+  background: rgba(46, 204, 113, 0.25);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.card-form-gallery-slider-image-delete-btn:hover {
+  cursor: pointer;
+}
+
+.card-form-path-to-card-container {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.card-form-path-to-card-input {
+  width: 100%;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  align-self: flex-end;
+  margin-left: 3px;
+  font-weight: 500;
+}
+
+.card-form-path-to-card-input:focus {
+  outline: none;
+}
+
+.card-form-path-to-card-url {
+  position: relative;
+  top: 10px;
+  margin-right: 3px;
+}
+
+@media only screen and (max-width: 650px) {
+  .card-form-wrapper {
+    width: 100%;
+    padding: 20px 0px 20px 0px;
+  }
+
+  .card-form-backdrop-image-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .card-form-business-image-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .card-form-container {
+    width: 95%;
+    max-width: 100%;
+  }
+
+  .card-form-button {
+    text-align: center !important;
+  }
+
+  .card-form-button-text {
+    width: 100% !important;
+    text-align: center !important;
+    color: #ffffff;
+    font-weight: 600;
+  }
+}
