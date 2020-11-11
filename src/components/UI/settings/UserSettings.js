@@ -7,7 +7,7 @@ import ChangePasswordForm from "./ChangePasswordForm";
 import { Animated } from "react-animated-css";
 
 import "../../../constants/colors.css";
-import "../UI.css";
+import "./SettingsUI.css";
 
 class UserSettings extends Component {
   render() {

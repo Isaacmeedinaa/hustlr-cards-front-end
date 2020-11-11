@@ -3,6 +3,8 @@ import React from "react";
 import PublicCardIndustry from "./PublicCardIndustry";
 import PublicCardLocation from "./PublicCardLocation";
 
+import "./PublicCardUI.css";
+
 const PublicCardBadges = (props) => {
   const industryView =
     !props.industry || !props.industry.id ? null : (

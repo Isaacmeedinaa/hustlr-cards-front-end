@@ -6,7 +6,7 @@ import MdArrowDropup from "react-ionicons/lib/MdArrowDropup";
 import MdArrowDropdown from "react-ionicons/lib/MdArrowDropdown";
 
 import "../../../constants/colors.css";
-import "../UI.css";
+import "./SettingsUI.css";
 
 class PaymentMethodForm extends Component {
   state = {
