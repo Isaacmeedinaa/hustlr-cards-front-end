@@ -6,7 +6,7 @@ import "./CardUI.css";
 const CardOfferings = (props) => {
   const renderOfferings = () => {
     return props.offerings.map((offering, index) => {
-      if (offering.title === "") {
+      if ((!offering.title || offering.title === "") && (!offering.description || offering.description === "")) {
         return null;
       }
       return (

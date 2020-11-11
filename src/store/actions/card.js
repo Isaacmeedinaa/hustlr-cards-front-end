@@ -416,7 +416,7 @@ export const setCardOfferingDescription = (
 export const createOffering = (cardId) => {
   return (dispatch) => {
     const offeringData = {
-      title: "Your Service or Product Title",
+      title: "",
       description: "",
       price: "",
       offerType: 0,
