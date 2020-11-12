@@ -145,6 +145,14 @@ class CardForm extends Component {
         hideDuration: 1000,
       },
     });
+
+    if (this.props.cardErrors.length > 0 && !success) {
+      window.scroll({
+        top: 0, 
+        left: 0, 
+        behavior: 'smooth'
+      });
+    }
   }
 
   showSocialMediaLinks = async () => {

@@ -30,33 +30,35 @@ class TopToolbar extends Component {
     }
     return (
       <Fragment>
-        <div className="primary-light-bg toptoolbar">
-          {/* {this.props.cardLoader ? null : ( */}
-          <div className="toptoolbar-container">
-            <div
-              className="toptoolbar-theme-icon-container"
-              onClick={this.openCloseThemePickerHandler}
-            >
-              {!this.state.themePickerIsOpen ? (
-                <MdBrush
-                  className="toptoolbar-theme-icon"
-                  fontSize="18px"
-                  color="#2ecc71"
-                />
-              ) : (
-                <MdCloseCircle
-                  className="toptoolbar-theme-icon"
-                  fontSize="18px"
-                  color="#2ecc71"
-                />
-              )}
+        <div className="toptoolbar-wrapper">
+          <div className="primary-light-bg toptoolbar">
+            {/* {this.props.cardLoader ? null : ( */}
+            <div className="toptoolbar-container">
+              <div
+                className="toptoolbar-theme-icon-container"
+                onClick={this.openCloseThemePickerHandler}
+              >
+                {!this.state.themePickerIsOpen ? (
+                  <MdBrush
+                    className="toptoolbar-theme-icon"
+                    fontSize="18px"
+                    color="#2ecc71"
+                  />
+                ) : (
+                  <MdCloseCircle
+                    className="toptoolbar-theme-icon"
+                    fontSize="18px"
+                    color="#2ecc71"
+                  />
+                )}
+              </div>
+              <PublicToggle />
+              <SaveCardButton />
             </div>
-            <PublicToggle />
-            <SaveCardButton />
+            {/* )} */}
           </div>
-          {/* )} */}
+          {!this.state.themePickerIsOpen ? null : <ThemePicker />}
         </div>
-        {!this.state.themePickerIsOpen ? null : <ThemePicker />}
       </Fragment>
     );
   }

@@ -13,6 +13,8 @@ const CardLink = (props) => {
         href={"https://www.hustlr.cards/" + props.pathToCard}
         style={{ color: props.primaryColor }}
         className="card-business-link"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         https://www.hustlr.cards/{props.pathToCard}
       </a>
