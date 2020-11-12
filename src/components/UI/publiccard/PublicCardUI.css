@@ -194,7 +194,7 @@
   width: 90%;
   font-size: 18px;
   font-weight: 700;
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 .public-card-products-services-container {
@@ -240,6 +240,15 @@
 .public-card-product-service-description {
   margin-top: 10px;
   font-size: 14px;
+}
+
+.public-card-logo-container {
+  margin-bottom: 40px;
+}
+
+.awssld__bullets button {
+  width: 10px !important;
+  height: 10px !important;
 }
 
 @media only screen and (max-width: 650px) {

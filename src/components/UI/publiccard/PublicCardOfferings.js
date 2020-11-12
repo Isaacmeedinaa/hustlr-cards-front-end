@@ -49,7 +49,7 @@ class PublicCardOfferings extends Component {
     return (
       <Fragment>
         <div className="public-card-products-services-title-text">
-          Products & Services
+          Products &amp; Services
         </div>
         <div className="public-card-products-services-container">
           {this.renderOfferings()}
