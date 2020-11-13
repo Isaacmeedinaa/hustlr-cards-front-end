@@ -5,6 +5,7 @@ import user from "./user";
 import industries from "./industries";
 import themes from "./themes";
 import card from "./card";
+import cardSaved from "./cardSaved";
 import publicCard from "./publicCard";
 import auth from "./auth";
 
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   industries,
   themes,
   card,
+  cardSaved,
   publicCard,
   auth,
   // Loaders

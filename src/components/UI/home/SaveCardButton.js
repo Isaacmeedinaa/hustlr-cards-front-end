@@ -11,9 +11,12 @@ import "./HomeUI.css";
 class SaveCardButton extends Component {
   render() {
     return (
-      // <div className="save-card-button-container">
       <button
-        className="save-card-button"
+        className={
+          !this.props.cardSaved
+            ? "save-card-button glowing-button"
+            : "save-card-button"
+        }
         onClick={() => this.props.saveCard(this.props.cardId)}
       >
         <span className="card-form-button-text">
@@ -24,7 +27,6 @@ class SaveCardButton extends Component {
           )}
         </span>
       </button>
-      // </div>
     );
   }
 }
@@ -33,6 +35,7 @@ const mapStateToProps = (state) => {
   return {
     cardId: state.card.cardData.id,
     cardUpdatingLoader: state.cardUpdatingLoader,
+    cardSaved: state.cardSaved,
   };
 };
 

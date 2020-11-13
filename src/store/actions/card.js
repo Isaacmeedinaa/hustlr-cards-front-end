@@ -47,6 +47,7 @@ import {
   CARD_GALLERY_IMAGE_IS_NOT_LOADING,
 } from "./loaders/cardGalleryImageLoader";
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
+import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -200,12 +201,14 @@ export const saveCard = (cardId) => {
           dispatch({ type: CARD_ERRORS, errors: data.errors });
           dispatch({ type: CARD_IS_NOT_UPDATING });
           dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
+          dispatch({ type: CARD_IS_NOT_SAVED });
           return;
         }
         localStorage.removeItem("card");
         localStorage.setItem("card", JSON.stringify(data));
 
         dispatch({ type: CARD_SAVED_SUCCESSFULLY });
+        dispatch({ type: CARD_IS_SAVED });
         dispatch({ type: CARD_NO_ERRORS });
         dispatch({ type: CARD_IS_NOT_UPDATING });
       });
