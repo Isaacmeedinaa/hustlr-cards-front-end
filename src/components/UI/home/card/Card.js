@@ -26,6 +26,11 @@ class Card extends Component {
       <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-wrapper">
           <div className="card-container">
+            <CardLink
+              pathToCard={this.props.cardData.pathToCard}
+              primaryColor={this.props.cardTheme.primaryColor}
+              transparentColor={this.props.cardTheme.transparentColor}
+            />
             <CardBackdropImage
               backdropImgUrl={this.props.cardData.backdropImgUrl}
               cardBackdropImageLoader={this.props.cardBackdropImageLoader}
@@ -57,11 +62,6 @@ class Card extends Component {
             <CardGallerySlider photos={this.props.cardData.photos} />
             <CardOfferings
               offerings={this.props.cardData.offerings}
-              primaryColor={this.props.cardTheme.primaryColor}
-              transparentColor={this.props.cardTheme.transparentColor}
-            />
-            <CardLink
-              pathToCard={this.props.cardData.pathToCard}
               primaryColor={this.props.cardTheme.primaryColor}
               transparentColor={this.props.cardTheme.transparentColor}
             />

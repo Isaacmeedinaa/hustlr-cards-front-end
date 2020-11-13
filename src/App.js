@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,8 +12,6 @@ import { connect } from "react-redux";
 import { fetchIndustries } from "./store/actions/industries";
 import { userAutoLogin } from "./store/actions/user";
 import { setIsNotAuthenticated } from "./store/actions/auth";
-
-import IdleTimer from "react-idle-timer";
 
 import "./App.css";
 
@@ -30,15 +28,6 @@ import PublicCardPage from "./components/pages/PublicCardPage";
 import ProtectedRoute from "./components/hoc/ProtectedRoute";
 
 class App extends Component {
-  constructor() {
-    super();
-
-    this.idleTimer = null;
-    this.handleOnAction = this.handleOnAction.bind(this);
-    this.handleOnActive = this.handleOnActive.bind(this);
-    this.handleOnIdle = this.handleOnIdle.bind(this);
-  }
-
   componentDidMount() {
     const userToken = localStorage.getItem("userToken");
 
@@ -51,24 +40,6 @@ class App extends Component {
     this.props.fetchIndustries();
   }
 
-  handleOnAction() {
-    this.idleTimer.reset();
-  }
-
-  handleOnActive() {}
-
-  handleOnIdle() {
-    const userToken = localStorage.getItem("userToken");
-    const userId = localStorage.getItem("userId");
-
-    if (userToken && userId) {
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("userId");
-    } else {
-      return;
-    }
-  }
-
   render() {
     if (this.props.industriesLoader || !this.props.auth.hasCheckedAuth) {
       return (
@@ -79,57 +50,37 @@ class App extends Component {
     }
 
     return (
-      <Fragment>
-        <IdleTimer
-          ref={(ref) => {
-            this.idleTimer = ref;
-          }}
-          timeout={1800000}
-          onActive={this.handleOnActive}
-          onIdle={this.handleOnIdle}
-          onAction={this.handleOnAction}
-          debounce={250}
-        />
-        <Router>
-          <Switch>
-            <Route path="/404" component={NotFoundPage} />
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/register" component={RegisterPage} />
-            <Route
-              exact
-              path="/forgot-password"
-              component={ForgotPasswordPage}
-            />
-            <Route
-              exact
-              path="/change-password"
-              component={ChangePasswordPage}
-            />
-            <ProtectedRoute
-              exact
-              path="/home"
-              component={HomePage}
-              isAuthenticated={this.props.auth.isAuthenticated}
-            />
-            <ProtectedRoute
-              exact
-              path="/settings"
-              component={SettingsPage}
-              isAuthenticated={this.props.auth.isAuthenticated}
-            />
-            <ProtectedRoute
-              exact
-              path="/support"
-              component={SupportPage}
-              isAuthenticated={this.props.auth.isAuthenticated}
-            />
-            <Route exact path="/landing" component={LandingPage} />
-            <Route exact path="/:pathToCard" component={PublicCardPage} />
-            <Route exact path="/" component={LandingPage} />
-            <Redirect to="/404" />
-          </Switch>
-        </Router>
-      </Fragment>
+      <Router>
+        <Switch>
+          <Route path="/404" component={NotFoundPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/forgot-password" component={ForgotPasswordPage} />
+          <Route exact path="/change-password" component={ChangePasswordPage} />
+          <ProtectedRoute
+            exact
+            path="/home"
+            component={HomePage}
+            isAuthenticated={this.props.auth.isAuthenticated}
+          />
+          <ProtectedRoute
+            exact
+            path="/settings"
+            component={SettingsPage}
+            isAuthenticated={this.props.auth.isAuthenticated}
+          />
+          <ProtectedRoute
+            exact
+            path="/support"
+            component={SupportPage}
+            isAuthenticated={this.props.auth.isAuthenticated}
+          />
+          <Route exact path="/landing" component={LandingPage} />
+          <Route exact path="/:pathToCard" component={PublicCardPage} />
+          <Route exact path="/" component={LandingPage} />
+          <Redirect to="/404" />
+        </Switch>
+      </Router>
     );
   }
 }
