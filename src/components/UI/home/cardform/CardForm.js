@@ -148,9 +148,9 @@ class CardForm extends Component {
 
     if (this.props.cardErrors.length > 0 && !success) {
       window.scroll({
-        top: 0, 
-        left: 0, 
-        behavior: 'smooth'
+        top: 0,
+        left: 0,
+        behavior: "smooth",
       });
     }
   }
@@ -200,6 +200,7 @@ class CardForm extends Component {
             <CardFormLocationInputs />
             <CardFormIndustrySelect />
             <CardFormDescriptionInput />
+            <CardFormCardPathInput />
             <CardFormAddOfferingButton />
             {this.renderOfferingsInputs()}
             <CardFormContactInputs />
@@ -210,7 +211,6 @@ class CardForm extends Component {
               isHidden={this.state.isHidden}
             />
             {this.state.isHidden ? null : <CardFormSocialMediaInputs />}
-            <CardFormCardPathInput />
           </div>
         </div>
       </Animated>

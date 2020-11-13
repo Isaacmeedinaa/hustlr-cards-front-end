@@ -455,10 +455,16 @@
 
 .card-form-path-to-card-container {
   width: 100%;
-  margin-top: 30px;
+  margin-top: 15px;
   display: flex;
   align-content: center;
   justify-content: center;
+}
+
+.card-form-path-to-card-url {
+  position: relative;
+  top: 10px;
+  margin-right: 10px;
 }
 
 .card-form-path-to-card-input {
@@ -469,18 +475,12 @@
   border-radius: 5px;
   padding: 5px 10px;
   align-self: flex-end;
-  margin-left: 3px;
+  margin-left: 10px;
   font-weight: 500;
 }
 
 .card-form-path-to-card-input:focus {
   outline: none;
-}
-
-.card-form-path-to-card-url {
-  position: relative;
-  top: 10px;
-  margin-right: 3px;
 }
 
 @media only screen and (max-width: 650px) {
