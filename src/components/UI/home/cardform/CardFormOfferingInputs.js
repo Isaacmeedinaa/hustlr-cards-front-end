@@ -5,7 +5,6 @@ import {
   setCardOfferingTitle,
   setCardOfferingPrice,
   setCardOfferingDescription,
-  updateOffering,
   deleteOffering,
 } from "../../../../store/actions/card";
 
@@ -18,7 +17,6 @@ class CardFormOfferingInputs extends Component {
     title: this.props.offering.title,
     price: this.props.offering.price,
     description: this.props.offering.description,
-    offeringSnapshot: { ...this.props.offering },
   };
 
   onCardTitleChangeHandler = async (event) => {
@@ -46,20 +44,6 @@ class CardFormOfferingInputs extends Component {
       this.props.index,
       this.state.description
     );
-  };
-
-  updateOfferingInputsHandler = async () => {
-    await this.props.updateOffering(
-      this.props.id,
-      this.props.title,
-      this.props.description,
-      this.props.price,
-      this.props.cardId
-    );
-
-    this.setState({
-      offeringSnapshot: { ...this.props.offering },
-    });
   };
 
   deleteOfferingInputsHandler = async () => {
@@ -97,18 +81,6 @@ class CardFormOfferingInputs extends Component {
           onChange={this.onOfferingDescriptionChangeHandler}
         />
         <div className="card-form-product-service-buttons-container">
-          {this.state.offeringSnapshot.title !== this.props.offering.title ||
-          this.state.offeringSnapshot.price !== this.props.offering.price ||
-          this.state.offeringSnapshot.description !==
-            this.props.offering.description ? (
-            <button
-              className="primary-color card-form-offering-button"
-              id="cardFormProductServiceDeleteBtn"
-              onClick={this.updateOfferingInputsHandler}
-            >
-              Save Changes
-            </button>
-          ) : null}
           <button
             className="primary-color card-form-offering-button"
             id="cardFormProductServiceDeleteBtn"
@@ -151,8 +123,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setCardOfferingPrice(offeringIndex, offeringPrice)),
     setCardOfferingDescription: (offeringIndex, offeringDescription) =>
       dispatch(setCardOfferingDescription(offeringIndex, offeringDescription)),
-    updateOffering: (id, title, description, price, cardId) =>
-      dispatch(updateOffering(id, title, description, price, cardId)),
     deleteOffering: (id) => dispatch(deleteOffering(id)),
   };
 };

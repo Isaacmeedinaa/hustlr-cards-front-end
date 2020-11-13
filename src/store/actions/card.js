@@ -13,8 +13,6 @@ import {
 import {
   OFFERING_CREATED_SUCCESSFULLY,
   OFFERING_CREATED_UNSUCCESSFULLY,
-  OFFERING_SAVED_SUCCESSFULLY,
-  OFFERING_SAVED_UNSUCCESSFULLY,
   OFFERING_DELETED_SUCCESSFULLY,
   OFFERING_DELETED_UNSUCCESSFULLY,
 } from "./notifications/offeringNotifications";
@@ -69,7 +67,6 @@ export const SET_CARD_OFFERING_TITLE = "SET_CARD_OFFERING_TITLE";
 export const SET_CARD_OFFERING_PRICE = "SET_CARD_OFFERING_PRICE";
 export const SET_CARD_OFFERING_DESCRIPTION = "SET_CARD_OFFERING_DESCRIPTION";
 export const CREATE_OFFERING = "CREATE_OFFERING";
-export const UPDATE_OFFERING = "UPDATE_OFFERING";
 export const DELETE_OFFERING = "DELETE_OFFERING";
 export const SET_CARD_EMAIL = "SET_CARD_EMAIL";
 export const SET_CARD_PHONE_NUMBER = "SET_CARD_PHONE_NUMBER";
@@ -133,8 +130,26 @@ export const fetchCard = (userId) => {
 };
 
 export const saveCard = (cardId) => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { cardData } = getState().card;
+    const localStorageCard = JSON.parse(localStorage.getItem("card"));
+    let updatedOfferings = [];
+
+    for (let i = 0; i < localStorageCard.offerings.length; i++) {
+      let result = cardData.offerings.filter((offeringRedux) => {
+        return (
+          offeringRedux.id === localStorageCard.offerings[i].id &&
+          (offeringRedux.title !== localStorageCard.offerings[i].title ||
+            offeringRedux.price !== localStorageCard.offerings[i].price ||
+            offeringRedux.description !==
+              localStorageCard.offerings[i].description)
+        );
+      });
+
+      if (result.length === 1) {
+        updatedOfferings.push(result[0]);
+      }
+    }
 
     const updateCardData = {
       id: cardData.id,
@@ -160,6 +175,7 @@ export const saveCard = (cardId) => {
           ? null
           : cardData.industry.id,
       userId: cardData.userId,
+      offerings: updatedOfferings,
     };
 
     const userToken = localStorage.getItem("userToken");
@@ -186,10 +202,12 @@ export const saveCard = (cardId) => {
           dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
           return;
         }
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(data));
+
         dispatch({ type: CARD_SAVED_SUCCESSFULLY });
         dispatch({ type: CARD_NO_ERRORS });
         dispatch({ type: CARD_IS_NOT_UPDATING });
-        console.log(data);
       });
   };
 };
@@ -438,6 +456,12 @@ export const createOffering = (cardId) => {
     fetch(`${API_BASE_URL}/offerings`, reqObj)
       .then((resp) => resp.json())
       .then((offering) => {
+        // MUST add new offering to local storage card offerings array
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        localStorageCard.offerings.push(offering);
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
         dispatch({ type: CREATE_OFFERING, offering: offering });
         dispatch({ type: OFFERING_CREATED_SUCCESSFULLY });
       })
@@ -448,48 +472,8 @@ export const createOffering = (cardId) => {
   };
 };
 
-export const updateOffering = (id, title, description, price, cardId) => {
-  return (dispatch) => {
-    const offeringData = {
-      id: id,
-      title: title,
-      description: description,
-      price: price,
-      offerType: 0,
-      cardId: cardId,
-    };
-
-    const userToken = localStorage.getItem("userToken");
-
-    const reqObj = {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-        "Content-Type": "application/json",
-        Accepts: "application/json",
-      },
-      body: JSON.stringify(offeringData),
-    };
-
-    fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
-      .then((resp) => resp.json())
-      .then((offering) => {
-        dispatch({
-          type: UPDATE_OFFERING,
-          id: offering.id,
-          offering: offering,
-        });
-        dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });
-      })
-      .catch((err) => {
-        dispatch({ type: OFFERING_SAVED_UNSUCCESSFULLY });
-        console.log(err);
-      });
-  };
-};
-
 export const deleteOffering = (id, index) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     const offeringData = {
       id: id,
     };
@@ -506,9 +490,19 @@ export const deleteOffering = (id, index) => {
       body: JSON.stringify(offeringData),
     };
 
-    await fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
+    fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
       .then(() => {})
       .then(() => {
+        // MUST remove offering from local storage card offerings array
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        let newOfferings = localStorageCard.offerings.filter(
+          (offering) => offering.id !== id
+        );
+        delete localStorageCard["offerings"];
+        localStorageCard["offerings"] = newOfferings;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
         dispatch({ type: DELETE_OFFERING, id: id });
         dispatch({ type: OFFERING_DELETED_SUCCESSFULLY });
       })

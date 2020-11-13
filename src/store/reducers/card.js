@@ -15,7 +15,6 @@ import {
   SET_CARD_OFFERING_PRICE,
   SET_CARD_OFFERING_DESCRIPTION,
   CREATE_OFFERING,
-  UPDATE_OFFERING,
   DELETE_OFFERING,
   SET_CARD_EMAIL,
   SET_CARD_PHONE_NUMBER,
@@ -245,21 +244,6 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           offerings: state.cardData.offerings.concat(action.offering),
-        },
-      };
-
-    case UPDATE_OFFERING:
-      const offeringIndex = state.cardData.offerings.findIndex(
-        (offering) => offering.id === action.id
-      );
-      const updatedOfferings = [...state.cardData.offerings];
-      updatedOfferings[offeringIndex] = action.offering;
-
-      return {
-        ...state,
-        cardData: {
-          ...state.cardData,
-          offerings: updatedOfferings,
         },
       };
 
