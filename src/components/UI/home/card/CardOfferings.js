@@ -6,7 +6,10 @@ import "./CardUI.css";
 const CardOfferings = (props) => {
   const renderOfferings = () => {
     return props.offerings.map((offering, index) => {
-      if ((!offering.title || offering.title === "") && (!offering.description || offering.description === "")) {
+      if (
+        (!offering.title || offering.title === "") &&
+        (!offering.description || offering.description === "")
+      ) {
         return null;
       }
       return (
@@ -29,8 +32,11 @@ const CardOfferings = (props) => {
             </div>
           </div>
           {offering.description ? (
-            <div className="card-business-product-service-description word-wrap">
-              <span style={{ color: props.primaryColor }}>
+            <div className="card-business-product-service-description">
+              <span
+                className="card-business-product-service-description wordwrap"
+                style={{ color: props.primaryColor }}
+              >
                 {offering.description}
               </span>
             </div>

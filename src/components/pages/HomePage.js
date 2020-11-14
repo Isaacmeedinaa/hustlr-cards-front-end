@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import { userAutoLogin } from "../../store/actions/user";
+import { cardIsSaved, cardIsNotSaved } from "../../store/actions/cardSaved";
 
 import SideToolbar from "../UI/SideToolbar";
 import TopToolbar from "../UI/home/TopToolbar";
@@ -15,8 +16,28 @@ import "../../constants/colors.css";
 import "./pages.css";
 
 class HomeContainer extends Component {
-  render() {
+  componentDidUpdate() {
+    const localStorageCard = JSON.parse(localStorage.getItem("card"));
 
+    if (this.props.cardData.id === null) return;
+
+    for (const key in localStorageCard) {
+      if (localStorageCard.hasOwnProperty(key)) {
+        if (
+          Array.isArray(localStorageCard[key]) ||
+          typeof localStorageCard[key] === "object"
+        )
+          continue;
+        if (localStorageCard[key] !== this.props.cardData[key]) {
+          this.props.cardIsNotSaved();
+          return;
+        }
+      }
+    }
+    this.props.cardIsSaved();
+  }
+
+  render() {
     if (this.props.cardLoader) {
       return (
         <div className="page-loader-container">
@@ -66,6 +87,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     userAutoLogin: (history) => dispatch(userAutoLogin(history)),
+    cardIsSaved: () => dispatch(cardIsSaved()),
+    cardIsNotSaved: () => dispatch(cardIsNotSaved()),
   };
 };
 

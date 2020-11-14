@@ -5,9 +5,14 @@ import {
   setCardOfferingTitle,
   setCardOfferingPrice,
   setCardOfferingDescription,
-  updateOffering,
   deleteOffering,
 } from "../../../../store/actions/card";
+
+import scrollToComponent from 'react-scroll-to-component';
+
+import {
+  hideOfferingCreatedNotification,
+} from "../../../../store/actions/notifications/offeringNotifications";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
@@ -18,8 +23,18 @@ class CardFormOfferingInputs extends Component {
     title: this.props.offering.title,
     price: this.props.offering.price,
     description: this.props.offering.description,
-    offeringSnapshot: { ...this.props.offering },
+    id: this.props.offering.id,
+    offerings: this.props.offerings
   };
+
+  componentDidUpdate() {
+    if (this.props.offeringAddedNotification.show 
+      && this.props.offeringAddedNotification.success
+      && this.props.offering.id === this.props.offerings[this.props.offerings.length - 1].id) {
+        scrollToComponent(this.ScrollTo, { offset: 0, align: 'middle', duration: 500, ease:'out-circ'})
+      this.props.hideOfferingCreatedNotification();
+    }
+  }
 
   onCardTitleChangeHandler = async (event) => {
     await this.setState({
@@ -48,20 +63,6 @@ class CardFormOfferingInputs extends Component {
     );
   };
 
-  updateOfferingInputsHandler = async () => {
-    await this.props.updateOffering(
-      this.props.id,
-      this.props.title,
-      this.props.description,
-      this.props.price,
-      this.props.cardId
-    );
-
-    this.setState({
-      offeringSnapshot: { ...this.props.offering },
-    });
-  };
-
   deleteOfferingInputsHandler = async () => {
     await this.props.deleteOffering(this.props.id);
     this.setState({
@@ -79,6 +80,8 @@ class CardFormOfferingInputs extends Component {
             placeholder="Product or Service Title"
             value={this.state.title}
             onChange={this.onCardTitleChangeHandler}
+            id={this.state.id?.toString()}
+            ref={(section) => { this.ScrollTo = section; }}
           />
           <p className="primary-color card-form-product-service-text">$</p>
           <input
@@ -97,18 +100,6 @@ class CardFormOfferingInputs extends Component {
           onChange={this.onOfferingDescriptionChangeHandler}
         />
         <div className="card-form-product-service-buttons-container">
-          {this.state.offeringSnapshot.title !== this.props.offering.title ||
-          this.state.offeringSnapshot.price !== this.props.offering.price ||
-          this.state.offeringSnapshot.description !==
-            this.props.offering.description ? (
-            <button
-              className="primary-color card-form-offering-button"
-              id="cardFormProductServiceDeleteBtn"
-              onClick={this.updateOfferingInputsHandler}
-            >
-              Save Changes
-            </button>
-          ) : null}
           <button
             className="primary-color card-form-offering-button"
             id="cardFormProductServiceDeleteBtn"
@@ -143,6 +134,12 @@ class CardFormOfferingInputs extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    offeringAddedNotification: state.offeringNotifications.created
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setCardOfferingTitle: (offeringIndex, offeringTitle) =>
@@ -151,10 +148,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setCardOfferingPrice(offeringIndex, offeringPrice)),
     setCardOfferingDescription: (offeringIndex, offeringDescription) =>
       dispatch(setCardOfferingDescription(offeringIndex, offeringDescription)),
-    updateOffering: (id, title, description, price, cardId) =>
-      dispatch(updateOffering(id, title, description, price, cardId)),
     deleteOffering: (id) => dispatch(deleteOffering(id)),
+    hideOfferingCreatedNotification: () =>
+      dispatch(hideOfferingCreatedNotification()),
   };
 };
 
-export default connect(null, mapDispatchToProps)(CardFormOfferingInputs);
+export default connect(mapStateToProps, mapDispatchToProps)(CardFormOfferingInputs);

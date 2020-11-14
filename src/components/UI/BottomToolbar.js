@@ -50,7 +50,7 @@ class BottomToolbar extends Component {
               onClick={() => {
                 this.props.history.push("/home");
               }}
-              fontSize="30px"
+              fontsize="26px"
               color={
                 this.state.pathname !== "/home"
                   ? this.state.secondary
@@ -70,7 +70,7 @@ class BottomToolbar extends Component {
               onClick={() => {
                 this.props.history.push("/settings");
               }}
-              fontSize="30px"
+              fontsize="26px"
               color={
                 this.state.pathname !== "/settings"
                   ? this.state.secondary
@@ -85,7 +85,7 @@ class BottomToolbar extends Component {
                 const history = this.props.history;
                 this.props.userLogout(history);
               }}
-              fontSize="30px"
+              fontsize="26px"
               color={this.state.secondary}
             />
           </div>
@@ -101,7 +101,7 @@ class BottomToolbar extends Component {
               onClick={() => {
                 this.props.history.push("/support");
               }}
-              fontSize="30px"
+              fontsize="26px"
               color={
                 this.state.pathname !== "/support"
                   ? this.state.secondary

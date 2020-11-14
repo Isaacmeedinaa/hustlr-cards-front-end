@@ -20,7 +20,7 @@ class PublicCardGallerySlider extends Component {
 
     return (
       <div className="public-card-gallery-slider-container">
-        <AwesomeSlider bullets={false}>
+        <AwesomeSlider bullets={this.props.photos.length <= 1 ? false : true} organicArrows={true} mobileTouch={true}>
           {this.renderGallerySliderImages()}
         </AwesomeSlider>
       </div>

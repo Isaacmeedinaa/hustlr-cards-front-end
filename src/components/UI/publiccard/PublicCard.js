@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import PublicCardImage from "./PublicCardImage";
 import PublicCardBackdropImage from "./PublicCardBackdropImage";
@@ -60,6 +61,11 @@ class PublicCard extends Component {
                 primaryColor={this.props.publicCard.primaryColor}
                 transparentColor={this.props.publicCard.transparentColor}
               />
+              <div className="public-card-logo-container">
+                <Link className="primary-color" to="/">
+                  <h2 className="primary-color-hover">hustlr.cards</h2>
+                </Link>
+              </div>
             </div>
           </div>
         )}
