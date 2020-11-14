@@ -38,7 +38,7 @@ import CardFormAddImageButton from "./CardFormAddImageButton";
 import CardFormGallerySlider from "./CardFormGallerySlider";
 import CardFormCardPathInput from "./CardFormCardPathInput";
 
-import $ from "jquery";
+import { showToast } from "../../Toasts";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
@@ -59,11 +59,14 @@ class CardForm extends Component {
     }
 
     if (this.props.offeringNotifications.created.show) {
-      this.displayNotification(
-        this.props.offeringNotifications.created.success,
-        this.props.offeringNotifications.created.message
-      );
-      this.props.hideOfferingCreatedNotification();
+      // Only show failures
+      if (!this.props.offeringNotifications.created.success) {
+        this.displayNotification(
+          this.props.offeringNotifications.created.success,
+          this.props.offeringNotifications.created.message
+        );
+      }
+      // Let CardFormOfferingIput component hide the notification because it has to scroll to it
     }
 
     if (this.props.offeringNotifications.saved.show) {
@@ -132,19 +135,8 @@ class CardForm extends Component {
   }
 
   displayNotification(success, message) {
-    $("body").toast({
-      class: success ? "success" : "error",
-      position: "bottom center",
-      message: message,
-      showIcon: success ? "check circle" : "exclamation",
-      displayTime: 3000,
-      transition: {
-        showMethod: "fade",
-        showDuration: 1000,
-        hideMethod: "fade",
-        hideDuration: 1000,
-      },
-    });
+    
+    showToast(success, message);
 
     if (this.props.cardErrors.length > 0 && !success) {
       window.scroll({
@@ -175,6 +167,7 @@ class CardForm extends Component {
           description={offering.description}
           price={offering.price}
           cardId={offering.cardId}
+          offerings={this.props.cardData.offerings}
         />
       );
     });

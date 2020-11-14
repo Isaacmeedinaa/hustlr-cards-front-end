@@ -5,7 +5,7 @@ import { changePassword } from "../../../store/actions/user";
 import { hidePasswordChangedNotification } from "../../../store/actions/notifications/changePasswordNotifications";
 import { clearChangePasswordErrors } from "../../../store/actions/errors/changePasswordErrors";
 
-import $ from "jquery";
+import { showToast } from "../Toasts";
 
 import Loader from "react-loader-spinner";
 
@@ -56,19 +56,7 @@ class ChangePasswordForm extends Component {
   }
 
   displayNotification(success, message) {
-    $("body").toast({
-      class: success ? "success" : "error",
-      position: "bottom center",
-      message: message,
-      showIcon: success ? "check circle" : "exclamation",
-      displayTime: 3000,
-      transition: {
-        showMethod: "fade",
-        showDuration: 1000,
-        hideMethod: "fade",
-        hideDuration: 1000,
-      },
-    });
+    showToast(success, message);
   }
 
   onShowFormClickHandler = async () => {

@@ -5,7 +5,7 @@ import { updateUser } from "../../../store/actions/user";
 import { hideUserUpdatedNotification } from "../../../store/actions/notifications/userUpdatedNotifications";
 import { clearPersonalInfoErrors } from "../../../store/actions/errors/personalInfoErrors";
 
-import $ from "jquery";
+import { showToast } from "../Toasts";
 
 import Loader from "react-loader-spinner";
 
@@ -60,19 +60,7 @@ class PersonalInfoForm extends Component {
   }
 
   displayNotification(success, message) {
-    $("body").toast({
-      class: success ? "success" : "error",
-      position: "bottom center",
-      message: message,
-      showIcon: success ? "check circle" : "exclamation",
-      displayTime: 3000,
-      transition: {
-        showMethod: "fade",
-        showDuration: 1000,
-        hideMethod: "fade",
-        hideDuration: 1000,
-      },
-    });
+    showToast(success, message);
   }
 
   onShowFormClickHandler = async () => {

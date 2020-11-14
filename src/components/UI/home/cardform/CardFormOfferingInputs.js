@@ -8,6 +8,12 @@ import {
   deleteOffering,
 } from "../../../../store/actions/card";
 
+import scrollToComponent from 'react-scroll-to-component';
+
+import {
+  hideOfferingCreatedNotification,
+} from "../../../../store/actions/notifications/offeringNotifications";
+
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
 
@@ -17,7 +23,18 @@ class CardFormOfferingInputs extends Component {
     title: this.props.offering.title,
     price: this.props.offering.price,
     description: this.props.offering.description,
+    id: this.props.offering.id,
+    offerings: this.props.offerings
   };
+
+  componentDidUpdate() {
+    if (this.props.offeringAddedNotification.show 
+      && this.props.offeringAddedNotification.success
+      && this.props.offering.id === this.props.offerings[this.props.offerings.length - 1].id) {
+        scrollToComponent(this.ScrollTo, { offset: 0, align: 'middle', duration: 500, ease:'out-circ'})
+      this.props.hideOfferingCreatedNotification();
+    }
+  }
 
   onCardTitleChangeHandler = async (event) => {
     await this.setState({
@@ -63,6 +80,8 @@ class CardFormOfferingInputs extends Component {
             placeholder="Product or Service Title"
             value={this.state.title}
             onChange={this.onCardTitleChangeHandler}
+            id={this.state.id?.toString()}
+            ref={(section) => { this.ScrollTo = section; }}
           />
           <p className="primary-color card-form-product-service-text">$</p>
           <input
@@ -115,6 +134,12 @@ class CardFormOfferingInputs extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    offeringAddedNotification: state.offeringNotifications.created
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setCardOfferingTitle: (offeringIndex, offeringTitle) =>
@@ -124,7 +149,9 @@ const mapDispatchToProps = (dispatch) => {
     setCardOfferingDescription: (offeringIndex, offeringDescription) =>
       dispatch(setCardOfferingDescription(offeringIndex, offeringDescription)),
     deleteOffering: (id) => dispatch(deleteOffering(id)),
+    hideOfferingCreatedNotification: () =>
+      dispatch(hideOfferingCreatedNotification()),
   };
 };
 
-export default connect(null, mapDispatchToProps)(CardFormOfferingInputs);
+export default connect(mapStateToProps, mapDispatchToProps)(CardFormOfferingInputs);
