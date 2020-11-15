@@ -11,11 +11,10 @@ import "./HomeUI.css";
 class SaveCardButton extends Component {
   render() {
     return (
+      !this.props.cardSaved ? 
       <button
         className={
-          !this.props.cardSaved
-            ? "save-card-button glowing-button"
-            : "save-card-button"
+          "save-card-button glowing-button"
         }
         onClick={() => this.props.saveCard(this.props.cardId)}
       >
@@ -27,6 +26,10 @@ class SaveCardButton extends Component {
           )}
         </span>
       </button>
+      : <div className="card-saved-container">
+        <i className="check icon card-saved-check"></i>
+        <span className="color-saved-text">Saved</span>
+        </div>
     );
   }
 }
