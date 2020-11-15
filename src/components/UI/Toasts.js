@@ -1,7 +1,6 @@
 import $ from "jquery";
 
 export const showToast = function displayNotification(success, message) {
-  //const myToast = $('body').toast({ position: "bottom center",});
   
   const myToast = $("body").toast({
     class: success ? "success" : "error",
@@ -16,7 +15,6 @@ export const showToast = function displayNotification(success, message) {
   // remove other toasts on page
   for (let i = 0; i < toasts.length; i++) {
     if (i !== toasts.length - 1) {
-      console.log(toasts[i].parentNode);
       toasts[i].parentNode.removeChild(toasts[i]);
     }
   }
