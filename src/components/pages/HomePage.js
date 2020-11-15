@@ -16,6 +16,7 @@ import "../../constants/colors.css";
 import "./pages.css";
 
 class HomeContainer extends Component {
+
   componentDidUpdate() {
     const localStorageCard = JSON.parse(localStorage.getItem("card"));
 
@@ -26,9 +27,35 @@ class HomeContainer extends Component {
         if (
           Array.isArray(localStorageCard[key]) ||
           typeof localStorageCard[key] === "object"
-        )
-          continue;
-        if (localStorageCard[key] !== this.props.cardData[key]) {
+        ) {
+          if (key === 'industry') {
+            if (localStorageCard[key].id !==  this.props.cardData[key].id) {
+              this.props.cardIsNotSaved();
+              return;
+            }
+          }
+          else if (key === 'offerings') {
+            
+            for (let i = 0; i < localStorageCard.offerings.length; i++) {
+              let foundChanges = false;
+              this.props.cardData.offerings.forEach((offeringRedux) => {
+                if  (offeringRedux.id === localStorageCard.offerings[i].id &&
+                    (offeringRedux.title !== localStorageCard.offerings[i].title ||
+                    offeringRedux.price !== localStorageCard.offerings[i].price ||
+                    offeringRedux.description !== localStorageCard.offerings[i].description)) {
+                  this.props.cardIsNotSaved();
+                  foundChanges = true;
+                  return; // this only breaks from forEach loop, that's why we need the boolean
+                }
+              });
+              if (foundChanges) return;
+            }
+          }
+          else {
+            continue;
+          }
+        }
+        else if (localStorageCard[key] !== this.props.cardData[key]) {
           this.props.cardIsNotSaved();
           return;
         }

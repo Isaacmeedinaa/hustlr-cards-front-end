@@ -166,6 +166,28 @@
 
 .glowing-button {
   animation: glowing 2000ms infinite;
+  width: 80px !important;
+}
+
+.card-saved-container {
+  height: 30px;
+  color:  #2ecc71;;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: flex-end;
+  /* align-self: flex-end; */
+  position: fixed;
+  right: 20px;
+}
+
+.card-saved-check {
+ color: #2ecc71;
+ padding-right: 15px;
+}
+
+.card-saved-text {
+  color: black !important;
 }
 
 .save-card-button {

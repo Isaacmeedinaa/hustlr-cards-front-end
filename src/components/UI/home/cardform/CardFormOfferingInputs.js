@@ -31,7 +31,8 @@ class CardFormOfferingInputs extends Component {
     if (this.props.offeringAddedNotification.show 
       && this.props.offeringAddedNotification.success
       && this.props.offering.id === this.props.offerings[this.props.offerings.length - 1].id) {
-        scrollToComponent(this.ScrollTo, { offset: 0, align: 'middle', duration: 500, ease:'out-circ'})
+        
+      scrollToComponent(this.ScrollTo, { offset: 0, align: 'middle', duration: 500, ease:'out-circ'});
       this.props.hideOfferingCreatedNotification();
     }
   }
