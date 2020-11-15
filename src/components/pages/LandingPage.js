@@ -3,7 +3,11 @@ import "./pages.css";
 
 class LandingPage extends Component {
   render() {
-    return <div>LandingPage.js</div>;
+    return (
+      <div className="landing-page-wrapper">
+        <div className="landing-page-container"></div>
+      </div>
+    );
   }
 }
 
