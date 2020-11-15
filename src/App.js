@@ -75,7 +75,6 @@ class App extends Component {
             component={SupportPage}
             isAuthenticated={this.props.auth.isAuthenticated}
           />
-          <Route exact path="/landing" component={LandingPage} />
           <Route exact path="/:pathToCard" component={PublicCardPage} />
           <Route exact path="/" component={LandingPage} />
           <Redirect to="/404" />
