@@ -14,7 +14,7 @@ const PublicCardImage = (props) => {
       src={props.imgUrl}
       style={{
         marginTop:
-          !props.backdropImgUrl || props.backdropImgUrl === "" ? 0 : -65,
+          !props.backdropImgUrl || props.backdropImgUrl === "" ? 30 : -65,
       }}
       className="public-card-image"
       alt="profile_pic"
