@@ -1,9 +1,29 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import "../../../../constants/colors.css";
 import "./CardUI.css";
 
 const CardOfferings = (props) => {
+
+  const [showHeader, setShowHeader] = useState(false);
+
+  useEffect(() => {
+    checkHeaderState();
+  });
+
+  const checkHeaderState = () => {
+    for (let idx = 0; idx < props.offerings.length; idx++) {
+      let offering = props.offerings[idx];
+      if (offering.title !== "" || offering.description !== "") {
+        setShowHeader(true);
+        break;
+      }
+      else if (idx === props.offerings.length - 1) {
+        setShowHeader(false);
+      }
+    }
+  }
+
   const renderOfferings = () => {
     return props.offerings.map((offering, index) => {
       if (
@@ -44,13 +64,13 @@ const CardOfferings = (props) => {
         </div>
       );
     });
-  };
-
+  }
+  
   const view =
-    !props.offerings || props.offerings.length === 0 ? null : (
+     !showHeader || !props.offerings || props.offerings.length === 0 ? null : (
       <Fragment>
         <div className="card-business-products-services-title-text">
-          Products & Services
+          Products &amp; Services
         </div>
         <div className="card-business-products-services-container">
           {renderOfferings()}
@@ -59,6 +79,7 @@ const CardOfferings = (props) => {
     );
 
   return view;
+  
 };
 
 export default CardOfferings;

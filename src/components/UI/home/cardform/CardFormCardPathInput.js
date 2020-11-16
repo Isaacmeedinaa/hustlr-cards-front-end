@@ -27,7 +27,7 @@ class CardFormCardPathInput extends Component {
         </p>
         <input
           className="card-form-path-to-card-input"
-          placeholder="Business Username"
+          placeholder="your-link-here"
           name="pathToCard"
           value={this.state.pathToCard}
           onChange={this.onCardPathChangeHandler}
