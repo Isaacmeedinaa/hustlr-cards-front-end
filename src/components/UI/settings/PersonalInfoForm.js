@@ -100,7 +100,7 @@ class PersonalInfoForm extends Component {
         </div>
         {this.state.showForm ? (
           <Animated
-            animationIn="bounceIn"
+            animationIn=""
             animationOut="fadeOut"
             isVisible={true}
             className="settings-form-animation-container"

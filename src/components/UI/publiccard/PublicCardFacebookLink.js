@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
@@ -14,7 +16,7 @@ const PublicCardFacebookLink = (props) => {
       className="public-card-social-media-icon-container"
     >
       <a href={props.facebookLink} target="_blank" rel="noopener noreferrer">
-        <i className="facebook icon" style={{ color: props.primaryColor }}></i>
+        <FontAwesomeIcon icon={faFacebook} style={{ color: props.primaryColor }}/>
       </a>
     </div>
   );

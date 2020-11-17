@@ -12,7 +12,7 @@ import "./SettingsUI.css";
 class UserSettings extends Component {
   render() {
     return (
-      <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
+      <Animated animationIn="" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg user-settings-wrapper">
           <div className="user-settings-container">
             <PersonalInfoForm />

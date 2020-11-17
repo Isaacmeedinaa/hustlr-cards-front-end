@@ -7,6 +7,7 @@ import store from "./store/store";
 import "./index.css";
 import App from "./App";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'fomantic-ui-css/semantic.css';
 import $ from 'jquery'
 window.jQuery = $;   //this makes jquery accessible for any later jquery plugin (like FUI in this case)

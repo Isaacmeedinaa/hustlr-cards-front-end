@@ -23,7 +23,7 @@ class Card extends Component {
     }
 
     return (
-      <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
+      <Animated animationIn="" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-wrapper">
           <div className="card-container">
             <CardLink

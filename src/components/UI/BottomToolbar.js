@@ -29,9 +29,8 @@ class BottomToolbar extends Component {
   render() {
     return (
       <div>
-        <div class="ui page dimmer dimmable">
-          <div class="content">
-          
+        <div className="ui page dimmer dimmable">
+          <div className="content">
           <div className="primary-light-bg logout-modal">
             <span className="logout-modal-question">
               Are you sure you want to log out?
