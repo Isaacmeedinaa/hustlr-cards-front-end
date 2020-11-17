@@ -26,12 +26,12 @@ class SupportForm extends Component {
 
   render() {
     return (
-      <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
+      <Animated animationIn="" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg support-form-wrapper">
           <div className="support-form-container">
             <h5 className="support-header">Questions? Send us a message!</h5>
             <Animated
-              animationIn="bounceIn"
+              animationIn=""
               animationOut="fadeOut"
               isVisible={true}
               className="support-form-animation-container"

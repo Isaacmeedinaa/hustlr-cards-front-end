@@ -1,5 +1,8 @@
 import React from "react";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons'
+
 import "../../../../constants/colors.css";
 import "./CardUI.css";
 
@@ -14,10 +17,10 @@ const CardPhoneNumber = (props) => {
       className="card-business-social-media-icon-container"
     >
       <a href={"tel:" + props.phoneNumber} target="_black">
-        <i
-          className="phone alternate icon card-business-social-media-icon"
-          style={{ color: props.primaryColor, fontSize: "14px" }}
-        ></i>
+        <FontAwesomeIcon 
+            icon={faPhoneAlt} 
+            transform="shrink-2"
+            style={{ color: props.primaryColor }}/>
       </a>
     </div>
   );

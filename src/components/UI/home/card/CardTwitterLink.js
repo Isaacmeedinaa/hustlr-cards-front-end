@@ -1,5 +1,8 @@
 import React from "react";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter} from '@fortawesome/free-brands-svg-icons'
+
 import "../../../../constants/colors.css";
 import "./CardUI.css";
 
@@ -14,10 +17,9 @@ const CardTwitterLink = (props) => {
       className="card-business-social-media-icon-container"
     >
       <a href={props.twitterLink} target="_black">
-        <i
-          className="twitter icon card-business-social-media-icon"
-          style={{ color: props.primaryColor }}
-        ></i>
+        <FontAwesomeIcon 
+            icon={faTwitter} 
+            style={{ color: props.primaryColor }}/>
       </a>
     </div>
   );

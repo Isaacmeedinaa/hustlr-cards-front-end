@@ -1,5 +1,8 @@
 import React from "react";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
 
@@ -14,10 +17,7 @@ const PublicCardInstagramLink = (props) => {
       className="public-card-social-media-icon-container"
     >
       <a href={props.instagramLink} target="_blank" rel="noopener noreferrer">
-        <i
-          className="instagram icon card-business-social-media-icon"
-          style={{ color: props.primaryColor }}
-        ></i>
+        <FontAwesomeIcon icon={faInstagram} style={{ color: props.primaryColor }}/>
       </a>
     </div>
   );

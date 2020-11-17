@@ -179,7 +179,7 @@ class CardForm extends Component {
     }
 
     return (
-      <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
+      <Animated animationIn="" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-form-wrapper">
           <div className="card-form-container">
             {this.props.cardErrors.map((error, index) => (

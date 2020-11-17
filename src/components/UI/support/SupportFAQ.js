@@ -8,7 +8,7 @@ import "./SupportUI.css";
 class SupportFAQ extends Component {
   render() {
     return (
-      <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
+      <Animated animationIn="" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg support-faq-wrapper">
           <div className="support-faq-container">
             <h5 className="support-header">FAQ's</h5>

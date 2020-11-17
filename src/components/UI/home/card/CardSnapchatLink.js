@@ -1,5 +1,8 @@
 import React from "react";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSnapchatGhost } from '@fortawesome/free-brands-svg-icons'
+
 import "../../../../constants/colors.css";
 import "./CardUI.css";
 
@@ -14,10 +17,9 @@ const CardSnapchatLink = (props) => {
       className="card-business-social-media-icon-container"
     >
       <a href={props.snapchatLink} target="_black">
-        <i
-          className="snapchat ghost icon card-business-social-media-icon"
-          style={{ color: props.primaryColor }}
-        ></i>
+        <FontAwesomeIcon 
+          icon={faSnapchatGhost} 
+          style={{ color: props.primaryColor }}/>
       </a>
     </div>
   );
