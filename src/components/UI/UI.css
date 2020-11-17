@@ -80,6 +80,61 @@
   cursor: pointer;
 }
 
+.logout-modal {
+  height: 100px;
+  width: 100%;
+  padding: 10px 10px;
+  z-index: 1000000 !important;
+  border-radius: 5px;
+  border-top: 1px solid #d1d2d5;
+  border-right: 1px solid #d1d2d5;
+  border-left: 1px solid #d1d2d5;
+  -webkit-box-shadow: 0px 5px 0px -1px #cdcdd2;
+  -moz-box-shadow: 0px 5px 0px -1px #cdcdd2;
+  box-shadow: 0px 5px 0px -1px #cdcdd2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+}
+
+.logout-modal-question {
+  padding: 15px 10px 0px 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2F3640;
+}
+
+.logout-modal-question-2 {
+  padding: 0px 10px 0px 10px;
+  font-size: 15px;
+  color: #2F3640;
+  margin-top: 10px;
+}
+
+.logout-modal-button {
+  margin: 10px;
+  border: none;
+  background: white;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 0 !important;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.logout-modal-button:focus {
+  outline: none;
+}
+
+.logout-modal-button:hover {
+  background-color: #a3a3a32f;
+  border-radius: 5px;
+}
+
 .content {
   font-size: 16px !important;
 }

@@ -1,5 +1,8 @@
 import React from "react";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
 
@@ -18,10 +21,10 @@ const PublicCardEmail = (props) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <i
-          className="envelope icon"
-          style={{ color: props.primaryColor, fontSize: "14px" }}
-        ></i>
+        <FontAwesomeIcon 
+        icon={faEnvelope} 
+        transform="shrink-2"
+        style={{ color: props.primaryColor }}/>
       </a>
     </div>
   );

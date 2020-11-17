@@ -8,6 +8,8 @@ import MdSettings from "react-ionicons/lib/MdSettings";
 import MdLogOut from "react-ionicons/lib/MdLogOut";
 import MdInformationCircle from "react-ionicons/lib/MdInformationCircle";
 
+import $ from 'jquery';
+
 import "../../constants/colors.css";
 import "./UI.css";
 
@@ -26,6 +28,36 @@ class BottomToolbar extends Component {
 
   render() {
     return (
+      <div>
+        <div className="ui page dimmer dimmable">
+          <div className="content">
+          <div className="primary-light-bg logout-modal">
+            <span className="logout-modal-question">
+              Are you sure you want to log out?
+            </span>
+            <div className="logout-modal-question-2">
+              <button
+                className="primary-color logout-modal-button"
+                onClick={() => {
+                  const history = this.props.history;
+                  this.props.userLogout(history);
+                }}
+              >
+                Yes
+              </button>
+              <button
+                className="primary-color logout-modal-button"
+                onClick={() => {
+                  $('.ui.dimmable').dimmer('hide');
+                }}
+              >
+                No
+              </button>
+            </div>
+          </div>
+          </div>
+        </div>
+      
       <div className="primary-light-bg bottomtoolbar">
         <div className="bottomtoolbar-icons-container">
           {/* <div className="bottomtoolbar-icon-wrapper">
@@ -78,17 +110,6 @@ class BottomToolbar extends Component {
               }
             />
           </div>
-          <div className="bottomtoolbar-icon-wrapper">
-            <MdLogOut
-              className="bottomtoolbar-icon"
-              onClick={() => {
-                const history = this.props.history;
-                this.props.userLogout(history);
-              }}
-              fontsize="26px"
-              color={this.state.secondary}
-            />
-          </div>
           <div
             className={
               this.state.pathname !== "/support"
@@ -109,7 +130,18 @@ class BottomToolbar extends Component {
               }
             />
           </div>
+          <div className="bottomtoolbar-icon-wrapper">
+            <MdLogOut
+              className="bottomtoolbar-icon"
+              onClick={() => {
+                $('.ui.dimmable').dimmer('show')
+              }}
+              fontsize="26px"
+              color={this.state.secondary}
+            />
+          </div>
         </div>
+      </div>
       </div>
     );
   }

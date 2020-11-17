@@ -7,7 +7,7 @@ import "./SettingsUI.css";
 class SubscriptionSettingsForm extends Component {
   render() {
     return (
-      <Animated animationIn="bounceIn" animationOut="fadeOut" isVisible={true}>
+      <Animated animationIn="" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg subscription-settings-wrapper">
           <div className="subscription-settings-text-container">
             <h4>Subscription Settings</h4>
