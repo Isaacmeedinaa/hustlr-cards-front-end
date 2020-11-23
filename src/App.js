@@ -18,6 +18,7 @@ import "./App.css";
 import LandingPage from "./components/pages/LandingPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
 import LoginPage from "./components/pages/Auth Pages/LoginPage";
+import VerifyEmailPage from "./components/pages/Auth Pages/VerifyEmailPage";
 import RegisterPage from "./components/pages/Auth Pages/RegisterPage";
 import ForgotPasswordPage from "./components/pages/Auth Pages/ForgotPasswordPage";
 import ChangePasswordPage from "./components/pages/Auth Pages/ChangePasswordPage";
@@ -57,6 +58,7 @@ class App extends Component {
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/forgot-password" component={ForgotPasswordPage} />
           <Route exact path="/change-password" component={ChangePasswordPage} />
+          <Route exact path="/verify-email/:token" component={VerifyEmailPage} />
           <ProtectedRoute
             exact
             path="/home"

@@ -147,6 +147,32 @@
   text-decoration: none;
 }
 
+.email-verification-info {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.email-verification-text {
+  margin-top: 20px !important;
+  font-size: 16px;
+}
+
+.email-question-one {
+  display: inline;
+  font-size: 13px;
+  margin-right: 3px;
+}
+
+.email-link-one {
+  display: inline;
+  font-size: 13px;
+}
+
+.email-link-one:hover {
+  color: #2bc16b;
+  text-decoration: none;
+}
+
 @media only screen and (max-width: 650px) {
   .auth-card {
     width: 95%;
