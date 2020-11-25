@@ -34,7 +34,7 @@ class CardFormAddImageButton extends Component {
             <Loader type="TailSpin" color="#ffffff" width={15} height={15} />
           ) : (
             <span className="card-form-button-text">
-              Upload New Gallery Image
+              + Upload New Gallery Photo
             </span>
           )}
         </label>

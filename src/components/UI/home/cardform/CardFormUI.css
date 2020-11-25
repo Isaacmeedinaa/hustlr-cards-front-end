@@ -338,6 +338,7 @@
   padding-bottom: 8px;
   padding-top: 8px;
   font-size: 14px;
+  font-weight: 400;
 }
 
 .card-form-offering-button:focus {
@@ -347,6 +348,7 @@
 .card-form-offering-button:hover {
   border-radius: 5px;
   background-color: rgba(112, 112, 112, 0.06);
+  cursor: pointer;
 }
 
 #cardFormProductServiceDeleteBtn {
@@ -481,6 +483,31 @@
 
 .card-form-path-to-card-input:focus {
   outline: none;
+}
+
+.card-form-offering-image {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  max-height: 45px;
+}
+
+.card-form-offering-image-container {
+  margin-top: 10px !important;
+  width: 100%;
+}
+
+.card-form-offerings-header-btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+.card-form-offerings-header-btn-container:hover {
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 650px) {

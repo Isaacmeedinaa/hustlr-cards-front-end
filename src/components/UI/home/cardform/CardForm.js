@@ -42,6 +42,7 @@ import { showToast } from "../../Toasts";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
+import { hideOfferingImageDeletedNotification, hideOfferingImageUploadedNotification } from "../../../../store/actions/notifications/offeringImageNotifications";
 
 class CardForm extends Component {
   state = {
@@ -132,6 +133,22 @@ class CardForm extends Component {
       );
       this.props.hideBackdropImageDeletedNotification();
     }
+
+    if (this.props.offeringImageNotifications.uploaded.show) {
+      this.displayNotification(
+        this.props.offeringImageNotifications.uploaded.success,
+        this.props.offeringImageNotifications.uploaded.message
+      );
+      this.props.hideOfferingImageUploadedNotification();
+    }
+
+    if (this.props.offeringImageNotifications.deleted.show) {
+      this.displayNotification(
+        this.props.offeringImageNotifications.deleted.success,
+        this.props.offeringImageNotifications.deleted.message
+      );
+      this.props.hideOfferingImageDeletedNotification();
+    }
   }
 
   displayNotification(success, message) {
@@ -168,6 +185,7 @@ class CardForm extends Component {
           price={offering.price}
           cardId={offering.cardId}
           offerings={this.props.cardData.offerings}
+          photos={offering.photos}
         />
       );
     });
@@ -221,6 +239,7 @@ const mapStateToProps = (state) => {
     galleryNotifications: state.galleryNotifications,
     profileImageNotifications: state.profileImageNotifications,
     backdropImageNotifications: state.backdropImageNotifications,
+    offeringImageNotifications: state.offeringImageNotifications
   };
 };
 
@@ -247,6 +266,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(hideBackdropImageUploadedNotification()),
     hideBackdropImageDeletedNotification: () =>
       dispatch(hideBackdropImageDeletedNotification()),
+    hideOfferingImageUploadedNotification: () =>
+      dispatch(hideOfferingImageUploadedNotification()),
+    hideOfferingImageDeletedNotification: () =>
+      dispatch(hideOfferingImageDeletedNotification())
   };
 };
 

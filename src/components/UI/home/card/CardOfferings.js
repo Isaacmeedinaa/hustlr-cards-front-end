@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 
+import AwesomeSlider from "react-awesome-slider";
+
 import "../../../../constants/colors.css";
 import "./CardUI.css";
 
@@ -24,6 +26,12 @@ const CardOfferings = (props) => {
     }
   }
 
+  const renderOfferingSliderImages = (offering) => {
+    return offering.photos.map((photo) => (
+      <div key={photo.id} data-src={photo.url}></div>
+    ));
+  };
+
   const renderOfferings = () => {
     return props.offerings.map((offering, index) => {
       if (
@@ -38,20 +46,28 @@ const CardOfferings = (props) => {
           style={{ backgroundColor: props.transparentColor }}
           className="card-business-product-service-container"
         >
-          <div className="card-business-product-service-header">
-            <p
-              style={{ color: props.primaryColor }}
-              className="card-business-product-service-title"
-            >
-              {offering.title}
-            </p>
-            <div className="card-business-product-service-price">
-              <span style={{ color: props.primaryColor }}>
-                {!offering.price ? null : "$" + offering.price}
-              </span>
+          { offering.photos.length > 0 ? 
+            //<img className="preview-card-offering-photo" src={offering.photos[0].url}/>
+            <AwesomeSlider bullets={false}>
+              {renderOfferingSliderImages(offering)}
+            </AwesomeSlider>
+            : null
+          }
+          <div className="card-business-offering-body">
+            <div className="card-business-product-service-header">
+              <p
+                style={{ color: props.primaryColor }}
+                className="card-business-product-service-title"
+              >
+                {offering.title}
+              </p>
+              <div className="card-business-product-service-price">
+                <span style={{ color: props.primaryColor }}>
+                  {!offering.price ? null : "$" + offering.price}
+                </span>
+              </div>
             </div>
-          </div>
-          {offering.description ? (
+            {offering.description ? (
             <div className="card-business-product-service-description">
               <span
                 className="card-business-product-service-description wordwrap"
@@ -61,6 +77,7 @@ const CardOfferings = (props) => {
               </span>
             </div>
           ) : null}
+          </div>
         </div>
       );
     });
@@ -75,6 +92,7 @@ const CardOfferings = (props) => {
         <div className="card-business-products-services-container">
           {renderOfferings()}
         </div>
+        
       </Fragment>
     );
 

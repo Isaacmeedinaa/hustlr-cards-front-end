@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import {
@@ -6,6 +6,8 @@ import {
   setCardOfferingPrice,
   setCardOfferingDescription,
   deleteOffering,
+  uploadOfferingImage,
+  deleteOfferingImage
 } from "../../../../store/actions/card";
 
 import scrollToComponent from 'react-scroll-to-component';
@@ -16,15 +18,22 @@ import {
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
+import Loader from "react-loader-spinner";
+
+import MdArrowDropup from "react-ionicons/lib/MdArrowDropup";
+import MdArrowDropdown from "react-ionicons/lib/MdArrowDropdown";
 
 class CardFormOfferingInputs extends Component {
   state = {
     showDeleteModal: false,
+    showPhotos: false,
     title: this.props.offering.title,
     price: this.props.offering.price,
     description: this.props.offering.description,
     id: this.props.offering.id,
-    offerings: this.props.offerings
+    offerings: this.props.offerings,
+    photos: this.props.photos,
+    showOffering: false
   };
 
   componentDidUpdate() {
@@ -71,73 +80,147 @@ class CardFormOfferingInputs extends Component {
     });
   };
 
+  onImageChangeHandler = (event) => {
+    const reqImgData = event.target.files[0];
+    const offeringId = this.state.id;
+
+    let reader = new FileReader();
+    if (reqImgData) {
+      console.log(reqImgData);
+      reader.readAsDataURL(reqImgData);
+      this.props.uploadOfferingImage(reqImgData, offeringId);
+    }
+  };
+
+  onDeleteImageHandler = (event) => {
+    const photoId = +event.target.id;
+
+    this.props.deleteOfferingImage(photoId, this.state.id);
+  }
+
+  renderOfferingImages = () => {
+    return this.props.photos.map(photo => {
+      return (
+        <img className="ui rounded image card-form-offering-image" 
+          src={photo?.url}
+          alt="" 
+          key={photo?.id}
+          id={photo?.id}
+          onClick={(event) => this.onDeleteImageHandler(event)}/>
+      );
+    })
+  }
+
   render() {
     return (
-      <div className="card-form-products-services-container">
-        <div className="card-form-product-service-inputs-container">
-          <input
-            className="card-form-product-service-title-input"
-            name="offeringTitle"
-            placeholder="Product or Service Title"
-            value={this.state.title}
-            onChange={this.onCardTitleChangeHandler}
-            id={this.state.id?.toString()}
-            ref={(section) => { this.ScrollTo = section; }}
-          />
-          <p className="primary-color card-form-product-service-text">$</p>
-          <input
-            className="card-form-product-service-price-input"
-            name="offeringPrice"
-            placeholder="0.00"
-            value={this.state.price}
-            onChange={this.onCardPriceChangeHandler}
-          />
-        </div>
-        <textarea
-          className="card-form-input-large"
-          name="description"
-          placeholder="Explain your product or service.."
-          value={this.state.description}
-          onChange={this.onOfferingDescriptionChangeHandler}
-        />
-        <div className="card-form-product-service-buttons-container">
-          <button
-            className="primary-color card-form-offering-button"
-            id="cardFormProductServiceDeleteBtn"
-            onClick={() => this.setState({ showDeleteModal: true })}
-          >
-            Delete
-          </button>
-        </div>
-        {this.state.showDeleteModal ? (
-          <div className="primary-light-bg card-form-delete-offering-modal">
-            <span className="card-form-delete-offering-modal-question">
-              Are you sure?
-            </span>
-            <div className="card-form-delete-offering-modal-question">
-              <button
-                className="primary-color card-form-delete-offering-modal-button"
-                onClick={this.deleteOfferingInputsHandler}
-              >
-                Yes
-              </button>
-              <button
-                className="primary-color card-form-delete-offering-modal-button"
-                onClick={() => this.setState({ showDeleteModal: false })}
-              >
-                No
-              </button>
+      <Fragment>
+        <div
+            className="card-form-offerings-header-btn-container"
+            onClick={() => {this.setState({showOffering: !this.state.showOffering})}}
+        >
+            <h6 className="offering-title-header">{this.state.title}</h6>
+            <div className="settings-accordion-icon-container">
+              {this.state.showOffering ? (
+                <MdArrowDropdown color="#2ecc71" />
+              ) : (
+                <MdArrowDropup color="#2ecc71" />
+              )}
             </div>
+        </div>
+        {this.state.showOffering ? 
+        <div className="card-form-products-services-container">
+          <div className="card-form-product-service-inputs-container">
+            <input
+              className="card-form-product-service-title-input"
+              name="offeringTitle"
+              placeholder="Product or Service Title"
+              value={this.state.title}
+              onChange={this.onCardTitleChangeHandler}
+              id={this.state.id?.toString()}
+              ref={(section) => { this.ScrollTo = section; }}
+            />
+            <p className="primary-color card-form-product-service-text">$</p>
+            <input
+              className="card-form-product-service-price-input"
+              name="offeringPrice"
+              placeholder="0.00"
+              value={this.state.price}
+              onChange={this.onCardPriceChangeHandler}
+            />
           </div>
-        ) : null}
-      </div>
+          <textarea
+            className="card-form-input-large"
+            name="description"
+            placeholder="Explain your product or service.."
+            value={this.state.description}
+            onChange={this.onOfferingDescriptionChangeHandler}
+          />
+          {this.state.showPhotos ?
+            <div className="ui tiny images card-form-offering-image-container">
+              {this.renderOfferingImages()}
+            </div>
+            : null
+          }
+          <div className="card-form-product-service-buttons-container">
+            <label
+              className="primary-color card-form-offering-button"
+              htmlFor={`offeringPhotoImgSelector${this.state.id}`}
+            >
+              {(this.props.offeringImageLoader.loading && this.props.offeringImageLoader.offeringId === this.state.id) ? (
+                <Loader type="TailSpin" color="#2ecc71" width={22} height={22} style={{}}/>
+              ) : (
+                <span>
+                  + Add Photo
+                </span>
+              )}
+            </label>
+            <input
+              className="card-form-file-button"
+              id={`offeringPhotoImgSelector${this.state.id}`}
+              onChange={this.onImageChangeHandler}
+              type="file"
+              accept="image/x-png,image/jpeg"
+            />
+            <button
+              className="primary-color card-form-offering-button"
+              id="cardFormProductServiceDeleteBtn"
+              onClick={() => this.setState({ showDeleteModal: true })}
+            >
+              Delete
+            </button>
+          </div>
+          {this.state.showDeleteModal ? (
+            <div className="primary-light-bg card-form-delete-offering-modal">
+              <span className="card-form-delete-offering-modal-question">
+                Are you sure?
+              </span>
+              <div className="card-form-delete-offering-modal-question">
+                <button
+                  className="primary-color card-form-delete-offering-modal-button"
+                  onClick={this.deleteOfferingInputsHandler}
+                >
+                  Yes
+                </button>
+                <button
+                  className="primary-color card-form-delete-offering-modal-button"
+                  onClick={() => this.setState({ showDeleteModal: false })}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>      
+        : null}
+      </Fragment>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    offeringAddedNotification: state.offeringNotifications.created
+    offeringAddedNotification: state.offeringNotifications.created,
+    offeringImageLoader: state.offeringImageLoader
   };
 };
 
@@ -152,6 +235,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteOffering: (id) => dispatch(deleteOffering(id)),
     hideOfferingCreatedNotification: () =>
       dispatch(hideOfferingCreatedNotification()),
+    uploadOfferingImage: (reqImgData, offeringId) => dispatch(uploadOfferingImage(reqImgData, offeringId)),
+    deleteOfferingImage: (photoId, offeringId) => dispatch(deleteOfferingImage(photoId, offeringId)),
   };
 };
 

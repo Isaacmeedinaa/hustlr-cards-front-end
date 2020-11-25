@@ -62,3 +62,25 @@ body {
   border: none !important;
   outline: none !important;
 }
+
+.awssld__controls {
+  visibility: visible !important; 
+}
+
+.awssld__controls__arrow-left, .awssld__controls__arrow-right {
+  height: 30px !important;
+}
+
+.awssld__controls__arrow-right {
+  margin-right: 20px;
+}
+
+.awssld__controls__arrow-left {
+  margin-left: 20px;
+}
+
+.awssld {
+  --organic-arrow-thickness: 3px !important;
+  --loader-bar-color: #999696  !important;
+  --organic-arrow-color: #797979 !important;
+}

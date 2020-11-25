@@ -17,6 +17,12 @@ import {
   OFFERING_DELETED_UNSUCCESSFULLY,
 } from "./notifications/offeringNotifications";
 import {
+  OFFERING_IMAGE_UPLOADED_SUCCESSFULLY,
+  OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY,
+  OFFERING_IMAGE_DELETED_SUCCESSFULLY,
+  OFFERING_IMAGE_DELETED_UNSUCCESSFULLY
+} from "./notifications/offeringImageNotifications";
+import {
   GALLERY_IMAGE_UPLOADED_SUCCESSFULLY,
   GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY,
   GALLERY_IMAGE_DELETED_SUCCESSFULLY,
@@ -46,6 +52,11 @@ import {
   CARD_GALLERY_IMAGE_IS_LOADING,
   CARD_GALLERY_IMAGE_IS_NOT_LOADING,
 } from "./loaders/cardGalleryImageLoader";
+import {
+  OFFERING_IMAGE_IS_LOADING,
+  OFFERING_IMAGE_IS_NOT_LOADING
+} from "./loaders/offeringImageLoader"
+
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 
@@ -74,6 +85,8 @@ export const SET_CARD_PHONE_NUMBER = "SET_CARD_PHONE_NUMBER";
 export const SET_CARD_SOCIAL_MEDIAS_LINK = "SET_CARD_SOCIAL_MEDIAS_LINK";
 export const UPLOAD_CARD_GALLERY_PICTURE = "UPLOAD_CARD_GALLERY_PICTURE";
 export const DELETE_CARD_GALLERY_PICTURE = "DELETE_CARD_GALLERY_PICTURE";
+export const UPLOAD_OFFERING_PICTURE = "UPLOAD_OFFERING_PICTURE";
+export const DELETE_OFFERING_PICTURE = "DELETE_OFFERING_PICTURE";
 export const SET_CARD_PATH = "SET_CARD_PATH";
 
 export const fetchCard = (userId) => {
@@ -602,6 +615,79 @@ export const deleteGalleryImage = (photoId) => {
         console.log(err);
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
         dispatch({ type: GALLERY_IMAGE_DELETED_UNSUCCESSFULLY });
+      });
+  };
+};
+
+export const uploadOfferingImage = (reqImgData, offeringId) => {
+  return (dispatch) => {
+    const body = new FormData();
+    body.append("OfferingId", offeringId);
+    body.append("File", reqImgData);
+    console.log(offeringId)
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        Accepts: "application/json",
+      },
+      body: body,
+    };
+
+    dispatch({ type: OFFERING_IMAGE_IS_LOADING, offeringId: offeringId });
+    fetch(`${API_BASE_URL}/photos/offering`, reqObj)
+      .then((resp) => {
+        dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
+        if (!resp.ok) {
+          dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
+          return;
+        }
+        dispatch({ type: OFFERING_IMAGE_UPLOADED_SUCCESSFULLY });
+        return resp.json()
+      })
+      .then((data) => {
+        if (data === undefined) {
+          return;
+        }
+        dispatch({ type: UPLOAD_OFFERING_PICTURE, photo: data, offeringId: offeringId });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
+        dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
+      });
+  };
+};
+
+export const deleteOfferingImage = (photoId, offeringId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
+
+    dispatch({ type: OFFERING_IMAGE_IS_LOADING, offeringId: offeringId });
+    fetch(`${API_BASE_URL}/photos/offering/${photoId}`, reqObj)
+      .then((resp) => {
+        dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
+        if (resp.ok) {
+          dispatch({ type: DELETE_OFFERING_PICTURE, photoId: photoId, offeringId: offeringId });
+          dispatch({ type: OFFERING_IMAGE_DELETED_SUCCESSFULLY });
+        }
+        else {
+          dispatch({ type: OFFERING_IMAGE_DELETED_UNSUCCESSFULLY });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
+        dispatch({ type: OFFERING_IMAGE_DELETED_UNSUCCESSFULLY });
       });
   };
 };
