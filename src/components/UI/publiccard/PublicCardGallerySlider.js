@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import AwesomeSlider from "react-awesome-slider";
 
@@ -19,11 +19,19 @@ class PublicCardGallerySlider extends Component {
     }
 
     return (
-      <div className="public-card-gallery-slider-container">
-        <AwesomeSlider bullets={this.props.photos.length <= 1 ? false : true} organicArrows={true} mobileTouch={true}>
+      <Fragment>
+        <div className="public-card-products-services-title-container">
+        <h4 className="ui horizontal divider header">
+          <span className="public-card-products-services-title-text">Gallery</span>
+        </h4>
+        </div>
+        <div className="public-card-gallery-slider-container">
+        <AwesomeSlider bullets={false}>
           {this.renderGallerySliderImages()}
         </AwesomeSlider>
       </div>
+      </Fragment>
+      
     );
   }
 }

@@ -41,28 +41,28 @@ class CardFormSocialMediaInputs extends Component {
           <input
             className="card-form-social-media-input"
             name="facebookLink"
-            placeholder="https://www.facebook.com/your_username"
+            placeholder="Facebook Username"
             value={this.state.facebookLink}
             onChange={this.onCardSocialMediaLinkChangeHandler}
           />
           <input
             className="card-form-social-media-input"
             name="instagramLink"
-            placeholder="https://www.instagram.com/your_username"
+            placeholder="Instagram Username"
             value={this.state.instagramLink}
             onChange={this.onCardSocialMediaLinkChangeHandler}
           />
           <input
             className="card-form-social-media-input"
             name="twitterLink"
-            placeholder="https://www.twitter.com/your_username"
+            placeholder="Twitter Handle"
             value={this.state.twitterLink}
             onChange={this.onCardSocialMediaLinkChangeHandler}
           />
           <input
             className="card-form-social-media-input"
             name="snapchatLink"
-            placeholder="https://www.snapchat.com/add/your_username"
+            placeholder="Snapchat Username"
             value={this.state.snapchatLink}
             onChange={this.onCardSocialMediaLinkChangeHandler}
           />

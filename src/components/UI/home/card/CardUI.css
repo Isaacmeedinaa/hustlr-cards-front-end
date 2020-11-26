@@ -133,29 +133,36 @@
 
 .card-business-products-services-container {
   margin-top: 15px;
-  width: 100%;
+  width: 95%;
+  max-width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  overflow-x: auto;
+}
+
+.card-business-products-services-container::-webkit-scrollbar {
+ display: none;
 }
 
 .card-business-product-service-container {
   margin-top: 25px;
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 20px;
   padding-bottom: 20px;
-  width: 100%;
+  width: 70%;
+  max-width: 100%;
   border-radius: 10px;
+  margin-right: 5%;
   word-wrap: break-word;
+  flex-shrink: 0;
+}
+
+.card-business-offering-body {
+  padding: 20px 20px;
 }
 
 .card-business-product-service-header {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -332,6 +339,16 @@ a > i {
 
 .file-upload:hover {
   cursor: pointer;
+}
+
+.preview-card-offering-photo {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  min-height: 175px;
+  max-height: 175px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 
 @media only screen and (max-width: 650px) {
