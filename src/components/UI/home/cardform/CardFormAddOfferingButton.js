@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import Loader from "react-loader-spinner";
+
 import { connect } from "react-redux";
 import { createOffering } from "../../../../store/actions/card";
 
@@ -13,7 +15,9 @@ class CardFormAddOfferingButton extends Component {
         onClick={() => this.props.createOffering(this.props.cardId)}
       >
         <span className="card-form-button-text">
-          + Add Products or Services
+        {this.props.offeringLoader.creatingLoader?
+          <Loader type="TailSpin" color="#ffffff" width={23} height={23} /> 
+          : '+ Add a Product or Service'}
         </span>
       </label>
     );
@@ -23,6 +27,7 @@ class CardFormAddOfferingButton extends Component {
 const mapStateToProps = (state) => {
   return {
     cardId: state.card.cardData.id,
+    offeringLoader: state.offeringLoader
   };
 };
 
