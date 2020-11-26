@@ -18,10 +18,13 @@ import {
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
+
 import Loader from "react-loader-spinner";
+import AwesomeSlider from "react-awesome-slider";
 
 import MdArrowDropup from "react-ionicons/lib/MdArrowDropup";
 import MdArrowDropdown from "react-ionicons/lib/MdArrowDropdown";
+import MdTrash from "react-ionicons/lib/MdTrash";
 
 class CardFormOfferingInputs extends Component {
   state = {
@@ -40,7 +43,8 @@ class CardFormOfferingInputs extends Component {
     if (this.props.offeringAddedNotification.show 
       && this.props.offeringAddedNotification.success
       && this.props.offering.id === this.props.offerings[this.props.offerings.length - 1].id) {
-        
+      
+      this.setState({showOffering: true});
       scrollToComponent(this.ScrollTo, { offset: 0, align: 'middle', duration: 500, ease:'out-circ'});
       this.props.hideOfferingCreatedNotification();
     }
@@ -92,21 +96,29 @@ class CardFormOfferingInputs extends Component {
     }
   };
 
-  onDeleteImageHandler = (event) => {
-    const photoId = +event.target.id;
-
-    this.props.deleteOfferingImage(photoId, this.state.id);
-  }
-
-  renderOfferingImages = () => {
+  renderOfferingSliderImages = () => {
     return this.props.photos.map(photo => {
       return (
-        <img className="ui rounded image card-form-offering-image" 
-          src={photo?.url}
-          alt="" 
-          key={photo?.id}
-          id={photo?.id}
-          onClick={(event) => this.onDeleteImageHandler(event)}/>
+        <div
+        key={photo.id}
+        style={{
+          backgroundImage: `url('${photo.url}')`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+        }}
+      >
+        <div className="card-form-offering-image-slider-btns-container">
+          <label
+            className="primary-color card-form-backdrop-image-btn"
+            onClick={() =>
+              this.props.deleteOfferingImage(photo.id, this.state.id)
+            }
+          >
+            <MdTrash color="#2ecc71" size={16} />
+          </label>
+        </div>
+      </div>
       );
     })
   }
@@ -118,8 +130,10 @@ class CardFormOfferingInputs extends Component {
             className="card-form-offerings-header-btn-container"
             onClick={() => {this.setState({showOffering: !this.state.showOffering})}}
         >
-            <h6 className="offering-title-header">{this.state.title}</h6>
-            <div className="settings-accordion-icon-container">
+            <h6 className="card-form-offering-title-header">
+              {this.state.showOffering ? 'Close' : (!this.state.title || this.state.title === '') ? <span className="card-form-empty-offering-title-placeholder">Click To Edit Offering</span>: this.state.title}
+            </h6>
+            <div className="card-form-accordion-icon-container">
               {this.state.showOffering ? (
                 <MdArrowDropdown color="#2ecc71" />
               ) : (
@@ -155,24 +169,13 @@ class CardFormOfferingInputs extends Component {
             value={this.state.description}
             onChange={this.onOfferingDescriptionChangeHandler}
           />
-          {this.state.showPhotos ?
-            <div className="ui tiny images card-form-offering-image-container">
-              {this.renderOfferingImages()}
-            </div>
-            : null
-          }
           <div className="card-form-product-service-buttons-container">
             <label
-              className="primary-color card-form-offering-button"
-              htmlFor={`offeringPhotoImgSelector${this.state.id}`}
-            >
-              {(this.props.offeringImageLoader.loading && this.props.offeringImageLoader.offeringId === this.state.id) ? (
-                <Loader type="TailSpin" color="#2ecc71" width={22} height={22} style={{}}/>
-              ) : (
-                <span>
-                  + Add Photo
-                </span>
-              )}
+                className="primary-color card-form-offering-button"
+                htmlFor={`offeringPhotoImgSelector${this.state.id}`}
+              >
+               {(this.props.offeringImageLoader.loading && this.props.offeringImageLoader.offeringId) === this.state.id ?
+               <Loader type="TailSpin" color="#2ecc71" width={23} height={23} /> : 'Add Photo'}
             </label>
             <input
               className="card-form-file-button"
@@ -189,6 +192,14 @@ class CardFormOfferingInputs extends Component {
               Delete
             </button>
           </div>
+          {this.props.offering.photos.length > 0 ?
+            <div className="card-form-gallery-slider-container">
+              <AwesomeSlider bullets={false}>
+                {this.renderOfferingSliderImages()}
+              </AwesomeSlider>
+            </div>
+            : null
+          }
           {this.state.showDeleteModal ? (
             <div className="primary-light-bg card-form-delete-offering-modal">
               <span className="card-form-delete-offering-modal-question">
