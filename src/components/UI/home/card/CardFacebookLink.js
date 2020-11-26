@@ -1,7 +1,7 @@
 import React from "react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 
 import "../../../../constants/colors.css";
 import "./CardUI.css";
@@ -16,10 +16,14 @@ const CardFacebookLink = (props) => {
       style={{ backgroundColor: props.transparentColor }}
       className="card-business-social-media-icon-container"
     >
-      <a href={props.facebookLink} target="_black">
-        <FontAwesomeIcon 
+      <a
+        href={`https://www.facebook.com/${props.facebookLink}`}
+        target="_black"
+      >
+        <FontAwesomeIcon
           icon={faFacebook}
-          style={{ color: props.primaryColor }}/>
+          style={{ color: props.primaryColor }}
+        />
       </a>
     </div>
   );

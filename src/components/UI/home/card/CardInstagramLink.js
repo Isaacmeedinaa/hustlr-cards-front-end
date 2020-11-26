@@ -1,7 +1,7 @@
 import React from "react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 import "../../../../constants/colors.css";
 import "./CardUI.css";
@@ -16,10 +16,14 @@ const CardInstagramLink = (props) => {
       style={{ backgroundColor: props.transparentColor }}
       className="card-business-social-media-icon-container"
     >
-      <a href={props.instagramLink} target="_black">
-      <FontAwesomeIcon 
-        icon={faInstagram} 
-        style={{ color: props.primaryColor }}/>
+      <a
+        href={`https://www.instagram.com/${props.instagramLink}`}
+        target="_black"
+      >
+        <FontAwesomeIcon
+          icon={faInstagram}
+          style={{ color: props.primaryColor }}
+        />
       </a>
     </div>
   );
