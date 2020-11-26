@@ -121,6 +121,35 @@ class Toolbar extends Component {
                   Zenyx LLC
                 </a>
               </li>
+              {this.props.auth.isAuthenticated ? (
+                <li className="landing-page-toolbar-menu-list-item">
+                  <Link
+                    to="/home"
+                    className="landing-page-toolbar-menu-auth-button"
+                  >
+                    Home
+                  </Link>
+                </li>
+              ) : (
+                <Fragment>
+                  <li className="landing-page-toolbar-menu-list-item">
+                    <Link
+                      to="/login"
+                      className="landing-page-toolbar-menu-auth-button"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                  <li className="landing-page-toolbar-menu-list-item">
+                    <Link
+                      to="/register"
+                      className="landing-page-toolbar-menu-register-button"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                </Fragment>
+              )}
             </ul>
           </div>
         ) : null}
