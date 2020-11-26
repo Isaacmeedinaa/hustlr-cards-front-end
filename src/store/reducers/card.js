@@ -21,6 +21,8 @@ import {
   SET_CARD_SOCIAL_MEDIAS_LINK,
   UPLOAD_CARD_GALLERY_PICTURE,
   DELETE_CARD_GALLERY_PICTURE,
+  UPLOAD_OFFERING_PICTURE,
+  DELETE_OFFERING_PICTURE,
   SET_CARD_PATH,
 } from "../actions/card";
 
@@ -212,9 +214,9 @@ const card = (state = initialState, action) => {
       };
 
     case SET_CARD_OFFERING_PRICE:
-      const offeringsSnapshotTwo = [...state.cardData.offerings];
-      const offeringSnapshotTwo = offeringsSnapshotTwo[action.offeringIndex];
-      offeringSnapshotTwo.price = action.offeringPrice;
+      const offeringsSnapshotTwo = [...state.cardData.offerings]; // creates a copy of all offerings in array
+      const offeringSnapshotTwo = offeringsSnapshotTwo[action.offeringIndex]; // gets copy of the offering we want to modify
+      offeringSnapshotTwo.price = action.offeringPrice; // modifies the 
 
       return {
         ...state,
@@ -309,6 +311,42 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           photos: filteredGalleryPhotos,
+        },
+      };
+
+    case UPLOAD_OFFERING_PICTURE:
+      const updatedOfferingsOne = state.cardData.offerings.map((offering) => {
+        if (offering.id !== action.offeringId) {
+          return offering;
+        }
+
+        offering.photos = [...offering.photos, action.photo];
+        return offering;
+      });
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          offerings: updatedOfferingsOne,
+        },
+      };
+
+    case DELETE_OFFERING_PICTURE:
+      const updatedOfferings = state.cardData.offerings.map((offering) => {
+        if (offering.id !== action.offeringId) {
+          return offering;
+        }
+
+        offering.photos = offering.photos.filter(photo => photo.id !== action.photoId);
+        return offering;
+      });
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          offerings: updatedOfferings,
         },
       };
 

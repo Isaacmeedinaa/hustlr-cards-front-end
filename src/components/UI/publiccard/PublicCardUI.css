@@ -46,17 +46,16 @@
 }
 
 .public-card-name {
-  text-align: center;
   margin-top: 15px !important;
-  font-family: "Montserrat", sans-serif;
-  font-size: 26px;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 28px !important;
 }
 
 .public-card-social-media-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 30px;
   width: 95%;
 }
 
@@ -137,36 +136,42 @@
 }
 
 .public-card-gallery-slider-container {
-  margin-top: 30px;
+  margin-top: 60px;
   width: 100%;
+}
+
+.public-card-products-services-title-container {
+  width: 90%;
+  margin-top: 50px;
 }
 
 .public-card-products-services-title-text {
-  width: 90%;
-  font-size: 18px;
-  font-weight: 700;
-  margin-top: 70px;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  font-family: "Montserrat", sans-serif;
 }
 
 .public-card-products-services-container {
-  margin-top: 0px;
+  margin-top: 50px;
   width: 95%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  overflow-x: auto;
   margin-bottom: 0px;
 }
 
+.public-card-products-services-container::-webkit-scrollbar {
+  display: none;
+ }
+
 .public-card-product-service-container {
   margin-top: 25px;
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 20px;
   padding-bottom: 20px;
-  width: 100%;
+  width: 70%;
+  max-width: 100%;
+  margin-right: 2%;
   border-radius: 10px;
   word-wrap: break-word;
+  flex-shrink: 0;
 }
 
 .public-card-product-service-header {
@@ -189,13 +194,26 @@
 }
 
 .public-card-product-service-description {
-  margin-top: 10px;
+  margin-top: 25px;
   font-size: 14px;
 }
 
 .public-card-logo-container {
-  margin-top: 80px;
+  margin-top: 40px;
   margin-bottom: 40px;
+}
+
+.public-offering-photo {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  max-height: 225px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.public-card-offering-body {
+  padding: 20px 20px;
 }
 
 .awssld__bullets button {
@@ -210,6 +228,10 @@
 
   .public-card-gallery-slider-container {
     width: 100%;
+  }
+
+  .public-offering-photo {
+    max-height: 175px;
   }
 }
 

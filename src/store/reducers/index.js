@@ -19,6 +19,7 @@ import publicCardLoader from "./loaders/publicCardLoader";
 import cardBackdropImageLoader from "./loaders/cardBackdropImageLoader";
 import cardImageLoader from "./loaders/cardImageLoader";
 import cardGalleryImageLoader from "./loaders/cardGalleryImageLoader";
+import offeringImageLoader from "./loaders/offeringImageLoader";
 import cardUpdatingLoader from "./loaders/cardUpdatingLoader";
 import userUpdatingLoader from "./loaders/userUpdatingLoader";
 import changePasswordLoader from "./loaders/changePasswordLoader";
@@ -39,6 +40,7 @@ import changePasswordCodeErrors from "./errors/changePasswordCodeErrors";
 import changePasswordNotifications from "./notifications/changePasswordNotifications";
 import cardSavedNotification from "./notifications/cardSavedNotifications";
 import offeringNotifications from "./notifications/offeringNotifications";
+import offeringImageNotifications from "./notifications/offeringImageNotifications";
 import galleryNotifications from "./notifications/galleryNotifications";
 import profileImageNotifications from "./notifications/profileImageNotifications";
 import userUpdatedNotifications from "./notifications/userUpdatedNotifications";
@@ -63,6 +65,7 @@ const rootReducer = combineReducers({
   cardBackdropImageLoader,
   cardImageLoader,
   cardGalleryImageLoader,
+  offeringImageLoader,
   cardUpdatingLoader,
   userUpdatingLoader,
   changePasswordLoader,
@@ -81,6 +84,7 @@ const rootReducer = combineReducers({
   changePasswordNotifications,
   cardSavedNotification,
   offeringNotifications,
+  offeringImageNotifications,
   galleryNotifications,
   profileImageNotifications,
   userUpdatedNotifications,

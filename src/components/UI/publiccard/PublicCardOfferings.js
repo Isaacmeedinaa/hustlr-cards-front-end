@@ -1,9 +1,18 @@
 import React, { Component, Fragment } from "react";
 
+import AwesomeSlider from "react-awesome-slider";
+
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
 
 class PublicCardOfferings extends Component {
+
+  renderOfferingSliderImages = (offering) => {
+    return offering.photos.map((photo) => (
+      <div key={photo.id} data-src={photo.url}></div>
+    ));
+  };
+
   renderOfferings = () => {
     return this.props.offerings.map((offering) => {
       if ((!offering.title || offering.title === "") && (!offering.description || offering.description === "")) {
@@ -15,7 +24,17 @@ class PublicCardOfferings extends Component {
           key={offering.id}
           style={{ backgroundColor: this.props.transparentColor }}
           className="public-card-product-service-container"
-        >
+        > 
+          { offering.photos.length > 0 ? 
+            //<img className="preview-card-offering-photo" src={offering.photos[0].url}/>
+            <div className="slider-container">
+              <AwesomeSlider bullets={false}>
+              {this.renderOfferingSliderImages(offering)}
+            </AwesomeSlider>
+            </div>
+            : null
+          }
+          <div className="public-card-offering-body">
           <div className="public-card-product-service-header">
             <p
               style={{ color: this.props.primaryColor }}
@@ -36,6 +55,7 @@ class PublicCardOfferings extends Component {
               </span>
             </div>
           ) : null}
+          </div>
         </div>
       );
     });
@@ -48,8 +68,10 @@ class PublicCardOfferings extends Component {
 
     return (
       <Fragment>
-        <div className="public-card-products-services-title-text">
-          Products &amp; Services
+        <div className="public-card-products-services-title-container">
+        <h4 className="ui horizontal divider header">
+          <span className="public-card-products-services-title-text">Products &amp; Services</span>
+        </h4>
         </div>
         <div className="public-card-products-services-container">
           {this.renderOfferings()}
