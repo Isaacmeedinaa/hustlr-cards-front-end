@@ -48,6 +48,7 @@ class CardForm extends Component {
   state = {
     isHidden: true,
     deleteModalShown: false,
+    openOfferingId: null
   };
 
   componentDidUpdate() {
@@ -186,10 +187,16 @@ class CardForm extends Component {
           cardId={offering.cardId}
           offerings={this.props.cardData.offerings}
           photos={offering.photos}
+          openOfferingHandler={this.openOfferingHandler}
+          openOfferingId={this.state.openOfferingId}
         />
       );
     });
   };
+
+  openOfferingHandler = async (offeringId) => {
+    await this.setState({openOfferingId: offeringId});
+  }
 
   render() {
     if (this.props.cardLoader) {

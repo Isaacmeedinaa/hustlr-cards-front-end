@@ -39,14 +39,18 @@ class CardFormOfferingInputs extends Component {
     showOffering: false
   };
 
-  componentDidUpdate() {
+   componentDidUpdate() {
+    // this checks if this is a new offering that was added via the "Add Products/Services button"
     if (this.props.offeringAddedNotification.show 
       && this.props.offeringAddedNotification.success
-      && this.props.offering.id === this.props.offerings[this.props.offerings.length - 1].id) {
+      && this.props.offering.id === this.props.offerings[this.props.offerings.length - 1].id) {    
       
-      this.setState({showOffering: true});
-      scrollToComponent(this.ScrollTo, { offset: 0, align: 'middle', duration: 500, ease:'out-circ'});
-      this.props.hideOfferingCreatedNotification();
+      this.props.hideOfferingCreatedNotification(); // need this, don't delete unless you know why you are deleting it 
+      this.onNewOfferingAdded();
+    }
+
+    if ((this.props.openOfferingId !== this.state.id) && this.state.showOffering) {
+      this.setState({showOffering: false});
     }
   }
 
@@ -96,6 +100,21 @@ class CardFormOfferingInputs extends Component {
     }
   };
 
+  onNewOfferingAdded = async () => {
+    if (!this.state.showOffering) {
+     await this.props.openOfferingHandler(this.state.id);
+    }
+    this.setState({showOffering: !this.state.showOffering})
+    scrollToComponent(this.ScrollTo, { offset: 0, align: 'middle', duration: 500, ease:'out-circ'});
+  }
+
+  openOfferingHandler = async () => {
+    if (!this.state.showOffering) {
+     await this.props.openOfferingHandler(this.state.id);
+    }
+    this.setState({showOffering: !this.state.showOffering})
+  }
+
   renderOfferingSliderImages = () => {
     return this.props.photos.map(photo => {
       return (
@@ -128,7 +147,7 @@ class CardFormOfferingInputs extends Component {
       <Fragment>
         <div
             className="card-form-offerings-header-btn-container"
-            onClick={() => {this.setState({showOffering: !this.state.showOffering})}}
+            onClick={this.openOfferingHandler}
         >
             <h6 className="card-form-offering-title-header">
               {this.state.showOffering ? 'Close' : (!this.state.title || this.state.title === '') ? <span className="card-form-empty-offering-title-placeholder">Click To Edit Offering</span>: this.state.title}
