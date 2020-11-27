@@ -18,9 +18,9 @@ class Toolbar extends Component {
               to="/"
               className="primary-color-hover landing-page-toolbar-app-name"
             >
-              Hustlr Cards
+              hustlr.cards
             </Link>
-            <Link to="/contact-us" className="landing-page-toolbar-link">
+            {/* <Link to="/contact-us" className="landing-page-toolbar-link">
               Contact Us
             </Link>
             <a
@@ -30,7 +30,7 @@ class Toolbar extends Component {
               className="landing-page-toolbar-link"
             >
               Zenyx LLC
-            </a>
+            </a> */}
           </div>
           <div className="landing-page-toolbar-buttons-container">
             {this.props.auth.isAuthenticated ? (
@@ -103,7 +103,7 @@ class Toolbar extends Component {
         {this.props.showMenu ? (
           <div className="landing-page-menu-links-container">
             <ul className="landing-page-toolbar-menu-list">
-              <li className="landing-page-toolbar-menu-list-item">
+              {/* <li className="landing-page-toolbar-menu-list-item">
                 <Link
                   to="/contact-us"
                   className="landing-page-toolbar-menu-link"
@@ -120,7 +120,7 @@ class Toolbar extends Component {
                 >
                   Zenyx LLC
                 </a>
-              </li>
+              </li> */}
               {this.props.auth.isAuthenticated ? (
                 <li className="landing-page-toolbar-menu-list-item">
                   <Link
