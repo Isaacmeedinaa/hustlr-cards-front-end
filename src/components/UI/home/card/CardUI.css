@@ -137,10 +137,11 @@
   max-width: 100%;
   display: flex;
   overflow-x: auto;
+  touch-action: none;
 }
 
 .card-business-products-services-container::-webkit-scrollbar {
- display: none;
+  display: none;
 }
 
 .card-business-product-service-container {
