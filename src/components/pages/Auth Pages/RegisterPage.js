@@ -7,7 +7,6 @@ import { userRegister, userAutoLogin } from "../../../store/actions/user";
 import Loader from "react-loader-spinner";
 
 import AuthCard from "./AuthCard";
-import AuthFooter from "./AuthFooter";
 
 import "./AuthPages.css";
 import "../../../constants/colors.css";
@@ -62,7 +61,9 @@ class RegisterPage extends Component {
           <div className="mobile-full-width">
             <AuthCard>
             <div className="auth-info">
-              <h1 className="primary-color app-name">hustlr.cards</h1>
+              <Link to="/">
+                <h1 className="primary-color app-name">hustlr.cards</h1>
+              </Link>
               <h5 className="auth-text">Join us today!</h5>
             </div>
               {this.props.registerErrors.length !== 0
@@ -128,7 +129,7 @@ class RegisterPage extends Component {
                 </Link>
               </div>
             </AuthCard>
-            <AuthFooter />
+            {/* <AuthFooter /> */}
           </div>
         </div>
     );
