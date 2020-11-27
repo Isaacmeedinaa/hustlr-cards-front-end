@@ -19,6 +19,7 @@ import publicCardLoader from "./loaders/publicCardLoader";
 import cardBackdropImageLoader from "./loaders/cardBackdropImageLoader";
 import cardImageLoader from "./loaders/cardImageLoader";
 import cardGalleryImageLoader from "./loaders/cardGalleryImageLoader";
+import offeringLoader from "./loaders/offeringLoader";
 import offeringImageLoader from "./loaders/offeringImageLoader";
 import cardUpdatingLoader from "./loaders/cardUpdatingLoader";
 import userUpdatingLoader from "./loaders/userUpdatingLoader";
@@ -65,6 +66,7 @@ const rootReducer = combineReducers({
   cardBackdropImageLoader,
   cardImageLoader,
   cardGalleryImageLoader,
+  offeringLoader,
   offeringImageLoader,
   cardUpdatingLoader,
   userUpdatingLoader,

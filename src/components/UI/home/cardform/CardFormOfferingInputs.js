@@ -208,7 +208,9 @@ class CardFormOfferingInputs extends Component {
               id="cardFormProductServiceDeleteBtn"
               onClick={() => this.setState({ showDeleteModal: true })}
             >
-              Delete
+              {(this.props.offeringLoader.deletingLoader && this.props.offeringLoader.deletingOfferingId) === this.state.id ?
+               <Loader type="TailSpin" color="#2ecc71" width={23} height={23} /> 
+               : 'Delete'}
             </button>
           </div>
           {this.props.offering.photos.length > 0 ?
@@ -250,7 +252,8 @@ class CardFormOfferingInputs extends Component {
 const mapStateToProps = (state) => {
   return {
     offeringAddedNotification: state.offeringNotifications.created,
-    offeringImageLoader: state.offeringImageLoader
+    offeringImageLoader: state.offeringImageLoader,
+    offeringLoader: state.offeringLoader
   };
 };
 

@@ -56,7 +56,12 @@ import {
   OFFERING_IMAGE_IS_LOADING,
   OFFERING_IMAGE_IS_NOT_LOADING
 } from "./loaders/offeringImageLoader"
-
+import {
+  OFFERING_IS_CREATING_LOADER,
+  OFFERING_IS_NOT_CREATING_LOADER,
+  OFFERING_IS_DELETING_LOADER,
+  OFFERING_IS_NOT_DELETING_LOADER
+} from "./loaders/offeringLoader";
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 
@@ -469,9 +474,11 @@ export const createOffering = (cardId) => {
       body: JSON.stringify(offeringData),
     };
 
+    dispatch({type: OFFERING_IS_CREATING_LOADER});
     fetch(`${API_BASE_URL}/offerings`, reqObj)
       .then((resp) => resp.json())
       .then((offering) => {
+        dispatch({type: OFFERING_IS_NOT_CREATING_LOADER});
         // MUST add new offering to local storage card offerings array
         const localStorageCard = JSON.parse(localStorage.getItem("card"));
         localStorageCard.offerings.push(offering);
@@ -482,6 +489,7 @@ export const createOffering = (cardId) => {
         dispatch({ type: OFFERING_CREATED_SUCCESSFULLY });
       })
       .catch((err) => {
+        dispatch({type: OFFERING_IS_NOT_CREATING_LOADER});
         dispatch({ type: OFFERING_CREATED_UNSUCCESSFULLY });
         console.log(err);
       });
@@ -506,9 +514,11 @@ export const deleteOffering = (id, index) => {
       body: JSON.stringify(offeringData),
     };
 
+    dispatch({type: OFFERING_IS_DELETING_LOADER, offeringId: id});
     fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
       .then(() => {})
       .then(() => {
+        dispatch({type: OFFERING_IS_NOT_DELETING_LOADER});
         // MUST remove offering from local storage card offerings array
         const localStorageCard = JSON.parse(localStorage.getItem("card"));
         let newOfferings = localStorageCard.offerings.filter(
@@ -523,6 +533,7 @@ export const deleteOffering = (id, index) => {
         dispatch({ type: OFFERING_DELETED_SUCCESSFULLY });
       })
       .catch((err) => {
+        dispatch({type: OFFERING_IS_NOT_DELETING_LOADER});
         dispatch({ type: OFFERING_DELETED_UNSUCCESSFULLY });
         console.log(err);
       });

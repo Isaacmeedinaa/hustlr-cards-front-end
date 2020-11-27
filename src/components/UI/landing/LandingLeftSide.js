@@ -4,59 +4,28 @@ import "../../../constants/colors.css";
 import "./landingUI.css";
 
 class LandingLeftSide extends Component {
-  state = {
-    email: "",
-  };
-
-  onSubmitEmailClick = (event) => {
-    event.preventDefault();
-  };
 
   render() {
     return (
       <div className="landing-left-side-wrapper">
         <h1 className="landing-left-side-header-text">
-          Our{" "}
           <span className="primary-color landing-left-side-header-text-span">
-            goal
+            hustlr.cards
           </span>{" "}
-          is to help you and your business{" "}
-          <span className="primary-color landing-left-side-header-text-span">
-            grow.
-          </span>
+          is the app for side hustlers
         </h1>
         <p className="landing-left-side-small-text">
-          With{" "}
-          <span className="primary-color landing-left-side-small-text-span">
-            Hustlr Cards
-          </span>{" "}
-          you can create a landing page, or a{" "}
-          <span className="primary-color landing-left-side-small-text-span">
-            "card"
-          </span>{" "}
-          for your small business. More features are arriving soon!
+          Create your hustlr card today in 5 minutes and showcase what your side hustle is all about!
         </p>
         <p className="landing-left-side-form-text">
-          Join our{" "}
-          <span className="primary-color landing-left-side-form-text-span">
-            beta testing team!
-          </span>{" "}
-          Just provide your email.
-        </p>
-        <form className="landing-left-side-form">
-          <input
-            className="landing-left-side-form-input"
-            placeholder="Email"
-            value={this.state.email}
-            onChange={(event) => this.setState({ email: event.target.value })}
-          />
-          <button
+          Join our beta testing team to start using the app!
+          <a
             className="landing-left-side-form-button"
-            onClick={this.onSubmitEmailClick}
+            href="mailto:support@hustlr.cards?subject=Please add me to the beta team!&body=Hi! I would like to start using hustlr.cards as a beta tester!"
           >
-            Send
-          </button>
-        </form>
+            Join Us
+          </a>
+        </p>
       </div>
     );
   }
