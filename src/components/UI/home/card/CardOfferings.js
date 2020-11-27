@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 
 import AwesomeSlider from "react-awesome-slider";
 
@@ -6,11 +6,25 @@ import "../../../../constants/colors.css";
 import "./CardUI.css";
 
 const CardOfferings = (props) => {
-
   const [showHeader, setShowHeader] = useState(false);
+
+  const offeringsContainer = useRef();
 
   useEffect(() => {
     checkHeaderState();
+    const copyOfferingsContainerCurrent = offeringsContainer.current;
+    offeringsContainer.current.addEventListener(
+      "wheel",
+      onOfferingsContainerWheel,
+      {
+        passive: false,
+      }
+    );
+    return () =>
+      copyOfferingsContainerCurrent.removeEventListener(
+        "wheel",
+        onOfferingsContainerWheel
+      );
   });
 
   const checkHeaderState = () => {
@@ -19,12 +33,27 @@ const CardOfferings = (props) => {
       if (offering.title !== "" || offering.description !== "") {
         setShowHeader(true);
         break;
-      }
-      else if (idx === props.offerings.length - 1) {
+      } else if (idx === props.offerings.length - 1) {
         setShowHeader(false);
       }
     }
-  }
+  };
+
+  const onOfferingsContainerWheel = (event) => {
+    event.preventDefault();
+
+    const container = document.getElementById(
+      "card-business-products-services-container"
+    );
+    const containerScrollPosition = document.getElementById(
+      "card-business-products-services-container"
+    ).scrollLeft;
+    container.scrollTo({
+      top: 0,
+      left: containerScrollPosition + event.deltaY,
+      behaviour: "smooth",
+    });
+  };
 
   const renderOfferingSliderImages = (offering) => {
     return offering.photos.map((photo) => (
@@ -46,13 +75,12 @@ const CardOfferings = (props) => {
           style={{ backgroundColor: props.transparentColor }}
           className="card-business-product-service-container"
         >
-          { offering.photos.length > 0 ? 
+          {offering.photos.length > 0 ? (
             //<img className="preview-card-offering-photo" src={offering.photos[0].url}/>
             <AwesomeSlider bullets={false}>
               {renderOfferingSliderImages(offering)}
             </AwesomeSlider>
-            : null
-          }
+          ) : null}
           <div className="card-business-offering-body">
             <div className="card-business-product-service-header">
               <p
@@ -68,40 +96,46 @@ const CardOfferings = (props) => {
               </div>
             </div>
             {offering.description ? (
-            <div className="card-business-product-service-description">
-              <span
-                className="card-business-product-service-description wordwrap"
-                style={{ color: props.primaryColor }}
-              >
-                {offering.description}
-              </span>
-            </div>
-          ) : null}
+              <div className="card-business-product-service-description">
+                <span
+                  className="card-business-product-service-description wordwrap"
+                  style={{ color: props.primaryColor }}
+                >
+                  {offering.description}
+                </span>
+              </div>
+            ) : null}
           </div>
         </div>
       );
     });
-  }
-  
-  const view =
-     !showHeader || !props.offerings || props.offerings.length === 0 ? null : (
-      <Fragment>
-        <div className="card-business-section-header-container">
+  };
+
+  return (
+    <Fragment>
+      {!showHeader ||
+      !props.offerings ||
+      props.offerings.length === 0 ? null : (
+       <div className="card-business-section-header-container">
           <h4 className="ui horizontal divider header">
             <span className="public-card-products-services-title-text">
               Products &amp; Services
             </span>
           </h4>
         </div>
-        <div className="card-business-products-services-container">
-          {renderOfferings()}
-        </div>
-        
-      </Fragment>
-    );
-
-  return view;
-  
+      )}
+      <div
+        className="card-business-products-services-container"
+        id="card-business-products-services-container"
+        onWheel={onOfferingsContainerWheel}
+        ref={offeringsContainer}
+      >
+        {!showHeader || !props.offerings || props.offerings.length === 0
+          ? null
+          : renderOfferings()}
+      </div>
+    </Fragment>
+  );
 };
 
 export default CardOfferings;
