@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { userChangePasswordCode } from "../../../store/actions/user";
 
 import AuthCard from "./AuthCard";
-import AuthFooter from "./AuthFooter";
 
 import "./AuthPages.css";
 import "../../../constants/colors.css";
@@ -55,7 +54,9 @@ class ChangePasswordPage extends Component {
         <div className="mobile-full-width">
           <AuthCard>
           <div className="auth-info">
-            <h1 className="primary-color app-name">hustlr.cards</h1>
+            <Link to="/">
+              <h1 className="primary-color app-name">hustlr.cards</h1>
+            </Link>
             <h5 className="auth-text">
               Enter the recovery code that was sent to your email.
             </h5>
@@ -114,7 +115,7 @@ class ChangePasswordPage extends Component {
               </Link>
             </div>
           </AuthCard>
-          <AuthFooter />
+          {/* <AuthFooter /> */}
         </div>
       </div>
     );

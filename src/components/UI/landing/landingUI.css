@@ -261,7 +261,7 @@
 }
 
 .landing-left-side-form-button {
-  width: 100px;
+  width: 150px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -272,10 +272,12 @@
   font-size: 15px;
   font-weight: 600;
   color: #fff;
+  margin-top: 30px;
 }
 
 .landing-left-side-form-button:hover {
   background-color: #2bc16b;
+  color: #fff !important;
 }
 
 .landing-left-side-form-button:focus {
@@ -374,6 +376,18 @@
 }
 
 @media only screen and (max-width: 834px) {
+  .landing-left-side-wrapper {
+    margin-top: 40px;
+  }
+  .landing-left-side-form-text {
+    margin-top: 20px;
+  }
+  .landing-left-side-form-button {
+    margin-bottom: 40px;
+  }
+  .landing-right-side-wrapper {
+    margin-bottom: 60px;
+  }
   .landing-page-toolbar-wrapper {
     padding: 22px 0px 10px 0px;
     justify-content: space-between;
