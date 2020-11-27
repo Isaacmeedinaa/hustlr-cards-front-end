@@ -87,12 +87,12 @@ const CardOfferings = (props) => {
      !showHeader || !props.offerings || props.offerings.length === 0 ? null : (
       <Fragment>
         <div className="card-business-section-header-container">
-            <h4 className="ui horizontal divider header">
-              <span className="public-card-products-services-title-text">
-                Products &amp; Services
-              </span>
-            </h4>
-          </div>
+          <h4 className="ui horizontal divider header">
+            <span className="public-card-products-services-title-text">
+              Products &amp; Services
+            </span>
+          </h4>
+        </div>
         <div className="card-business-products-services-container">
           {renderOfferings()}
         </div>
