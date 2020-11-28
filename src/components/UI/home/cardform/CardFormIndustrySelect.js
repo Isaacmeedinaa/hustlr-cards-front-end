@@ -66,7 +66,7 @@ class CardFormIndustrySelect extends Component {
               },
             }),
           }}
-          placeholder={<div>Select an industry</div>}
+          placeholder={<div className="card-form-placeholder-color">Select an industry</div>}
           options={this.props.dropdownIndustries}
           value={
             !this.props.industry || this.props.industry.id === null
