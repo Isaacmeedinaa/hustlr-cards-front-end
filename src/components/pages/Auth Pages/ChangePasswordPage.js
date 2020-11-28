@@ -10,6 +10,7 @@ import AuthCard from "./AuthCard";
 
 import "./AuthPages.css";
 import "../../../constants/colors.css";
+import { CHANGE_PASSWORD_CODE_NO_ERRORS } from "../../../store/actions/errors/changePasswordCodeErrors";
 
 class ChangePasswordPage extends Component {
   state = {
@@ -24,6 +25,10 @@ class ChangePasswordPage extends Component {
     if (this.props.auth.isAuthenticated) {
       history.push("/home");
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearChangePasswordErrors();
   }
 
   inputChangeHandler = async (event) => {
@@ -136,6 +141,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         userChangePasswordCode(username, recoveryCode, newPassword, history)
       ),
+    clearChangePasswordErrors: () => dispatch({type: CHANGE_PASSWORD_CODE_NO_ERRORS})
   };
 };
 
