@@ -56,11 +56,12 @@ class CardFormImageSelector extends Component {
             <Loader type="TailSpin" color="#fff" width={50} height={50} />
           ) : null}
         </div>
-        <div className="ui floating dropdown button card-form-button edit-image-dropdown primary-font">
+        <div className="ui floating dropdown button card-form-button primary-font">
           <span className="card-form-button-text">Edit Profile Image</span>
-          <div className="menu">
+          <div className="menu" id="card-form-edit-image-dropdown">
             <div className="item">
-              <i className="add icon"></i>Upload new photo
+              <i className="cloud upload alternate icon" style={{color: '#2ecc71'}}></i>
+              Upload new photo
               <input
                 className="file-upload"
                 id="businessProfileImgSelector"
@@ -74,7 +75,7 @@ class CardFormImageSelector extends Component {
                 className="item"
                 onClick={() => this.props.deleteBusinessImage(this.props.imgId)}
               >
-                <i className="delete icon"></i> Remove Photo
+                <i className="delete icon" style={{color: '#2ecc71'}}></i> Remove Photo
               </div>
             )}
           </div>
