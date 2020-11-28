@@ -215,9 +215,9 @@
   padding: 20px 20px;
 }
 
-.awssld__bullets button {
-  width: 10px !important;
-  height: 10px !important;
+.public-card-product-service-container .awssld__content {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 @media only screen and (max-width: 650px) {
@@ -237,5 +237,8 @@
 @media only screen and (max-device-width: 900px) and (orientation: landscape) {
   .public-card-gallery-slider-container {
     max-width: 500px;
+  }
+  .public-card-gallery-slider-container .awssld__content {
+    border-radius: 10px;
   }
 }
