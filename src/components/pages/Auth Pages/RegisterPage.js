@@ -10,6 +10,7 @@ import AuthCard from "./AuthCard";
 
 import "./AuthPages.css";
 import "../../../constants/colors.css";
+import { REGISTER_NO_ERRORS } from "../../../store/actions/errors/registerErrors";
 
 class RegisterPage extends Component {
   constructor() {
@@ -29,6 +30,10 @@ class RegisterPage extends Component {
     if (this.props.auth.isAuthenticated) {
       history.push("/home");
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearRegisterErrors();
   }
 
   inputChangeHandler = (event) => {
@@ -151,6 +156,7 @@ const mapDispatchToProps = (dispatch) => {
         userRegister(email, username, password, confirmPassword, history)
       ),
     userAutoLogin: (history) => dispatch(userAutoLogin(history)),
+    clearRegisterErrors: () => dispatch({type: REGISTER_NO_ERRORS})
   };
 };
 

@@ -9,7 +9,6 @@ import {
 import Loader from "react-loader-spinner";
 
 import { connect } from "react-redux";
-import { fetchIndustries } from "./store/actions/industries";
 import { userAutoLogin } from "./store/actions/user";
 import { setIsNotAuthenticated } from "./store/actions/auth";
 
@@ -37,12 +36,10 @@ class App extends Component {
     } else {
       this.props.setIsNotAuthenticated();
     }
-
-    this.props.fetchIndustries();
   }
 
   render() {
-    if (this.props.industriesLoader || !this.props.auth.hasCheckedAuth) {
+    if (!this.props.auth.hasCheckedAuth) {
       return (
         <div className="page-loader-container">
           <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
@@ -88,16 +85,14 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    industriesLoader: state.industriesLoader,
-    auth: state.auth,
+    auth: state.auth
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchIndustries: () => dispatch(fetchIndustries()),
     userAutoLogin: () => dispatch(userAutoLogin()),
-    setIsNotAuthenticated: () => dispatch(setIsNotAuthenticated()),
+    setIsNotAuthenticated: () => dispatch(setIsNotAuthenticated())
   };
 };
 

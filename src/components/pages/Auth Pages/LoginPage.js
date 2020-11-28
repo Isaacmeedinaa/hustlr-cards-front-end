@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { userLogin, userAutoLogin } from "../../../store/actions/user";
+import { LOGIN_NO_ERRORS } from "../../../store/actions/errors/loginErrors";
 
 import Loader from "react-loader-spinner";
 
@@ -24,6 +25,10 @@ class LoginPage extends Component {
     if (this.props.auth.isAuthenticated) {
       history.push("/home");
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearLoginErrors();
   }
 
   checkBoxChangeHandler = () => {
@@ -129,6 +134,7 @@ const mapDispatchToProps = (dispatch) => {
     userLogin: (username, password, history) =>
       dispatch(userLogin(username, password, history)),
     userAutoLogin: (history) => dispatch(userAutoLogin(history)),
+    clearLoginErrors: () => dispatch({type: LOGIN_NO_ERRORS}),
   };
 };
 
