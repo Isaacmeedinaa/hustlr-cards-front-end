@@ -3,6 +3,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { userAutoLogin } from "../../store/actions/user";
 import { cardIsSaved, cardIsNotSaved } from "../../store/actions/cardSaved";
+import { fetchIndustries } from "../../store/actions/industries";
 
 import SideToolbar from "../UI/SideToolbar";
 import TopToolbar from "../UI/home/TopToolbar";
@@ -16,6 +17,13 @@ import "../../constants/colors.css";
 import "./pages.css";
 
 class HomeContainer extends Component {
+
+  componentDidMount() {
+    if (this.props.industries.length === 0) {
+      this.props.fetchIndustries();
+    }
+  }
+
   componentDidUpdate() {
     const keysToCompare = ['title', 'description', 'city', 'state', 'email', 'phoneNumber', 'pathToCard', 'isPublic', 'facebookLink','instagramLink','snapchatLink','twitterLink','themeId','industryId'];
     const localStorageCard = JSON.parse(localStorage.getItem("card"));
@@ -66,7 +74,7 @@ class HomeContainer extends Component {
   }
 
   render() {
-    if (this.props.cardLoader) {
+    if (this.props.cardLoader || this.props.industriesLoader) {
       return (
         <div className="page-loader-container">
           <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
@@ -109,6 +117,8 @@ const mapStateToProps = (state) => {
     user: state.user,
     cardData: state.card.cardData,
     cardLoader: state.cardLoader,
+    industries: state.industries,
+    industriesLoader: state.industriesLoader,
   };
 };
 
@@ -117,6 +127,7 @@ const mapDispatchToProps = (dispatch) => {
     userAutoLogin: (history) => dispatch(userAutoLogin(history)),
     cardIsSaved: () => dispatch(cardIsSaved()),
     cardIsNotSaved: () => dispatch(cardIsNotSaved()),
+    fetchIndustries: () => dispatch(fetchIndustries())
   };
 };
 
