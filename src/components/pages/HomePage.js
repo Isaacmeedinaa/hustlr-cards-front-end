@@ -17,6 +17,7 @@ import "./pages.css";
 
 class HomeContainer extends Component {
   componentDidUpdate() {
+    const keysToCompare = ['title', 'description', 'city', 'state', 'email', 'phoneNumber', 'pathToCard', 'isPublic', 'facebookLink','instagramLink','snapchatLink','twitterLink','themeId','industryId'];
     const localStorageCard = JSON.parse(localStorage.getItem("card"));
 
     if (this.props.cardData.id === null) return;
@@ -55,7 +56,7 @@ class HomeContainer extends Component {
           } else {
             continue;
           }
-        } else if (localStorageCard[key] !== this.props.cardData[key]) {
+        } else if ((localStorageCard[key] !== this.props.cardData[key]) && keysToCompare.indexOf(key) > -1) {
           this.props.cardIsNotSaved();
           return;
         }
