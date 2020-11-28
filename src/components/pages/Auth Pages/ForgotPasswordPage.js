@@ -10,6 +10,7 @@ import AuthCard from "./AuthCard";
 
 import "./AuthPages.css";
 import "../../../constants/colors.css";
+import { FORGOT_PASSWORD_NO_ERRORS } from "../../../store/actions/errors/forgotPasswordErrors";
 
 class ForgotPasswordPage extends Component {
   state = {
@@ -22,6 +23,10 @@ class ForgotPasswordPage extends Component {
     if (this.props.auth.isAuthenticated) {
       history.push("/home");
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearForgotPasswordErrors();
   }
 
   inputChangeHandler = async (event) => {
@@ -107,6 +112,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     userForgotPassword: (username, history) =>
       dispatch(userForgotPassword(username, history)),
+    clearForgotPasswordErrors: () => dispatch({type: FORGOT_PASSWORD_NO_ERRORS})
   };
 };
 

@@ -276,12 +276,19 @@ export const uploadBackdropImage = (reqImgData, cardId) => {
         console.log(resp);
         if (!resp.ok) {
           dispatch({ type: CARD_BACKDROP_IMAGE_IS_NOT_UPLOADING });
-          dispatch({ type: BACKDROP_IMAGE_UPLOADED_UNSUCCESSFULLY });
+          resp.json().then((error) => {
+            dispatch({ type: CARD_ERRORS, errors: [error] });
+            dispatch({ type: BACKDROP_IMAGE_UPLOADED_UNSUCCESSFULLY });
+          });
           return;
         }
         return resp.json();
       })
       .then((data) => {
+        if (!data) {
+          return;
+        }
+        dispatch({ type: CARD_NO_ERRORS });
         dispatch({
           type: UPLOAD_BACKDROP_IMAGE,
           backdropImgUrl: data.url,
@@ -347,12 +354,19 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
       .then((resp) => {
         if (!resp.ok) {
           dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
-          dispatch({ type: PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY });
+          resp.json().then((error) => {
+            dispatch({ type: CARD_ERRORS, errors: [error] });
+            dispatch({ type: PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY });
+          });
           return;
         }
         return resp.json();
       })
       .then((data) => {
+        if (!data) {
+          return;
+        }
+        dispatch({ type: CARD_NO_ERRORS });
         dispatch({
           type: UPLOAD_BUSINESS_PROFILE_PICTURE,
           imgUrl: data.url,
@@ -588,11 +602,25 @@ export const uploadGalleryImage = (reqImgData, cardId) => {
 
     dispatch({ type: CARD_GALLERY_IMAGE_IS_LOADING });
     fetch(`${API_BASE_URL}/photos`, reqObj)
-      .then((resp) => resp.json())
-      .then((data) => {
-        dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
-        dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-        dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
+      .then((resp) => {
+        if (!resp.ok) {
+        resp.json().then((error) => {
+          dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+          dispatch({ type: CARD_ERRORS, errors: [error] });
+          dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
+        });
+        return;
+      }
+      return resp.json();
+    })
+    .then((data) => {
+      if (!data) {
+        return;
+      }
+      dispatch({ type: CARD_NO_ERRORS });
+      dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
+      dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+      dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
       })
       .catch((err) => {
         console.log(err);
@@ -652,16 +680,20 @@ export const uploadOfferingImage = (reqImgData, offeringId) => {
       .then((resp) => {
         dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
         if (!resp.ok) {
-          dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
+          resp.json().then((error) => {
+            dispatch({ type: CARD_ERRORS, errors: [error] });
+            dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
+          });
           return;
         }
         dispatch({ type: OFFERING_IMAGE_UPLOADED_SUCCESSFULLY });
-        return resp.json()
+        return resp.json();
       })
       .then((data) => {
-        if (data === undefined) {
+        if (!data) {
           return;
         }
+        dispatch({ type: CARD_NO_ERRORS });
         dispatch({ type: UPLOAD_OFFERING_PICTURE, photo: data, offeringId: offeringId });
       })
       .catch((err) => {

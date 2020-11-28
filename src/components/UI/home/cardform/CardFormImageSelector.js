@@ -36,9 +36,13 @@ class CardFormImageSelector extends Component {
     const cardId = this.state.cardId;
 
     let reader = new FileReader();
-    reader.readAsDataURL(reqImgData);
 
-    this.props.uploadBusinessProfilePicture(reqImgData, cardId);
+    if (reqImgData) {
+      reader.readAsDataURL(reqImgData);
+      this.props.uploadBusinessProfilePicture(reqImgData, cardId);
+      event.target.value = null;
+    }
+    
   };
 
   render() {
@@ -52,7 +56,7 @@ class CardFormImageSelector extends Component {
             <Loader type="TailSpin" color="#fff" width={50} height={50} />
           ) : null}
         </div>
-        <label className="ui floating dropdown button card-form-button edit-image-dropdown primary-font">
+        <div className="ui floating dropdown button card-form-button edit-image-dropdown primary-font">
           <span className="card-form-button-text">Edit Profile Image</span>
           <div className="menu">
             <div className="item">
@@ -74,7 +78,7 @@ class CardFormImageSelector extends Component {
               </div>
             )}
           </div>
-        </label>
+        </div>
       </Fragment>
     );
   }
