@@ -96,6 +96,7 @@ class CardFormOfferingInputs extends Component {
     if (reqImgData) {
       reader.readAsDataURL(reqImgData);
       this.props.uploadOfferingImage(reqImgData, offeringId);
+      event.target.value = null;
     }
   };
 

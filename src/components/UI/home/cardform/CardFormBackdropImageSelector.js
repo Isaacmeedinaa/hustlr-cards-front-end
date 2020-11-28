@@ -23,6 +23,7 @@ class CardFormBackdropImageSelector extends Component {
     if (reqImgData) {
       reader.readAsDataURL(reqImgData);
       this.props.uploadBackdropImage(reqImgData, cardId);
+      event.target.value = null;
     }
   };
 

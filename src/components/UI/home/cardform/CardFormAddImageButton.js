@@ -22,6 +22,7 @@ class CardFormAddImageButton extends Component {
     if (reqImgData) {
       reader.readAsDataURL(reqImgData);
       this.props.uploadGalleryImage(reqImgData, cardId);
+      event.target.value = null;
     }
   };
 
