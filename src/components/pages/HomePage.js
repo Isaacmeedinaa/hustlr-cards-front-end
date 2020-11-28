@@ -117,7 +117,7 @@ const mapStateToProps = (state) => {
     user: state.user,
     cardData: state.card.cardData,
     cardLoader: state.cardLoader,
-    industries: state.industries,
+    industries: state.industries.dropdownIndustries,
     industriesLoader: state.industriesLoader,
   };
 };
