@@ -20,9 +20,10 @@ class CardFormBackdropImageSelector extends Component {
     const cardId = this.props.cardId;
 
     let reader = new FileReader();
-    reader.readAsDataURL(reqImgData);
-
-    this.props.uploadBackdropImage(reqImgData, cardId);
+    if (reqImgData) {
+      reader.readAsDataURL(reqImgData);
+      this.props.uploadBackdropImage(reqImgData, cardId);
+    }
   };
 
   render() {

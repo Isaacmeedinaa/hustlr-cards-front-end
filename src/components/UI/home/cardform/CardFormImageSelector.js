@@ -36,9 +36,12 @@ class CardFormImageSelector extends Component {
     const cardId = this.state.cardId;
 
     let reader = new FileReader();
-    reader.readAsDataURL(reqImgData);
 
-    this.props.uploadBusinessProfilePicture(reqImgData, cardId);
+    if (reqImgData) {
+      reader.readAsDataURL(reqImgData);
+      this.props.uploadBusinessProfilePicture(reqImgData, cardId);
+    }
+    
   };
 
   render() {
