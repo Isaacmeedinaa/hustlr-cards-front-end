@@ -51,7 +51,6 @@ class PublicCardOfferings extends Component {
           className="public-card-product-service-container"
         >
           {offering.photos.length > 0 ? (
-            //<img className="preview-card-offering-photo" src={offering.photos[0].url}/>
             <div className="slider-container">
               <AwesomeSlider bullets={false}>
                 {this.renderOfferingSliderImages(offering)}
