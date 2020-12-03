@@ -201,7 +201,7 @@
 .landing-left-side-header-text {
   width: 100%;
   text-align: left;
-  font-size: 48px;
+  font-size: 40px;
   line-height: 70px;
   font-weight: 500;
   letter-spacing: 1px;
@@ -229,12 +229,19 @@
   width: 100%;
   margin-top: 30px;
   text-align: left;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 500;
 }
 
 .landing-left-side-form-text-span {
   font-weight: 600;
+}
+
+.landing-items-container {
+  display: flex;
+  align-self: flex-start !important;
+  color: #838a96;
+  margin-top: 20px;
 }
 
 .landing-left-side-form {
