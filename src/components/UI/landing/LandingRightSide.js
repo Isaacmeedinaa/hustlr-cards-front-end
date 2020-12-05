@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import "../../../constants/colors.css";
 import "./landingUI.css";
-import img from "./hustlr-cards-phones.png";
+import img from "./landing.png";
 
 class LandingRightSide extends Component {
   render() {

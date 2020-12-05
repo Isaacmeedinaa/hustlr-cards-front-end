@@ -301,7 +301,10 @@
 }
 
 .landing-right-side-img {
-  margin-top: 50px;
+  max-width: 100%;
+  background-color: rgba(40, 175, 96, 0.1);
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .landing-page-footer-wrapper {
@@ -334,7 +337,7 @@
   }
 
   .landing-page-content-container {
-    padding: 0px 80px 0px 80px !important;
+    padding: 0px 80px 0px 80px;
   }
 
   .landing-page-footer-wrapper {
@@ -349,13 +352,6 @@
 
   .landing-page-footer-wrapper {
     padding: 20px 30px 20px 30px;
-  }
-}
-
-@media only screen and (max-width: 1030px) {
-  .landing-right-side-img {
-    height: 90%;
-    width: 90%;
   }
 }
 
@@ -393,10 +389,10 @@
     margin-bottom: 40px;
   }
   .landing-right-side-wrapper {
-    margin-bottom: 60px;
+    margin-top: 10px;
   }
   .landing-page-toolbar-wrapper {
-    padding: 22px 0px 10px 0px;
+    padding: 20px 0px 10px 0px;
     justify-content: space-between;
     flex-direction: column;
   }
@@ -426,29 +422,24 @@
   }
 }
 
-@media only screen and (max-width: 750px) {
-  .landing-right-side-img {
-    width: 85%;
-    height: 85%;
-  }
-}
-
 @media only screen and (max-width: 700px) {
   .landing-page-content-container {
     flex-direction: column;
+    flex-direction: column-reverse;
+    padding: 0px 0px 0px 0px !important;
+  }
+
+  .landing-right-side-img {
+    border-radius: 0px;
   }
 
   .landing-left-side-wrapper {
     width: 100%;
+    padding: 0px 30px 0px 30px;
   }
 
   .landing-right-side-wrapper {
     width: 100%;
     justify-content: center;
-  }
-
-  .landing-right-side-img {
-    height: 90%;
-    width: 90%;
   }
 }
