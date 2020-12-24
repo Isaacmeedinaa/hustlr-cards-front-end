@@ -41,6 +41,12 @@
   cursor: pointer;
 }
 
+.top-toolbar-color-theme-text {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
 .theme-picker-animation-wrapper {
   width: 150px;
   height: 150px;
@@ -133,14 +139,15 @@
 .public-toggle-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-content: center;
-  margin-left: 25px;
+  width: 100%;
+  margin-top: 30px;
 }
 
 .public-toggle-label {
-  position: relative;
-  top: 4px;
+  display: flex;
+  align-items: center;
   width: 55px;
   margin-right: 10px;
 }

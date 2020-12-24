@@ -6,7 +6,6 @@ import MdBrush from "react-ionicons/lib/MdBrush";
 import MdCloseCircle from "react-ionicons/lib/MdCloseCircle";
 
 import ThemePicker from "./ThemePicker";
-import PublicToggle from "./PublicToggle";
 import SaveCardButton from "./SaveCardButton";
 
 import "./HomeUI.css";
@@ -52,7 +51,7 @@ class TopToolbar extends Component {
                   />
                 )}
               </div>
-              <PublicToggle />
+              <div className="top-toolbar-color-theme-text">Color</div>
               <SaveCardButton />
             </div>
             {/* )} */}

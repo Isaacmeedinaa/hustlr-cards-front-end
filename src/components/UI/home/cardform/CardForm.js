@@ -37,6 +37,7 @@ import CardFormSocialMediaInputs from "./CardFormSocialMediaInputs";
 import CardFormAddImageButton from "./CardFormAddImageButton";
 import CardFormGallerySlider from "./CardFormGallerySlider";
 import CardFormCardPathInput from "./CardFormCardPathInput";
+import PublicToggle from "../PublicToggle";
 
 import { showToast } from "../../Toasts";
 
@@ -229,6 +230,7 @@ class CardForm extends Component {
               isHidden={this.state.isHidden}
             />
             {this.state.isHidden ? null : <CardFormSocialMediaInputs />}
+            <PublicToggle />
           </div>
         </div>
       </Animated>
