@@ -57,11 +57,11 @@ class CardFormImageSelector extends Component {
           ) : null}
         </div>
         <div className="ui floating dropdown button card-form-button primary-font">
-          <span className="card-form-button-text">Edit Profile Image</span>
+          <span className="card-form-button-text">Edit Profile Photo</span>
           <div className="menu" id="card-form-edit-image-dropdown">
             <div className="item">
               <i className="cloud upload alternate icon" style={{color: '#2ecc71'}}></i>
-              Upload new photo
+              Upload New Profile Photo
               <input
                 className="file-upload"
                 id="businessProfileImgSelector"
@@ -75,7 +75,7 @@ class CardFormImageSelector extends Component {
                 className="item"
                 onClick={() => this.props.deleteBusinessImage(this.props.imgId)}
               >
-                <i className="delete icon" style={{color: '#2ecc71'}}></i> Remove Photo
+                <i className="delete icon" style={{color: '#2ecc71'}}></i> Remove Current Profile Photo
               </div>
             )}
           </div>

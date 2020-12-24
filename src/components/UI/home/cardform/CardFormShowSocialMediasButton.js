@@ -13,7 +13,7 @@ class CardFormShowSocialMediasButton extends Component {
         <span className="card-form-button-text">
           {this.props.isHidden ? (
             <span className="card-form-button-text">
-              Edit Social Media Links
+              + Add Social Media
             </span>
           ) : (
             "Close"
