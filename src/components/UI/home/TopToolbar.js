@@ -51,7 +51,7 @@ class TopToolbar extends Component {
                   />
                 )}
               </div>
-              <div className="top-toolbar-color-theme-text">Color</div>
+              <div className="top-toolbar-color-theme-text">Color Theme</div>
               <SaveCardButton />
             </div>
             {/* )} */}

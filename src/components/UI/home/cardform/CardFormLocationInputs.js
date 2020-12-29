@@ -2,8 +2,7 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import { setCardLocation } from "../../../../store/actions/card";
-import Select from "react-select";
-import dropdownStates from "../../../../data/usa-states";
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
@@ -11,39 +10,87 @@ import "./CardFormUI.css";
 class CardFormLocationInputs extends Component {
   state = {
     city: this.props.city,
-    state: this.props.state,
+    state: this.props.state
   };
 
-  dropdownStates = dropdownStates;
+  componentDidMount() {
+    if(this.state.city && this.state.city.length > 0) {
+      this.setState({
+        city : { label: this.state.city, value: this.state.city }
+      })
+      console.log(this.state.city);
+    }
+  }
 
-  onCardCityChangeHandler = async (event) => {
+  onCardLocationChangeHandler = async (location) => {
     await this.setState({
-      city: event.target.value,
+      city: location,
     });
 
-    this.props.setCardLocation(this.state.city, this.state.state);
-  };
-
-  onCardStateChangeHandler = async (selectedOption) => {
-    await this.setState({
-      state: selectedOption.value,
-    });
-
-    this.props.setCardLocation(this.state.city, this.state.state);
+    let updatedLocation = this.state.city === null ? "" : this.state.city.label;
+    let updatedGooglePlaceId = this.state.city === null ? "" : this.state.city.value.place_id;
+    
+    this.props.setCardLocation(updatedLocation, updatedGooglePlaceId);
   };
 
   render() {
     return (
       <Fragment>
-        <div className="card-form-location-fields">
+        <div className="card-form-dropdown-container">
+        <GooglePlacesAutocomplete
+          className="card-form-dropdown"
+          classNamePrefix="card-form-dropdown"
+          
+          selectProps={{
+            openMenuOnClick: false,
+            isClearable: true,
+            value: this.state.city,
+            onChange: this.onCardLocationChangeHandler,
+            placeholder:<div className="card-form-placeholder-color">Location (city, state, or address, e.g.)</div>,
+            styles:{
+              control: (base, state) => ({
+                ...base,
+                background: "#f1f1f1",
+                border: "none",
+                boxShadow: null,
+                fontWeight: 500,
+              }),
+              menu: (base) => ({
+                ...base,
+                color: "#000",
+                boxShadow: "0px 5px 0px -1px #cdcdd2",
+                borderRadius: 5,
+                border: "1px solid #cdcdd2",
+              }),
+              option: (base, state) => ({
+                ...base,
+              color: state.isSelected ? "#2ecc71" : "black",
+              backgroundColor: state.isSelected
+                ? "rgba(46, 204, 113, 0.25)"
+                : "white",
+              "&:hover": {
+                backgroundColor: "#f1f1f1",
+                cursor: "pointer",
+              },
+              "&:active": {
+                color: "#2ecc71",
+                backgroundColor: "rgba(46, 204, 113, 0.25)",
+              },
+            })
+            }
+          }}
+           />
+      </div>
+        {/* <div className="card-form-location-fields">
           <input
             className="card-form-input-location"
             name="city"
-            placeholder="City"
+            placeholder="Location"
             value={this.state.city}
             onChange={this.onCardCityChangeHandler}
           />
-          <div className="card-form-state-dropdown-container">
+          
+           <div className="card-form-state-dropdown-container">
             <Select
               classNamePrefix="card-form-dropdown"
               placeholder={<div className="card-form-placeholder-color">State</div>}
@@ -89,8 +136,8 @@ class CardFormLocationInputs extends Component {
               }
               onChange={this.onCardStateChangeHandler}
             />
-          </div>
-        </div>
+          </div> 
+        </div> */}
       </Fragment>
     );
   }

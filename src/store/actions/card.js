@@ -170,6 +170,8 @@ export const saveCard = (cardId) => {
       }
     }
 
+    // check google place id here, if local storage doesn't match state, fetch the details from google api
+
     const updateCardData = {
       id: cardData.id,
       title: cardData.title,
@@ -417,11 +419,11 @@ export const setCardTitle = (title) => {
   };
 };
 
-export const setCardLocation = (city, state) => {
+export const setCardLocation = (description, googlePlaceId) => {
   return {
     type: SET_CARD_LOCATION,
-    city: city,
-    state: state,
+    description: description,
+    googlePlaceId: googlePlaceId,
   };
 };
 
