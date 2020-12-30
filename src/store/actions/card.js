@@ -246,9 +246,19 @@ export const saveCard = (cardId) => {
 
     fetch(`${API_BASE_URL}/cards/${cardId}`, reqObj)
       .then((resp) => {
+        if (!resp.ok) {
+          resp.text().then(error => console.log(error));
+          dispatch({ type: CARD_IS_NOT_UPDATING });
+          dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
+          dispatch({ type: CARD_IS_NOT_SAVED });
+          return;
+        }
         return resp.json();
       })
       .then((data) => {
+        if (!data) {
+          return;
+        }
         if (data.errors) {
           dispatch({ type: CARD_ERRORS, errors: data.errors });
           dispatch({ type: CARD_IS_NOT_UPDATING });
