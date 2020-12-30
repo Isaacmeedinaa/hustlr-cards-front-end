@@ -1,3 +1,4 @@
+import CardLocation from "../../models/cardLocation";
 import {
   SET_CARD,
   SET_CARD_THEME_ID,
@@ -9,6 +10,7 @@ import {
   DELETE_BUSINESS_PROFILE_PICTURE,
   SET_CARD_TITLE,
   SET_CARD_LOCATION,
+  SET_FULL_CARD_LOCATION,
   SET_CARD_INDUSTRY,
   SET_CARD_DESCRIPTION,
   SET_CARD_OFFERING_TITLE,
@@ -49,6 +51,7 @@ const initialState = {
     industryId: null,
     userId: null,
     industry: {},
+    location: new CardLocation(),
     photos: [],
     offerings: [],
   },
@@ -86,6 +89,7 @@ const card = (state = initialState, action) => {
           industry: action.cardData.industry,
           photos: action.cardData.photos,
           offerings: action.cardData.offerings,
+          location: action.cardData.location
         },
         cardTheme: {
           primaryColor: action.cardTheme.primaryColor,
@@ -177,8 +181,20 @@ const card = (state = initialState, action) => {
         ...state,
         cardData: {
           ...state.cardData,
-          city: action.city,
-          state: action.state,
+          location: {
+            ...state.cardData.location,
+            description: action.description,
+            googlePlaceId: action.googlePlaceId
+          }
+        },
+      };
+
+    case SET_FULL_CARD_LOCATION:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          location: action.location
         },
       };
 

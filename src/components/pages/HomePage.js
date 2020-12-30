@@ -36,7 +36,13 @@ class HomeContainer extends Component {
           Array.isArray(localStorageCard[key]) ||
           typeof localStorageCard[key] === "object"
         ) {
-          if (key === "industry") {
+          if (key === 'location') {
+            if (localStorageCard[key]?.googlePlaceId !== this.props.cardData[key]?.googlePlaceId) {
+              this.props.cardIsNotSaved();
+              return;
+            }
+          }
+          else if (key === "industry") {
             if (localStorageCard[key]?.id !== this.props.cardData[key]?.id) {
               this.props.cardIsNotSaved();
               return;
