@@ -3,8 +3,7 @@ class PublicCard {
     id,
     title,
     description,
-    city,
-    state,
+    location,
     email,
     phoneNumber,
     imgUrl,
@@ -29,8 +28,7 @@ class PublicCard {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.city = city;
-    this.state = state;
+    this.location = location;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.imgUrl = imgUrl;

@@ -7,15 +7,12 @@ import "../../../constants/colors.css";
 import "./PublicCardUI.css";
 
 const PublicCardLocation = (props) => {
-  if (!props.city || !props.state || props.city === "" || props.state === "") {
+  console.log(props.location)
+  if (!props.location || !props.location.description || props.location.description === "") {
     return null;
   }
 
-  const stateView = !props.state
-    ? null
-    : !props.city
-    ? props.state
-    : ", " + props.state;
+  
 
   return (
     <div className="public-card-location-container">
@@ -27,7 +24,7 @@ const PublicCardLocation = (props) => {
         style={{ color: props.primaryColor }}
         className="public-card-location-text"
       >
-        {props.city} {stateView}
+        {props.location.description}
       </p>
     </div>
   );
