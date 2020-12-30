@@ -278,7 +278,12 @@ export const saveCard = (cardId) => {
         dispatch({ type: CARD_IS_SAVED });
         dispatch({ type: CARD_NO_ERRORS });
         dispatch({ type: CARD_IS_NOT_UPDATING });
-      });
+      }).catch((err) => {
+          dispatch({ type: CARD_IS_NOT_UPDATING });
+          dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
+          dispatch({ type: CARD_IS_NOT_SAVED });
+          console.log(err);
+      });;
   };
 };
 
