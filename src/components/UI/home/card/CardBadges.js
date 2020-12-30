@@ -18,15 +18,13 @@ const CardBadges = (props) => {
     );
 
   const locationView =
-    (!props.cardData.city || props.cardData.city.length === 0) &&
-    (!props.cardData.state || props.cardData.state.length === 0) ? null : (
+    (!props.cardData?.location?.description || props.cardData?.location?.description.trim().length === 0) ? null : (
       <div
         className="card-business-badge"
         style={{ backgroundColor: props.cardTheme.transparentColor }}
       >
         <CardLocation
-          city={props.cardData.city}
-          state={props.cardData.state}
+          location={props.cardData.location}
           primaryColor={props.cardTheme.primaryColor}
           transparentColor={props.cardTheme.transparentColor}
         />

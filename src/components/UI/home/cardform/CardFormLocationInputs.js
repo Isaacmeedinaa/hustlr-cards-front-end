@@ -9,28 +9,30 @@ import "./CardFormUI.css";
 
 class CardFormLocationInputs extends Component {
   state = {
-    city: this.props.city,
-    state: this.props.state
+    locationDropdown: null,
+    location: this.props.location
   };
 
   componentDidMount() {
-    if(this.state.city && this.state.city.length > 0) {
+    console.log(this.state.locationDropdown)
+    // As soon as the component mounts, set the dropdown value to the existing location
+    if(this.props.location?.description && this.props.location?.description.trim().length  > 0) {
       this.setState({
-        city : { label: this.state.city, value: this.state.city }
+        locationDropdown : { label: this.props.location.description, value: this.props.location.googlePlaceId }
       })
-      console.log(this.state.city);
     }
   }
 
-  onCardLocationChangeHandler = async (location) => {
+  onCardLocationChangeHandler = async (selectedLocation) => {
     await this.setState({
-      city: location,
+      locationDropdown: selectedLocation,
     });
 
-    let updatedLocation = this.state.city === null ? "" : this.state.city.label;
-    let updatedGooglePlaceId = this.state.city === null ? "" : this.state.city.value.place_id;
+    // React Select component returns a null object when it is cleared, so set description and googlePlaceId to empty string in that case
+    let updatedLocationDescription = selectedLocation === null ? "" : selectedLocation.label;
+    let updatedGooglePlaceId = selectedLocation === null ? "" : selectedLocation.value.place_id;
     
-    this.props.setCardLocation(updatedLocation, updatedGooglePlaceId);
+    this.props.setCardLocation(updatedLocationDescription, updatedGooglePlaceId);
   };
 
   render() {
@@ -40,11 +42,10 @@ class CardFormLocationInputs extends Component {
         <GooglePlacesAutocomplete
           className="card-form-dropdown"
           classNamePrefix="card-form-dropdown"
-          
           selectProps={{
             openMenuOnClick: false,
             isClearable: true,
-            value: this.state.city,
+            value: this.state.locationDropdown,
             onChange: this.onCardLocationChangeHandler,
             placeholder:<div className="card-form-placeholder-color">Location (city, state, or address, e.g.)</div>,
             styles:{
@@ -81,63 +82,6 @@ class CardFormLocationInputs extends Component {
           }}
            />
       </div>
-        {/* <div className="card-form-location-fields">
-          <input
-            className="card-form-input-location"
-            name="city"
-            placeholder="Location"
-            value={this.state.city}
-            onChange={this.onCardCityChangeHandler}
-          />
-          
-           <div className="card-form-state-dropdown-container">
-            <Select
-              classNamePrefix="card-form-dropdown"
-              placeholder={<div className="card-form-placeholder-color">State</div>}
-              styles={{
-                control: (base, state) => ({
-                  ...base,
-                  background: "#f1f1f1",
-                  border: "none",
-                  boxShadow: null,
-                  fontWeight: 500,
-                  height: 40,
-                }),
-                menu: (base) => ({
-                  ...base,
-                  color: "#000",
-                  boxShadow: "0px 5px 0px -1px #cdcdd2",
-                  borderRadius: 5,
-                  border: "1px solid #cdcdd2",
-                }),
-                option: (base, state) => ({
-                  ...base,
-                  color: state.isSelected ? "#2ecc71" : "black",
-                  backgroundColor: state.isSelected
-                    ? "rgba(46, 204, 113, 0.25)"
-                    : "white",
-                  "&:hover": {
-                    backgroundColor: "#f1f1f1",
-                    cursor: "pointer",
-                  },
-                  "&:active": {
-                    color: "#2ecc71",
-                    backgroundColor: "rgba(46, 204, 113, 0.25)",
-                  },
-                }),
-              }}
-              options={this.dropdownStates}
-              value={
-                !this.props.state
-                  ? null
-                  : this.dropdownStates.filter(
-                      (currState) => currState.value === this.state.state
-                    )
-              }
-              onChange={this.onCardStateChangeHandler}
-            />
-          </div> 
-        </div> */}
       </Fragment>
     );
   }
@@ -145,14 +89,13 @@ class CardFormLocationInputs extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    city: state.card.cardData.city,
-    state: state.card.cardData.state,
+    location: state.card.cardData.location
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setCardLocation: (city, state) => dispatch(setCardLocation(city, state)),
+    setCardLocation: (locationDescription, updatedGooglePlaceId) => dispatch(setCardLocation(locationDescription, updatedGooglePlaceId)),
   };
 };
 

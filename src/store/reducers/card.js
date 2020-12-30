@@ -10,6 +10,7 @@ import {
   DELETE_BUSINESS_PROFILE_PICTURE,
   SET_CARD_TITLE,
   SET_CARD_LOCATION,
+  SET_FULL_CARD_LOCATION,
   SET_CARD_INDUSTRY,
   SET_CARD_DESCRIPTION,
   SET_CARD_OFFERING_TITLE,
@@ -185,6 +186,15 @@ const card = (state = initialState, action) => {
             description: action.description,
             googlePlaceId: action.googlePlaceId
           }
+        },
+      };
+
+    case SET_FULL_CARD_LOCATION:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          location: action.location
         },
       };
 
