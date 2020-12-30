@@ -20,6 +20,8 @@ class PublicCard extends Component {
       return null;
     }
 
+    console.log(this.props.publicCard)
+
     return (
       <Fragment>
         {!this.props.publicCard.isPublic ? (
@@ -47,8 +49,7 @@ class PublicCard extends Component {
               />
               <PublicCardBadges
                 industry={this.props.publicCard.industry}
-                city={this.props.publicCard.city}
-                state={this.props.publicCard.state}
+                location={this.props.publicCard.location}
                 primaryColor={this.props.publicCard.primaryColor}
                 transparentColor={this.props.publicCard.transparentColor}
               />

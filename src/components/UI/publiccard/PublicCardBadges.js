@@ -21,15 +21,13 @@ const PublicCardBadges = (props) => {
     );
 
   const locationView =
-    (!props.city || props.city.length === 0) &&
-    (!props.state || props.state.length === 0) ? null : (
+    (!props.location?.description || props.location.description.trim().length === 0)  ? null : (
       <div
         className="public-card-badge"
         style={{ backgroundColor: props.transparentColor }}
       >
         <PublicCardLocation
-          city={props.city}
-          state={props.state}
+          location={props.location}
           primaryColor={props.primaryColor}
           transparentColor={props.transparentColor}
         />
