@@ -1,4 +1,5 @@
 import Card from "../../models/card";
+import { fetchGoogleLocationDetails, extractGoogleLocationDetails} from '../../services/GooglePlaces'
 import { API_BASE_URL } from "../../constants/urls";
 
 import { CARD_IS_LOADING, CARD_IS_NOT_LOADING } from "./loaders/cardLoader";
@@ -64,6 +65,7 @@ import {
 } from "./loaders/offeringLoader";
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
+import CardLocation from "../../models/cardLocation";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -78,6 +80,7 @@ export const DELETE_BUSINESS_PROFILE_PICTURE =
   "DELETE_BUSINESS_PROFILE_PICTURE";
 export const SET_CARD_TITLE = "SET_CARD_TITLE";
 export const SET_CARD_LOCATION = "SET_CARD_LOCATION";
+export const SET_FULL_CARD_LOCATION = "SET_FULL_CARD_LOCATION";
 export const SET_CARD_INDUSTRY = "SET_CARD_INDUSTRY";
 export const SET_CARD_DESCRIPTION = "SET_CARD_DESCRIPTION";
 export const SET_CARD_OFFERING_TITLE = "SET_CARD_OFFERING_TITLE";
@@ -95,7 +98,7 @@ export const DELETE_OFFERING_PICTURE = "DELETE_OFFERING_PICTURE";
 export const SET_CARD_PATH = "SET_CARD_PATH";
 
 export const fetchCard = (userId) => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { themes } = getState();
 
     dispatch({ type: CARD_IS_LOADING });
@@ -112,8 +115,7 @@ export const fetchCard = (userId) => {
           card.id,
           card.title,
           card.description,
-          card.city,
-          card.state,
+          card.location,
           card.email,
           card.phoneNumber,
           card.imgUrl,
@@ -170,12 +172,44 @@ export const saveCard = (cardId) => {
       }
     }
 
+    // The location description is stored in the redux state. Let's get the description from there and fill it in with the details from the google api
+    let updatedLocation = cardData.location;
+
+    let didNotHaveALocationSaved = !localStorageCard.location; // the local storage card location will be null if the card does not have a location yet.
+    let hasNotSetLocation = !cardData.location;                // the redux location will be null if a location has never been saved and the user still hasn't selected one
+    let reduxStateContainsGooglePlaceId = cardData.location?.googlePlaceId; // This shows that a user has selected a new location
+    let isCreatingLocationForFirstTime = didNotHaveALocationSaved && reduxStateContainsGooglePlaceId;
+
+    let hasChangedLocation = cardData.location?.googlePlaceId !== localStorageCard.location?.googlePlaceId // This will be true if the user selects a new location or clears an existing one
+
+    // Cannot save the card unless there is a location. So set one if the user has not ever created one and is trying to save without it.
+    if (didNotHaveALocationSaved && hasNotSetLocation) {
+      updatedLocation = new CardLocation(); // updatedLocation === null so need to add the missing properties
+      updatedLocation.cardId = cardData.id;
+    }
+
+    // Need these two cases because cannot check just 'hasChangedLocation' since it requires there to have been a location previously saved
+    if (isCreatingLocationForFirstTime || hasChangedLocation) {
+      // When the location is cleared, only the description is cleared. We must clear the other fields but preserve the id and cardId fields
+      if (cardData.location.googlePlaceId.length === 0) {
+        let locationId = cardData.location.id;
+        let cardId = cardData.location.cardId;
+        updatedLocation = new CardLocation();
+        updatedLocation.id = locationId;
+        updatedLocation.cardId = cardId;
+      }
+      else {
+        const googleLocationDetails = await fetchGoogleLocationDetails(cardData.location.googlePlaceId);
+        updatedLocation = extractGoogleLocationDetails(googleLocationDetails, updatedLocation, cardData.location.googlePlaceId);
+      }
+    }
+
+
     const updateCardData = {
       id: cardData.id,
       title: cardData.title,
       description: cardData.description,
-      city: cardData.city,
-      state: cardData.state,
+      location: updatedLocation,
       email: cardData.email,
       phoneNumber: cardData.phoneNumber,
       imgUrl: cardData.imgUrl,
@@ -224,6 +258,11 @@ export const saveCard = (cardId) => {
         }
         localStorage.removeItem("card");
         localStorage.setItem("card", JSON.stringify(data));
+
+        // Set the redux state when we create a location for the first time 
+        if (didNotHaveALocationSaved) {
+          dispatch(setFullCardLocation(data.location));
+        }
 
         dispatch({ type: CARD_SAVED_SUCCESSFULLY });
         dispatch({ type: CARD_IS_SAVED });
@@ -417,11 +456,18 @@ export const setCardTitle = (title) => {
   };
 };
 
-export const setCardLocation = (city, state) => {
+export const setCardLocation = (description, googlePlaceId) => {
   return {
     type: SET_CARD_LOCATION,
-    city: city,
-    state: state,
+    description: description,
+    googlePlaceId: googlePlaceId,
+  };
+};
+
+export const setFullCardLocation = (location) => {
+  return {
+    type: SET_FULL_CARD_LOCATION,
+    location: location,
   };
 };
 
