@@ -14,15 +14,26 @@ class CardFormIndustrySelect extends Component {
   };
 
   onCardIndustryChangeHandler = async (event) => {
-    const icon = this.props.dropdownIndustries.find(
-      (dropdown) => dropdown.label === event.label
-    ).icon;
+
+    let selectedId = null;
+    let selectedTitle = null;
+    let selectedIcon = null;
+
+    if (event !== null && event !== undefined) {
+
+      selectedIcon = this.props.dropdownIndustries.find(
+        (dropdown) => dropdown.label === event.label
+      ).icon;
+
+      selectedId = parseInt(event.value);
+      selectedTitle = event.label;
+    }
 
     await this.setState({
       industry: {
-        id: parseInt(event.value),
-        title: event.label,
-        icon: icon,
+        id: selectedId,
+        title: selectedTitle,
+        icon: selectedIcon,
       },
     });
 
@@ -35,6 +46,7 @@ class CardFormIndustrySelect extends Component {
         <Select
           className="card-form-dropdown"
           classNamePrefix="card-form-dropdown"
+          isClearable={true}
           styles={{
             control: (base, state) => ({
               ...base,
