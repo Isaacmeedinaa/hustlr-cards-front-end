@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-
 import { connect } from "react-redux";
 import {
   uploadBusinessProfilePicture,
@@ -10,6 +9,8 @@ import Loader from "react-loader-spinner";
 
 import $ from "jquery";
 
+import CardFormImageCropper from "./CardFormImageCropper";
+
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
 
@@ -17,6 +18,8 @@ class CardFormImageSelector extends Component {
   state = {
     imgUrl: this.props.imgUrl,
     cardId: this.props.cardId,
+    blob: null,
+    inputImg: "",
   };
 
   componentDidUpdate(prevProps) {
@@ -31,18 +34,33 @@ class CardFormImageSelector extends Component {
     $(".ui.dropdown").dropdown();
   }
 
+  getBlob = async (blob) => {
+    await this.setState({ blob: blob });
+  };
+
   onImageChangeHandler = (event) => {
     const reqImgData = event.target.files[0];
-    const cardId = this.state.cardId;
 
     let reader = new FileReader();
 
+    reader.addEventListener(
+      "load",
+      async () => {
+        await this.setState({ inputImg: reader.result });
+      },
+      false
+    );
+
     if (reqImgData) {
       reader.readAsDataURL(reqImgData);
-      this.props.uploadBusinessProfilePicture(reqImgData, cardId);
-      event.target.value = null;
     }
-    
+  };
+
+  onUploadImageClick = async () => {
+    const cardId = this.state.cardId;
+
+    this.props.uploadBusinessProfilePicture(this.state.blob, cardId);
+    await this.setState({ inputImg: "" });
   };
 
   render() {
@@ -60,7 +78,10 @@ class CardFormImageSelector extends Component {
           <span className="card-form-button-text">Edit Profile Photo</span>
           <div className="menu" id="card-form-edit-image-dropdown">
             <div className="item">
-              <i className="cloud upload alternate icon" style={{color: '#2ecc71'}}></i>
+              <i
+                className="cloud upload alternate icon"
+                style={{ color: "#2ecc71" }}
+              ></i>
               Upload New Profile Photo
               <input
                 className="file-upload"
@@ -75,11 +96,28 @@ class CardFormImageSelector extends Component {
                 className="item"
                 onClick={() => this.props.deleteBusinessImage(this.props.imgId)}
               >
-                <i className="delete icon" style={{color: '#2ecc71'}}></i> Remove Current Profile Photo
+                <i className="delete icon" style={{ color: "#2ecc71" }}></i>{" "}
+                Remove Current Profile Photo
               </div>
             )}
           </div>
         </div>
+        {this.state.inputImg && (
+          <Fragment>
+            <CardFormImageCropper
+              getBlob={this.getBlob}
+              inputImg={this.state.inputImg}
+            />
+            <label
+              onClick={this.onUploadImageClick}
+              className="card-form-button"
+            >
+              <span className="card-form-button-text">
+                Crop and Upload Image
+              </span>
+            </label>
+          </Fragment>
+        )}
       </Fragment>
     );
   }
