@@ -154,6 +154,34 @@
   cursor: pointer;
 }
 
+.card-form-image-cropper {
+  margin-top: 30px;
+  position: relative;
+  height: 200px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.reactEasyCrop_Container {
+  border-radius: 5px !important;
+}
+
+.card-form-image-cropper-controls {
+  margin-top: 15px;
+  height: auto;
+  width: 100%;
+}
+
+.range-slider--original::-webkit-slider-thumb {
+  background: #2ecc71 !important;
+}
+.range-slider--original::-moz-range-thumb {
+  background: #2ecc71 !important;
+}
+.range-slider--original::-ms-thumb {
+  background: #2ecc71 !important;
+}
+
 .card-form-input {
   margin-top: 30px;
   width: 100%;
