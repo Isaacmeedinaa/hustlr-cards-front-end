@@ -3,7 +3,7 @@ import React, { Component, Fragment } from "react";
 import Loader from "react-loader-spinner";
 
 import { connect } from "react-redux";
-import { uploadGalleryImage } from "../../../../store/actions/card";
+import { uploadGalleryImages } from "../../../../store/actions/card";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
@@ -14,16 +14,12 @@ class CardFormAddImageButton extends Component {
   };
 
   onImageChangeHandler = (event) => {
-    const reqImgData = event.target.files[0];
     const cardId = this.state.cardId;
+    const images = event.target.files;
 
-    let reader = new FileReader();
+    this.props.uploadGalleryImages(images, cardId);
 
-    if (reqImgData) {
-      reader.readAsDataURL(reqImgData);
-      this.props.uploadGalleryImage(reqImgData, cardId);
-      event.target.value = null;
-    }
+    event.target.value = null;
   };
 
   render() {
@@ -46,6 +42,7 @@ class CardFormAddImageButton extends Component {
           id="businessGalleryImgSelector"
           onChange={this.onImageChangeHandler}
           type="file"
+          multiple={true}
           accept="image/x-png,image/jpeg"
         />
       </Fragment>
@@ -62,8 +59,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadGalleryImage: (reqImgData, cardId) =>
-      dispatch(uploadGalleryImage(reqImgData, cardId)),
+    uploadGalleryImages: (images, cardId) =>
+      dispatch(uploadGalleryImages(images, cardId)),
   };
 };
 
