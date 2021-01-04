@@ -648,52 +648,6 @@ export const setCardSocialMediaLinks = (
   };
 };
 
-export const uploadGalleryImage = (reqImgData, cardId) => {
-  return (dispatch) => {
-    const body = new FormData();
-    body.append("CardId", cardId);
-    body.append("File", reqImgData);
-
-    const userToken = localStorage.getItem("userToken");
-
-    const reqObj = {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-        Accepts: "application/json",
-      },
-      body: body,
-    };
-
-    dispatch({ type: CARD_GALLERY_IMAGE_IS_LOADING });
-    fetch(`${API_BASE_URL}/photos`, reqObj)
-      .then((resp) => {
-        if (!resp.ok) {
-          resp.json().then((error) => {
-            dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-            dispatch({ type: CARD_ERRORS, errors: [error] });
-            dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
-          });
-          return;
-        }
-        return resp.json();
-      })
-      .then((data) => {
-        if (!data) {
-          return;
-        }
-        dispatch({ type: CARD_NO_ERRORS });
-        dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
-        dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-        dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
-      })
-      .catch((err) => {
-        dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-        dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
-      });
-  };
-};
-
 export const uploadGalleryImages = (images, cardId) => {
   return (dispatch) => {
     const userToken = localStorage.getItem("userToken");
@@ -772,53 +726,59 @@ export const deleteGalleryImage = (photoId) => {
   };
 };
 
-export const uploadOfferingImage = (reqImgData, offeringId) => {
+export const uploadOfferingImages = (images, offeringId) => {
   return (dispatch) => {
-    const body = new FormData();
-    body.append("OfferingId", offeringId);
-    body.append("File", reqImgData);
-    console.log(offeringId);
+    console.log(images);
     const userToken = localStorage.getItem("userToken");
 
-    const reqObj = {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-        Accepts: "application/json",
-      },
-      body: body,
-    };
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      console.log(image);
 
-    dispatch({ type: OFFERING_IMAGE_IS_LOADING, offeringId: offeringId });
-    fetch(`${API_BASE_URL}/photos/offering`, reqObj)
-      .then((resp) => {
-        dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
-        if (!resp.ok) {
-          resp.json().then((error) => {
-            dispatch({ type: CARD_ERRORS, errors: [error] });
-            dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
+      const body = new FormData();
+      body.append("OfferingId", offeringId);
+      body.append("File", image);
+
+      const reqObj = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          Accepts: "application/json",
+        },
+        body: body,
+      };
+
+      dispatch({ type: OFFERING_IMAGE_IS_LOADING, offeringId: offeringId });
+      fetch(`${API_BASE_URL}/photos/offering`, reqObj)
+        .then((resp) => {
+          dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
+          if (!resp.ok) {
+            resp.json().then((error) => {
+              dispatch({ type: CARD_ERRORS, errors: [error] });
+              dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
+            });
+            return;
+          }
+          dispatch({ type: OFFERING_IMAGE_UPLOADED_SUCCESSFULLY });
+          return resp.json();
+        })
+        .then((data) => {
+          if (!data) {
+            return;
+          }
+          dispatch({ type: CARD_NO_ERRORS });
+          dispatch({
+            type: UPLOAD_OFFERING_PICTURE,
+            photo: data,
+            offeringId: offeringId,
           });
-          return;
-        }
-        dispatch({ type: OFFERING_IMAGE_UPLOADED_SUCCESSFULLY });
-        return resp.json();
-      })
-      .then((data) => {
-        if (!data) {
-          return;
-        }
-        dispatch({ type: CARD_NO_ERRORS });
-        dispatch({
-          type: UPLOAD_OFFERING_PICTURE,
-          photo: data,
-          offeringId: offeringId,
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
+          dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
         });
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
-        dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
-      });
+    }
   };
 };
 
