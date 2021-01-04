@@ -5,6 +5,7 @@ import { userAutoLogin } from "../../store/actions/user";
 import { cardIsSaved, cardIsNotSaved } from "../../store/actions/cardSaved";
 import { fetchIndustries } from "../../store/actions/industries";
 
+import CardFormImageCropperModal from "../UI/home/cardform/CardFormImageCropperModal";
 import SideToolbar from "../UI/SideToolbar";
 import TopToolbar from "../UI/home/TopToolbar";
 import BottomToolbar from "../UI/BottomToolbar";
@@ -17,7 +18,6 @@ import "../../constants/colors.css";
 import "./pages.css";
 
 class HomeContainer extends Component {
-
   componentDidMount() {
     if (this.props.industries.length === 0) {
       this.props.fetchIndustries();
@@ -25,7 +25,22 @@ class HomeContainer extends Component {
   }
 
   componentDidUpdate() {
-    const keysToCompare = ['title', 'description', 'city', 'state', 'email', 'phoneNumber', 'pathToCard', 'isPublic', 'facebookLink','instagramLink','snapchatLink','twitterLink','themeId','industryId'];
+    const keysToCompare = [
+      "title",
+      "description",
+      "city",
+      "state",
+      "email",
+      "phoneNumber",
+      "pathToCard",
+      "isPublic",
+      "facebookLink",
+      "instagramLink",
+      "snapchatLink",
+      "twitterLink",
+      "themeId",
+      "industryId",
+    ];
     const localStorageCard = JSON.parse(localStorage.getItem("card"));
 
     if (this.props.cardData.id === null) return;
@@ -36,13 +51,15 @@ class HomeContainer extends Component {
           Array.isArray(localStorageCard[key]) ||
           typeof localStorageCard[key] === "object"
         ) {
-          if (key === 'location') {
-            if (localStorageCard[key]?.googlePlaceId !== this.props.cardData[key]?.googlePlaceId) {
+          if (key === "location") {
+            if (
+              localStorageCard[key]?.googlePlaceId !==
+              this.props.cardData[key]?.googlePlaceId
+            ) {
               this.props.cardIsNotSaved();
               return;
             }
-          }
-          else if (key === "industry") {
+          } else if (key === "industry") {
             if (localStorageCard[key]?.id !== this.props.cardData[key]?.id) {
               this.props.cardIsNotSaved();
               return;
@@ -70,7 +87,10 @@ class HomeContainer extends Component {
           } else {
             continue;
           }
-        } else if ((localStorageCard[key] !== this.props.cardData[key]) && keysToCompare.indexOf(key) > -1) {
+        } else if (
+          localStorageCard[key] !== this.props.cardData[key] &&
+          keysToCompare.indexOf(key) > -1
+        ) {
           this.props.cardIsNotSaved();
           return;
         }
@@ -90,6 +110,9 @@ class HomeContainer extends Component {
 
     return (
       <Fragment>
+        {this.props.imageCropperModal.openModal ? (
+          <CardFormImageCropperModal />
+        ) : null}
         <TopToolbar />
         <div className="grid-container-home">
           <SideToolbar
@@ -125,6 +148,7 @@ const mapStateToProps = (state) => {
     cardLoader: state.cardLoader,
     industries: state.industries.dropdownIndustries,
     industriesLoader: state.industriesLoader,
+    imageCropperModal: state.imageCropperModal,
   };
 };
 
@@ -133,7 +157,7 @@ const mapDispatchToProps = (dispatch) => {
     userAutoLogin: (history) => dispatch(userAutoLogin(history)),
     cardIsSaved: () => dispatch(cardIsSaved()),
     cardIsNotSaved: () => dispatch(cardIsNotSaved()),
-    fetchIndustries: () => dispatch(fetchIndustries())
+    fetchIndustries: () => dispatch(fetchIndustries()),
   };
 };
 
