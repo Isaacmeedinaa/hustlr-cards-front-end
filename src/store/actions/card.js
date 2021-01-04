@@ -1,5 +1,8 @@
 import Card from "../../models/card";
-import { fetchGoogleLocationDetails, extractGoogleLocationDetails} from '../../services/GooglePlaces'
+import {
+  fetchGoogleLocationDetails,
+  extractGoogleLocationDetails,
+} from "../../services/GooglePlaces";
 import { API_BASE_URL } from "../../constants/urls";
 
 import { CARD_IS_LOADING, CARD_IS_NOT_LOADING } from "./loaders/cardLoader";
@@ -21,7 +24,7 @@ import {
   OFFERING_IMAGE_UPLOADED_SUCCESSFULLY,
   OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY,
   OFFERING_IMAGE_DELETED_SUCCESSFULLY,
-  OFFERING_IMAGE_DELETED_UNSUCCESSFULLY
+  OFFERING_IMAGE_DELETED_UNSUCCESSFULLY,
 } from "./notifications/offeringImageNotifications";
 import {
   GALLERY_IMAGE_UPLOADED_SUCCESSFULLY,
@@ -55,13 +58,13 @@ import {
 } from "./loaders/cardGalleryImageLoader";
 import {
   OFFERING_IMAGE_IS_LOADING,
-  OFFERING_IMAGE_IS_NOT_LOADING
-} from "./loaders/offeringImageLoader"
+  OFFERING_IMAGE_IS_NOT_LOADING,
+} from "./loaders/offeringImageLoader";
 import {
   OFFERING_IS_CREATING_LOADER,
   OFFERING_IS_NOT_CREATING_LOADER,
   OFFERING_IS_DELETING_LOADER,
-  OFFERING_IS_NOT_DELETING_LOADER
+  OFFERING_IS_NOT_DELETING_LOADER,
 } from "./loaders/offeringLoader";
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
@@ -176,11 +179,14 @@ export const saveCard = (cardId) => {
     let updatedLocation = cardData.location;
 
     let didNotHaveALocationSaved = !localStorageCard.location; // the local storage card location will be null if the card does not have a location yet.
-    let hasNotSetLocation = !cardData.location;                // the redux location will be null if a location has never been saved and the user still hasn't selected one
+    let hasNotSetLocation = !cardData.location; // the redux location will be null if a location has never been saved and the user still hasn't selected one
     let reduxStateContainsGooglePlaceId = cardData.location?.googlePlaceId; // This shows that a user has selected a new location
-    let isCreatingLocationForFirstTime = didNotHaveALocationSaved && reduxStateContainsGooglePlaceId;
+    let isCreatingLocationForFirstTime =
+      didNotHaveALocationSaved && reduxStateContainsGooglePlaceId;
 
-    let hasChangedLocation = cardData.location?.googlePlaceId !== localStorageCard.location?.googlePlaceId // This will be true if the user selects a new location or clears an existing one
+    let hasChangedLocation =
+      cardData.location?.googlePlaceId !==
+      localStorageCard.location?.googlePlaceId; // This will be true if the user selects a new location or clears an existing one
 
     // Cannot save the card unless there is a location. So set one if the user has not ever created one and is trying to save without it.
     if (didNotHaveALocationSaved && hasNotSetLocation) {
@@ -197,13 +203,17 @@ export const saveCard = (cardId) => {
         updatedLocation = new CardLocation();
         updatedLocation.id = locationId;
         updatedLocation.cardId = cardId;
-      }
-      else {
-        const googleLocationDetails = await fetchGoogleLocationDetails(cardData.location.googlePlaceId);
-        updatedLocation = extractGoogleLocationDetails(googleLocationDetails, updatedLocation, cardData.location.googlePlaceId);
+      } else {
+        const googleLocationDetails = await fetchGoogleLocationDetails(
+          cardData.location.googlePlaceId
+        );
+        updatedLocation = extractGoogleLocationDetails(
+          googleLocationDetails,
+          updatedLocation,
+          cardData.location.googlePlaceId
+        );
       }
     }
-
 
     const updateCardData = {
       id: cardData.id,
@@ -262,7 +272,7 @@ export const saveCard = (cardId) => {
         localStorage.removeItem("card");
         localStorage.setItem("card", JSON.stringify(data));
 
-        // Set the redux state when we create a location for the first time 
+        // Set the redux state when we create a location for the first time
         if (didNotHaveALocationSaved) {
           dispatch(setFullCardLocation(data.location));
         }
@@ -271,12 +281,13 @@ export const saveCard = (cardId) => {
         dispatch({ type: CARD_IS_SAVED });
         dispatch({ type: CARD_NO_ERRORS });
         dispatch({ type: CARD_IS_NOT_UPDATING });
-      }).catch((err) => {
-          dispatch({ type: CARD_IS_NOT_UPDATING });
-          dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
-          dispatch({ type: CARD_IS_NOT_SAVED });
-          console.log(err);
-      });;
+      })
+      .catch((err) => {
+        dispatch({ type: CARD_IS_NOT_UPDATING });
+        dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
+        dispatch({ type: CARD_IS_NOT_SAVED });
+        console.log(err);
+      });
   };
 };
 
@@ -542,11 +553,11 @@ export const createOffering = (cardId) => {
       body: JSON.stringify(offeringData),
     };
 
-    dispatch({type: OFFERING_IS_CREATING_LOADER});
+    dispatch({ type: OFFERING_IS_CREATING_LOADER });
     fetch(`${API_BASE_URL}/offerings`, reqObj)
       .then((resp) => resp.json())
       .then((offering) => {
-        dispatch({type: OFFERING_IS_NOT_CREATING_LOADER});
+        dispatch({ type: OFFERING_IS_NOT_CREATING_LOADER });
         // MUST add new offering to local storage card offerings array
         const localStorageCard = JSON.parse(localStorage.getItem("card"));
         localStorageCard.offerings.push(offering);
@@ -557,7 +568,7 @@ export const createOffering = (cardId) => {
         dispatch({ type: OFFERING_CREATED_SUCCESSFULLY });
       })
       .catch((err) => {
-        dispatch({type: OFFERING_IS_NOT_CREATING_LOADER});
+        dispatch({ type: OFFERING_IS_NOT_CREATING_LOADER });
         dispatch({ type: OFFERING_CREATED_UNSUCCESSFULLY });
         console.log(err);
       });
@@ -582,11 +593,11 @@ export const deleteOffering = (id, index) => {
       body: JSON.stringify(offeringData),
     };
 
-    dispatch({type: OFFERING_IS_DELETING_LOADER, offeringId: id});
+    dispatch({ type: OFFERING_IS_DELETING_LOADER, offeringId: id });
     fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
       .then(() => {})
       .then(() => {
-        dispatch({type: OFFERING_IS_NOT_DELETING_LOADER});
+        dispatch({ type: OFFERING_IS_NOT_DELETING_LOADER });
         // MUST remove offering from local storage card offerings array
         const localStorageCard = JSON.parse(localStorage.getItem("card"));
         let newOfferings = localStorageCard.offerings.filter(
@@ -601,7 +612,7 @@ export const deleteOffering = (id, index) => {
         dispatch({ type: OFFERING_DELETED_SUCCESSFULLY });
       })
       .catch((err) => {
-        dispatch({type: OFFERING_IS_NOT_DELETING_LOADER});
+        dispatch({ type: OFFERING_IS_NOT_DELETING_LOADER });
         dispatch({ type: OFFERING_DELETED_UNSUCCESSFULLY });
         console.log(err);
       });
@@ -658,29 +669,78 @@ export const uploadGalleryImage = (reqImgData, cardId) => {
     fetch(`${API_BASE_URL}/photos`, reqObj)
       .then((resp) => {
         if (!resp.ok) {
-        resp.json().then((error) => {
-          dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-          dispatch({ type: CARD_ERRORS, errors: [error] });
-          dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
-        });
-        return;
-      }
-      return resp.json();
-    })
-    .then((data) => {
-      if (!data) {
-        return;
-      }
-      dispatch({ type: CARD_NO_ERRORS });
-      dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
-      dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-      dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
+          resp.json().then((error) => {
+            dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+            dispatch({ type: CARD_ERRORS, errors: [error] });
+            dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
+          });
+          return;
+        }
+        return resp.json();
+      })
+      .then((data) => {
+        if (!data) {
+          return;
+        }
+        dispatch({ type: CARD_NO_ERRORS });
+        dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
+        dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+        dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
       })
       .catch((err) => {
-        console.log(err);
         dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
         dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
       });
+  };
+};
+
+export const uploadGalleryImages = (images, cardId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+
+      const body = new FormData();
+      body.append("CardId", cardId);
+      body.append("File", image);
+
+      const reqObj = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          Accepts: "application/json",
+        },
+        body: body,
+      };
+
+      dispatch({ type: CARD_GALLERY_IMAGE_IS_LOADING });
+      fetch(`${API_BASE_URL}/photos`, reqObj)
+        .then((resp) => {
+          if (!resp.ok) {
+            resp.json().then((error) => {
+              dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+              dispatch({ type: CARD_ERRORS, errors: [error] });
+              dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
+            });
+            return;
+          }
+          return resp.json();
+        })
+        .then((data) => {
+          if (!data) {
+            return;
+          }
+          dispatch({ type: CARD_NO_ERRORS });
+          dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
+          dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+          dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
+        })
+        .catch((err) => {
+          dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
+          dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
+        });
+    }
   };
 };
 
@@ -717,7 +777,7 @@ export const uploadOfferingImage = (reqImgData, offeringId) => {
     const body = new FormData();
     body.append("OfferingId", offeringId);
     body.append("File", reqImgData);
-    console.log(offeringId)
+    console.log(offeringId);
     const userToken = localStorage.getItem("userToken");
 
     const reqObj = {
@@ -748,7 +808,11 @@ export const uploadOfferingImage = (reqImgData, offeringId) => {
           return;
         }
         dispatch({ type: CARD_NO_ERRORS });
-        dispatch({ type: UPLOAD_OFFERING_PICTURE, photo: data, offeringId: offeringId });
+        dispatch({
+          type: UPLOAD_OFFERING_PICTURE,
+          photo: data,
+          offeringId: offeringId,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -774,10 +838,13 @@ export const deleteOfferingImage = (photoId, offeringId) => {
       .then((resp) => {
         dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
         if (resp.ok) {
-          dispatch({ type: DELETE_OFFERING_PICTURE, photoId: photoId, offeringId: offeringId });
+          dispatch({
+            type: DELETE_OFFERING_PICTURE,
+            photoId: photoId,
+            offeringId: offeringId,
+          });
           dispatch({ type: OFFERING_IMAGE_DELETED_SUCCESSFULLY });
-        }
-        else {
+        } else {
           dispatch({ type: OFFERING_IMAGE_DELETED_UNSUCCESSFULLY });
         }
       })
