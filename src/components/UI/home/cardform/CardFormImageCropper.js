@@ -2,8 +2,10 @@ import React, { useState, Fragment } from "react";
 import Cropper from "react-easy-crop";
 import RangeSlider from "react-bootstrap-range-slider";
 
-import { getCroppedImg } from "./cropper/businessCropImage";
+import { getCroppedImg } from "../../../../constants/cropper/businessCropImage";
 
+import "../../../../constants/colors.css";
+import "./CardFormUI.css";
 import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 
 const CardFormImageCropper = ({ getBlob, inputImg }) => {
@@ -26,6 +28,7 @@ const CardFormImageCropper = ({ getBlob, inputImg }) => {
           onCropChange={setCrop}
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}
+          cropShape="round"
         />
       </div>
       <div className="card-form-image-cropper-controls">
