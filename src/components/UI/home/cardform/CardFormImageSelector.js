@@ -1,15 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import {
-  uploadBusinessProfilePicture,
-  deleteBusinessImage,
-} from "../../../../store/actions/card";
+import { deleteBusinessImage } from "../../../../store/actions/card";
+import { openImageCropperModal } from "../../../../store/actions/modals/imageCropperModal";
 
 import Loader from "react-loader-spinner";
 
 import $ from "jquery";
 
-import CardFormImageCropper from "./CardFormImageCropper";
+// import CardFormImageCropper from "./CardFormImageCropper";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
@@ -17,9 +15,6 @@ import "./CardFormUI.css";
 class CardFormImageSelector extends Component {
   state = {
     imgUrl: this.props.imgUrl,
-    cardId: this.props.cardId,
-    blob: null,
-    inputImg: "",
   };
 
   componentDidUpdate(prevProps) {
@@ -34,10 +29,6 @@ class CardFormImageSelector extends Component {
     $(".ui.dropdown").dropdown();
   }
 
-  getBlob = async (blob) => {
-    await this.setState({ blob: blob });
-  };
-
   onImageChangeHandler = (event) => {
     const reqImgData = event.target.files[0];
 
@@ -46,21 +37,16 @@ class CardFormImageSelector extends Component {
     reader.addEventListener(
       "load",
       async () => {
-        await this.setState({ inputImg: reader.result });
+        let inputImg = reader.result;
+        this.props.openImageCropperModal(inputImg);
       },
       false
     );
 
     if (reqImgData) {
       reader.readAsDataURL(reqImgData);
+      event.target.value = null;
     }
-  };
-
-  onUploadImageClick = async () => {
-    const cardId = this.state.cardId;
-
-    this.props.uploadBusinessProfilePicture(this.state.blob, cardId);
-    await this.setState({ inputImg: "" });
   };
 
   render() {
@@ -71,7 +57,7 @@ class CardFormImageSelector extends Component {
           style={{ backgroundImage: `url(${this.props.imgUrl})` }}
         >
           {this.props.cardImageLoader ? (
-            <Loader type="TailSpin" color="#fff" width={50} height={50} />
+            <Loader type="TailSpin" color="#2ecc71" width={50} height={50} />
           ) : null}
         </div>
         <div className="ui floating dropdown button card-form-button primary-font">
@@ -102,22 +88,6 @@ class CardFormImageSelector extends Component {
             )}
           </div>
         </div>
-        {this.state.inputImg && (
-          <Fragment>
-            <CardFormImageCropper
-              getBlob={this.getBlob}
-              inputImg={this.state.inputImg}
-            />
-            <label
-              onClick={this.onUploadImageClick}
-              className="card-form-button"
-            >
-              <span className="card-form-button-text">
-                Crop and Upload Image
-              </span>
-            </label>
-          </Fragment>
-        )}
       </Fragment>
     );
   }
@@ -127,16 +97,15 @@ const mapStateToProps = (state) => {
   return {
     imgUrl: state.card.cardData.imgUrl,
     imgId: state.card.cardData.imgId,
-    cardId: state.card.cardData.id,
     cardImageLoader: state.cardImageLoader,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadBusinessProfilePicture: (imgData, cardId) =>
-      dispatch(uploadBusinessProfilePicture(imgData, cardId)),
     deleteBusinessImage: (imgId) => dispatch(deleteBusinessImage(imgId)),
+    openImageCropperModal: (inputImg) =>
+      dispatch(openImageCropperModal(inputImg)),
   };
 };
 
