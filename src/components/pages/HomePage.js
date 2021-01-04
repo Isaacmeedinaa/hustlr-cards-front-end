@@ -6,6 +6,7 @@ import { cardIsSaved, cardIsNotSaved } from "../../store/actions/cardSaved";
 import { fetchIndustries } from "../../store/actions/industries";
 
 import CardFormImageCropperModal from "../UI/home/cardform/CardFormImageCropperModal";
+import CardFormBackdropImageCropperModal from "../UI/home/cardform/CardFormBackdropImageCropperModal";
 import SideToolbar from "../UI/SideToolbar";
 import TopToolbar from "../UI/home/TopToolbar";
 import BottomToolbar from "../UI/BottomToolbar";
@@ -113,6 +114,9 @@ class HomeContainer extends Component {
         {this.props.imageCropperModal.openModal ? (
           <CardFormImageCropperModal />
         ) : null}
+        {this.props.backdropImageCropperModal.openModal ? (
+          <CardFormBackdropImageCropperModal />
+        ) : null}
         <TopToolbar />
         <div className="grid-container-home">
           <SideToolbar
@@ -149,6 +153,7 @@ const mapStateToProps = (state) => {
     industries: state.industries.dropdownIndustries,
     industriesLoader: state.industriesLoader,
     imageCropperModal: state.imageCropperModal,
+    backdropImageCropperModal: state.backdropImageCropperModal,
   };
 };
 

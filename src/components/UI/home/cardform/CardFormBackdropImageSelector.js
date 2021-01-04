@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import {
-  uploadBackdropImage,
-  deleteBackdropImage,
-} from "../../../../store/actions/card";
+import { deleteBackdropImage } from "../../../../store/actions/card";
+import { openBackdropImageCropperModal } from "../../../../store/actions/modals/backdropImageCropperModal";
 
 import Loader from "react-loader-spinner";
 
@@ -17,20 +14,27 @@ import "./CardFormUI.css";
 class CardFormBackdropImageSelector extends Component {
   onBackdropImageChangeHandler = (event) => {
     const reqImgData = event.target.files[0];
-    const cardId = this.props.cardId;
 
     let reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      async () => {
+        let inputImg = reader.result;
+        this.props.openBackdropImageCropperModal(inputImg);
+      },
+      false
+    );
+
     if (reqImgData) {
       reader.readAsDataURL(reqImgData);
-      this.props.uploadBackdropImage(reqImgData, cardId);
       event.target.value = null;
     }
   };
 
   render() {
-
-    const deleteBackdropImageView = 
-      (!this.props.backdropImgUrl || this.props.backdropImgUrl === "" ? null :
+    const deleteBackdropImageView =
+      !this.props.backdropImgUrl || this.props.backdropImgUrl === "" ? null : (
         <label
           className="primary-color card-form-backdrop-image-btn"
           onClick={() =>
@@ -38,7 +42,8 @@ class CardFormBackdropImageSelector extends Component {
           }
         >
           <MdCloseCircle color="#2ecc71" size={16} />
-        </label>);
+        </label>
+      );
 
     return (
       <div
@@ -79,7 +84,6 @@ class CardFormBackdropImageSelector extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cardId: state.card.cardData.id,
     backdropImgUrl: state.card.cardData.backdropImgUrl,
     backdropImgId: state.card.cardData.backdropImgId,
     cardBackdropImageLoader: state.cardBackdropImageLoader,
@@ -88,9 +92,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadBackdropImage: (imgReqData, cardId) =>
-      dispatch(uploadBackdropImage(imgReqData, cardId)),
     deleteBackdropImage: (imgId) => dispatch(deleteBackdropImage(imgId)),
+    openBackdropImageCropperModal: (inputImg) =>
+      dispatch(openBackdropImageCropperModal(inputImg)),
   };
 };
 

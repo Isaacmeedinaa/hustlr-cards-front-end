@@ -49,6 +49,7 @@ import backdropImageNotifications from "./notifications/backdropImageNotificatio
 
 // Modals
 import imageCropperModal from "./modals/imageCropperModal";
+import backdropImageCropperModal from "./modals/backdropImageCropperModal";
 
 const rootReducer = combineReducers({
   // Main
@@ -96,6 +97,7 @@ const rootReducer = combineReducers({
   backdropImageNotifications,
   // Modals
   imageCropperModal,
+  backdropImageCropperModal,
 });
 
 export default rootReducer;

@@ -36,7 +36,7 @@ class CardFormImageSelector extends Component {
 
     reader.addEventListener(
       "load",
-      async () => {
+      () => {
         let inputImg = reader.result;
         this.props.openImageCropperModal(inputImg);
       },
