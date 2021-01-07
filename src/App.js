@@ -55,7 +55,11 @@ class App extends Component {
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/forgot-password" component={ForgotPasswordPage} />
           <Route exact path="/change-password" component={ChangePasswordPage} />
-          <Route exact path="/verify-email/:token" component={VerifyEmailPage} />
+          <Route
+            exact
+            path="/verify-email/:token"
+            component={VerifyEmailPage}
+          />
           <ProtectedRoute
             exact
             path="/home"
@@ -85,14 +89,14 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     userAutoLogin: () => dispatch(userAutoLogin()),
-    setIsNotAuthenticated: () => dispatch(setIsNotAuthenticated())
+    setIsNotAuthenticated: () => dispatch(setIsNotAuthenticated()),
   };
 };
 

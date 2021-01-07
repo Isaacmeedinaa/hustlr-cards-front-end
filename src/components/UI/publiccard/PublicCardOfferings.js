@@ -31,7 +31,11 @@ class PublicCardOfferings extends Component {
 
   renderOfferingSliderImages = (offering) => {
     return offering.photos.map((photo) => (
-      <div key={photo.id} data-src={photo.url}></div>
+      <div
+        key={photo.id}
+        data-src={photo.url}
+        onClick={() => this.props.openModal(photo.url)}
+      ></div>
     ));
   };
 

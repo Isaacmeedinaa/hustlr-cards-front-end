@@ -19,7 +19,9 @@ class CardGallerySlider extends Component {
         <Fragment>
           <div className="card-business-section-header-container">
             <h4 className="ui horizontal divider header">
-              <span className="public-card-products-services-title-text">Gallery</span>
+              <span className="public-card-products-services-title-text">
+                Gallery
+              </span>
             </h4>
           </div>
           <div className="card-business-gallery-slider-container">
