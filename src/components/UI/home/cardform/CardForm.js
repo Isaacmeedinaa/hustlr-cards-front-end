@@ -43,13 +43,16 @@ import { showToast } from "../../Toasts";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
-import { hideOfferingImageDeletedNotification, hideOfferingImageUploadedNotification } from "../../../../store/actions/notifications/offeringImageNotifications";
+import {
+  hideOfferingImageDeletedNotification,
+  hideOfferingImageUploadedNotification,
+} from "../../../../store/actions/notifications/offeringImageNotifications";
 
 class CardForm extends Component {
   state = {
     isHidden: true,
     deleteModalShown: false,
-    openOfferingId: null
+    openOfferingId: null,
   };
 
   componentDidUpdate() {
@@ -154,7 +157,6 @@ class CardForm extends Component {
   }
 
   displayNotification(success, message) {
-    
     showToast(success, message);
 
     if (this.props.cardErrors.length > 0 && !success) {
@@ -196,8 +198,8 @@ class CardForm extends Component {
   };
 
   openOfferingHandler = async (offeringId) => {
-    await this.setState({openOfferingId: offeringId});
-  }
+    await this.setState({ openOfferingId: offeringId });
+  };
 
   render() {
     if (this.props.cardLoader) {
@@ -213,8 +215,18 @@ class CardForm extends Component {
                 {error.message}
               </p>
             ))}
-            <CardFormBackdropImageSelector />
-            <CardFormImageSelector />
+            <CardFormBackdropImageSelector
+              openBackdropImageCropperModal={
+                this.props.openBackdropImageCropperModal
+              }
+              closeBackdropImageCropperModal={
+                this.props.closeBackdropImageCropperModal
+              }
+            />
+            <CardFormImageSelector
+              openImageCropperModal={this.props.openImageCropperModal}
+              closeImageCropperModal={this.props.closeImageCropperModal}
+            />
             <CardFormTitleInput />
             <CardFormLocationInputs />
             <CardFormIndustrySelect />
@@ -248,7 +260,7 @@ const mapStateToProps = (state) => {
     galleryNotifications: state.galleryNotifications,
     profileImageNotifications: state.profileImageNotifications,
     backdropImageNotifications: state.backdropImageNotifications,
-    offeringImageNotifications: state.offeringImageNotifications
+    offeringImageNotifications: state.offeringImageNotifications,
   };
 };
 
@@ -278,7 +290,7 @@ const mapDispatchToProps = (dispatch) => {
     hideOfferingImageUploadedNotification: () =>
       dispatch(hideOfferingImageUploadedNotification()),
     hideOfferingImageDeletedNotification: () =>
-      dispatch(hideOfferingImageDeletedNotification())
+      dispatch(hideOfferingImageDeletedNotification()),
   };
 };
 

@@ -1,13 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { deleteBusinessImage } from "../../../../store/actions/card";
-import { openImageCropperModal } from "../../../../store/actions/modals/imageCropperModal";
 
 import Loader from "react-loader-spinner";
 
 import $ from "jquery";
-
-// import CardFormImageCropper from "./CardFormImageCropper";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
@@ -104,8 +101,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteBusinessImage: (imgId) => dispatch(deleteBusinessImage(imgId)),
-    openImageCropperModal: (inputImg) =>
-      dispatch(openImageCropperModal(inputImg)),
   };
 };
 

@@ -47,10 +47,6 @@ import profileImageNotifications from "./notifications/profileImageNotifications
 import userUpdatedNotifications from "./notifications/userUpdatedNotifications";
 import backdropImageNotifications from "./notifications/backdropImageNotifications";
 
-// Modals
-import imageCropperModal from "./modals/imageCropperModal";
-import backdropImageCropperModal from "./modals/backdropImageCropperModal";
-
 const rootReducer = combineReducers({
   // Main
   user,
@@ -96,8 +92,6 @@ const rootReducer = combineReducers({
   userUpdatedNotifications,
   backdropImageNotifications,
   // Modals
-  imageCropperModal,
-  backdropImageCropperModal,
 });
 
 export default rootReducer;
