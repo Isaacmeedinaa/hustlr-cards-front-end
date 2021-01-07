@@ -8,11 +8,13 @@ import "react-awesome-slider/dist/styles.css";
 
 class PublicCardGallerySlider extends Component {
   renderGallerySliderImages = () => {
-    return this.props.photos.map((photo) => (
+    return this.props.photos.map((photo, index) => (
       <div
         key={photo.id}
         data-src={photo.url}
-        onClick={() => this.props.openModal(photo.url)}
+        onClick={() =>
+          this.props.openModal(this.props.photos, photo.url, index)
+        }
       ></div>
     ));
   };
