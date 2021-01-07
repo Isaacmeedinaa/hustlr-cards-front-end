@@ -164,6 +164,21 @@
   cursor: pointer;
 }
 
+.home-page-image-cropper-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 300px;
+  padding: 15px 15px 15px 15px;
+  border-radius: 5px;
+  border-bottom: 6px solid #cdcdd2;
+}
+
+.home-page-image-cropper-modal:focus {
+  outline: none;
+}
+
 /* 770 breakpoint for the home page */
 @media only screen and (max-width: 1100px) {
   .landing-page-content-container {

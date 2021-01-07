@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { deleteBackdropImage } from "../../../../store/actions/card";
-import { openBackdropImageCropperModal } from "../../../../store/actions/modals/backdropImageCropperModal";
 
 import Loader from "react-loader-spinner";
 
@@ -93,8 +92,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteBackdropImage: (imgId) => dispatch(deleteBackdropImage(imgId)),
-    openBackdropImageCropperModal: (inputImg) =>
-      dispatch(openBackdropImageCropperModal(inputImg)),
   };
 };
 
