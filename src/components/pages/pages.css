@@ -179,6 +179,58 @@
   outline: none;
 }
 
+.public-card-image-modal-buttons-container {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.public-card-prev-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.public-card-next-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#nextButton {
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 35px;
+  min-width: 35px;
+  background-color: rgba(46, 204, 113, 0.25);
+  border: none;
+}
+
+#previousButton {
+  align-self: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 35px;
+  min-width: 35px;
+  background-color: rgba(46, 204, 113, 0.25);
+  border: none;
+}
+
+#previousButton:focus,
+#nextButton:focus {
+  outline: none;
+}
+
 /* 770 breakpoint for the home page */
 @media only screen and (max-width: 1100px) {
   .landing-page-content-container {
