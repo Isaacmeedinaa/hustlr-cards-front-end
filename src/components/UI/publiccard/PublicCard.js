@@ -20,8 +20,6 @@ class PublicCard extends Component {
       return null;
     }
 
-    console.log(this.props.publicCard)
-
     return (
       <Fragment>
         {!this.props.publicCard.isPublic ? (
@@ -56,11 +54,17 @@ class PublicCard extends Component {
               <PublicCardDescription
                 description={this.props.publicCard.description}
               />
-              <PublicCardGallerySlider photos={this.props.publicCard.photos} />
+              <PublicCardGallerySlider
+                photos={this.props.publicCard.photos}
+                openModal={this.props.openModal}
+                closeModal={this.props.closeModal}
+              />
               <PublicCardOfferings
                 offerings={this.props.publicCard.offerings}
                 primaryColor={this.props.publicCard.primaryColor}
                 transparentColor={this.props.publicCard.transparentColor}
+                openModal={this.props.openModal}
+                closeModal={this.props.closeModal}
               />
               <div className="public-card-logo-container">
                 <Link className="primary-color" to="/">
