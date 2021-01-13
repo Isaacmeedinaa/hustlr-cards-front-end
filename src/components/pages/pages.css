@@ -324,6 +324,12 @@
   }
 }
 
+@media only screen and (max-width: 414px) {
+  .home-page-image-cropper-modal {
+    width: 370px;
+  }
+}
+
 @media only screen and (max-width: 560px) {
   .public-card-gallery-image {
     width: 400px;
