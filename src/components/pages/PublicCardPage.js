@@ -121,7 +121,6 @@ class PublicCardPage extends Component {
               </button>
             </div>
           </div>
-
           <button
             className="primary-color public-card-image-modal-button"
             onClick={this.closeModal}
