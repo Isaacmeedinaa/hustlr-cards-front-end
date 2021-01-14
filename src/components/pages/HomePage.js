@@ -33,13 +33,48 @@ class HomeContainer extends Component {
     inputImg: "",
     imageBlob: null,
     backdropImageBlob: null,
+    largeScreen: false,
   };
 
   componentDidMount() {
     if (this.props.industries.length === 0) {
       this.props.fetchIndustries();
     }
+
+    if (window.innerWidth > 1100) {
+      this.setState({
+        ...this.state,
+        largeScreen: true,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        largeScreen: false,
+      });
+    }
+
+    const mql = window.matchMedia("(max-width: 1100px)");
+    mql.addEventListener("change", this.mediaQueryListener);
   }
+
+  componentWillUnmount() {
+    const mql = window.matchMedia("(max-width: 1100px)");
+    mql.removeEventListener("change", this.mediaQueryListener);
+  }
+
+  mediaQueryListener = (event) => {
+    if (!event.matches) {
+      this.setState({
+        ...this.state,
+        largeScreen: true,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        largeScreen: false,
+      });
+    }
+  };
 
   componentDidUpdate() {
     const keysToCompare = [
@@ -175,6 +210,7 @@ class HomeContainer extends Component {
 
     return (
       <Fragment>
+        {/* Modals Start */}
         <Modal
           isOpen={this.state.imageCropperModalIsOpen}
           onRequestClose={this.closeImageCropperModal}
@@ -224,8 +260,18 @@ class HomeContainer extends Component {
             pathname={this.props.location.pathname}
             history={this.props.history}
           />
+
           <Fragment>
-            <div className="secondary-light-bg card-form-col-wrapper">
+            <div
+              className="secondary-light-bg card-form-col-wrapper"
+              style={{
+                display: this.state.largeScreen
+                  ? "block"
+                  : this.props.tabs !== "EDIT"
+                  ? "none"
+                  : "block",
+              }}
+            >
               <div className="card-form-col-container">
                 <CardForm
                   openImageCropperModal={this.openImageCropperModal}
@@ -239,7 +285,16 @@ class HomeContainer extends Component {
                 />
               </div>
             </div>
-            <div className="secondary-light-bg card-show-col-wrapper">
+            <div
+              className="secondary-light-bg card-show-col-wrapper"
+              style={{
+                display: this.state.largeScreen
+                  ? "block"
+                  : this.props.tabs !== "PREVIEW"
+                  ? "none"
+                  : "block",
+              }}
+            >
               <div className="card-show-col-container">
                 <Card />
               </div>
@@ -265,6 +320,7 @@ const mapStateToProps = (state) => {
     industriesLoader: state.industriesLoader,
     imageCropperModal: state.imageCropperModal,
     backdropImageCropperModal: state.backdropImageCropperModal,
+    tabs: state.tabs,
   };
 };
 

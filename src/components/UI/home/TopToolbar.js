@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 import { connect } from "react-redux";
 
@@ -7,6 +7,7 @@ import MdCloseCircle from "react-ionicons/lib/MdCloseCircle";
 
 import ThemePicker from "./ThemePicker";
 import SaveCardButton from "./SaveCardButton";
+import Tabs from "./Tabs";
 
 import "./HomeUI.css";
 
@@ -28,37 +29,35 @@ class TopToolbar extends Component {
       return null;
     }
     return (
-      <Fragment>
-        <div className="toptoolbar-wrapper">
-          <div className="primary-light-bg toptoolbar">
-            {/* {this.props.cardLoader ? null : ( */}
-            <div className="toptoolbar-container">
-              <div
-                className="toptoolbar-theme-icon-container"
-                onClick={this.openCloseThemePickerHandler}
-              >
-                {!this.state.themePickerIsOpen ? (
-                  <MdBrush
-                    className="toptoolbar-theme-icon"
-                    fontSize="18px"
-                    color="#2ecc71"
-                  />
-                ) : (
-                  <MdCloseCircle
-                    className="toptoolbar-theme-icon"
-                    fontSize="18px"
-                    color="#2ecc71"
-                  />
-                )}
-              </div>
-              <div className="top-toolbar-color-theme-text">Color Theme</div>
-              <SaveCardButton />
+      <div className="toptoolbar-wrapper">
+        <div className="primary-light-bg toptoolbar">
+          {/* {this.props.cardLoader ? null : ( */}
+          <div className="toptoolbar-container">
+            <div
+              className="toptoolbar-theme-icon-container"
+              onClick={this.openCloseThemePickerHandler}
+            >
+              {!this.state.themePickerIsOpen ? (
+                <MdBrush
+                  className="toptoolbar-theme-icon"
+                  fontSize="18px"
+                  color="#2ecc71"
+                />
+              ) : (
+                <MdCloseCircle
+                  className="toptoolbar-theme-icon"
+                  fontSize="18px"
+                  color="#2ecc71"
+                />
+              )}
             </div>
-            {/* )} */}
+            <div className="top-toolbar-color-theme-text">Color Theme</div>
+            <SaveCardButton />
           </div>
-          {!this.state.themePickerIsOpen ? null : <ThemePicker />}
         </div>
-      </Fragment>
+        {!this.state.themePickerIsOpen ? null : <ThemePicker />}
+        <Tabs />
+      </div>
     );
   }
 }
