@@ -30,6 +30,7 @@
     "react-dom": "^16.13.1",
     "react-easy-crop": "^3.3.1",
     "react-google-places-autocomplete": "^3.0.0",
+    "react-helmet": "^6.1.0",
     "react-horizontal-scrolling-menu": "^0.7.8",
     "react-image-crop": "^8.6.6",
     "react-ionicons": "^3.1.4",
