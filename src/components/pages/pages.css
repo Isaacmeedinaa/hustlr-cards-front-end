@@ -242,6 +242,15 @@
       "sidetoolbar cardform"
       "sidetoolbar cardshow";
   }
+
+  .card-form-col-container {
+    padding: 140px 10px 15px 10px;
+  }
+
+  .card-show-col-container {
+    padding: 140px 10px 80px 10px;
+  }
+
   .card-show-col-wrapper {
     border: none;
   }
@@ -283,11 +292,11 @@
   }
 
   .card-form-col-container {
-    padding: 80px 10px 15px 10px;
+    padding: 140px 10px 15px 10px;
   }
 
   .card-show-col-container {
-    padding: 20px 10px 80px 10px;
+    padding: 140px 10px 80px 10px;
   }
 
   .grid-container-settings {

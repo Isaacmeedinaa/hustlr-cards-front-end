@@ -9,6 +9,7 @@ import cardSaved from "./cardSaved";
 import publicCard from "./publicCard";
 import auth from "./auth";
 import emailVerification from "./emailVerification";
+import tabs from "./tabs";
 
 // Loaders
 import loginLoader from "./loaders/loginLoader";
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   publicCard,
   auth,
   emailVerification,
+  tabs,
   // Loaders
   loginLoader,
   registerLoader,
