@@ -19,6 +19,12 @@
   max-width: 90%;
 }
 
+.card-business-link-copied-text {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #2ecc71;
+}
+
 .card-business-link-container {
   margin-bottom: 30px;
   width: 100%;
