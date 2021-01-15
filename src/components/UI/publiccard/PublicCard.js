@@ -22,9 +22,6 @@ class PublicCard extends Component {
 
     return (
       <Fragment>
-        {!this.props.publicCard.isPublic ? (
-          <h1 className="private-card">This card is not public.</h1>
-        ) : (
           <div className="primary-light-bg public-card">
             <div className="public-card-container">
               <PublicCardBackdropImage
@@ -73,7 +70,6 @@ class PublicCard extends Component {
               </div>
             </div>
           </div>
-        )}
       </Fragment>
     );
   }
