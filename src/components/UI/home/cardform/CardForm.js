@@ -215,6 +215,7 @@ class CardForm extends Component {
                 {error.message}
               </p>
             ))}
+            <CardFormCardPathInput />
             <CardFormBackdropImageSelector
               openBackdropImageCropperModal={
                 this.props.openBackdropImageCropperModal
@@ -228,20 +229,19 @@ class CardForm extends Component {
               closeImageCropperModal={this.props.closeImageCropperModal}
             />
             <CardFormTitleInput />
-            <CardFormLocationInputs />
-            <CardFormIndustrySelect />
-            <CardFormDescriptionInput />
-            <CardFormCardPathInput />
-            <CardFormAddOfferingButton />
-            {this.renderOfferingsInputs()}
             <CardFormContactInputs />
-            <CardFormAddImageButton />
-            <CardFormGallerySlider />
             <CardFormShowSocialMediasButton
               showSocialMediaLinks={this.showSocialMediaLinks}
               isHidden={this.state.isHidden}
             />
             {this.state.isHidden ? null : <CardFormSocialMediaInputs />}
+            <CardFormIndustrySelect />
+            <CardFormLocationInputs />
+            <CardFormDescriptionInput />
+            {this.renderOfferingsInputs()}
+            <CardFormAddImageButton />
+            <CardFormGallerySlider />
+            <CardFormAddOfferingButton />
             <PublicToggle />
           </div>
         </div>
