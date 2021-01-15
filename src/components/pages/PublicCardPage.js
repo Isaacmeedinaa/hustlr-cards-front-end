@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import { fetchPublicCard } from "../../store/actions/publicCard";
+import PrivateCard from '../UI/publiccard/PrivateCard';
 
 import Loader from "react-loader-spinner";
 import Modal from "react-modal";
@@ -128,12 +129,16 @@ class PublicCardPage extends Component {
             Close
           </button>
         </Modal>
+        {!this.props.publicCard.isPublic ? (
+            <PrivateCard/>
+        ) : (
         <div
           className="public-card-page-wrapper"
           style={{ backgroundColor: this.props.publicCard.primaryColor }}
         >
           <PublicCard openModal={this.openModal} closeModal={this.closeModal} />
-        </div>
+        </div>)}
+        
       </Fragment>
     );
   }
