@@ -1,1 +1,1 @@
-## This app is great
+## This app is great.
