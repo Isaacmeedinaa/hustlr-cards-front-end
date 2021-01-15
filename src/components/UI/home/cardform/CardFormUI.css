@@ -53,6 +53,7 @@
 }
 
 .card-form-backdrop-image-container {
+  margin-top: 30px;
   width: 127.5%;
   height: 180px;
   border-radius: 5px;
@@ -310,6 +311,7 @@
 
 .card-form-button {
   margin-top: 30px !important;
+  margin-bottom: 0px !important;
   width: 100% !important;
   height: 40px !important;
   background-color: #2ecc71 !important;
@@ -528,7 +530,6 @@
 
 .card-form-path-to-card-container {
   width: 100%;
-  margin-top: 30px;
   display: flex;
   align-content: center;
   justify-content: center;
