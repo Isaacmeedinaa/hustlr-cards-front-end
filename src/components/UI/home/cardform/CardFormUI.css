@@ -550,6 +550,17 @@
   border: 1px solid #d1d2d5 !important;
 }
 
+.card-form-social-media-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  padding-left: 2px;
+  font-size: 16px;
+}
+
 @media only screen and (max-width: 650px) {
   .card-form-wrapper {
     width: 100%;

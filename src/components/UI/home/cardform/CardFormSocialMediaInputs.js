@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import Select from "react-select";
 
 import { connect } from "react-redux";
 import { setCardSocialMediaLinks } from "../../../../store/actions/card";
 
-import { Animated } from "react-animated-css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram, faSnapchatGhost, faTwitter, faTwitch } from "@fortawesome/free-brands-svg-icons";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
@@ -14,7 +16,15 @@ class CardFormSocialMediaInputs extends Component {
     instagramLink: this.props.instagramLink,
     snapchatLink: this.props.snapchatLink,
     twitterLink: this.props.twitterLink,
+    links: []
   };
+
+  options = [
+    { value: "instagram", label: <span style={{marginLeft: '5px'}}><FontAwesomeIcon icon={faInstagram} transform="grow-4" /> <span style={{marginLeft: '15px'}}>Instagram</span></span>},
+    { value: "snapchat", label: <span style={{marginLeft: '5px'}}><FontAwesomeIcon icon={faSnapchatGhost} transform="grow-4"/> <span style={{marginLeft: '15px'}}>Snapchat</span></span>},
+    { value: "twitch", label: <span style={{marginLeft: '5px'}}><FontAwesomeIcon icon={faTwitch} transform="grow-4"/> <span style={{marginLeft: '15px'}}>Twitch</span></span>},
+    { value: "twitter", label: <span style={{marginLeft: '5px'}}><FontAwesomeIcon icon={faTwitter} transform="grow-4"/> <span style={{marginLeft: '15px'}}>Twitter</span></span> }
+  ];
 
   onCardSocialMediaLinkChangeHandler = async (event) => {
     await this.setState({
@@ -31,13 +41,51 @@ class CardFormSocialMediaInputs extends Component {
 
   render() {
     return (
-      <Animated
-        className="card-form-social-media-inputs-animation-wrapper"
-        animationIn="bounceIn"
-        animationOut="fadeOut"
-        isVisible={true}
-      >
-        <div className="card-form-social-media-inputs-container">
+      <Fragment>
+        <div className="card-form-dropdown-container">
+          <Select
+            className="card-form-dropdown"
+            classNamePrefix="card-form-dropdown"
+            isClearable={true}
+            styles={{
+              control: (base, state) => ({
+                ...base,
+                background: "#f1f1f1",
+                border: "none",
+                boxShadow: null,
+                fontWeight: 500,
+              }),
+              menu: (base) => ({
+                ...base,
+                color: "#000",
+                boxShadow: "0px 5px 0px -1px #cdcdd2",
+                borderRadius: 5,
+                border: "1px solid #cdcdd2",
+              }),
+              option: (base, state) => ({
+                ...base,
+                color: state.isSelected ? "#2ecc71" : "black",
+                backgroundColor: state.isSelected
+                  ? "rgba(46, 204, 113, 0.25)"
+                  : "white",
+                "&:hover": {
+                  backgroundColor: "#f1f1f1",
+                  cursor: "pointer",
+                },
+                "&:active": {
+                  color: "#2ecc71",
+                  backgroundColor: "rgba(46, 204, 113, 0.25)",
+                },
+              }),
+            }}
+            placeholder={<div className="card-form-placeholder-color">Select link type</div>}
+            options={this.options}
+            value={this.options.value}
+            onChange={this.onCardIndustryChangeHandler}
+          />
+      </div>
+
+        {/* <div className="card-form-social-media-inputs-container">
           <input
             className="card-form-social-media-input"
             name="facebookLink"
@@ -66,8 +114,8 @@ class CardFormSocialMediaInputs extends Component {
             value={this.state.snapchatLink}
             onChange={this.onCardSocialMediaLinkChangeHandler}
           />
-        </div>
-      </Animated>
+        </div> */}
+      </Fragment>
     );
   }
 }
