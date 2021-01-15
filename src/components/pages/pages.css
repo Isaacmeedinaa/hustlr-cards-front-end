@@ -179,8 +179,14 @@
   outline: none;
 }
 
-.public-card-image-modal-buttons-container {
+.public-card-modal-images-count {
   margin-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.public-card-image-modal-buttons-container {
+  margin-top: 10px;
   height: 100%;
   width: 100%;
   display: flex;
