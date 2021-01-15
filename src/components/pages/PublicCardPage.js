@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import { fetchPublicCard } from "../../store/actions/publicCard";
-import PrivateCard from '../UI/publiccard/PrivateCard';
+import PrivateCard from "../UI/publiccard/PrivateCard";
 
 import Loader from "react-loader-spinner";
 import Modal from "react-modal";
@@ -94,6 +94,9 @@ class PublicCardPage extends Component {
             alt="gallery"
             className="public-card-gallery-image"
           />
+          <span className="public-card-modal-images-count">
+            {this.state.currentImgIndex + 1} / {this.state.images.length}
+          </span>
           <div className="public-card-image-modal-buttons-container">
             <div className="public-card-prev-button-container">
               <button
@@ -130,15 +133,18 @@ class PublicCardPage extends Component {
           </button>
         </Modal>
         {!this.props.publicCard.isPublic ? (
-            <PrivateCard/>
+          <PrivateCard />
         ) : (
-        <div
-          className="public-card-page-wrapper"
-          style={{ backgroundColor: this.props.publicCard.primaryColor }}
-        >
-          <PublicCard openModal={this.openModal} closeModal={this.closeModal} />
-        </div>)}
-        
+          <div
+            className="public-card-page-wrapper"
+            style={{ backgroundColor: this.props.publicCard.primaryColor }}
+          >
+            <PublicCard
+              openModal={this.openModal}
+              closeModal={this.closeModal}
+            />
+          </div>
+        )}
       </Fragment>
     );
   }
