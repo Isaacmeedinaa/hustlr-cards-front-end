@@ -238,10 +238,10 @@ class CardForm extends Component {
             <CardFormIndustrySelect />
             <CardFormLocationInputs />
             <CardFormDescriptionInput />
-            {this.renderOfferingsInputs()}
             <CardFormAddImageButton />
             <CardFormGallerySlider />
             <CardFormAddOfferingButton />
+            {this.renderOfferingsInputs()}
             <PublicToggle />
           </div>
         </div>
