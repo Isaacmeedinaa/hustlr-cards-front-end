@@ -161,9 +161,6 @@
   justify-content: center;
 }
 
-.view-image {
-}
-
 @media only screen and (max-width: 650px) {
   .sidetoolbar {
     display: none;
