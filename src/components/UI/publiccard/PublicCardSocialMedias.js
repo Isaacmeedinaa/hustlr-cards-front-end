@@ -11,7 +11,6 @@ import "../../../constants/colors.css";
 import "./PublicCardUI.css";
 
 const PublicCardSocialMedias = (props) => {
-  console.log(props);
   return (
     <div className="public-card-social-media-container">
       <PublicCardPhoneNumber

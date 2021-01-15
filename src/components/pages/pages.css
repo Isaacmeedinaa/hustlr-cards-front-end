@@ -115,6 +115,121 @@
   overflow-x: hidden !important;
 }
 
+.ReactModal__Overlay {
+  z-index: 9999999 !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.public-card-image-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* width: 450px; */
+  padding: 15px 15px 15px 15px;
+  border-radius: 5px;
+  border-bottom: 6px solid #cdcdd2;
+}
+
+.public-card-image-modal:focus {
+  outline: none;
+}
+
+.public-card-gallery-image {
+  width: 500px;
+}
+
+.public-card-image-modal-button {
+  border: none;
+  margin-top: 10px;
+  background-color: white;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.public-card-image-modal-button:focus {
+  outline: none;
+}
+
+.public-card-image-modal-button:hover {
+  border-radius: 5px;
+  background-color: rgba(112, 112, 112, 0.06);
+  cursor: pointer;
+}
+
+.home-page-image-cropper-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 300px;
+  padding: 15px 15px 15px 15px;
+  border-radius: 5px;
+  border-bottom: 6px solid #cdcdd2;
+}
+
+.home-page-image-cropper-modal:focus {
+  outline: none;
+}
+
+.public-card-image-modal-buttons-container {
+  margin-top: 20px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.public-card-prev-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.public-card-next-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#nextButton {
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: rgba(46, 204, 113, 0.25);
+  border: none;
+}
+
+#previousButton {
+  align-self: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: rgba(46, 204, 113, 0.25);
+  border: none;
+}
+
+#previousButton:focus,
+#nextButton:focus {
+  outline: none;
+}
+
 /* 770 breakpoint for the home page */
 @media only screen and (max-width: 1100px) {
   .landing-page-content-container {
@@ -127,6 +242,15 @@
       "sidetoolbar cardform"
       "sidetoolbar cardshow";
   }
+
+  .card-form-col-container {
+    padding: 140px 10px 15px 10px;
+  }
+
+  .card-show-col-container {
+    padding: 140px 10px 80px 10px;
+  }
+
   .card-show-col-wrapper {
     border: none;
   }
@@ -168,11 +292,11 @@
   }
 
   .card-form-col-container {
-    padding: 80px 10px 15px 10px;
+    padding: 130px 10px 80px 10px;
   }
 
   .card-show-col-container {
-    padding: 20px 10px 80px 10px;
+    padding: 130px 10px 80px 10px;
   }
 
   .grid-container-settings {
@@ -205,5 +329,33 @@
 
   .support-faq-col-container {
     padding: 20px 10px 80px 10px;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .public-card-gallery-image {
+    width: 400px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .public-card-gallery-image {
+    width: 350px;
+  }
+
+  .home-page-image-cropper-modal {
+    width: 350px;
+  }
+}
+
+@media only screen and (max-width: 395px) {
+  .public-card-gallery-image {
+    width: 300px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .public-card-gallery-image {
+    width: 250px;
   }
 }

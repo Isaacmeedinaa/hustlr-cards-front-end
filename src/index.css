@@ -1,37 +1,41 @@
 @font-face {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 400;
-  src: local('Montserrat'), url(./assets/fonts/montserrat/Montserrat-Regular.ttf) format('truetype');
+  src: local("Montserrat"),
+    url(./assets/fonts/montserrat/Montserrat-Regular.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 500;
-  src: local('Montserrat'), url(./assets/fonts/montserrat/Montserrat-Medium.ttf) format('truetype');
+  src: local("Montserrat"),
+    url(./assets/fonts/montserrat/Montserrat-Medium.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 600;
-  src: local('Montserrat'), url(./assets/fonts/montserrat/Montserrat-SemiBold.ttf) format('truetype');
+  src: local("Montserrat"),
+    url(./assets/fonts/montserrat/Montserrat-SemiBold.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 700;
-  src: local('Montserrat'), url(./assets/fonts/montserrat/Montserrat-Bold.ttf) format('truetype');
+  src: local("Montserrat"),
+    url(./assets/fonts/montserrat/Montserrat-Bold.ttf) format("truetype");
 }
 
 html,
 body,
 #root {
-  margin: 0;
-  height: 100%;
+  margin: 0 !important;
+  height: 100% !important;
   width: 100%;
   max-width: 100%;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 500;
-  color: #2F3640;
+  color: #2f3640;
   background-color: #f6f7fb;
 }
 
@@ -64,10 +68,11 @@ body {
 }
 
 .awssld__controls {
-  visibility: visible !important; 
+  visibility: visible !important;
 }
 
-.awssld__controls__arrow-left, .awssld__controls__arrow-right {
+.awssld__controls__arrow-left,
+.awssld__controls__arrow-right {
   height: 30px !important;
 }
 
@@ -81,6 +86,6 @@ body {
 
 .awssld {
   --organic-arrow-thickness: 3px !important;
-  --loader-bar-color: #999696  !important;
+  --loader-bar-color: #999696 !important;
   --organic-arrow-color: #797979 !important;
 }

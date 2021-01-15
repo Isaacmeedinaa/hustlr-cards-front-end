@@ -1,25 +1,27 @@
 import React from "react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
 
 const PublicCardLocation = (props) => {
-  console.log(props.location)
-  if (!props.location || !props.location.description || props.location.description === "") {
+  if (
+    !props.location ||
+    !props.location.description ||
+    props.location.description === ""
+  ) {
     return null;
   }
 
-  
-
   return (
     <div className="public-card-location-container">
-      <FontAwesomeIcon 
+      <FontAwesomeIcon
         icon={faMapMarkerAlt}
         transform="down-4 left-5"
-        style={{ color: props.primaryColor }}/>
+        style={{ color: props.primaryColor }}
+      />
       <p
         style={{ color: props.primaryColor }}
         className="public-card-location-text"
