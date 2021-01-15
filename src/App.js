@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +26,7 @@ import SettingsPage from "./components/pages/SettingsPage";
 import SupportPage from "./components/pages/SupportPage";
 import PublicCardPage from "./components/pages/PublicCardPage";
 import ProtectedRoute from "./components/hoc/ProtectedRoute";
+import RouteHead from "./components/hoc/RouteHead";
 
 class App extends Component {
   componentDidMount() {
@@ -41,58 +42,77 @@ class App extends Component {
   render() {
     if (!this.props.auth.hasCheckedAuth) {
       return (
-        <div className="page-loader-container">
-          <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
-        </div>
+        <Fragment>
+          <RouteHead />
+          <div className="page-loader-container">
+            <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
+          </div>
+        </Fragment>
       );
     }
 
     return (
-      <Router>
-        <Switch>
-          <Route path="/404" component={NotFoundPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/forgot-password" component={ForgotPasswordPage} />
-          <Route exact path="/change-password" component={ChangePasswordPage} />
-          <Route exact path="/verify-email/:token" component={VerifyEmailPage} />
-          <ProtectedRoute
-            exact
-            path="/home"
-            component={HomePage}
-            isAuthenticated={this.props.auth.isAuthenticated}
-          />
-          <ProtectedRoute
-            exact
-            path="/settings"
-            component={SettingsPage}
-            isAuthenticated={this.props.auth.isAuthenticated}
-          />
-          <ProtectedRoute
-            exact
-            path="/support"
-            component={SupportPage}
-            isAuthenticated={this.props.auth.isAuthenticated}
-          />
-          <Route exact path="/:pathToCard" component={PublicCardPage} />
-          <Route exact path="/" component={LandingPage} />
-          <Redirect to="/404" />
-        </Switch>
-      </Router>
+      <Fragment>
+        <RouteHead />
+        <Router>
+          <Switch>
+            <Route path="/404" component={NotFoundPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route
+              exact
+              path="/forgot-password"
+              component={ForgotPasswordPage}
+            />
+            <Route
+              exact
+              path="/change-password"
+              component={ChangePasswordPage}
+            />
+            <Route
+              exact
+              path="/verify-email/:token"
+              component={VerifyEmailPage}
+            />
+            <ProtectedRoute
+              exact
+              path="/home"
+              component={HomePage}
+              isAuthenticated={this.props.auth.isAuthenticated}
+            />
+            <ProtectedRoute
+              exact
+              path="/settings"
+              component={SettingsPage}
+              isAuthenticated={this.props.auth.isAuthenticated}
+            />
+            <ProtectedRoute
+              exact
+              path="/support"
+              component={SupportPage}
+              isAuthenticated={this.props.auth.isAuthenticated}
+            />
+            <Route exact path="/:pathToCard" component={PublicCardPage} />
+            <Route exact path="/" component={LandingPage} />
+            <Redirect to="/404" />
+          </Switch>
+        </Router>
+      </Fragment>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    publicCard: state.publicCard,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     userAutoLogin: () => dispatch(userAutoLogin()),
-    setIsNotAuthenticated: () => dispatch(setIsNotAuthenticated())
+    setIsNotAuthenticated: () => dispatch(setIsNotAuthenticated()),
   };
 };
 

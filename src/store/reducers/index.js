@@ -9,6 +9,7 @@ import cardSaved from "./cardSaved";
 import publicCard from "./publicCard";
 import auth from "./auth";
 import emailVerification from "./emailVerification";
+import tabs from "./tabs";
 
 // Loaders
 import loginLoader from "./loaders/loginLoader";
@@ -47,9 +48,6 @@ import profileImageNotifications from "./notifications/profileImageNotifications
 import userUpdatedNotifications from "./notifications/userUpdatedNotifications";
 import backdropImageNotifications from "./notifications/backdropImageNotifications";
 
-// Modals
-import imageCropperModal from "./modals/imageCropperModal";
-
 const rootReducer = combineReducers({
   // Main
   user,
@@ -60,6 +58,7 @@ const rootReducer = combineReducers({
   publicCard,
   auth,
   emailVerification,
+  tabs,
   // Loaders
   loginLoader,
   registerLoader,
@@ -95,7 +94,6 @@ const rootReducer = combineReducers({
   userUpdatedNotifications,
   backdropImageNotifications,
   // Modals
-  imageCropperModal,
 });
 
 export default rootReducer;

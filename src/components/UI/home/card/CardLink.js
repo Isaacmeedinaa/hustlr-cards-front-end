@@ -1,18 +1,22 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import "../../../../constants/colors.css";
 import "./CardUI.css";
 
 const CardLink = (props) => {
   const [pathState, setPathState] = useState(props.pathToCard);
+  const [isCopied, setIsCopied] = useState(false);
+  const [disableCopy, setIsDisableCopy] = useState(false);
 
-  const cardSaved = useSelector(state => state.cardSaved);
+  const cardSaved = useSelector((state) => state.cardSaved);
 
   useEffect(() => {
-    const card = JSON.parse(localStorage.getItem('card'));
-    
-    if ((card.pathToCard === props.pathToCard)) {
+    const card = JSON.parse(localStorage.getItem("card"));
+
+    if (card.pathToCard === props.pathToCard) {
       setPathState(props.pathToCard);
     }
   }, [props.pathToCard, cardSaved]);
@@ -21,25 +25,49 @@ const CardLink = (props) => {
     return null;
   }
 
+  const onCopySuccessChange = () => {
+    if (disableCopy) {
+      return;
+    } else {
+      setIsCopied(true);
+      setIsDisableCopy(true);
+      setTimeout(() => {
+        setIsCopied(false);
+        setIsDisableCopy(false);
+      }, 3000);
+    }
+  };
+
   return (
     <Fragment>
-    <div
-      style={{ backgroundColor: props.transparentColor }}
-      className="card-business-link-container"
-    >
-      <b>Link to your card:</b> 
-      <a
-        href={"https://www.hustlr.cards/" + pathState}
-        style={{ color: props.primaryColor, marginTop: '5px' }}
-        className="card-business-link"
-        target="_blank"
-        rel="noopener noreferrer"
+      {isCopied ? (
+        <span className="card-business-link-copied-text">Copied!</span>
+      ) : null}
+      <CopyToClipboard
+        text={`https://www.hustlr.cards/${pathState}`}
+        onCopy={onCopySuccessChange}
       >
-        https://www.hustlr.cards/{pathState}
-      </a>
-    </div>
-    <div>
-    </div>
+        <div
+          style={{ backgroundColor: props.transparentColor, cursor: "pointer" }}
+          className="card-business-link-container"
+        >
+          <span style={{ cursor: "pointer" }}>
+            <b>Copy My Card URL</b>
+          </span>
+          <span
+            style={{
+              color: props.primaryColor,
+              marginTop: 5,
+              cursor: "pointer",
+            }}
+            className="card-business-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://www.hustlr.cards/{pathState}
+          </span>
+        </div>
+      </CopyToClipboard>
     </Fragment>
   );
 };
