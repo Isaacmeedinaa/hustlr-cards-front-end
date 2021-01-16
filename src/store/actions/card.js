@@ -70,6 +70,8 @@ import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 import CardLocation from "../../models/cardLocation";
 
+import { openOfferingModal, closeOfferingModal } from "./modals/offeringModal";
+
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
 export const SET_CARD_THEME_ID = "SET_CARD_THEME_ID";
@@ -566,6 +568,7 @@ export const createOffering = (cardId) => {
 
         dispatch({ type: CREATE_OFFERING, offering: offering });
         dispatch({ type: OFFERING_CREATED_SUCCESSFULLY });
+        dispatch(openOfferingModal(offering));
       })
       .catch((err) => {
         dispatch({ type: OFFERING_IS_NOT_CREATING_LOADER });
@@ -575,7 +578,7 @@ export const createOffering = (cardId) => {
   };
 };
 
-export const deleteOffering = (id, index) => {
+export const deleteOffering = (id) => {
   return (dispatch) => {
     const offeringData = {
       id: id,
@@ -610,6 +613,7 @@ export const deleteOffering = (id, index) => {
 
         dispatch({ type: DELETE_OFFERING, id: id });
         dispatch({ type: OFFERING_DELETED_SUCCESSFULLY });
+        dispatch(closeOfferingModal());
       })
       .catch((err) => {
         dispatch({ type: OFFERING_IS_NOT_DELETING_LOADER });

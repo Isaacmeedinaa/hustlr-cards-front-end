@@ -52,6 +52,9 @@ import backdropImageNotifications from "./notifications/backdropImageNotificatio
 import imageCropperModal from "./modals/imageCropperModal";
 import backdropImageCropperModal from "./modals/backdropImageCropperModal";
 import viewImagesModal from "./modals/viewImagesModal";
+import socialMediaModal from "./modals/socialMediaModal";
+import paymentMethodsModal from "./modals/paymentMethodsModal";
+import offeringModal from "./modals/offeringModal";
 
 const rootReducer = combineReducers({
   // Main
@@ -102,6 +105,9 @@ const rootReducer = combineReducers({
   imageCropperModal,
   backdropImageCropperModal,
   viewImagesModal,
+  socialMediaModal,
+  paymentMethodsModal,
+  offeringModal,
 });
 
 export default rootReducer;
