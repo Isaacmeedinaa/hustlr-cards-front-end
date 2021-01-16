@@ -12,9 +12,9 @@ import {
 import SideToolbar from "../UI/SideToolbar";
 import TopToolbar from "../UI/home/TopToolbar";
 import BottomToolbar from "../UI/BottomToolbar";
+import CardFormImageCropperModal from "../UI/home/cardform/modals/CardFormImageCropperModal";
+import CardFormBackdropImageCropperModal from "../UI/home/cardform/modals/CardFromBackdropImageCropperModal";
 import CardForm from "../UI/home/cardform/CardForm";
-import CardFormImageCropper from "../UI/home/cardform/CardFormImageCropper";
-import CardFormBackdropImageCropper from "../UI/home/cardform/CardFormBackdropImageCropper";
 import Card from "../UI/home/card/Card";
 
 import Loader from "react-loader-spinner";
@@ -28,11 +28,6 @@ Modal.setAppElement("#root");
 
 class HomeContainer extends Component {
   state = {
-    imageCropperModalIsOpen: false,
-    backdropImageCropperModalIsOpen: false,
-    inputImg: "",
-    imageBlob: null,
-    backdropImageBlob: null,
     largeScreen: false,
   };
 
@@ -151,54 +146,6 @@ class HomeContainer extends Component {
     this.props.cardIsSaved();
   }
 
-  openImageCropperModal = (inputImg) => {
-    this.setState({
-      imageCropperModalIsOpen: true,
-      inputImg: inputImg,
-    });
-  };
-
-  closeImageCropperModal = () => {
-    this.setState({
-      imageCropperModalIsOpen: false,
-      inputImg: "",
-    });
-  };
-
-  openBackdropImageCropperModal = (inputImg) => {
-    this.setState({
-      backdropImageCropperModalIsOpen: true,
-      inputImg: inputImg,
-    });
-  };
-
-  closeBackdropImageCropperModal = () => {
-    this.setState({
-      backdropImageCropperModalIsOpen: false,
-      inputImg: "",
-    });
-  };
-
-  getImageBlob = (blob) => {
-    this.setState({ imageBlob: blob });
-  };
-
-  getBackdropImageBlob = (blob) => {
-    this.setState({ backdropImageBlob: blob });
-  };
-
-  onUploadImageClick = () => {
-    const cardId = this.props.cardId;
-    this.props.uploadBusinessProfilePicture(this.state.imageBlob, cardId);
-    this.closeImageCropperModal();
-  };
-
-  onUploadBackdropImageClick = () => {
-    const cardId = this.props.cardId;
-    this.props.uploadBackdropImage(this.state.backdropImageBlob, cardId);
-    this.closeBackdropImageCropperModal();
-  };
-
   render() {
     if (this.props.cardLoader || this.props.industriesLoader) {
       return (
@@ -210,57 +157,14 @@ class HomeContainer extends Component {
 
     return (
       <Fragment>
-        {/* Modals Start */}
-        <Modal
-          isOpen={this.state.imageCropperModalIsOpen}
-          onRequestClose={this.closeImageCropperModal}
-          contentLabel="Image Cropper Modal"
-          className="primary-light-bg home-page-image-cropper-modal"
-        >
-          <CardFormImageCropper
-            getBlob={this.getImageBlob}
-            inputImg={this.state.inputImg}
-          />
-          <label onClick={this.onUploadImageClick} className="card-form-button">
-            <span className="card-form-button-text">Crop and Upload Image</span>
-          </label>
-          <buttom
-            className="primary-color card-form-image-cropper-modal-button"
-            onClick={this.closeImageCropperModal}
-          >
-            Close
-          </buttom>
-        </Modal>
-        <Modal
-          isOpen={this.state.backdropImageCropperModalIsOpen}
-          onRequestClose={this.closeBackdropImageCropperModal}
-          contentLabel="Gallery Image Modal"
-          className="primary-light-bg home-page-image-cropper-modal"
-        >
-          <CardFormBackdropImageCropper
-            getBlob={this.getBackdropImageBlob}
-            inputImg={this.state.inputImg}
-          />
-          <label
-            onClick={this.onUploadBackdropImageClick}
-            className="card-form-button"
-          >
-            <span className="card-form-button-text">Crop and Upload Image</span>
-          </label>
-          <button
-            className="primary-color card-form-image-cropper-modal-button"
-            onClick={this.closeBackdropImageCropperModal}
-          >
-            Close
-          </button>
-        </Modal>
+        <CardFormImageCropperModal />
+        <CardFormBackdropImageCropperModal />
         <TopToolbar />
         <div className="grid-container-home">
           <SideToolbar
             pathname={this.props.location.pathname}
             history={this.props.history}
           />
-
           <Fragment>
             <div
               className="secondary-light-bg card-form-col-wrapper"
@@ -273,16 +177,7 @@ class HomeContainer extends Component {
               }}
             >
               <div className="card-form-col-container">
-                <CardForm
-                  openImageCropperModal={this.openImageCropperModal}
-                  closeImageCropperModal={this.closeImageCropperModal}
-                  openBackdropImageCropperModal={
-                    this.openBackdropImageCropperModal
-                  }
-                  closeBackdropImageCropperModal={
-                    this.closeBackdropImageCropperModal
-                  }
-                />
+                <CardForm />
               </div>
             </div>
             <div
@@ -318,9 +213,9 @@ const mapStateToProps = (state) => {
     cardLoader: state.cardLoader,
     industries: state.industries.dropdownIndustries,
     industriesLoader: state.industriesLoader,
+    tabs: state.tabs,
     imageCropperModal: state.imageCropperModal,
     backdropImageCropperModal: state.backdropImageCropperModal,
-    tabs: state.tabs,
   };
 };
 

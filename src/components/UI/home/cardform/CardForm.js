@@ -216,18 +216,8 @@ class CardForm extends Component {
               </p>
             ))}
             <CardFormCardPathInput />
-            <CardFormBackdropImageSelector
-              openBackdropImageCropperModal={
-                this.props.openBackdropImageCropperModal
-              }
-              closeBackdropImageCropperModal={
-                this.props.closeBackdropImageCropperModal
-              }
-            />
-            <CardFormImageSelector
-              openImageCropperModal={this.props.openImageCropperModal}
-              closeImageCropperModal={this.props.closeImageCropperModal}
-            />
+            <CardFormBackdropImageSelector />
+            <CardFormImageSelector />
             <CardFormTitleInput />
             <CardFormContactInputs />
             <CardFormShowSocialMediasButton

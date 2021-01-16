@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { openViewImagesModal } from "../../../store/actions/modals/viewImagesModal";
 
 import AwesomeSlider from "react-awesome-slider";
 
@@ -13,7 +15,7 @@ class PublicCardGallerySlider extends Component {
         key={photo.id}
         data-src={photo.url}
         onClick={() =>
-          this.props.openModal(this.props.photos, photo.url, index)
+          this.props.openViewImagesModal(this.props.photos, photo.url, index)
         }
       ></div>
     ));
@@ -43,4 +45,11 @@ class PublicCardGallerySlider extends Component {
   }
 }
 
-export default PublicCardGallerySlider;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openViewImagesModal: (images, currentImgUrl, currentImgindex) =>
+      dispatch(openViewImagesModal(images, currentImgUrl, currentImgindex)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(PublicCardGallerySlider);
