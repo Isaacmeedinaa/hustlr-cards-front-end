@@ -21,7 +21,8 @@ class CardFormBackdropImageSelector extends Component {
       "load",
       async () => {
         let inputImg = reader.result;
-        this.props.openBDImageCropperModal(inputImg);
+        this.props.setInputBackdropImg(inputImg);
+        this.props.openBDImageCropperModal();
       },
       false
     );
@@ -93,8 +94,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteBackdropImage: (imgId) => dispatch(deleteBackdropImage(imgId)),
-    openBDImageCropperModal: (inputImg) =>
-      dispatch(openBDImageCropperModal(inputImg)),
+    openBDImageCropperModal: () => dispatch(openBDImageCropperModal()),
   };
 };
 

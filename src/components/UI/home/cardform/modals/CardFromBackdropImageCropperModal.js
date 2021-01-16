@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  closeBDImageCropperModal,
-  setBDImageCropperModalImageBlob,
-} from "../../../../../store/actions/modals/backdropImageCropperModal";
+import { closeBDImageCropperModal } from "../../../../../store/actions/modals/backdropImageCropperModal";
 import { uploadBackdropImage } from "../../../../../store/actions/card";
 
 import Modal from "react-modal";
@@ -16,7 +13,9 @@ import "../../../../pages/pages.css";
 
 Modal.setAppElement("#root");
 
-const CardFormBackdropImageCropperModal = () => {
+const CardFormBackdropImageCropperModal = (props) => {
+  const [imgBlob, setImgBlob] = useState(null);
+
   const dispatch = useDispatch();
 
   const cardId = useSelector((state) => state.card.cardData.id);
@@ -25,20 +24,20 @@ const CardFormBackdropImageCropperModal = () => {
   );
 
   const onUploadBackdropImageClick = () => {
-    dispatch(uploadBackdropImage(backdropImageCropperModal.imageBlob, cardId));
+    dispatch(uploadBackdropImage(imgBlob, cardId));
     dispatch(closeBDImageCropperModal());
   };
 
   return (
     <Modal
-      isOpen={backdropImageCropperModal.modalIsOpen}
+      isOpen={backdropImageCropperModal}
       onRequestClose={() => dispatch(closeBDImageCropperModal())}
       contentLabel="Gallery Image Modal"
       className="primary-light-bg home-page-image-cropper-modal"
     >
       <CardFormBackdropImageCropper
-        getBlob={(blob) => dispatch(setBDImageCropperModalImageBlob(blob))}
-        inputImg={backdropImageCropperModal.inputImg}
+        getBlob={(blob) => setImgBlob(blob)}
+        inputImg={props.inputBackdropImg}
       />
       <label onClick={onUploadBackdropImageClick} className="card-form-button">
         <span className="card-form-button-text">Crop and Upload Image</span>

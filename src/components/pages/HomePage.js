@@ -29,6 +29,8 @@ Modal.setAppElement("#root");
 class HomeContainer extends Component {
   state = {
     largeScreen: false,
+    inputImg: "",
+    inputBackdropImg: "",
   };
 
   componentDidMount() {
@@ -146,6 +148,20 @@ class HomeContainer extends Component {
     this.props.cardIsSaved();
   }
 
+  setInputImg = (inputImg) => {
+    this.setState({
+      ...this.state,
+      inputImg: inputImg,
+    });
+  };
+
+  setInputBackdropImg = (inputBackdropImg) => {
+    this.setState({
+      ...this.state,
+      inputBackdropImg: inputBackdropImg,
+    });
+  };
+
   render() {
     if (this.props.cardLoader || this.props.industriesLoader) {
       return (
@@ -157,8 +173,10 @@ class HomeContainer extends Component {
 
     return (
       <Fragment>
-        <CardFormImageCropperModal />
-        <CardFormBackdropImageCropperModal />
+        <CardFormImageCropperModal inputImg={this.state.inputImg} />
+        <CardFormBackdropImageCropperModal
+          inputBackdropImg={this.state.inputBackdropImg}
+        />
         <TopToolbar />
         <div className="grid-container-home">
           <SideToolbar
@@ -177,7 +195,10 @@ class HomeContainer extends Component {
               }}
             >
               <div className="card-form-col-container">
-                <CardForm />
+                <CardForm
+                  setInputImg={this.setInputImg}
+                  setInputBackdropImg={this.setInputBackdropImg}
+                />
               </div>
             </div>
             <div

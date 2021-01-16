@@ -15,10 +15,15 @@ class PublicCardGallerySlider extends Component {
         key={photo.id}
         data-src={photo.url}
         onClick={() =>
-          this.props.openViewImagesModal(this.props.photos, photo.url, index)
+          this.onGalleryImageClick(this.props.photos, photo.url, index)
         }
       ></div>
     ));
+  };
+
+  onGalleryImageClick = (images, currentImgUrl, currentImgIndex) => {
+    this.props.setImagesData(images, currentImgUrl, currentImgIndex);
+    this.props.openViewImagesModal();
   };
 
   render() {

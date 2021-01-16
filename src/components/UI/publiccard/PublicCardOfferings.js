@@ -37,10 +37,15 @@ class PublicCardOfferings extends Component {
         key={photo.id}
         data-src={photo.url}
         onClick={() =>
-          this.props.openViewImagesModal(offering.photos, photo.url, index)
+          this.onOfferingImageClick(offering.photos, photo.url, index)
         }
       ></div>
     ));
+  };
+
+  onOfferingImageClick = (images, currentImgUrl, currentImgIndex) => {
+    this.props.setImagesData(images, currentImgUrl, currentImgIndex);
+    this.props.openViewImagesModal();
   };
 
   renderOfferings = () => {
