@@ -36,7 +36,8 @@ class CardFormImageSelector extends Component {
       "load",
       () => {
         let inputImg = reader.result;
-        this.props.openImageCropperModal(inputImg);
+        this.props.setInputImg(inputImg);
+        this.props.openImageCropperModal();
       },
       false
     );
@@ -102,8 +103,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteBusinessImage: (imgId) => dispatch(deleteBusinessImage(imgId)),
-    openImageCropperModal: (inputImg) =>
-      dispatch(openImageCropperModal(inputImg)),
+    openImageCropperModal: () => dispatch(openImageCropperModal()),
   };
 };
 

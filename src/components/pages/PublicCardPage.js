@@ -16,7 +16,6 @@ Modal.setAppElement("#root");
 
 class PublicCardPage extends Component {
   state = {
-    modalIsOpen: false,
     images: [],
     currentImgUrl: "",
     currentImgIndex: null,
@@ -28,18 +27,16 @@ class PublicCardPage extends Component {
     this.props.fetchPublicCard(pathname, history);
   }
 
-  openModal = (images, currentImgUrl, currentImgIndex) => {
+  setImagesData = (images, currentImgUrl, currentImgIndex) => {
     this.setState({
-      modalIsOpen: true,
       images: images,
       currentImgUrl: currentImgUrl,
       currentImgIndex: currentImgIndex,
     });
   };
 
-  closeModal = () => {
+  clearImagesData = () => {
     this.setState({
-      modalIsOpen: false,
       images: [],
       currentImgUrl: "",
       currentImgIndex: null,
@@ -81,7 +78,14 @@ class PublicCardPage extends Component {
 
     return (
       <Fragment>
-        <PublicCardViewImagesModal />
+        <PublicCardViewImagesModal
+          images={this.state.images}
+          currentImgUrl={this.state.currentImgUrl}
+          currentImgIndex={this.state.currentImgIndex}
+          onNextButtonClick={this.onNextButtonClick}
+          onPreviousButtonClick={this.onPreviousButtonClick}
+          clearImagesData={this.clearImagesData}
+        />
         {!this.props.publicCard.isPublic ? (
           <PrivateCard />
         ) : (
@@ -89,7 +93,7 @@ class PublicCardPage extends Component {
             className="public-card-page-wrapper"
             style={{ backgroundColor: this.props.publicCard.primaryColor }}
           >
-            <PublicCard />
+            <PublicCard setImagesData={this.setImagesData} />
           </div>
         )}
       </Fragment>

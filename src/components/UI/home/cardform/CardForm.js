@@ -216,8 +216,10 @@ class CardForm extends Component {
               </p>
             ))}
             <CardFormCardPathInput />
-            <CardFormBackdropImageSelector />
-            <CardFormImageSelector />
+            <CardFormBackdropImageSelector
+              setInputBackdropImg={this.props.setInputBackdropImg}
+            />
+            <CardFormImageSelector setInputImg={this.props.setInputImg} />
             <CardFormTitleInput />
             <CardFormContactInputs />
             <CardFormShowSocialMediasButton

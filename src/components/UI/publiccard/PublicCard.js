@@ -51,11 +51,15 @@ class PublicCard extends Component {
             <PublicCardDescription
               description={this.props.publicCard.description}
             />
-            <PublicCardGallerySlider photos={this.props.publicCard.photos} />
+            <PublicCardGallerySlider
+              photos={this.props.publicCard.photos}
+              setImagesData={this.props.setImagesData}
+            />
             <PublicCardOfferings
               offerings={this.props.publicCard.offerings}
               primaryColor={this.props.publicCard.primaryColor}
               transparentColor={this.props.publicCard.transparentColor}
+              setImagesData={this.props.setImagesData}
             />
             <div className="public-card-logo-container">
               <Link className="primary-color" to="/">
