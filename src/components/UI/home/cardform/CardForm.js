@@ -32,12 +32,12 @@ import CardFormDescriptionInput from "./CardFormDescriptionInput";
 import CardFormAddOfferingButton from "./CardFormAddOfferingButton";
 import CardFormOfferingInputs from "./CardFormOfferingInputs";
 import CardFormContactInputs from "./CardFormContactInputs";
-import CardFormShowSocialMediasButton from "./CardFormShowSocialMediasButton";
-import CardFormSocialMediaInputs from "./CardFormSocialMediaInputs";
+import CardFormAddSocialMediaButton from "./CardFormAddSocialMediaButton";
 import CardFormAddImageButton from "./CardFormAddImageButton";
 import CardFormGallerySlider from "./CardFormGallerySlider";
 import CardFormCardPathInput from "./CardFormCardPathInput";
 import PublicToggle from "../PublicToggle";
+import CardFormAddPaymentMethodButton from "./CardFormAddPaymentMethodButton";
 
 import { showToast } from "../../Toasts";
 
@@ -50,7 +50,6 @@ import {
 
 class CardForm extends Component {
   state = {
-    isHidden: true,
     deleteModalShown: false,
     openOfferingId: null,
   };
@@ -168,14 +167,6 @@ class CardForm extends Component {
     }
   }
 
-  showSocialMediaLinks = async () => {
-    await this.setState((prevState) => {
-      return {
-        isHidden: !prevState.isHidden,
-      };
-    });
-  };
-
   renderOfferingsInputs = () => {
     return this.props.cardData.offerings.map((offering, index) => {
       return (
@@ -222,14 +213,11 @@ class CardForm extends Component {
             <CardFormImageSelector setInputImg={this.props.setInputImg} />
             <CardFormTitleInput />
             <CardFormContactInputs />
-            <CardFormShowSocialMediasButton
-              showSocialMediaLinks={this.showSocialMediaLinks}
-              isHidden={this.state.isHidden}
-            />
-            {this.state.isHidden ? null : <CardFormSocialMediaInputs />}
+            <CardFormAddSocialMediaButton />
             <CardFormIndustrySelect />
             <CardFormLocationInputs />
             <CardFormDescriptionInput />
+            <CardFormAddPaymentMethodButton />
             <CardFormAddImageButton />
             <CardFormGallerySlider />
             <CardFormAddOfferingButton />

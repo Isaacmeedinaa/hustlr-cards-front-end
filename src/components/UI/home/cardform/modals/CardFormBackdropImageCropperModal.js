@@ -9,7 +9,7 @@ import Modal from "react-modal";
 import CardFormBackdropImageCropper from "../CardFormBackdropImageCropper";
 
 import "../../../../../constants/colors.css";
-import "../../../../pages/pages.css";
+import "./modals.css";
 
 Modal.setAppElement("#root");
 
@@ -33,7 +33,7 @@ const CardFormBackdropImageCropperModal = (props) => {
       isOpen={backdropImageCropperModal}
       onRequestClose={() => dispatch(closeBDImageCropperModal())}
       contentLabel="Gallery Image Modal"
-      className="primary-light-bg home-page-image-cropper-modal"
+      className="primary-light-bg card-form-image-cropper-modal"
     >
       <CardFormBackdropImageCropper
         getBlob={(blob) => setImgBlob(blob)}

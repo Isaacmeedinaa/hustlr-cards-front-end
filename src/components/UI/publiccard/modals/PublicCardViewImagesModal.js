@@ -8,7 +8,7 @@ import Modal from "react-modal";
 import IosArrowForward from "react-ionicons/lib/IosArrowForward";
 import IosArrowBack from "react-ionicons/lib/IosArrowBack";
 
-import "../../../pages/pages.css";
+import "./modals.css";
 
 Modal.setAppElement("#root");
 

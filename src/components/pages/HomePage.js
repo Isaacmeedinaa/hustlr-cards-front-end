@@ -13,18 +13,18 @@ import SideToolbar from "../UI/SideToolbar";
 import TopToolbar from "../UI/home/TopToolbar";
 import BottomToolbar from "../UI/BottomToolbar";
 import CardFormImageCropperModal from "../UI/home/cardform/modals/CardFormImageCropperModal";
-import CardFormBackdropImageCropperModal from "../UI/home/cardform/modals/CardFromBackdropImageCropperModal";
+import CardFormBackdropImageCropperModal from "../UI/home/cardform/modals/CardFormBackdropImageCropperModal";
+import CardFormSocialMediaModal from "../UI/home/cardform/modals/CardFormSocialMediaModal";
+import CardFormPaymentMethodsModal from "../UI/home/cardform/modals/CardFormPaymentMethodsModal";
+import CardFormOfferingModal from "../UI/home/cardform/modals/CardFormOfferingModal";
 import CardForm from "../UI/home/cardform/CardForm";
 import Card from "../UI/home/card/Card";
 
 import Loader from "react-loader-spinner";
-import Modal from "react-modal";
 
 import "../../constants/colors.css";
 import "./pages.css";
 import "../UI/home/cardform/CardFormUI.css";
-
-Modal.setAppElement("#root");
 
 class HomeContainer extends Component {
   state = {
@@ -177,6 +177,9 @@ class HomeContainer extends Component {
         <CardFormBackdropImageCropperModal
           inputBackdropImg={this.state.inputBackdropImg}
         />
+        <CardFormSocialMediaModal />
+        <CardFormPaymentMethodsModal />
+        <CardFormOfferingModal />
         <TopToolbar />
         <div className="grid-container-home">
           <SideToolbar
