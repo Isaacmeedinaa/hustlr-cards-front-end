@@ -1,0 +1,99 @@
+.card-form-image-cropper-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 400px;
+  padding: 15px 15px 15px 15px;
+  border-radius: 5px;
+  border-bottom: 6px solid #cdcdd2;
+}
+
+.card-form-image-cropper-modal:focus {
+  outline: none;
+}
+
+.card-form-image-cropper-modal-button {
+  border: none;
+  margin-top: 10px;
+  background-color: white;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.card-form-image-cropper-modal-button:focus {
+  outline: none;
+}
+
+.card-form-image-cropper-modal-button:hover {
+  border-radius: 5px;
+  background-color: rgba(112, 112, 112, 0.06);
+  cursor: pointer;
+}
+
+.card-form-social-media-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 400px;
+  padding: 15px 15px 15px 15px;
+  border-radius: 5px;
+  border-bottom: 6px solid #cdcdd2;
+}
+
+.card-form-social-media-modal:focus {
+  outline: none;
+}
+
+.card-form-payment-methods-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 400px;
+  padding: 15px 15px 15px 15px;
+  border-radius: 5px;
+  border-bottom: 6px solid #cdcdd2;
+}
+
+.card-form-payment-methods-modal:focus {
+  outline: none;
+}
+
+.card-form-offering-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 400px;
+  padding: 15px 15px 15px 15px;
+  border-radius: 5px;
+  border-bottom: 6px solid #cdcdd2;
+}
+
+.card-form-offering-modal:focus {
+  outline: none;
+}
+
+@media only screen and (max-width: 450px) {
+  .card-form-image-cropper-modal {
+    width: 350px;
+  }
+
+  .card-form-social-media-modal {
+    width: 350px;
+  }
+
+  .card-form-payment-methods-modal {
+    width: 350px;
+  }
+
+  .card-form-offering-modal {
+    width: 350px;
+  }
+}

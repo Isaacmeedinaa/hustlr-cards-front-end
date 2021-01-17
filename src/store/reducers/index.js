@@ -27,6 +27,7 @@ import userUpdatingLoader from "./loaders/userUpdatingLoader";
 import changePasswordLoader from "./loaders/changePasswordLoader";
 import forgotPasswordLoader from "./loaders/forgotPasswordLoader";
 import changePasswordCodeLoader from "./loaders/changePasswordCodeLoader";
+import contactMessageLoader from "./loaders/contactMessageLoader";
 
 // Errors
 import errors from "./errors";
@@ -47,6 +48,15 @@ import galleryNotifications from "./notifications/galleryNotifications";
 import profileImageNotifications from "./notifications/profileImageNotifications";
 import userUpdatedNotifications from "./notifications/userUpdatedNotifications";
 import backdropImageNotifications from "./notifications/backdropImageNotifications";
+import contactMessageNotifications from './notifications/contactMessageNotifications';
+
+// Modals
+import imageCropperModal from "./modals/imageCropperModal";
+import backdropImageCropperModal from "./modals/backdropImageCropperModal";
+import viewImagesModal from "./modals/viewImagesModal";
+import socialMediaModal from "./modals/socialMediaModal";
+import paymentMethodsModal from "./modals/paymentMethodsModal";
+import offeringModal from "./modals/offeringModal";
 
 const rootReducer = combineReducers({
   // Main
@@ -75,6 +85,7 @@ const rootReducer = combineReducers({
   changePasswordLoader,
   forgotPasswordLoader,
   changePasswordCodeLoader,
+  contactMessageLoader,
   // Errors
   errors,
   cardErrors,
@@ -93,7 +104,14 @@ const rootReducer = combineReducers({
   profileImageNotifications,
   userUpdatedNotifications,
   backdropImageNotifications,
+  contactMessageNotifications,
   // Modals
+  imageCropperModal,
+  backdropImageCropperModal,
+  viewImagesModal,
+  socialMediaModal,
+  paymentMethodsModal,
+  offeringModal,
 });
 
 export default rootReducer;

@@ -22,54 +22,52 @@ class PublicCard extends Component {
 
     return (
       <Fragment>
-          <div className="primary-light-bg public-card">
-            <div className="public-card-container">
-              <PublicCardBackdropImage
-                backdropImgUrl={this.props.publicCard.backdropImgUrl}
-              />
-              <PublicCardImage
-                imgUrl={this.props.publicCard.imgUrl}
-                backdropImgUrl={this.props.publicCard.backdropImgUrl}
-              />
-              <PublicCardName title={this.props.publicCard.title} />
-              <PublicCardSocialMedias
-                phoneNumber={this.props.publicCard.phoneNumber}
-                email={this.props.publicCard.email}
-                facebookLink={this.props.publicCard.facebookLink}
-                instagramLink={this.props.publicCard.instagramLink}
-                twitterLink={this.props.publicCard.twitterLink}
-                snapchatLink={this.props.publicCard.snapchatLink}
-                primaryColor={this.props.publicCard.primaryColor}
-                transparentColor={this.props.publicCard.transparentColor}
-              />
-              <PublicCardBadges
-                industry={this.props.publicCard.industry}
-                location={this.props.publicCard.location}
-                primaryColor={this.props.publicCard.primaryColor}
-                transparentColor={this.props.publicCard.transparentColor}
-              />
-              <PublicCardDescription
-                description={this.props.publicCard.description}
-              />
-              <PublicCardGallerySlider
-                photos={this.props.publicCard.photos}
-                openModal={this.props.openModal}
-                closeModal={this.props.closeModal}
-              />
-              <PublicCardOfferings
-                offerings={this.props.publicCard.offerings}
-                primaryColor={this.props.publicCard.primaryColor}
-                transparentColor={this.props.publicCard.transparentColor}
-                openModal={this.props.openModal}
-                closeModal={this.props.closeModal}
-              />
-              <div className="public-card-logo-container">
-                <Link className="primary-color" to="/">
-                  <h2 className="primary-color-hover">hustlr.cards</h2>
-                </Link>
-              </div>
+        <div className="primary-light-bg public-card">
+          <div className="public-card-container">
+            <PublicCardBackdropImage
+              backdropImgUrl={this.props.publicCard.backdropImgUrl}
+            />
+            <PublicCardImage
+              imgUrl={this.props.publicCard.imgUrl}
+              backdropImgUrl={this.props.publicCard.backdropImgUrl}
+            />
+            <PublicCardName title={this.props.publicCard.title} />
+            <PublicCardSocialMedias
+              phoneNumber={this.props.publicCard.phoneNumber}
+              email={this.props.publicCard.email}
+              facebookLink={this.props.publicCard.facebookLink}
+              instagramLink={this.props.publicCard.instagramLink}
+              twitterLink={this.props.publicCard.twitterLink}
+              snapchatLink={this.props.publicCard.snapchatLink}
+              primaryColor={this.props.publicCard.primaryColor}
+              transparentColor={this.props.publicCard.transparentColor}
+            />
+            <PublicCardBadges
+              industry={this.props.publicCard.industry}
+              location={this.props.publicCard.location}
+              primaryColor={this.props.publicCard.primaryColor}
+              transparentColor={this.props.publicCard.transparentColor}
+            />
+            <PublicCardDescription
+              description={this.props.publicCard.description}
+            />
+            <PublicCardGallerySlider
+              photos={this.props.publicCard.photos}
+              setImagesData={this.props.setImagesData}
+            />
+            <PublicCardOfferings
+              offerings={this.props.publicCard.offerings}
+              primaryColor={this.props.publicCard.primaryColor}
+              transparentColor={this.props.publicCard.transparentColor}
+              setImagesData={this.props.setImagesData}
+            />
+            <div className="public-card-logo-container">
+              <Link className="primary-color" to="/">
+                <h2 className="primary-color-hover">hustlr.cards</h2>
+              </Link>
             </div>
           </div>
+        </div>
       </Fragment>
     );
   }

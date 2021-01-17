@@ -1,5 +1,8 @@
 import React, { Component, Fragment, createRef } from "react";
 
+import { connect } from "react-redux";
+import { openViewImagesModal } from "../../../store/actions/modals/viewImagesModal";
+
 import AwesomeSlider from "react-awesome-slider";
 
 import "../../../constants/colors.css";
@@ -8,7 +11,6 @@ import "./PublicCardUI.css";
 class PublicCardOfferings extends Component {
   constructor() {
     super();
-
     this.offeringsContainer = createRef();
   }
 
@@ -34,9 +36,16 @@ class PublicCardOfferings extends Component {
       <div
         key={photo.id}
         data-src={photo.url}
-        onClick={() => this.props.openModal(offering.photos, photo.url, index)}
+        onClick={() =>
+          this.onOfferingImageClick(offering.photos, photo.url, index)
+        }
       ></div>
     ));
+  };
+
+  onOfferingImageClick = (images, currentImgUrl, currentImgIndex) => {
+    this.props.setImagesData(images, currentImgUrl, currentImgIndex);
+    this.props.openViewImagesModal();
   };
 
   renderOfferings = () => {
@@ -129,4 +138,11 @@ class PublicCardOfferings extends Component {
   }
 }
 
-export default PublicCardOfferings;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openViewImagesModal: (images, currentImgUrl, currentImgIndex) =>
+      dispatch(openViewImagesModal(images, currentImgUrl, currentImgIndex)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(PublicCardOfferings);

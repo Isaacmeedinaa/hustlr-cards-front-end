@@ -4,6 +4,7 @@ import Loader from "react-loader-spinner";
 
 import { connect } from "react-redux";
 import { createOffering } from "../../../../store/actions/card";
+import { openOfferingModal } from "../../../../store/actions/modals/offeringModal";
 
 import "./CardFormUI.css";
 
@@ -15,9 +16,11 @@ class CardFormAddOfferingButton extends Component {
         onClick={() => this.props.createOffering(this.props.cardId)}
       >
         <span className="card-form-button-text">
-        {this.props.offeringLoader.creatingLoader?
-          <Loader type="TailSpin" color="#ffffff" width={23} height={23} /> 
-          : '+ Add a Product or Service'}
+          {this.props.offeringLoader.creatingLoader ? (
+            <Loader type="TailSpin" color="#ffffff" width={23} height={23} />
+          ) : (
+            "+ Add a Product or Service"
+          )}
         </span>
       </label>
     );
@@ -27,13 +30,15 @@ class CardFormAddOfferingButton extends Component {
 const mapStateToProps = (state) => {
   return {
     cardId: state.card.cardData.id,
-    offeringLoader: state.offeringLoader
+    offeringLoader: state.offeringLoader,
+    offeringCreatedSuccessfully: state.offeringNotifications.created.success,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createOffering: (cardId) => dispatch(createOffering(cardId)),
+    openOfferingModal: () => dispatch(openOfferingModal()),
   };
 };
 

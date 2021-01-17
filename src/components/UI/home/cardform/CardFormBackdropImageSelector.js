@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { deleteBackdropImage } from "../../../../store/actions/card";
+import { openBDImageCropperModal } from "../../../../store/actions/modals/backdropImageCropperModal";
 
 import Loader from "react-loader-spinner";
 
@@ -20,7 +21,8 @@ class CardFormBackdropImageSelector extends Component {
       "load",
       async () => {
         let inputImg = reader.result;
-        this.props.openBackdropImageCropperModal(inputImg);
+        this.props.setInputBackdropImg(inputImg);
+        this.props.openBDImageCropperModal();
       },
       false
     );
@@ -92,6 +94,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteBackdropImage: (imgId) => dispatch(deleteBackdropImage(imgId)),
+    openBDImageCropperModal: () => dispatch(openBDImageCropperModal()),
   };
 };
 
