@@ -51,12 +51,12 @@ class HomeContainer extends Component {
     }
 
     const mql = window.matchMedia("(max-width: 1100px)");
-    mql.addEventListener("change", this.mediaQueryListener);
+    mql.addListener(this.mediaQueryListener);
   }
 
   componentWillUnmount() {
     const mql = window.matchMedia("(max-width: 1100px)");
-    mql.removeEventListener("change", this.mediaQueryListener);
+    mql.removeListener(this.mediaQueryListener);
   }
 
   mediaQueryListener = (event) => {
