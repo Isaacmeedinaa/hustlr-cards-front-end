@@ -17,6 +17,8 @@ import {
 import {
   OFFERING_CREATED_SUCCESSFULLY,
   OFFERING_CREATED_UNSUCCESSFULLY,
+  OFFERING_SAVED_SUCCESSFULLY,
+  OFFERING_SAVED_UNSUCCESSFULLY,
   OFFERING_DELETED_SUCCESSFULLY,
   OFFERING_DELETED_UNSUCCESSFULLY,
 } from "./notifications/offeringNotifications";
@@ -63,6 +65,8 @@ import {
 import {
   OFFERING_IS_CREATING_LOADER,
   OFFERING_IS_NOT_CREATING_LOADER,
+  OFFERING_IS_UPDATING_LOADER,
+  OFFERING_IS_NOT_UPDATING_LOADER,
   OFFERING_IS_DELETING_LOADER,
   OFFERING_IS_NOT_DELETING_LOADER,
 } from "./loaders/offeringLoader";
@@ -92,6 +96,7 @@ export const SET_CARD_OFFERING_TITLE = "SET_CARD_OFFERING_TITLE";
 export const SET_CARD_OFFERING_PRICE = "SET_CARD_OFFERING_PRICE";
 export const SET_CARD_OFFERING_DESCRIPTION = "SET_CARD_OFFERING_DESCRIPTION";
 export const CREATE_OFFERING = "CREATE_OFFERING";
+export const UPDATE_OFFERING = "UPDATE_OFFERING";
 export const DELETE_OFFERING = "DELETE_OFFERING";
 export const SET_CARD_EMAIL = "SET_CARD_EMAIL";
 export const SET_CARD_PHONE_NUMBER = "SET_CARD_PHONE_NUMBER";
@@ -159,23 +164,6 @@ export const saveCard = (cardId) => {
   return async (dispatch, getState) => {
     const { cardData } = getState().card;
     const localStorageCard = JSON.parse(localStorage.getItem("card"));
-    let updatedOfferings = [];
-
-    for (let i = 0; i < localStorageCard.offerings.length; i++) {
-      let result = cardData.offerings.filter((offeringRedux) => {
-        return (
-          offeringRedux.id === localStorageCard.offerings[i].id &&
-          (offeringRedux.title !== localStorageCard.offerings[i].title ||
-            offeringRedux.price !== localStorageCard.offerings[i].price ||
-            offeringRedux.description !==
-              localStorageCard.offerings[i].description)
-        );
-      });
-
-      if (result.length === 1) {
-        updatedOfferings.push(result[0]);
-      }
-    }
 
     // The location description is stored in the redux state. Let's get the description from there and fill it in with the details from the google api
     let updatedLocation = cardData.location;
@@ -240,7 +228,6 @@ export const saveCard = (cardId) => {
           ? null
           : cardData.industry.id,
       userId: cardData.userId,
-      offerings: updatedOfferings,
     };
 
     const userToken = localStorage.getItem("userToken");
@@ -568,12 +555,70 @@ export const createOffering = (cardId) => {
 
         dispatch({ type: CREATE_OFFERING, offering: offering });
         dispatch({ type: OFFERING_CREATED_SUCCESSFULLY });
-        dispatch(openOfferingModal(offering));
+        dispatch(
+          openOfferingModal(offering, localStorageCard.offerings.length - 1)
+        );
       })
       .catch((err) => {
         dispatch({ type: OFFERING_IS_NOT_CREATING_LOADER });
         dispatch({ type: OFFERING_CREATED_UNSUCCESSFULLY });
         console.log(err);
+      });
+  };
+};
+
+export const updateOffering = (
+  id,
+  title,
+  price,
+  description,
+  cardId,
+  index
+) => {
+  return (dispatch) => {
+    const offeringData = {
+      id: id,
+      title: title,
+      price: price,
+      description: description,
+      cardId: cardId,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(offeringData),
+    };
+
+    dispatch({ type: OFFERING_IS_UPDATING_LOADER });
+    fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
+      .then((resp) => resp.json())
+      .then((offering) => {
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        const localStorageCardOfferings = localStorageCard.offerings;
+        localStorageCardOfferings[index] = offering;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({
+          type: UPDATE_OFFERING,
+          offering: offering,
+          offeringIndex: index,
+        });
+
+        dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
+        dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });
+        dispatch(closeOfferingModal());
+      })
+      .catch((err) => {
+        dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
+        dispatch({ type: OFFERING_SAVED_UNSUCCESSFULLY });
       });
   };
 };
