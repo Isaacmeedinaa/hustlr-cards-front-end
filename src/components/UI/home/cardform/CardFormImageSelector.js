@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { deleteBusinessImage } from "../../../../store/actions/card";
+import { openImageCropperModal } from "../../../../store/actions/modals/imageCropperModal";
 
 import Loader from "react-loader-spinner";
 
@@ -35,7 +36,8 @@ class CardFormImageSelector extends Component {
       "load",
       () => {
         let inputImg = reader.result;
-        this.props.openImageCropperModal(inputImg);
+        this.props.setInputImg(inputImg);
+        this.props.openImageCropperModal();
       },
       false
     );
@@ -101,6 +103,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteBusinessImage: (imgId) => dispatch(deleteBusinessImage(imgId)),
+    openImageCropperModal: () => dispatch(openImageCropperModal()),
   };
 };
 

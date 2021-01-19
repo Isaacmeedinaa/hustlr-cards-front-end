@@ -177,28 +177,6 @@
   justify-content: center;
 }
 
-.card-form-image-cropper-modal-button {
-  border: none;
-  margin-top: 10px;
-  background-color: white;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-bottom: 8px;
-  padding-top: 8px;
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.card-form-image-cropper-modal-button:focus {
-  outline: none;
-}
-
-.card-form-image-cropper-modal-button:hover {
-  border-radius: 5px;
-  background-color: rgba(112, 112, 112, 0.06);
-  cursor: pointer;
-}
-
 .card-form-image-cropper {
   position: relative;
   height: 200px;
