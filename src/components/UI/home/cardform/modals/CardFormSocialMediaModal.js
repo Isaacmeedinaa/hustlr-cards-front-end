@@ -7,6 +7,7 @@ import Modal from "react-modal";
 
 import "../../../../../constants/colors.css";
 import "./modals.css";
+import CardFormSocialMediaInputs from "../CardFormSocialMediaInputs";
 
 Modal.setAppElement("#root");
 
@@ -23,6 +24,7 @@ const CardFormSocialMediaModal = () => {
       className="primary-light-bg card-form-social-media-modal"
     >
       <h3>Add Social Media</h3>
+      <CardFormSocialMediaInputs />
     </Modal>
   );
 };

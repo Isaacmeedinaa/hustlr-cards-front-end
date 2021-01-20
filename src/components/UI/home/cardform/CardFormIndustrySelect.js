@@ -46,6 +46,7 @@ class CardFormIndustrySelect extends Component {
         <Select
           className="card-form-dropdown"
           classNamePrefix="card-form-dropdown"
+          isSearchable={false}
           isClearable={true}
           styles={{
             control: (base, state) => ({
@@ -97,7 +98,7 @@ class CardFormIndustrySelect extends Component {
 const mapStateToProps = (state) => {
   return {
     industry: state.card.cardData.industry,
-    dropdownIndustries: state.industries.dropdownIndustries,
+    dropdownIndustries: state.dropdowns.dropdownIndustries,
   };
 };
 

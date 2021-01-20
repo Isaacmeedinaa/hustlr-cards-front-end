@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 // Main
 import user from "./user";
-import industries from "./industries";
+import dropdowns from "./dropdowns";
 import themes from "./themes";
 import card from "./card";
 import cardSaved from "./cardSaved";
@@ -14,7 +14,7 @@ import tabs from "./tabs";
 // Loaders
 import loginLoader from "./loaders/loginLoader";
 import registerLoader from "./loaders/registerLoader";
-import industriesLoader from "./loaders/industriesLoader";
+import dropdownsLoader from "./loaders/dropdownsLoader";
 import cardLoader from "./loaders/cardLoader";
 import publicCardLoader from "./loaders/publicCardLoader";
 import cardBackdropImageLoader from "./loaders/cardBackdropImageLoader";
@@ -28,6 +28,7 @@ import changePasswordLoader from "./loaders/changePasswordLoader";
 import forgotPasswordLoader from "./loaders/forgotPasswordLoader";
 import changePasswordCodeLoader from "./loaders/changePasswordCodeLoader";
 import contactMessageLoader from "./loaders/contactMessageLoader";
+import linkLoader from "./loaders/socialMediaLinkLoaders";
 
 // Errors
 import errors from "./errors";
@@ -49,6 +50,7 @@ import profileImageNotifications from "./notifications/profileImageNotifications
 import userUpdatedNotifications from "./notifications/userUpdatedNotifications";
 import backdropImageNotifications from "./notifications/backdropImageNotifications";
 import contactMessageNotifications from './notifications/contactMessageNotifications';
+import linkNotifications from "./notifications/socialMediaLinkNotifications";
 
 // Modals
 import imageCropperModal from "./modals/imageCropperModal";
@@ -61,7 +63,7 @@ import offeringModal from "./modals/offeringModal";
 const rootReducer = combineReducers({
   // Main
   user,
-  industries,
+  dropdowns,
   themes,
   card,
   cardSaved,
@@ -72,7 +74,7 @@ const rootReducer = combineReducers({
   // Loaders
   loginLoader,
   registerLoader,
-  industriesLoader,
+  dropdownsLoader,
   cardLoader,
   publicCardLoader,
   cardBackdropImageLoader,
@@ -86,6 +88,7 @@ const rootReducer = combineReducers({
   forgotPasswordLoader,
   changePasswordCodeLoader,
   contactMessageLoader,
+  linkLoader,
   // Errors
   errors,
   cardErrors,
@@ -105,6 +108,7 @@ const rootReducer = combineReducers({
   userUpdatedNotifications,
   backdropImageNotifications,
   contactMessageNotifications,
+  linkNotifications,
   // Modals
   imageCropperModal,
   backdropImageCropperModal,

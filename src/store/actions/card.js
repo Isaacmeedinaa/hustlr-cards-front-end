@@ -66,6 +66,25 @@ import {
   OFFERING_IS_DELETING_LOADER,
   OFFERING_IS_NOT_DELETING_LOADER,
 } from "./loaders/offeringLoader";
+
+import {
+  LINK_IS_CREATING_LOADER,
+  LINK_IS_NOT_CREATING_LOADER,
+  LINK_IS_DELETING_LOADER,
+  LINK_IS_NOT_DELETING_LOADER,
+  LINK_IS_UPDATING_LOADER,
+  LINK_IS_NOT_UPDATING_LOADER,
+} from "./loaders/socialMediaLinkLoaders";
+
+import {
+  LINK_CREATED_SUCCESSFULLY,
+  LINK_CREATED_UNSUCCESSFULLY,
+  LINK_SAVED_SUCCESSFULLY,
+  LINK_SAVED_UNSUCCESSFULLY,
+  LINK_DELETED_SUCCESSFULLY,
+  LINK_DELETED_UNSUCCESSFULLY
+} from "./notifications/socialMediaLinkNotifications";
+
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 import CardLocation from "../../models/cardLocation";
@@ -101,6 +120,7 @@ export const DELETE_CARD_GALLERY_PICTURE = "DELETE_CARD_GALLERY_PICTURE";
 export const UPLOAD_OFFERING_PICTURE = "UPLOAD_OFFERING_PICTURE";
 export const DELETE_OFFERING_PICTURE = "DELETE_OFFERING_PICTURE";
 export const SET_CARD_PATH = "SET_CARD_PATH";
+export const DELETE_LINK = "DELETE_LINK";
 
 export const fetchCard = (userId) => {
   return async (dispatch, getState) => {
@@ -138,7 +158,9 @@ export const fetchCard = (userId) => {
           card.userId,
           card.industry,
           card.photos,
-          card.offerings
+          card.offerings,
+          card.links,
+          card.paymentMethods
         );
 
         const cardTheme = themes.find((theme) => theme.id === card.themeId);
@@ -618,6 +640,98 @@ export const deleteOffering = (id) => {
       .catch((err) => {
         dispatch({ type: OFFERING_IS_NOT_DELETING_LOADER });
         dispatch({ type: OFFERING_DELETED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const createLink = (linkTypeId) => {
+  return (dispatch, getState) => {
+    const { themes, card } = getState();
+
+    const linkData = {
+      id: 0,
+      url: "",
+      title: "",
+      typeId: linkTypeId,
+      cardId: card.cardData.id,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(linkData),
+    };
+
+    dispatch({ type: LINK_IS_CREATING_LOADER });
+    fetch(`${API_BASE_URL}/links`, reqObj)
+      .then((resp) => resp.json())
+      .then((card) => {
+        dispatch({ type: LINK_IS_NOT_CREATING_LOADER });
+
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(card));
+
+        const cardTheme = themes.find((theme) => theme.id === card.themeId);
+
+        dispatch(
+          { type: SET_CARD, 
+            cardData: card,
+            cardTheme: cardTheme
+          });
+
+        dispatch({ type: LINK_CREATED_SUCCESSFULLY });
+        
+      })
+      .catch((err) => {
+        dispatch({ type: LINK_IS_NOT_CREATING_LOADER });
+        dispatch({ type: LINK_CREATED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const deleteLink = (id) => {
+  return (dispatch) => {
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: LINK_IS_DELETING_LOADER, linkId: id });
+    fetch(`${API_BASE_URL}/links/${id}`, reqObj)
+      .then(() => {})
+      .then(() => {
+        dispatch({ type: LINK_IS_NOT_DELETING_LOADER });
+        // MUST remove offering from local storage card offerings array
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        let newLinks = localStorageCard.links.filter(
+          (link) => link.id !== id
+        );
+        delete localStorageCard["links"];
+        localStorageCard["links"] = newLinks;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: DELETE_LINK, id: id });
+        dispatch({ type: LINK_DELETED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: LINK_IS_NOT_DELETING_LOADER });
+        dispatch({ type: LINK_DELETED_UNSUCCESSFULLY });
         console.log(err);
       });
   };

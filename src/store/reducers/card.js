@@ -26,6 +26,7 @@ import {
   UPLOAD_OFFERING_PICTURE,
   DELETE_OFFERING_PICTURE,
   SET_CARD_PATH,
+  DELETE_LINK
 } from "../actions/card";
 
 const initialState = {
@@ -54,6 +55,8 @@ const initialState = {
     location: new CardLocation(),
     photos: [],
     offerings: [],
+    links: [],
+    paymentMethods: []
   },
   cardTheme: {
     primaryColor: "",
@@ -89,6 +92,8 @@ const card = (state = initialState, action) => {
           industry: action.cardData.industry,
           photos: action.cardData.photos,
           offerings: action.cardData.offerings,
+          links: action.cardData.links,
+          paymentMethods: action.cardData.paymentMethods,
           location: action.cardData.location
         },
         cardTheme: {
@@ -275,6 +280,19 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           offerings: filteredOfferings,
+        },
+      };
+
+    case DELETE_LINK:
+      const filteredLinks = state.cardData.links.filter(
+        (link) => link.id !== action.id
+      );
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          links: filteredLinks,
         },
       };
 
