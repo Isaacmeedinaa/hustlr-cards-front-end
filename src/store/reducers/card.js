@@ -26,7 +26,10 @@ import {
   UPLOAD_OFFERING_PICTURE,
   DELETE_OFFERING_PICTURE,
   SET_CARD_PATH,
-  DELETE_LINK
+  DELETE_LINK,
+  CREATE_LINK,
+  SET_LINK,
+  SET_MULTIPLE_LINKS
 } from "../actions/card";
 
 const initialState = {
@@ -283,6 +286,15 @@ const card = (state = initialState, action) => {
         },
       };
 
+    case CREATE_LINK:
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          links: state.cardData.links.concat(action.link),
+        },
+      };
+
     case DELETE_LINK:
       const filteredLinks = state.cardData.links.filter(
         (link) => link.id !== action.id
@@ -293,6 +305,28 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           links: filteredLinks,
+        },
+      };
+
+    case SET_LINK:
+      const links = [...state.cardData.links];
+      links[action.linkIndex].url = action.url;
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          links: links,
+        },
+      };
+
+    case SET_MULTIPLE_LINKS:
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          links: action.links,
         },
       };
 

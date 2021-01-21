@@ -37,7 +37,7 @@ const linkNotifications = (state = intialState, action) => {
         saved : {
           show: true,
           success: true,
-          message: 'Your link was saved!'
+          message: 'Your links were saved!'
         }
       };
 
