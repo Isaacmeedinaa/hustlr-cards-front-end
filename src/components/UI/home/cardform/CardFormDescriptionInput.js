@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import { setCardDescription } from "../../../../store/actions/card";
@@ -20,13 +20,24 @@ class CardFormDescriptionInput extends Component {
   };
   render() {
     return (
-      <textarea
-        className="card-form-input-large"
-        name="description"
-        placeholder="Write your hook here!"
-        value={this.state.description}
-        onChange={this.onCardDescriptionChangeHandler}
-      />
+      <Fragment>
+        <textarea
+          className="card-form-input-large"
+          name="description"
+          placeholder="Write your hook here!"
+          value={this.state.description}
+          onChange={this.onCardDescriptionChangeHandler}
+        />
+        <p
+          className="card-form-description-count"
+          style={{ color: this.state.description.length > 250 ? "red" : null }}
+        >
+          {this.state.description.length > 250
+            ? `${250 - this.state.description.length}`
+            : this.state.description.length}{" "}
+          / 500
+        </p>
+      </Fragment>
     );
   }
 }

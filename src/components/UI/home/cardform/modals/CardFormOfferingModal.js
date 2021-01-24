@@ -85,6 +85,21 @@ const CardFormOfferingModal = (props) => {
     });
   };
 
+  const onSaveOfferingClick = () => {
+    if (description.length > 250) return;
+
+    dispatch(
+      updateOffering(
+        offering.id,
+        title,
+        price,
+        description,
+        cardId,
+        offeringModal.offeringIndex
+      )
+    );
+  };
+
   const deleteOfferingInputsHandler = () => {
     dispatch(deleteOffering(offering.id));
     setShowDeleteModal(false);
@@ -125,6 +140,15 @@ const CardFormOfferingModal = (props) => {
         value={description}
         onChange={(event) => setDescription(event.target.value)}
       />
+      <p
+        className="card-form-product-service-description-count"
+        style={{ color: description.length > 250 ? "red" : null }}
+      >
+        {description.length > 250
+          ? `${250 - description.length}`
+          : description.length}{" "}
+        / 250
+      </p>
       <div className="card-form-product-service-buttons-container">
         <label
           className="primary-color card-form-offering-button"
@@ -145,24 +169,13 @@ const CardFormOfferingModal = (props) => {
           accept="image/x-png,image/jpeg"
           multiple={true}
         />
-        {originalOffering.title !== title ||
-        originalOffering.price !== price ||
-        originalOffering.description !== description ? (
+        {description.length > 250 ? null : originalOffering.title !== title ||
+          originalOffering.price !== price ||
+          originalOffering.description !== description ? (
           <button
             className="primary-color card-form-offering-button"
             id="cardFormProductServiceDeleteBtn"
-            onClick={() =>
-              dispatch(
-                updateOffering(
-                  offering.id,
-                  title,
-                  price,
-                  description,
-                  cardId,
-                  offeringModal.offeringIndex
-                )
-              )
-            }
+            onClick={onSaveOfferingClick}
           >
             {offeringLoader.updatingLoader ? (
               <Loader type="TailSpin" color="#2ecc71" width={23} height={23} />
