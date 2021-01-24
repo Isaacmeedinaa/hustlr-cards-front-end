@@ -265,6 +265,12 @@
   outline: none;
 }
 
+.card-form-description-count {
+  margin-top: 10px;
+  width: 100%;
+  text-align: right;
+}
+
 .card-form-contact-fields {
   display: flex;
   flex-direction: row;
@@ -304,6 +310,27 @@
 
 .card-form-button:hover {
   background-color: #2bc16b !important;
+  cursor: pointer;
+}
+
+.card-form-add-payment-button {
+  margin-top: 10px !important;
+  margin-bottom: 0px !important;
+  width: 100% !important;
+  height: 40px !important;
+  background-color: #2ecc71 !important;
+  border: none !important;
+  border-radius: 5px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-content: center !important;
+  outline: none !important;
+}
+
+.card-form-add-payment-button:hover {
+  background-color: #2bc16b !important;
+  cursor: pointer;
 }
 
 .card-form-button-text {
@@ -374,11 +401,16 @@
   outline: none;
 }
 
+.card-form-product-service-description-count {
+  margin-top: 10px;
+  width: 100%;
+  text-align: right;
+}
+
 .card-form-product-service-buttons-container {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-top: 10px;
   width: 100%;
 }
 .card-form-offering-button {
