@@ -50,7 +50,7 @@ class CardFormOfferingInputs extends Component {
   };
 
   onOpenOfferingModalClick = () => {
-    this.props.openOfferingModal(this.props.offering);
+    this.props.openOfferingModal(this.props.offering, this.props.index);
   };
 
   render() {
@@ -64,12 +64,12 @@ class CardFormOfferingInputs extends Component {
           }}
         >
           <h6 className="card-form-offering-title-header">
-            {!this.state.title || this.state.title === "" ? (
+            {!this.props.offering.title || this.props.offering.title === "" ? (
               <span className="card-form-empty-offering-title-placeholder">
                 Click To Edit Offering
               </span>
             ) : (
-              this.state.title
+              this.props.offering.title
             )}
           </h6>
         </div>
@@ -90,7 +90,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     hideOfferingCreatedNotification: () =>
       dispatch(hideOfferingCreatedNotification()),
-    openOfferingModal: (offering) => dispatch(openOfferingModal(offering)),
+    openOfferingModal: (offering, offeringIndex) =>
+      dispatch(openOfferingModal(offering, offeringIndex)),
   };
 };
 

@@ -80,6 +80,12 @@
   outline: none;
 }
 
+/* .card-form-offering-modal-container {
+  padding: 15px 15px 15px 15px;
+  width: 100%;
+  height: 100%;
+} */
+
 @media only screen and (max-width: 450px) {
   .card-form-image-cropper-modal {
     width: 350px;

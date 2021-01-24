@@ -17,6 +17,7 @@ import {
   SET_CARD_OFFERING_PRICE,
   SET_CARD_OFFERING_DESCRIPTION,
   CREATE_OFFERING,
+  UPDATE_OFFERING,
   DELETE_OFFERING,
   SET_CARD_EMAIL,
   SET_CARD_PHONE_NUMBER,
@@ -89,7 +90,7 @@ const card = (state = initialState, action) => {
           industry: action.cardData.industry,
           photos: action.cardData.photos,
           offerings: action.cardData.offerings,
-          location: action.cardData.location
+          location: action.cardData.location,
         },
         cardTheme: {
           primaryColor: action.cardTheme.primaryColor,
@@ -184,8 +185,8 @@ const card = (state = initialState, action) => {
           location: {
             ...state.cardData.location,
             description: action.description,
-            googlePlaceId: action.googlePlaceId
-          }
+            googlePlaceId: action.googlePlaceId,
+          },
         },
       };
 
@@ -194,7 +195,7 @@ const card = (state = initialState, action) => {
         ...state,
         cardData: {
           ...state.cardData,
-          location: action.location
+          location: action.location,
         },
       };
 
@@ -232,7 +233,7 @@ const card = (state = initialState, action) => {
     case SET_CARD_OFFERING_PRICE:
       const offeringsSnapshotTwo = [...state.cardData.offerings]; // creates a copy of all offerings in array
       const offeringSnapshotTwo = offeringsSnapshotTwo[action.offeringIndex]; // gets copy of the offering we want to modify
-      offeringSnapshotTwo.price = action.offeringPrice; // modifies the 
+      offeringSnapshotTwo.price = action.offeringPrice; // modifies the
 
       return {
         ...state,
@@ -262,6 +263,18 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           offerings: state.cardData.offerings.concat(action.offering),
+        },
+      };
+
+    case UPDATE_OFFERING:
+      const updateOfferings = state.cardData.offerings;
+      updateOfferings[action.offeringIndex] = action.offering;
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          offerings: updateOfferings,
         },
       };
 
@@ -354,7 +367,9 @@ const card = (state = initialState, action) => {
           return offering;
         }
 
-        offering.photos = offering.photos.filter(photo => photo.id !== action.photoId);
+        offering.photos = offering.photos.filter(
+          (photo) => photo.id !== action.photoId
+        );
         return offering;
       });
 
