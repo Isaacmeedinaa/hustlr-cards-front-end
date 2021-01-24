@@ -190,6 +190,12 @@ const CardFormOfferingModal = (props) => {
           </AwesomeSlider>
         </div>
       ) : null}
+      <button
+        className="primary-color card-form-image-cropper-modal-button"
+        onClick={() => dispatch(closeOfferingModal())}
+      >
+        Close
+      </button>
       {showDeleteModal ? (
         <div className="primary-light-bg card-form-delete-offering-modal">
           <span className="card-form-delete-offering-modal-question">
