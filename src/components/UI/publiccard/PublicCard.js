@@ -35,10 +35,7 @@ class PublicCard extends Component {
             <PublicCardSocialMedias
               phoneNumber={this.props.publicCard.phoneNumber}
               email={this.props.publicCard.email}
-              facebookLink={this.props.publicCard.facebookLink}
-              instagramLink={this.props.publicCard.instagramLink}
-              twitterLink={this.props.publicCard.twitterLink}
-              snapchatLink={this.props.publicCard.snapchatLink}
+              links={this.props.publicCard.links}
               primaryColor={this.props.publicCard.primaryColor}
               transparentColor={this.props.publicCard.transparentColor}
             />

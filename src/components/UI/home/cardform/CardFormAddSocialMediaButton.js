@@ -13,7 +13,11 @@ class CardFormAddSocialMediaButton extends Component {
         className="primary color card-form-button"
         onClick={() => this.props.openSocialMediaModal()}
       >
-        <span className="card-form-button-text">+ Add Social Media</span>
+        <span className="card-form-button-text">
+          {this.props.links.length === 0 ?
+          "+ Add Social Media Links" : "Edit Social Media Links"
+          }
+        </span>
       </label>
     );
   }

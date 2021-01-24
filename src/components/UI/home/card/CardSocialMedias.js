@@ -1,11 +1,8 @@
 import React from "react";
 
-import CardFacebookLink from "./CardFacebookLink";
-import CardInstagramLink from "./CardInstagramLink";
-import CardTwitterLink from "./CardTwitterLink";
-import CardSnapchatLink from "./CardSnapchatLink";
 import CardPhoneNumber from "./CardPhoneNumber";
 import CardEmail from "./CardEmail";
+import CardSocialMediaLink from "./CardSocialMediaLink";
 
 import "../../../../constants/colors.css";
 import "./CardUI.css";
@@ -22,6 +19,19 @@ const CardSocialMedias = (props) => {
     return null;
   }
 
+  const renderSocialMediaLinks = () => {
+    return props.links.map((link) => {
+      return (
+        <CardSocialMediaLink 
+          primaryColor={props.primaryColor}
+          transparentColor={props.transparentColor}
+          link={link}
+          key={link.id}
+        />
+      )
+    })
+  }
+
   return (
     <div className="card-business-social-media-links-container">
       <CardPhoneNumber
@@ -34,26 +44,7 @@ const CardSocialMedias = (props) => {
         transparentColor={props.transparentColor}
         email={props.email}
       />
-      <CardFacebookLink
-        primaryColor={props.primaryColor}
-        transparentColor={props.transparentColor}
-        facebookLink={props.facebookLink}
-      />
-      <CardInstagramLink
-        primaryColor={props.primaryColor}
-        transparentColor={props.transparentColor}
-        instagramLink={props.instagramLink}
-      />
-      <CardTwitterLink
-        primaryColor={props.primaryColor}
-        transparentColor={props.transparentColor}
-        twitterLink={props.twitterLink}
-      />
-      <CardSnapchatLink
-        primaryColor={props.primaryColor}
-        transparentColor={props.transparentColor}
-        snapchatLink={props.snapchatLink}
-      />
+      {renderSocialMediaLinks()}
     </div>
   );
 };
