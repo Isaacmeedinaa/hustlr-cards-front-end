@@ -49,8 +49,8 @@ import galleryNotifications from "./notifications/galleryNotifications";
 import profileImageNotifications from "./notifications/profileImageNotifications";
 import userUpdatedNotifications from "./notifications/userUpdatedNotifications";
 import backdropImageNotifications from "./notifications/backdropImageNotifications";
-import contactMessageNotifications from './notifications/contactMessageNotifications';
 import linkNotifications from "./notifications/socialMediaLinkNotifications";
+import contactMessageNotifications from "./notifications/contactMessageNotifications";
 
 // Modals
 import imageCropperModal from "./modals/imageCropperModal";

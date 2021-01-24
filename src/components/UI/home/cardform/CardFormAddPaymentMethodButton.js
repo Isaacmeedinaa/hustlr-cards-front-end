@@ -11,7 +11,7 @@ const CardFormAddPaymentMethodButton = () => {
 
   return (
     <label
-      className="primary color card-form-button"
+      className="primary color card-form-add-payment-button"
       onClick={() => dispatch(openPaymentMethodsModal())}
     >
       <span className="card-form-button-text">+ Add Payment Method</span>
