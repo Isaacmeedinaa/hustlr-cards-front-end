@@ -19,6 +19,8 @@ import AwesomeSlider from "react-awesome-slider";
 import MdTrash from "react-ionicons/lib/MdTrash";
 import MdClose from "react-ionicons/lib/MdClose";
 
+import CardFormDeleteOfferingModal from "./CardFormDeleteOfferingModal";
+
 import "../../../../../constants/colors.css";
 import "./modals.css";
 
@@ -103,6 +105,10 @@ const CardFormOfferingModal = (props) => {
 
   const deleteOfferingInputsHandler = () => {
     dispatch(deleteOffering(offering.id));
+    setShowDeleteModal(false);
+  };
+
+  const hideDeleteModal = () => {
     setShowDeleteModal(false);
   };
 
@@ -217,25 +223,10 @@ const CardFormOfferingModal = (props) => {
         </div>
       ) : null}
       {showDeleteModal ? (
-        <div className="primary-light-bg card-form-delete-offering-modal">
-          <span className="card-form-delete-offering-modal-question">
-            Are you sure?
-          </span>
-          <div className="card-form-delete-offering-modal-question">
-            <button
-              className="primary-color card-form-delete-offering-modal-button"
-              onClick={deleteOfferingInputsHandler}
-            >
-              Yes
-            </button>
-            <button
-              className="primary-color card-form-delete-offering-modal-button"
-              onClick={() => setShowDeleteModal(false)}
-            >
-              No
-            </button>
-          </div>
-        </div>
+        <CardFormDeleteOfferingModal
+          deleteOfferingInputsHandler={deleteOfferingInputsHandler}
+          hideDeleteModal={hideDeleteModal}
+        />
       ) : null}
     </Modal>
   );

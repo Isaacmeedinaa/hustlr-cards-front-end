@@ -109,8 +109,31 @@ const Colors = (props) => {
 };
 
 class ThemePicker extends Component {
+  constructor(props) {
+    super(props);
+
+    this.themePicker = React.createRef();
+    this.handleOutsideComponentClick = this.handleOutsideComponentClick.bind(
+      this
+    );
+  }
+
   state = {
     themeId: this.props.themeId,
+  };
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleOutsideComponentClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleOutsideComponentClick);
+  }
+
+  handleOutsideComponentClick = (event) => {
+    if (this.themePicker && !this.themePicker.current.contains(event.target)) {
+      this.props.closeThemePickerHandler();
+    }
   };
 
   pickColorClickHandler = async (themeId) => {
@@ -129,7 +152,7 @@ class ThemePicker extends Component {
         animationOut="fadeOut"
         isVisible={true}
       >
-        <div className="primary-light-bg theme-picker">
+        <div className="primary-light-bg theme-picker" ref={this.themePicker}>
           <Colors
             themes={this.props.themes}
             pickColorClickHandler={this.pickColorClickHandler}
