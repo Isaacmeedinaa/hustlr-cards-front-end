@@ -33,6 +33,9 @@ const CardFormOfferingModal = (props) => {
   const cardId = useSelector((state) => state.card.cardData.id);
   const offeringLoader = useSelector((state) => state.offeringLoader);
   const offeringImageLoader = useSelector((state) => state.offeringImageLoader);
+  const offeringLocalStorage = useSelector(
+    (state) => state.offeringLocalStorage
+  );
   const offering = offeringModal.offering;
 
   const [title, setTitle] = useState(offering.title);
@@ -51,7 +54,14 @@ const CardFormOfferingModal = (props) => {
     dispatch(
       setCardOfferingDescription(offeringModal.offeringIndex, description)
     );
-  }, [offeringModal, title, price, description, dispatch]);
+  }, [
+    offeringModal,
+    title,
+    price,
+    description,
+    dispatch,
+    offeringLocalStorage,
+  ]);
 
   const onImageChangeHandler = (event) => {
     const images = event.target.files;
@@ -124,9 +134,7 @@ const CardFormOfferingModal = (props) => {
       className="primary-light-bg card-form-offering-modal"
     >
       <div className="card-form-modal-header">
-        <h3 className="card-form-modal-title">
-          Edit Product or Service
-        </h3>
+        <h3 className="card-form-modal-title">Edit Product or Service</h3>
         <div
           className="card-form-modal-btn"
           onClick={() => dispatch(closeOfferingModal())}
