@@ -95,6 +95,7 @@ import CardLocation from "../../models/cardLocation";
 
 import { openOfferingModal, closeOfferingModal } from "./modals/offeringModal";
 import { TOGGLE_CARD_LINK_LOCAL_STORAGE } from "./localStorage/cardLinkLocalStorage";
+import { TOGGLE_OFFERING_LOCAL_STORAGE } from "./localStorage/offeringLocalStorage";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -632,6 +633,8 @@ export const updateOffering = (
         localStorage.removeItem("card");
         localStorage.setItem("card", JSON.stringify(localStorageCard));
 
+        dispatch({ type: TOGGLE_OFFERING_LOCAL_STORAGE });
+
         dispatch({
           type: UPDATE_OFFERING,
           offering: offering,
@@ -640,7 +643,7 @@ export const updateOffering = (
 
         dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
         dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });
-        dispatch(closeOfferingModal());
+        // dispatch(closeOfferingModal());
       })
       .catch((err) => {
         dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });

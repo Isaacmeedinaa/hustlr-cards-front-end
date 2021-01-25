@@ -62,6 +62,7 @@ import offeringModal from "./modals/offeringModal";
 
 // Local Storage
 import cardLinkLocalStorage from "./localStorage/cardLinkLocalStorage";
+import offeringLocalStorage from "./localStorage/offeringLocalStorage";
 
 const rootReducer = combineReducers({
   // Main
@@ -121,6 +122,7 @@ const rootReducer = combineReducers({
   offeringModal,
   // Local Storage
   cardLinkLocalStorage,
+  offeringLocalStorage,
 });
 
 export default rootReducer;
