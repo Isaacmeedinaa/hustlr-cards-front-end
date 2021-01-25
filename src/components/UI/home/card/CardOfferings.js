@@ -116,7 +116,7 @@ const CardOfferings = (props) => {
       {!showHeader ||
       !props.offerings ||
       props.offerings.length === 0 ? null : (
-       <div className="card-business-section-header-container">
+        <div className="card-business-section-header-container">
           <h4 className="ui horizontal divider header">
             <span className="public-card-products-services-title-text">
               Products &amp; Services
@@ -126,6 +126,9 @@ const CardOfferings = (props) => {
       )}
       <div
         className="card-business-products-services-container"
+        style={{
+          justifyContent: props.offerings.length === 1 ? "center" : null,
+        }}
         id="card-business-products-services-container"
         onWheel={onOfferingsContainerWheel}
         ref={offeringsContainer}
