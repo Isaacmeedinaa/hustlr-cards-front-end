@@ -740,11 +740,58 @@ export const createLink = (linkTypeId) => {
   };
 };
 
-export const updateLinks = () => {
+// export const updateLinks = () => {
+//   return (dispatch, getState) => {
+//     const { card } = getState();
+
+//     const linkData = [ ...card.cardData.links ];
+
+//     const userToken = localStorage.getItem("userToken");
+
+//     const reqObj = {
+//       method: "PUT",
+//       headers: {
+//         Authorization: `Bearer ${userToken}`,
+//         "Content-Type": "application/json",
+//         Accepts: "application/json",
+//       },
+//       body: JSON.stringify(linkData),
+//     };
+
+//     dispatch({ type: LINK_IS_UPDATING_LOADER });
+//     fetch(`${API_BASE_URL}/links`, reqObj)
+//       .then((resp) => resp.json())
+//       .then((cardLinks) => {
+//         dispatch({ type: LINK_IS_NOT_UPDATING_LOADER });
+
+//         const localStorageCard = JSON.parse(localStorage.getItem("card"));
+//         localStorageCard.links = cardLinks;
+//         localStorage.removeItem("card");
+//         localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+//         dispatch({ type: SET_MULTIPLE_LINKS, links: cardLinks });
+//         dispatch({ type: LINK_SAVED_SUCCESSFULLY });
+        
+//       })
+//       .catch((err) => {
+//         dispatch({ type: LINK_IS_NOT_UPDATING_LOADER });
+//         dispatch({ type: LINK_SAVED_UNSUCCESSFULLY });
+//         console.log(err);
+//       });
+//   };
+// };
+
+export const updateLink = (link) => {
   return (dispatch, getState) => {
     const { card } = getState();
 
-    const linkData = [ ...card.cardData.links ];
+    const linkData = {
+      id: link.id,
+      url: link.url,
+      title: link.title,
+      typeId: link.type.id,
+      cardId: card.cardData.id,
+    };
 
     const userToken = localStorage.getItem("userToken");
 
@@ -758,34 +805,35 @@ export const updateLinks = () => {
       body: JSON.stringify(linkData),
     };
 
-    dispatch({ type: LINK_IS_UPDATING_LOADER });
-    fetch(`${API_BASE_URL}/links`, reqObj)
+    dispatch({ type: LINK_IS_UPDATING_LOADER, linkId: link.id });
+    fetch(`${API_BASE_URL}/links/${link.id}`, reqObj)
       .then((resp) => resp.json())
-      .then((cardLinks) => {
-        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER });
+      .then((cardLink) => {
+        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id  });
 
-        const localStorageCard = JSON.parse(localStorage.getItem("card"));
-        localStorageCard.links = cardLinks;
+        const localStorageCard = JSON.parse(localStorage.getItem("card"))
+        const localStorageCardLinks = localStorageCard.links;
+        const idx = localStorageCardLinks.findIndex(currLink => currLink.id === link.id);
+        localStorageCardLinks[idx] = cardLink;
         localStorage.removeItem("card");
         localStorage.setItem("card", JSON.stringify(localStorageCard));
 
-        dispatch({ type: SET_MULTIPLE_LINKS, links: cardLinks });
+        dispatch({ type: SET_LINK, link: cardLink });
         dispatch({ type: LINK_SAVED_SUCCESSFULLY });
         
       })
       .catch((err) => {
-        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER });
+        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id  });
         dispatch({ type: LINK_SAVED_UNSUCCESSFULLY });
         console.log(err);
       });
   };
 };
 
-export const setLink = (linkId, url) => {
+export const setLink = (link) => {
   return {
     type: SET_LINK,
-    linkId: linkId,
-    url: url
+    link: link,
   }
 }
 

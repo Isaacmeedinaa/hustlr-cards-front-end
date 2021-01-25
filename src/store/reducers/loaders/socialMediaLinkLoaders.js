@@ -12,6 +12,7 @@ let initialState = {
   deletingLoader: false,
   updatingLoader: false,
   deletingLinkId: 0,
+  updatingLinkId: 0,
 }
 
 const linkLoader = (state = initialState, action) => {
@@ -34,14 +35,16 @@ const linkLoader = (state = initialState, action) => {
 
       return {
         ...state,
-        updatingLoader: true
+        updatingLoader: true,
+        updatingLinkId: action.linkId,
       };
 
     case LINK_IS_NOT_UPDATING_LOADER:
 
       return {
         ...state,
-        updatingLoader: false
+        updatingLoader: false,
+        updatingLinkId: 0,
       };
 
     case LINK_IS_DELETING_LOADER:

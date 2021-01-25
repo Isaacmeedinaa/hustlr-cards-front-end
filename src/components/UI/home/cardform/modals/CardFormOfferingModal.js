@@ -117,12 +117,12 @@ const CardFormOfferingModal = (props) => {
       contentLabel="Offering Modal"
       className="primary-light-bg card-form-offering-modal"
     >
-      <div className="card-form-offering-modal-header">
-        <h3 className="card-form-offering-modal-title">
+      <div className="card-form-modal-header">
+        <h3 className="card-form-modal-title">
           Edit Product or Service
         </h3>
         <div
-          className="card-form-offering-modal-btn"
+          className="card-form-modal-btn"
           onClick={() => dispatch(closeOfferingModal())}
         >
           <MdClose color="#2ecc71" size={16} />

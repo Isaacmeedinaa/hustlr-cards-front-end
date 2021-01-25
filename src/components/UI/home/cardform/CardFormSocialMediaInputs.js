@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Select from "react-select";
-import Loader from "react-loader-spinner";
 
-import { createLink, deleteLink, setLink, updateLinks } from "../../../../store/actions/card";
+import { createLink, deleteLink, setLink, updateLink } from "../../../../store/actions/card";
 import { hideLinkSavedNotification, hideLinkDeletedNotification } from "../../../../store/actions/notifications/socialMediaLinkNotifications";
 
 import { showToast } from "../../Toasts";
@@ -11,12 +10,14 @@ import { connect } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import CardFormSocialMediaLink from './CardFormSocialMediaLink'
+
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
 
 class CardFormSocialMediaInputs extends Component {
   state = {
-    links: this.props.links,
+    links: [],
     selectValue: null
   };
 
@@ -72,47 +73,29 @@ class CardFormSocialMediaInputs extends Component {
     }
   };
 
-  onCardSocialMediaLinkChangeHandler = (event, id) => {
-    this.props.setLink(id, event.target.value);
+  onCardSocialMediaLinkChangeHandler = (event, link) => {
+    const linkToUpdate = {...link};
+    linkToUpdate.url = event.target.value;
+
+    this.props.setLink(linkToUpdate);
   }
 
   onDeleteLinkHandler = (link) => {
     this.props.deleteLink(link.id);
   }
 
-  onSaveLinksHandler = () => {
-    this.props.updateLinks();
+  onSaveLinksHandler = (link) => {
+    this.props.updateLink(link);
   }
 
   renderSocialMediaLinks(links) {
     links = [...this.props.links];
 
+    // sort from largest id to smallest id (newest to oldest)
     links.sort((a, b) => b.id - a.id);
 
-    return links.map((link) => {
-      return (
-        <div key={link.id} className="card-form-social-media-input-group">
-          <span className="card-form-social-media-icon-wrapper" >
-            <FontAwesomeIcon 
-              icon={[link.type.iconPrefix, link.type.icon]}
-              transform="grow-4"/>
-          </span>
-          <input
-            className="card-form-social-media-input"
-            placeholder={link.type.placeholder}
-            value={link.url}
-            name="social-media-link"
-            onChange={(event) => this.onCardSocialMediaLinkChangeHandler(event, link.id)}
-          />
-          <button onClick={() => this.onDeleteLinkHandler(link)}
-            className="primary-color card-form-delete-link">
-          { this.props.deletingLoader && this.props.deletingLinkId === link.id ? 
-            <Loader type="TailSpin" color="#2ecc71" width={22} height={22} /> :
-            <span>Delete link</span>
-          }
-          </button>
-        </div>
-      )
+    return links.map((link, index) => {
+      return <CardFormSocialMediaLink key={link.id} link={link} index={index} />
     });
   }
 
@@ -165,6 +148,9 @@ class CardFormSocialMediaInputs extends Component {
               option: (base, state) => ({
                 ...base,
                 color: state.isSelected ? "#2ecc71" : "black",
+                fontSize: "16px",
+                paddingTop: "10px",
+                paddingBottom: "10px",
                 backgroundColor: state.isSelected
                   ? "rgba(46, 204, 113, 0.25)"
                   : "white",
@@ -190,16 +176,6 @@ class CardFormSocialMediaInputs extends Component {
             <div className="card-form-social-media-inputs-container">
                 {this.renderSocialMediaLinks()}
             </div>
-            <div className="card-form-social-media-modal-footer">
-              <button className="card-form-social-media-save"
-                    onClick={this.onSaveLinksHandler}>
-                    {
-                 this.props.updatingLoader ? 
-                 <Loader type="TailSpin" color="#ffffff" width={22} height={22} /> 
-                 : "Save"
-                }  
-              </button>
-            </div>
           </Fragment>
         : 
         <div className="card-form-no-social-media-links">
@@ -218,6 +194,7 @@ const mapStateToProps = (state) => {
     updatingLoader: state.linkLoader.updatingLoader,
     deletingLoader: state.linkLoader.deletingLoader,
     deletingLinkId: state.linkLoader.deletingLinkId,
+    updatingLinkId: state.linkLoader.updatingLinkId,
     linkNotifications: state.linkNotifications
   };
 };
@@ -225,9 +202,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createLink: (typeId) => dispatch(createLink(typeId)),
-    updateLinks: () => dispatch(updateLinks()),
+    updateLink: (linkId) => dispatch(updateLink(linkId)),
     deleteLink: (linkId) => dispatch(deleteLink(linkId)),
-    setLink: (linkId, url) => dispatch(setLink(linkId, url)),
+    setLink: (link) => dispatch(setLink(link)),
     hideLinkSavedNotification: () => dispatch(hideLinkSavedNotification()),
     hideLinkDeletedNotification: () => dispatch(hideLinkDeletedNotification())
   };

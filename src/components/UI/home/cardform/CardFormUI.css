@@ -498,25 +498,25 @@
 .card-form-social-media-icon-wrapper {
   position: relative;
   float: left;
-  top: 70px;
+  top: 75px;
   left: 10px
 }
 
 .card-form-social-media-input-group:first-of-type .card-form-social-media-icon-wrapper {
-  top: 30px;
+  top: 33px;
 }
 
 
 .card-form-social-media-input {
   width: 100%;
-  height: 40px;
+  height: 45px;
   background-color: #f1f1f1;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
   padding-left: 35px;
-  padding-right: 35px;
   font-weight: 500;
+  font-size: 16px;
   float: left;
 }
 
@@ -531,25 +531,25 @@
   margin-top: -10px;
 }
 
-.card-form-delete-link {
+.card-form-link-btn {
   border: none;
   background-color: white;
   padding-left: 12px;
   padding-right: 12px;
   padding-bottom: 8px;
   padding-top: 8px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   float: right;
   margin-top: 7px;
   margin-bottom: 20px;
 }
 
-.card-form-delete-link:focus {
+.card-form-link-btn:focus {
   outline: none;
 }
 
-.card-form-delete-link:hover {
+.card-form-link-btn:hover {
   border-radius: 5px;
   background-color: rgba(112, 112, 112, 0.06);
   cursor: pointer;
@@ -706,6 +706,8 @@
 .card-form-social-media-placeholder-color {
   color: white;
   text-align: center;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .card-form-social-media-dropdown .css-1wa3eu0-placeholder {

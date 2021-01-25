@@ -326,7 +326,8 @@ const card = (state = initialState, action) => {
 
     case SET_LINK:
       const links = [...state.cardData.links];
-      links.find(link => link.id === action.linkId).url = action.url;
+      const linkIndex = links.findIndex(link => link.id === action.link.id);
+      links[linkIndex] = action.link;
 
       return {
         ...state,
