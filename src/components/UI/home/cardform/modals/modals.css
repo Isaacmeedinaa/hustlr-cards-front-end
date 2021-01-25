@@ -50,7 +50,6 @@
 .card-form-social-media-modal {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   width: 400px;
   padding: 15px 15px 15px 15px;
@@ -107,18 +106,19 @@
   outline: none;
 }
 
-.card-form-offering-modal-header {
+.card-form-modal-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  
 }
 
-.card-form-offering-modal-btn:hover {
+.card-form-modal-btn:hover {
   cursor: pointer;
 }
 
-.card-form-offering-modal-btn:focus {
+.card-form-modal-btn:focus {
   outline: none;
 }
 

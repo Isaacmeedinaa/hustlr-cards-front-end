@@ -27,6 +27,10 @@ import {
   UPLOAD_OFFERING_PICTURE,
   DELETE_OFFERING_PICTURE,
   SET_CARD_PATH,
+  DELETE_LINK,
+  CREATE_LINK,
+  SET_LINK,
+  SET_MULTIPLE_LINKS
 } from "../actions/card";
 
 const initialState = {
@@ -55,6 +59,8 @@ const initialState = {
     location: new CardLocation(),
     photos: [],
     offerings: [],
+    links: [],
+    paymentMethods: []
   },
   cardTheme: {
     primaryColor: "",
@@ -90,7 +96,9 @@ const card = (state = initialState, action) => {
           industry: action.cardData.industry,
           photos: action.cardData.photos,
           offerings: action.cardData.offerings,
-          location: action.cardData.location,
+          links: action.cardData.links,
+          paymentMethods: action.cardData.paymentMethods,
+          location: action.cardData.location
         },
         cardTheme: {
           primaryColor: action.cardTheme.primaryColor,
@@ -288,6 +296,54 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           offerings: filteredOfferings,
+        },
+      };
+
+    case CREATE_LINK:
+      let linksCopy = [...state.cardData.links];
+      linksCopy.unshift(action.link);
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          links: linksCopy,
+        },
+      };
+
+    case DELETE_LINK:
+      const filteredLinks = state.cardData.links.filter(
+        (link) => link.id !== action.id
+      );
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          links: filteredLinks,
+        },
+      };
+
+    case SET_LINK:
+      const links = [...state.cardData.links];
+      const linkIndex = links.findIndex(link => link.id === action.link.id);
+      links[linkIndex] = action.link;
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          links: links,
+        },
+      };
+
+    case SET_MULTIPLE_LINKS:
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          links: action.links,
         },
       };
 

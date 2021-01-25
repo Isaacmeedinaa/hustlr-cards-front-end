@@ -3,7 +3,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { userAutoLogin } from "../../store/actions/user";
 import { cardIsSaved, cardIsNotSaved } from "../../store/actions/cardSaved";
-import { fetchIndustries } from "../../store/actions/industries";
+import { fetchDropdownData } from "../../store/actions/dropdowns";
 import {
   uploadBusinessProfilePicture,
   uploadBackdropImage,
@@ -35,7 +35,7 @@ class HomeContainer extends Component {
 
   componentDidMount() {
     if (this.props.industries.length === 0) {
-      this.props.fetchIndustries();
+      this.props.fetchDropdownData();
     }
 
     if (window.innerWidth > 1100) {
@@ -213,7 +213,7 @@ const mapStateToProps = (state) => {
     cardData: state.card.cardData,
     cardId: state.card.cardData.id,
     cardLoader: state.cardLoader,
-    industries: state.industries.dropdownIndustries,
+    industries: state.dropdowns.dropdownIndustries,
     industriesLoader: state.industriesLoader,
     tabs: state.tabs,
     imageCropperModal: state.imageCropperModal,
@@ -227,7 +227,7 @@ const mapDispatchToProps = (dispatch) => {
     userAutoLogin: (history) => dispatch(userAutoLogin(history)),
     cardIsSaved: () => dispatch(cardIsSaved()),
     cardIsNotSaved: () => dispatch(cardIsNotSaved()),
-    fetchIndustries: () => dispatch(fetchIndustries()),
+    fetchDropdownData: () => dispatch(fetchDropdownData()),
     uploadBusinessProfilePicture: (reqImgData, cardId) =>
       dispatch(uploadBusinessProfilePicture(reqImgData, cardId)),
     uploadBackdropImage: (reqImgData, cardId) =>

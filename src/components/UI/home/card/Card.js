@@ -46,10 +46,7 @@ class Card extends Component {
               transparentColor={this.props.cardTheme.transparentColor}
               phoneNumber={this.props.cardData.phoneNumber}
               email={this.props.cardData.email}
-              facebookLink={this.props.cardData.facebookLink}
-              instagramLink={this.props.cardData.instagramLink}
-              twitterLink={this.props.cardData.twitterLink}
-              snapchatLink={this.props.cardData.snapchatLink}
+              links={this.props.cardData.links}
             />
             <CardBadges
               cardData={this.props.cardData}

@@ -58,6 +58,8 @@ export const fetchPublicCard = (pathname, history) => {
           publicCard.industry,
           publicCard.photos,
           publicCard.offerings,
+          publicCard.links,
+          publicCard.paymentMethods,
           primaryColor,
           transparentColor
         );

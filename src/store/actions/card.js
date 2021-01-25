@@ -70,6 +70,25 @@ import {
   OFFERING_IS_DELETING_LOADER,
   OFFERING_IS_NOT_DELETING_LOADER,
 } from "./loaders/offeringLoader";
+
+import {
+  LINK_IS_CREATING_LOADER,
+  LINK_IS_NOT_CREATING_LOADER,
+  LINK_IS_DELETING_LOADER,
+  LINK_IS_NOT_DELETING_LOADER,
+  LINK_IS_UPDATING_LOADER,
+  LINK_IS_NOT_UPDATING_LOADER,
+} from "./loaders/socialMediaLinkLoaders";
+
+import {
+  LINK_CREATED_SUCCESSFULLY,
+  LINK_CREATED_UNSUCCESSFULLY,
+  LINK_SAVED_SUCCESSFULLY,
+  LINK_SAVED_UNSUCCESSFULLY,
+  LINK_DELETED_SUCCESSFULLY,
+  LINK_DELETED_UNSUCCESSFULLY
+} from "./notifications/socialMediaLinkNotifications";
+
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 import CardLocation from "../../models/cardLocation";
@@ -106,6 +125,10 @@ export const DELETE_CARD_GALLERY_PICTURE = "DELETE_CARD_GALLERY_PICTURE";
 export const UPLOAD_OFFERING_PICTURE = "UPLOAD_OFFERING_PICTURE";
 export const DELETE_OFFERING_PICTURE = "DELETE_OFFERING_PICTURE";
 export const SET_CARD_PATH = "SET_CARD_PATH";
+export const CREATE_LINK = "CREATE_LINK";
+export const DELETE_LINK = "DELETE_LINK";
+export const SET_LINK = "SET_LINK";
+export const SET_MULTIPLE_LINKS = "SET_MULTIPLE_LINKS";
 
 export const fetchCard = (userId) => {
   return async (dispatch, getState) => {
@@ -143,7 +166,9 @@ export const fetchCard = (userId) => {
           card.userId,
           card.industry,
           card.photos,
-          card.offerings
+          card.offerings,
+          card.links,
+          card.paymentMethods
         );
 
         const cardTheme = themes.find((theme) => theme.id === card.themeId);
@@ -663,6 +688,190 @@ export const deleteOffering = (id) => {
       .catch((err) => {
         dispatch({ type: OFFERING_IS_NOT_DELETING_LOADER });
         dispatch({ type: OFFERING_DELETED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const createLink = (linkTypeId) => {
+  return (dispatch, getState) => {
+    const { card } = getState();
+
+    const linkData = {
+      id: 0,
+      url: "",
+      title: "",
+      typeId: linkTypeId,
+      cardId: card.cardData.id,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(linkData),
+    };
+
+    dispatch({ type: LINK_IS_CREATING_LOADER });
+    fetch(`${API_BASE_URL}/links`, reqObj)
+      .then((resp) => resp.json())
+      .then((cardLink) => {
+        dispatch({ type: LINK_IS_NOT_CREATING_LOADER });
+
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        localStorageCard.links.push(cardLink);
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: CREATE_LINK, link: cardLink });
+        dispatch({ type: LINK_CREATED_SUCCESSFULLY });
+        
+      })
+      .catch((err) => {
+        dispatch({ type: LINK_IS_NOT_CREATING_LOADER });
+        dispatch({ type: LINK_CREATED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+// export const updateLinks = () => {
+//   return (dispatch, getState) => {
+//     const { card } = getState();
+
+//     const linkData = [ ...card.cardData.links ];
+
+//     const userToken = localStorage.getItem("userToken");
+
+//     const reqObj = {
+//       method: "PUT",
+//       headers: {
+//         Authorization: `Bearer ${userToken}`,
+//         "Content-Type": "application/json",
+//         Accepts: "application/json",
+//       },
+//       body: JSON.stringify(linkData),
+//     };
+
+//     dispatch({ type: LINK_IS_UPDATING_LOADER });
+//     fetch(`${API_BASE_URL}/links`, reqObj)
+//       .then((resp) => resp.json())
+//       .then((cardLinks) => {
+//         dispatch({ type: LINK_IS_NOT_UPDATING_LOADER });
+
+//         const localStorageCard = JSON.parse(localStorage.getItem("card"));
+//         localStorageCard.links = cardLinks;
+//         localStorage.removeItem("card");
+//         localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+//         dispatch({ type: SET_MULTIPLE_LINKS, links: cardLinks });
+//         dispatch({ type: LINK_SAVED_SUCCESSFULLY });
+        
+//       })
+//       .catch((err) => {
+//         dispatch({ type: LINK_IS_NOT_UPDATING_LOADER });
+//         dispatch({ type: LINK_SAVED_UNSUCCESSFULLY });
+//         console.log(err);
+//       });
+//   };
+// };
+
+export const updateLink = (link) => {
+  return (dispatch, getState) => {
+    const { card } = getState();
+
+    const linkData = {
+      id: link.id,
+      url: link.url,
+      title: link.title,
+      typeId: link.type.id,
+      cardId: card.cardData.id,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(linkData),
+    };
+
+    dispatch({ type: LINK_IS_UPDATING_LOADER, linkId: link.id });
+    fetch(`${API_BASE_URL}/links/${link.id}`, reqObj)
+      .then((resp) => resp.json())
+      .then((cardLink) => {
+        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id  });
+
+        const localStorageCard = JSON.parse(localStorage.getItem("card"))
+        const localStorageCardLinks = localStorageCard.links;
+        const idx = localStorageCardLinks.findIndex(currLink => currLink.id === link.id);
+        localStorageCardLinks[idx] = cardLink;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: SET_LINK, link: cardLink });
+        dispatch({ type: LINK_SAVED_SUCCESSFULLY });
+        
+      })
+      .catch((err) => {
+        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id  });
+        dispatch({ type: LINK_SAVED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const setLink = (link) => {
+  return {
+    type: SET_LINK,
+    link: link,
+  }
+}
+
+export const deleteLink = (id) => {
+  return (dispatch) => {
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: LINK_IS_DELETING_LOADER, linkId: id });
+    fetch(`${API_BASE_URL}/links/${id}`, reqObj)
+      .then(() => {})
+      .then(() => {
+        dispatch({ type: LINK_IS_NOT_DELETING_LOADER });
+        // MUST remove offering from local storage card offerings array
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        let newLinks = localStorageCard.links.filter(
+          (link) => link.id !== id
+        );
+        delete localStorageCard["links"];
+        localStorageCard["links"] = newLinks;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: DELETE_LINK, id: id });
+        dispatch({ type: LINK_DELETED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: LINK_IS_NOT_DELETING_LOADER });
+        dispatch({ type: LINK_DELETED_UNSUCCESSFULLY });
         console.log(err);
       });
   };

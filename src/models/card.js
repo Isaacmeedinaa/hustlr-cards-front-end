@@ -21,7 +21,9 @@ class Card {
     userId,
     industry,
     photos,
-    offerings
+    offerings,
+    links,
+    paymentMethods
   ) {
     this.id = id;
     this.title = title;
@@ -45,6 +47,8 @@ class Card {
     this.industry = industry;
     this.photos = photos;
     this.offerings = offerings;
+    this.links = links;
+    this.paymentMethods = paymentMethods;
   }
 }
 

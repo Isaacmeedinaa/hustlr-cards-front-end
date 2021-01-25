@@ -213,7 +213,7 @@ class CardForm extends Component {
             <CardFormImageSelector setInputImg={this.props.setInputImg} />
             <CardFormTitleInput />
             <CardFormContactInputs />
-            <CardFormAddSocialMediaButton />
+            <CardFormAddSocialMediaButton links={this.props.cardData.links} />
             <CardFormIndustrySelect />
             <CardFormLocationInputs />
             <CardFormDescriptionInput />
