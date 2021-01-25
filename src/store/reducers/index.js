@@ -60,6 +60,9 @@ import socialMediaModal from "./modals/socialMediaModal";
 import paymentMethodsModal from "./modals/paymentMethodsModal";
 import offeringModal from "./modals/offeringModal";
 
+// Local Storage
+import cardLinkLocalStorage from "./localStorage/cardLinkLocalStorage";
+
 const rootReducer = combineReducers({
   // Main
   user,
@@ -116,6 +119,8 @@ const rootReducer = combineReducers({
   socialMediaModal,
   paymentMethodsModal,
   offeringModal,
+  // Local Storage
+  cardLinkLocalStorage,
 });
 
 export default rootReducer;

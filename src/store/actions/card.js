@@ -86,7 +86,7 @@ import {
   LINK_SAVED_SUCCESSFULLY,
   LINK_SAVED_UNSUCCESSFULLY,
   LINK_DELETED_SUCCESSFULLY,
-  LINK_DELETED_UNSUCCESSFULLY
+  LINK_DELETED_UNSUCCESSFULLY,
 } from "./notifications/socialMediaLinkNotifications";
 
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
@@ -94,6 +94,7 @@ import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 import CardLocation from "../../models/cardLocation";
 
 import { openOfferingModal, closeOfferingModal } from "./modals/offeringModal";
+import { TOGGLE_CARD_LINK_LOCAL_STORAGE } from "./localStorage/cardLinkLocalStorage";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -730,7 +731,6 @@ export const createLink = (linkTypeId) => {
 
         dispatch({ type: CREATE_LINK, link: cardLink });
         dispatch({ type: LINK_CREATED_SUCCESSFULLY });
-        
       })
       .catch((err) => {
         dispatch({ type: LINK_IS_NOT_CREATING_LOADER });
@@ -771,7 +771,7 @@ export const createLink = (linkTypeId) => {
 
 //         dispatch({ type: SET_MULTIPLE_LINKS, links: cardLinks });
 //         dispatch({ type: LINK_SAVED_SUCCESSFULLY });
-        
+
 //       })
 //       .catch((err) => {
 //         dispatch({ type: LINK_IS_NOT_UPDATING_LOADER });
@@ -809,21 +809,24 @@ export const updateLink = (link) => {
     fetch(`${API_BASE_URL}/links/${link.id}`, reqObj)
       .then((resp) => resp.json())
       .then((cardLink) => {
-        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id  });
+        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id });
 
-        const localStorageCard = JSON.parse(localStorage.getItem("card"))
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
         const localStorageCardLinks = localStorageCard.links;
-        const idx = localStorageCardLinks.findIndex(currLink => currLink.id === link.id);
+        const idx = localStorageCardLinks.findIndex(
+          (currLink) => currLink.id === link.id
+        );
         localStorageCardLinks[idx] = cardLink;
         localStorage.removeItem("card");
         localStorage.setItem("card", JSON.stringify(localStorageCard));
 
+        dispatch({ type: TOGGLE_CARD_LINK_LOCAL_STORAGE });
+
         dispatch({ type: SET_LINK, link: cardLink });
         dispatch({ type: LINK_SAVED_SUCCESSFULLY });
-        
       })
       .catch((err) => {
-        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id  });
+        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id });
         dispatch({ type: LINK_SAVED_UNSUCCESSFULLY });
         console.log(err);
       });
@@ -834,12 +837,11 @@ export const setLink = (link) => {
   return {
     type: SET_LINK,
     link: link,
-  }
-}
+  };
+};
 
 export const deleteLink = (id) => {
   return (dispatch) => {
-
     const userToken = localStorage.getItem("userToken");
 
     const reqObj = {
@@ -858,9 +860,7 @@ export const deleteLink = (id) => {
         dispatch({ type: LINK_IS_NOT_DELETING_LOADER });
         // MUST remove offering from local storage card offerings array
         const localStorageCard = JSON.parse(localStorage.getItem("card"));
-        let newLinks = localStorageCard.links.filter(
-          (link) => link.id !== id
-        );
+        let newLinks = localStorageCard.links.filter((link) => link.id !== id);
         delete localStorageCard["links"];
         localStorageCard["links"] = newLinks;
         localStorage.removeItem("card");
