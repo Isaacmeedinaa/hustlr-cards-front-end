@@ -178,6 +178,7 @@
 }
 
 .card-form-image-cropper {
+  margin-top: 15px;
   position: relative;
   height: 200px;
   width: 100%;
@@ -357,6 +358,7 @@
 }
 
 .card-form-product-service-inputs-container {
+  margin-top: 25px;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -402,17 +404,19 @@
 }
 
 .card-form-product-service-description-count {
-  margin-top: 10px;
+  margin-top: 5px;
   width: 100%;
   text-align: right;
 }
 
 .card-form-product-service-buttons-container {
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
 }
+
 .card-form-offering-button {
   border: none;
   background-color: white;
@@ -672,8 +676,8 @@
   background: rgba(46, 204, 113, 0.25);
   border-radius: 50%;
   display: flex;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: center;
 }

@@ -8,6 +8,8 @@ import Modal from "react-modal";
 
 import CardFormImageCropper from "../CardFormImageCropper";
 
+import MdClose from "react-ionicons/lib/MdClose";
+
 import "../../../../../constants/colors.css";
 import "./modals.css";
 
@@ -33,6 +35,12 @@ const CardFormImageCropperModal = (props) => {
       contentLabel="Image Cropper Modal"
       className="primary-light-bg card-form-image-cropper-modal"
     >
+      <div
+        className="card-form-image-modal-close-button"
+        onClick={() => dispatch(closeImageCropperModal())}
+      >
+        <MdClose color="#2ecc71" size={16} />
+      </div>
       <CardFormImageCropper
         getBlob={(blob) => setImgBlob(blob)}
         inputImg={props.inputImg}
@@ -40,12 +48,6 @@ const CardFormImageCropperModal = (props) => {
       <label onClick={onUploadImageClick} className="card-form-button">
         <span className="card-form-button-text">Crop and Upload Image</span>
       </label>
-      <button
-        className="primary-color card-form-image-cropper-modal-button"
-        onClick={() => dispatch(closeImageCropperModal())}
-      >
-        Close
-      </button>
     </Modal>
   );
 };
