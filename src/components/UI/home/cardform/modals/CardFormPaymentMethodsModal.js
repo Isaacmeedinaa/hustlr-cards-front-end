@@ -5,6 +5,8 @@ import { closePaymentMethodsModal } from "../../../../../store/actions/modals/pa
 
 import Modal from "react-modal";
 
+import MdClose from "react-ionicons/lib/MdClose";
+
 import "../../../../../constants/colors.css";
 import "./modals.css";
 
@@ -22,7 +24,17 @@ const CardFormPaymentMethodsModal = () => {
       contentLabel="Payment Methods Modal"
       className="primary-light-bg card-form-payment-methods-modal"
     >
-      <h3>Add Payment Methods</h3>
+      <div className="card-form-payment-methods-modal-header">
+        <h3 className="card-form-payment-methods-modal-title">
+          Payment Methods
+        </h3>
+        <div
+          className="card-form-payment-methods-modal-btn"
+          onClick={() => dispatch(closePaymentMethodsModal())}
+        >
+          <MdClose color="#2ecc71" size={16} />
+        </div>
+      </div>
     </Modal>
   );
 };

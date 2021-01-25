@@ -178,6 +178,7 @@
 }
 
 .card-form-image-cropper {
+  margin-top: 15px;
   position: relative;
   height: 200px;
   width: 100%;

@@ -13,6 +13,18 @@
   outline: none;
 }
 
+.card-form-image-modal-close-button {
+  align-self: flex-end;
+}
+
+.card-form-image-modal-close-button:hover {
+  cursor: pointer;
+}
+
+.card-form-image-modal-close-button:focus {
+  outline: none;
+}
+
 .card-form-image-cropper-modal-button {
   border: none;
   /* margin-top: 10px; */
@@ -74,6 +86,21 @@
   padding: 15px 15px 15px 15px;
   border-radius: 5px;
   border-bottom: 6px solid #cdcdd2;
+}
+
+.card-form-payment-methods-modal-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.card-form-payment-methods-modal-btn:hover {
+  cursor: pointer;
+}
+
+.card-form-payment-methods-modal-btn:focus {
+  outline: none;
 }
 
 .card-form-offering-modal:focus {
