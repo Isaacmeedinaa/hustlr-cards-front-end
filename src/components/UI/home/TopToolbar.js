@@ -24,10 +24,25 @@ class TopToolbar extends Component {
     });
   };
 
+  openThemePickerHandler = async () => {
+    await this.setState({
+      themePickerIsOpen: true,
+    });
+  };
+
+  closeThemePickerHandler = async () => {
+    if (this.state.themePickerIsOpen) {
+      await this.setState({
+        themePickerIsOpen: false,
+      });
+    }
+  };
+
   render() {
     if (this.props.cardLoader) {
       return null;
     }
+
     return (
       <div className="toptoolbar-wrapper">
         <div className="primary-light-bg toptoolbar">
@@ -55,7 +70,9 @@ class TopToolbar extends Component {
             <SaveCardButton />
           </div>
         </div>
-        {!this.state.themePickerIsOpen ? null : <ThemePicker />}
+        {!this.state.themePickerIsOpen ? null : (
+          <ThemePicker closeThemePickerHandler={this.closeThemePickerHandler} />
+        )}
         <Tabs />
       </div>
     );
