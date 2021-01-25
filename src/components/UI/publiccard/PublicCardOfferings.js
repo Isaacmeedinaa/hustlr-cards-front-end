@@ -127,6 +127,9 @@ class PublicCardOfferings extends Component {
         )}
         <div
           className="public-card-products-services-container"
+          style={{
+            justifyContent: this.props.offerings.length === 1 ? "center" : null,
+          }}
           id="public-card-products-services-container"
           onWheel={this.onOfferingsContainerWheel}
           ref={this.offeringsContainer}
