@@ -13,7 +13,20 @@
   outline: none;
 }
 
+.public-card-gallery-modal-close-button {
+  align-self: flex-end;
+}
+
+.public-card-gallery-modal-close-button:hover {
+  cursor: pointer;
+}
+
+.public-card-gallery-modal-close-button:focus {
+  outline: none;
+}
+
 .public-card-gallery-image {
+  margin-top: 15px;
   width: 500px;
 }
 
