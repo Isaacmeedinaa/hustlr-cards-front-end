@@ -7,6 +7,8 @@ import scrollToComponent from "react-scroll-to-component";
 
 import { hideOfferingCreatedNotification } from "../../../../store/actions/notifications/offeringNotifications";
 
+import MdCreate from "react-ionicons/lib/MdCreate";
+
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
 
@@ -72,6 +74,9 @@ class CardFormOfferingInputs extends Component {
               this.props.offering.title
             )}
           </h6>
+          <div className="card-form-accordion-icon-container">
+            <MdCreate color="#2ecc71" fontSize={18} />
+          </div>
         </div>
       </Fragment>
     );

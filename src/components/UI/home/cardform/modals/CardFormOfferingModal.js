@@ -17,6 +17,7 @@ import Loader from "react-loader-spinner";
 import AwesomeSlider from "react-awesome-slider";
 
 import MdTrash from "react-ionicons/lib/MdTrash";
+import MdClose from "react-ionicons/lib/MdClose";
 
 import "../../../../../constants/colors.css";
 import "./modals.css";
@@ -77,7 +78,7 @@ const CardFormOfferingModal = (props) => {
                 dispatch(deleteOfferingImage(photo.id, offering.id))
               }
             >
-              <MdTrash color="#2ecc71" size={16} />
+              <MdTrash color="#2ecc71" size={12} />
             </label>
           </div>
         </div>
@@ -116,6 +117,17 @@ const CardFormOfferingModal = (props) => {
       contentLabel="Offering Modal"
       className="primary-light-bg card-form-offering-modal"
     >
+      <div className="card-form-offering-modal-header">
+        <h3 className="card-form-offering-modal-title">
+          Edit Product or Service
+        </h3>
+        <div
+          className="card-form-offering-modal-btn"
+          onClick={() => dispatch(closeOfferingModal())}
+        >
+          <MdClose color="#2ecc71" size={16} />
+        </div>
+      </div>
       <div className="card-form-product-service-inputs-container">
         <input
           className="card-form-product-service-title-input"
@@ -150,40 +162,6 @@ const CardFormOfferingModal = (props) => {
         / 250
       </p>
       <div className="card-form-product-service-buttons-container">
-        <label
-          className="primary-color card-form-offering-button"
-          htmlFor={`offeringPhotoImgSelector${offering.id}`}
-        >
-          {(offeringImageLoader.loading && offeringImageLoader.offeringId) ===
-          offering.id ? (
-            <Loader type="TailSpin" color="#2ecc71" width={23} height={23} />
-          ) : (
-            "Add Photo"
-          )}
-        </label>
-        <input
-          className="card-form-file-button"
-          id={`offeringPhotoImgSelector${offering.id}`}
-          onChange={onImageChangeHandler}
-          type="file"
-          accept="image/x-png,image/jpeg"
-          multiple={true}
-        />
-        {description.length > 250 ? null : originalOffering.title !== title ||
-          originalOffering.price !== price ||
-          originalOffering.description !== description ? (
-          <button
-            className="primary-color card-form-offering-button"
-            id="cardFormProductServiceDeleteBtn"
-            onClick={onSaveOfferingClick}
-          >
-            {offeringLoader.updatingLoader ? (
-              <Loader type="TailSpin" color="#2ecc71" width={23} height={23} />
-            ) : (
-              "Save"
-            )}
-          </button>
-        ) : null}
         <button
           className="primary-color card-form-offering-button"
           id="cardFormProductServiceDeleteBtn"
@@ -195,6 +173,41 @@ const CardFormOfferingModal = (props) => {
             "Delete"
           )}
         </button>
+        <div className="card-form-offerings-modal-left-buttons-container">
+          <label
+            className="primary-color card-form-offering-button"
+            htmlFor={`offeringPhotoImgSelector${offering.id}`}
+          >
+            {(offeringImageLoader.loading && offeringImageLoader.offeringId) ===
+            offering.id ? (
+              <Loader type="TailSpin" color="#2ecc71" width={23} height={23} />
+            ) : (
+              "Add Photo"
+            )}
+          </label>
+          <input
+            className="card-form-file-button"
+            id={`offeringPhotoImgSelector${offering.id}`}
+            onChange={onImageChangeHandler}
+            type="file"
+            accept="image/x-png,image/jpeg"
+            multiple={true}
+          />
+          {description.length > 250 ? null : originalOffering.title !== title ||
+            originalOffering.price !== price ||
+            originalOffering.description !== description ? (
+            <button
+              className="card-form-offering-modal-save-button"
+              onClick={onSaveOfferingClick}
+            >
+              {offeringLoader.updatingLoader ? (
+                <Loader type="TailSpin" color="#fff" width={23} height={23} />
+              ) : (
+                "Save"
+              )}
+            </button>
+          ) : null}
+        </div>
       </div>
       {offering.photos.length > 0 ? (
         <div className="card-form-gallery-slider-container">
@@ -203,12 +216,6 @@ const CardFormOfferingModal = (props) => {
           </AwesomeSlider>
         </div>
       ) : null}
-      <button
-        className="primary-color card-form-image-cropper-modal-button"
-        onClick={() => dispatch(closeOfferingModal())}
-      >
-        Close
-      </button>
       {showDeleteModal ? (
         <div className="primary-light-bg card-form-delete-offering-modal">
           <span className="card-form-delete-offering-modal-question">
