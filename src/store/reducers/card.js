@@ -300,11 +300,14 @@ const card = (state = initialState, action) => {
       };
 
     case CREATE_LINK:
+      let linksCopy = [...state.cardData.links];
+      linksCopy.unshift(action.link);
+
       return {
         ...state,
         cardData: {
           ...state.cardData,
-          links: state.cardData.links.concat(action.link),
+          links: linksCopy,
         },
       };
 
@@ -323,7 +326,7 @@ const card = (state = initialState, action) => {
 
     case SET_LINK:
       const links = [...state.cardData.links];
-      links[action.linkIndex].url = action.url;
+      links.find(link => link.id === action.linkId).url = action.url;
 
       return {
         ...state,

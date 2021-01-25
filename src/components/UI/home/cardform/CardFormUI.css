@@ -489,18 +489,19 @@
 .card-form-social-media-inputs-container {
   width: 100%;
   margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
 }
 
 .card-form-social-media-icon-wrapper {
   position: relative;
   float: left;
-  top: 30px;
+  top: 70px;
   left: 10px
 }
+
+.card-form-social-media-input-group:first-of-type .card-form-social-media-icon-wrapper {
+  top: 30px;
+}
+
 
 .card-form-social-media-input {
   width: 100%;
@@ -537,6 +538,7 @@
   font-weight: 400;
   float: right;
   margin-top: 7px;
+  margin-bottom: 20px;
 }
 
 .card-form-delete-link:focus {
@@ -551,21 +553,17 @@
 
 .card-form-social-media-modal-footer {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .card-form-social-media-save {
   width: 80px;
   height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  float: right;
-  right: 20px;
   background-color: #2ecc71;
   border-radius: 5px;
   color: white;
   border: none;
+  float: right;
 }
 
 .card-form-social-media-save:hover {
@@ -580,6 +578,12 @@
 
 .card-form-social-media-save:active {
   outline: none !important;
+}
+
+.card-form-no-social-media-links {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .card-form-gallery-slider-container {

@@ -16,7 +16,7 @@ import "./CardFormUI.css";
 
 class CardFormSocialMediaInputs extends Component {
   state = {
-    links: [],
+    links: this.props.links,
     selectValue: null
   };
 
@@ -60,7 +60,6 @@ class CardFormSocialMediaInputs extends Component {
   onSelectChangeHandler = async (event) => {
 
     let selectedId = null;
-    let selectedLabel = null;
 
     await this.setState({
       selectValue: null
@@ -69,15 +68,12 @@ class CardFormSocialMediaInputs extends Component {
     if (event !== null && event !== undefined) {
 
       selectedId = parseInt(event.value);
-      selectedLabel = event.label;
-
-      console.log(selectedId, selectedLabel);
       this.props.createLink(selectedId);
     }
   };
 
-  onCardSocialMediaLinkChangeHandler = (event, idx) => {
-    this.props.setLink(idx, event.target.value);
+  onCardSocialMediaLinkChangeHandler = (event, id) => {
+    this.props.setLink(id, event.target.value);
   }
 
   onDeleteLinkHandler = (link) => {
@@ -86,6 +82,38 @@ class CardFormSocialMediaInputs extends Component {
 
   onSaveLinksHandler = () => {
     this.props.updateLinks();
+  }
+
+  renderSocialMediaLinks(links) {
+    links = [...this.props.links];
+
+    links.sort((a, b) => b.id - a.id);
+
+    return links.map((link) => {
+      return (
+        <div key={link.id} className="card-form-social-media-input-group">
+          <span className="card-form-social-media-icon-wrapper" >
+            <FontAwesomeIcon 
+              icon={[link.type.iconPrefix, link.type.icon]}
+              transform="grow-4"/>
+          </span>
+          <input
+            className="card-form-social-media-input"
+            placeholder={link.type.placeholder}
+            value={link.url}
+            name="social-media-link"
+            onChange={(event) => this.onCardSocialMediaLinkChangeHandler(event, link.id)}
+          />
+          <button onClick={() => this.onDeleteLinkHandler(link)}
+            className="primary-color card-form-delete-link">
+          { this.props.deletingLoader && this.props.deletingLinkId === link.id ? 
+            <Loader type="TailSpin" color="#2ecc71" width={22} height={22} /> :
+            <span>Delete link</span>
+          }
+          </button>
+        </div>
+      )
+    });
   }
 
   render() {
@@ -98,6 +126,7 @@ class CardFormSocialMediaInputs extends Component {
             isSearchable={false}
             isClearable={false}
             isLoading={this.props.creatingLoader}
+            menuPortalTarget={document.body}
             styles={{
               loadingIndicator: (base, state) => ({
                 ...base,
@@ -127,7 +156,11 @@ class CardFormSocialMediaInputs extends Component {
                 color: "#000",
                 boxShadow: "0px 5px 0px -1px #cdcdd2",
                 borderRadius: 5,
-                border: "1px solid #cdcdd2",
+                border: "1px solid #cdcdd2"
+              }),
+              menuPortal: (base) => ({
+                ...base,
+                zIndex: 3000 
               }),
               option: (base, state) => ({
                 ...base,
@@ -155,47 +188,23 @@ class CardFormSocialMediaInputs extends Component {
          { this.props.links.length > 0 ?
           <Fragment>
             <div className="card-form-social-media-inputs-container">
-                {this.props.links.map((link, idx) => {
-                  return (
-                    <div key={link.id} className="card-form-social-media-input-group">
-                      <span className="card-form-social-media-icon-wrapper" >
-                        <FontAwesomeIcon 
-                          icon={[link.type.iconPrefix, link.type.icon]}
-                          transform="grow-4"/>
-                      </span>
-                      <input
-                        className="card-form-social-media-input"
-                        placeholder={link.type.placeholder}
-                        value={link.url}
-                        name="social-media-link"
-                        onChange={(event) => this.onCardSocialMediaLinkChangeHandler(event, idx)}
-                      />
-                      <div
-                        onClick={() => this.onDeleteLinkHandler(link)}
-                        > 
-                          <button className="primary-color card-form-delete-link">
-                          { this.props.deletingLoader && this.props.deletingLinkId === link.id ? 
-                            <Loader type="TailSpin" color="#2ecc71" width={22} height={22} /> :
-                            <span>Delete link</span>
-                          }
-                          </button>
-                      </div>
-                    </div>
-                  )
-                })}
+                {this.renderSocialMediaLinks()}
             </div>
             <div className="card-form-social-media-modal-footer">
-              <div  className="card-form-social-media-save"
+              <button className="card-form-social-media-save"
                     onClick={this.onSaveLinksHandler}>
-                {
+                    {
                  this.props.updatingLoader ? 
                  <Loader type="TailSpin" color="#ffffff" width={22} height={22} /> 
-                 : <span>Save</span>
-                }
-              </div>
+                 : "Save"
+                }  
+              </button>
             </div>
           </Fragment>
-        : null }
+        : 
+        <div className="card-form-no-social-media-links">
+          <h5>No Links Added Yet.</h5>
+        </div> }
       </Fragment>
     );
   }
@@ -218,7 +227,7 @@ const mapDispatchToProps = (dispatch) => {
     createLink: (typeId) => dispatch(createLink(typeId)),
     updateLinks: () => dispatch(updateLinks()),
     deleteLink: (linkId) => dispatch(deleteLink(linkId)),
-    setLink: (linkIdx, url) => dispatch(setLink(linkIdx, url)),
+    setLink: (linkId, url) => dispatch(setLink(linkId, url)),
     hideLinkSavedNotification: () => dispatch(hideLinkSavedNotification()),
     hideLinkDeletedNotification: () => dispatch(hideLinkDeletedNotification())
   };

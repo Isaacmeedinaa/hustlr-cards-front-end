@@ -781,10 +781,10 @@ export const updateLinks = () => {
   };
 };
 
-export const setLink = (linkIndex, url) => {
+export const setLink = (linkId, url) => {
   return {
     type: SET_LINK,
-    linkIndex: linkIndex,
+    linkId: linkId,
     url: url
   }
 }
