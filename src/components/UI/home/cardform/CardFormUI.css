@@ -461,10 +461,9 @@
 }
 
 .card-form-delete-offering-modal {
-  height: 80px;
-  width: 150px;
-  padding: 10px 10px;
-  position: absolute;
+  padding: 20px 20px;
+  width: 180px;
+  align-self: center;
   z-index: 1000000 !important;
   border-radius: 5px;
   border-top: 1px solid #d1d2d5;
@@ -477,18 +476,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* align-self: center; */
+  position: relative;
 }
 
 .card-form-delete-offering-modal-question {
-  font-size: 15px;
+  font-size: 17px;
+  color: #000000de;
 }
 
 .card-form-delete-offering-modal-button {
   margin: 10px;
+  margin-top: 15px;
   border: none;
   background: white;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 0 !important;
   padding-left: 8px;
   padding-right: 8px;

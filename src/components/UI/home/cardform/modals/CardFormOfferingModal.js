@@ -226,13 +226,18 @@ const CardFormOfferingModal = (props) => {
           ) : null}
         </div>
       </div>
+      {showDeleteModal ? (
+        <CardFormDeleteOfferingModal
+          deleteOfferingInputsHandler={deleteOfferingInputsHandler}
+          hideDeleteModal={hideDeleteModal}
+        />
+      ) : null}
       {offeringImagesProgress.progressing ? (
         <p className="card-form-offering-modal-image-count">
           Image {offeringImagesProgress.currentOfferingImgCount} out of{" "}
           {offeringImagesProgress.totalOfferingImgCount} uploaded
         </p>
       ) : null}
-
       {offering.photos.length > 0 ? (
         <div
           className="card-form-gallery-slider-container"
@@ -242,12 +247,6 @@ const CardFormOfferingModal = (props) => {
             {renderOfferingSliderImages()}
           </AwesomeSlider>
         </div>
-      ) : null}
-      {showDeleteModal ? (
-        <CardFormDeleteOfferingModal
-          deleteOfferingInputsHandler={deleteOfferingInputsHandler}
-          hideDeleteModal={hideDeleteModal}
-        />
       ) : null}
     </Modal>
   );
