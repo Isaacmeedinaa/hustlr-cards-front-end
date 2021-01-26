@@ -64,6 +64,10 @@ import offeringModal from "./modals/offeringModal";
 import cardLinkLocalStorage from "./localStorage/cardLinkLocalStorage";
 import offeringLocalStorage from "./localStorage/offeringLocalStorage";
 
+// Progress
+import galleryImagesProgress from "./progress/galleryImagesProgress";
+import offeringImagesProgress from "./progress/offeringImagesProgress";
+
 const rootReducer = combineReducers({
   // Main
   user,
@@ -123,6 +127,9 @@ const rootReducer = combineReducers({
   // Local Storage
   cardLinkLocalStorage,
   offeringLocalStorage,
+  // Progress
+  galleryImagesProgress,
+  offeringImagesProgress,
 });
 
 export default rootReducer;
