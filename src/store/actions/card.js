@@ -10,6 +10,7 @@ import {
   CARD_IS_UPDATING,
   CARD_IS_NOT_UPDATING,
 } from "./loaders/cardUpdatingLoader";
+import { ENQUEUE_NOTIFICATION } from "./notifications/notifications";
 import {
   CARD_SAVED_SUCCESSFULLY,
   CARD_SAVE_UNSUCCESSFUL,
@@ -642,7 +643,12 @@ export const updateOffering = (
         });
 
         dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
-        dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });
+        // dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });
+        dispatch({
+          type: ENQUEUE_NOTIFICATION,
+          success: true,
+          message: "Offering saved successfully!",
+        });
         // dispatch(closeOfferingModal());
       })
       .catch((err) => {

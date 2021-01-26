@@ -51,6 +51,7 @@ import userUpdatedNotifications from "./notifications/userUpdatedNotifications";
 import backdropImageNotifications from "./notifications/backdropImageNotifications";
 import linkNotifications from "./notifications/socialMediaLinkNotifications";
 import contactMessageNotifications from "./notifications/contactMessageNotifications";
+import notifications from "./notifications/notifications";
 
 // Modals
 import imageCropperModal from "./modals/imageCropperModal";
@@ -113,6 +114,7 @@ const rootReducer = combineReducers({
   backdropImageNotifications,
   contactMessageNotifications,
   linkNotifications,
+  notifications,
   // Modals
   imageCropperModal,
   backdropImageCropperModal,

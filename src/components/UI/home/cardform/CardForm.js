@@ -48,6 +48,8 @@ import {
   hideOfferingImageUploadedNotification,
 } from "../../../../store/actions/notifications/offeringImageNotifications";
 
+import { DEQUEUE_NOTIFICATION } from "../../../../store/actions/notifications/notifications";
+
 class CardForm extends Component {
   state = {
     deleteModalShown: false,
@@ -55,6 +57,12 @@ class CardForm extends Component {
   };
 
   componentDidUpdate() {
+    for (let i = 0; i < this.props.notifications.length; i++) {
+      let notification = this.props.notifications[i];
+      this.props.dequeuNotification();
+      this.displayNotification(notification.success, notification.message);
+    }
+
     if (this.props.cardSavedNotification.show) {
       this.displayNotification(
         this.props.cardSavedNotification.success,
@@ -241,6 +249,7 @@ const mapStateToProps = (state) => {
     profileImageNotifications: state.profileImageNotifications,
     backdropImageNotifications: state.backdropImageNotifications,
     offeringImageNotifications: state.offeringImageNotifications,
+    notifications: state.notifications.queue,
   };
 };
 
@@ -271,6 +280,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(hideOfferingImageUploadedNotification()),
     hideOfferingImageDeletedNotification: () =>
       dispatch(hideOfferingImageDeletedNotification()),
+    dequeuNotification: () => dispatch({ type: DEQUEUE_NOTIFICATION }),
   };
 };
 
