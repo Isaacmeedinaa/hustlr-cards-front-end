@@ -36,6 +36,9 @@ const CardFormOfferingModal = (props) => {
   const offeringLocalStorage = useSelector(
     (state) => state.offeringLocalStorage
   );
+  const offeringImagesProgress = useSelector(
+    (state) => state.offeringImagesProgress
+  );
   const offering = offeringModal.offering;
 
   const [title, setTitle] = useState(offering.title);
@@ -160,7 +163,7 @@ const CardFormOfferingModal = (props) => {
         />
       </div>
       <textarea
-        className="card-form-input-large"
+        className="card-form-product-service-description-input "
         name="description"
         placeholder="Explain your product or service.."
         value={description}
@@ -196,7 +199,7 @@ const CardFormOfferingModal = (props) => {
             offering.id ? (
               <Loader type="TailSpin" color="#2ecc71" width={23} height={23} />
             ) : (
-              "Add Photo"
+              `Add Photo`
             )}
           </label>
           <input
@@ -223,8 +226,18 @@ const CardFormOfferingModal = (props) => {
           ) : null}
         </div>
       </div>
+      {offeringImagesProgress.progressing ? (
+        <p className="card-form-offering-modal-image-count">
+          Image {offeringImagesProgress.currentOfferingImgCount} out of{" "}
+          {offeringImagesProgress.totalOfferingImgCount} uploaded
+        </p>
+      ) : null}
+
       {offering.photos.length > 0 ? (
-        <div className="card-form-gallery-slider-container">
+        <div
+          className="card-form-gallery-slider-container"
+          style={{ marginTop: offeringImagesProgress.progressing ? 15 : 30 }}
+        >
           <AwesomeSlider bullets={false}>
             {renderOfferingSliderImages()}
           </AwesomeSlider>

@@ -23,13 +23,13 @@ import {
   OFFERING_DELETED_UNSUCCESSFULLY,
 } from "./notifications/offeringNotifications";
 import {
-  OFFERING_IMAGE_UPLOADED_SUCCESSFULLY,
+  // OFFERING_IMAGE_UPLOADED_SUCCESSFULLY,
   OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY,
   OFFERING_IMAGE_DELETED_SUCCESSFULLY,
   OFFERING_IMAGE_DELETED_UNSUCCESSFULLY,
 } from "./notifications/offeringImageNotifications";
 import {
-  GALLERY_IMAGE_UPLOADED_SUCCESSFULLY,
+  // GALLERY_IMAGE_UPLOADED_SUCCESSFULLY,
   GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY,
   GALLERY_IMAGE_DELETED_SUCCESSFULLY,
   GALLERY_IMAGE_DELETED_UNSUCCESSFULLY,
@@ -96,6 +96,14 @@ import CardLocation from "../../models/cardLocation";
 import { openOfferingModal, closeOfferingModal } from "./modals/offeringModal";
 import { TOGGLE_CARD_LINK_LOCAL_STORAGE } from "./localStorage/cardLinkLocalStorage";
 import { TOGGLE_OFFERING_LOCAL_STORAGE } from "./localStorage/offeringLocalStorage";
+import {
+  GALLERY_IMAGES_ARE_PROGRESSING,
+  GALLERY_IMAGES_ARE_NOT_PROGRESSING,
+} from "./progress/galleryImagesProgress";
+import {
+  OFFERING_IMAGES_ARE_PROGRESSING,
+  OFFERING_IMAGES_ARE_NOT_PROGRESSING,
+} from "./progress/offeringImagesProgress";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -912,10 +920,10 @@ export const setCardSocialMediaLinks = (
 export const uploadGalleryImages = (images, cardId) => {
   return (dispatch) => {
     const userToken = localStorage.getItem("userToken");
+    let imagesArrLength = images.length;
+    let counter = 0;
 
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
-
+    Array.from(images).forEach((image) => {
       const body = new FormData();
       body.append("CardId", cardId);
       body.append("File", image);
@@ -934,6 +942,7 @@ export const uploadGalleryImages = (images, cardId) => {
         .then((resp) => {
           if (!resp.ok) {
             resp.json().then((error) => {
+              dispatch({ type: GALLERY_IMAGES_ARE_NOT_PROGRESSING });
               dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
               dispatch({ type: CARD_ERRORS, errors: [error] });
               dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
@@ -946,16 +955,31 @@ export const uploadGalleryImages = (images, cardId) => {
           if (!data) {
             return;
           }
+
           dispatch({ type: CARD_NO_ERRORS });
           dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
           dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-          dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
+
+          counter++;
+          dispatch({
+            type: GALLERY_IMAGES_ARE_PROGRESSING,
+            currentGalleryImgCount: counter,
+            totalGalleryImgCount: imagesArrLength,
+          });
+
+          if (counter === imagesArrLength) {
+            setTimeout(() => {
+              dispatch({ type: GALLERY_IMAGES_ARE_NOT_PROGRESSING });
+            }, 1200);
+          }
+          // dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
         })
         .catch((err) => {
+          dispatch({ type: GALLERY_IMAGES_ARE_NOT_PROGRESSING });
           dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
           dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
         });
-    }
+    });
   };
 };
 
@@ -989,13 +1013,11 @@ export const deleteGalleryImage = (photoId) => {
 
 export const uploadOfferingImages = (images, offeringId) => {
   return (dispatch) => {
-    console.log(images);
     const userToken = localStorage.getItem("userToken");
+    let imagesArrLength = images.length;
+    let counter = 0;
 
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
-      console.log(image);
-
+    Array.from(images).forEach((image) => {
       const body = new FormData();
       body.append("OfferingId", offeringId);
       body.append("File", image);
@@ -1020,26 +1042,39 @@ export const uploadOfferingImages = (images, offeringId) => {
             });
             return;
           }
-          dispatch({ type: OFFERING_IMAGE_UPLOADED_SUCCESSFULLY });
+          // dispatch({ type: OFFERING_IMAGE_UPLOADED_SUCCESSFULLY });
           return resp.json();
         })
         .then((data) => {
           if (!data) {
             return;
           }
+
           dispatch({ type: CARD_NO_ERRORS });
           dispatch({
             type: UPLOAD_OFFERING_PICTURE,
             photo: data,
             offeringId: offeringId,
           });
+
+          counter++;
+          dispatch({
+            type: OFFERING_IMAGES_ARE_PROGRESSING,
+            currentOfferingImgCount: counter,
+            totalOfferingImgCount: imagesArrLength,
+          });
+
+          if (counter === imagesArrLength) {
+            setTimeout(() => {
+              dispatch({ type: OFFERING_IMAGES_ARE_NOT_PROGRESSING });
+            }, 1200);
+          }
         })
         .catch((err) => {
-          console.log(err);
           dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
           dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
         });
-    }
+    });
   };
 };
 
