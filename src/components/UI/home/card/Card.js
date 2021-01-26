@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import { Animated } from "react-animated-css";
 import { connect } from "react-redux";
 
 import CardBackdropImage from "./CardBackdropImage";
@@ -23,48 +22,46 @@ class Card extends Component {
     }
 
     return (
-      <Animated animationIn="" animationOut="fadeOut" isVisible={true}>
-        <div className="primary-light-bg card-wrapper">
-          <div className="card-container">
-            <CardLink
-              pathToCard={this.props.cardData.pathToCard}
-              primaryColor={this.props.cardTheme.primaryColor}
-              transparentColor={this.props.cardTheme.transparentColor}
-            />
-            <CardBackdropImage
-              backdropImgUrl={this.props.cardData.backdropImgUrl}
-              cardBackdropImageLoader={this.props.cardBackdropImageLoader}
-            />
-            <CardImage
-              imgUrl={this.props.cardData.imgUrl}
-              backdropImgUrl={this.props.cardData.backdropImgUrl}
-              cardImageLoader={this.props.cardImageLoader}
-            />
-            <CardTitle title={this.props.cardData.title} />
-            <CardSocialMedias
-              primaryColor={this.props.cardTheme.primaryColor}
-              transparentColor={this.props.cardTheme.transparentColor}
-              phoneNumber={this.props.cardData.phoneNumber}
-              email={this.props.cardData.email}
-              links={this.props.cardData.links}
-            />
-            <CardBadges
-              cardData={this.props.cardData}
-              cardTheme={this.props.cardTheme}
-            />
-            <CardDescription
-              description={this.props.cardData.description}
-              primaryColor={this.props.cardTheme.primaryColor}
-            />
-            <CardGallerySlider photos={this.props.cardData.photos} />
-            <CardOfferings
-              offerings={this.props.cardData.offerings}
-              primaryColor={this.props.cardTheme.primaryColor}
-              transparentColor={this.props.cardTheme.transparentColor}
-            />
-          </div>
+      <div className="primary-light-bg card-wrapper">
+        <div className="card-container">
+          <CardLink
+            pathToCard={this.props.cardData.pathToCard}
+            primaryColor={this.props.cardTheme.primaryColor}
+            transparentColor={this.props.cardTheme.transparentColor}
+          />
+          <CardBackdropImage
+            backdropImgUrl={this.props.cardData.backdropImgUrl}
+            cardBackdropImageLoader={this.props.cardBackdropImageLoader}
+          />
+          <CardImage
+            imgUrl={this.props.cardData.imgUrl}
+            backdropImgUrl={this.props.cardData.backdropImgUrl}
+            cardImageLoader={this.props.cardImageLoader}
+          />
+          <CardTitle title={this.props.cardData.title} />
+          <CardSocialMedias
+            primaryColor={this.props.cardTheme.primaryColor}
+            transparentColor={this.props.cardTheme.transparentColor}
+            phoneNumber={this.props.cardData.phoneNumber}
+            email={this.props.cardData.email}
+            links={this.props.cardData.links}
+          />
+          <CardBadges
+            cardData={this.props.cardData}
+            cardTheme={this.props.cardTheme}
+          />
+          <CardDescription
+            description={this.props.cardData.description}
+            primaryColor={this.props.cardTheme.primaryColor}
+          />
+          <CardGallerySlider photos={this.props.cardData.photos} />
+          <CardOfferings
+            offerings={this.props.cardData.offerings}
+            primaryColor={this.props.cardTheme.primaryColor}
+            transparentColor={this.props.cardTheme.transparentColor}
+          />
         </div>
-      </Animated>
+      </div>
     );
   }
 }

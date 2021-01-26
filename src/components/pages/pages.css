@@ -34,7 +34,10 @@
 
 .grid-container-home {
   display: grid;
-  grid-template-columns: minmax(75px, 75px) 1fr 1fr;
+  grid-template-columns: minmax(75px, 75px) minmax(calc(50% - 75px), 1fr) minmax(
+      calc(50% - 75px),
+      1fr
+    );
   grid-template-areas: "sidetoolbar cardform cardshow";
 }
 
@@ -140,7 +143,7 @@
   }
 
   .grid-container-home {
-    grid-template-columns: minmax(75px, 75px) 1fr;
+    grid-template-columns: minmax(75px, 75px) minmax(calc(50% - 75px), 1fr);
     grid-template-areas:
       "sidetoolbar cardform"
       "sidetoolbar cardshow";
@@ -188,7 +191,7 @@
 
 @media only screen and (max-width: 650px) {
   .grid-container-home {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(100%, 1fr);
     grid-template-areas:
       "cardform"
       "cardshow";
