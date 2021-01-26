@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import Select from "react-select";
 
-import { createLink, deleteLink, setLink, updateLink } from "../../../../store/actions/card";
-import { hideLinkSavedNotification, hideLinkDeletedNotification } from "../../../../store/actions/notifications/socialMediaLinkNotifications";
+import { createPaymentMethod, deletePaymentMethod } from "../../../../store/actions/card";
+import { hidePaymentMethodCreatedNotification, hidePaymentMethodDeletedNotification} from "../../../../store/actions/notifications/paymentMethodsNotifications";
 
 import { showToast } from "../../Toasts";
 
@@ -10,32 +10,32 @@ import { connect } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import CardFormSocialMediaLink from './CardFormSocialMediaLink'
+import CardFormPaymentMethod from './CardFormPaymentMethod'
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
 
-class CardFormSocialMediaInputs extends Component {
+class CardFormPaymentInputs extends Component {
   state = {
-    links: [],
+    paymentMethods: [],
     selectValue: null
   };
 
   componentDidUpdate() {
-    if (this.props.linkNotifications.saved.show) {
+    if (this.props.paymentMethodsNotifications.created.show) {
       this.displayNotification(
-        this.props.linkNotifications.saved.success,
-        this.props.linkNotifications.saved.message
+        this.props.paymentMethodsNotifications.created.success,
+        this.props.paymentMethodsNotifications.created.message
       );
-      this.props.hideLinkSavedNotification();
+      this.props.hidePaymentMethodCreatedNotification();
     }
 
-    if (this.props.linkNotifications.deleted.show) {
+    if (this.props.paymentMethodsNotifications.deleted.show) {
       this.displayNotification(
-        this.props.linkNotifications.deleted.success,
-        this.props.linkNotifications.deleted.message
+        this.props.paymentMethodsNotifications.deleted.success,
+        this.props.paymentMethodsNotifications.deleted.message
       );
-      this.props.hideLinkDeletedNotification();
+      this.props.hidePaymentMethodDeletedNotification();
     }
   }
 
@@ -44,16 +44,16 @@ class CardFormSocialMediaInputs extends Component {
   }
 
   selectOptions() {
-    let usedLinkTypes = this.props.links.map(link => link.typeId);
+    let usedPaymentMethodTypes = this.props.paymentMethods.map(paymentMethods => paymentMethods.paymentMethodTypeId);
 
-    return this.props.dropdownLinkTypes
-      .filter(linkType => {
-        return !usedLinkTypes.includes(linkType.value);
+    return this.props.dropdownPaymentMethodTypes
+      .filter(paymentMethodType => {
+        return !usedPaymentMethodTypes.includes(paymentMethodType.value);
       })
-      .map(linkType => {
+      .map(paymentMethodType => {
         return { 
-          value: linkType.value,
-          label: <span style={{marginLeft: '5px'}}><FontAwesomeIcon icon={[linkType.iconPrefix, linkType.icon]} transform="grow-4" /> <span style={{marginLeft: '15px'}}>{linkType.label}</span></span>
+          value: paymentMethodType.value,
+          label: <span style={{marginLeft: '5px'}}><FontAwesomeIcon icon={[paymentMethodType.iconPrefix, paymentMethodType.icon]} transform="grow-4" /> <span style={{marginLeft: '15px'}}>{paymentMethodType.label}</span></span>
         }
       })
   }
@@ -69,33 +69,22 @@ class CardFormSocialMediaInputs extends Component {
     if (event !== null && event !== undefined) {
 
       selectedId = parseInt(event.value);
-      this.props.createLink(selectedId);
+      this.props.createPaymentMethod(selectedId);
     }
   };
 
-  onCardSocialMediaLinkChangeHandler = (event, link) => {
-    const linkToUpdate = {...link};
-    linkToUpdate.url = event.target.value;
-
-    this.props.setLink(linkToUpdate);
+  onDeletePaymentMethodHandler = (paymentMethod) => {
+    this.props.deletePaymentMethod(paymentMethod.id);
   }
 
-  onDeleteLinkHandler = (link) => {
-    this.props.deleteLink(link.id);
-  }
-
-  onSaveLinksHandler = (link) => {
-    this.props.updateLink(link);
-  }
-
-  renderSocialMediaLinks(links) {
-    links = [...this.props.links];
+  renderPaymentMethods(paymentMethods) {
+    paymentMethods = [...this.props.paymentMethods];
 
     // sort from largest id to smallest id (newest to oldest)
-    links.sort((a, b) => b.id - a.id);
+    paymentMethods.sort((a, b) => b.id - a.id);
 
-    return links.map((link, index) => {
-      return <CardFormSocialMediaLink key={link.id} link={link} index={index} />
+    return paymentMethods.map((paymentMethod, index) => {
+      return <CardFormPaymentMethod key={paymentMethod.id} paymentMethod={paymentMethod} index={index} />
     });
   }
 
@@ -164,22 +153,22 @@ class CardFormSocialMediaInputs extends Component {
                 },
               }),
             }}
-            placeholder={<div className="card-form-social-media-placeholder-color">Add Link</div>}
+            placeholder={<div className="card-form-social-media-placeholder-color">Add Payment Method</div>}
             options={this.selectOptions()}
             onChange={this.onSelectChangeHandler}
             value={this.state.selectValue}
           />
       </div>
 
-         { this.props.links.length > 0 ?
+         { this.props.paymentMethods.length > 0 ?
           <Fragment>
             <div className="card-form-social-media-inputs-container">
-                {this.renderSocialMediaLinks()}
+                {this.renderPaymentMethods()}
             </div>
           </Fragment>
         : 
         <div className="card-form-no-social-media-links">
-          { "No Links Added Yet" }
+          {"No Payment Methods Added Yet"}
         </div> }
       </Fragment>
     );
@@ -188,29 +177,25 @@ class CardFormSocialMediaInputs extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    dropdownLinkTypes: state.dropdowns.dropdownLinkTypes,
-    links: state.card.cardData.links,
-    creatingLoader: state.linkLoader.creatingLoader,
-    updatingLoader: state.linkLoader.updatingLoader,
-    deletingLoader: state.linkLoader.deletingLoader,
-    deletingLinkId: state.linkLoader.deletingLinkId,
-    updatingLinkId: state.linkLoader.updatingLinkId,
-    linkNotifications: state.linkNotifications
+    dropdownPaymentMethodTypes: state.dropdowns.dropdownPaymentTypes,
+    paymentMethods: state.card.cardData.paymentMethods,
+    creatingLoader: state.paymentMethodsLoader.creatingLoader,
+    deletingLoader: state.paymentMethodsLoader.deletingLoader,
+    deletingLinkId: state.paymentMethodsLoader.deletingLinkId,
+    paymentMethodsNotifications: state.paymentMethodsNotifications
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createLink: (typeId) => dispatch(createLink(typeId)),
-    updateLink: (linkId) => dispatch(updateLink(linkId)),
-    deleteLink: (linkId) => dispatch(deleteLink(linkId)),
-    setLink: (link) => dispatch(setLink(link)),
-    hideLinkSavedNotification: () => dispatch(hideLinkSavedNotification()),
-    hideLinkDeletedNotification: () => dispatch(hideLinkDeletedNotification())
+    createPaymentMethod: (typeId) => dispatch(createPaymentMethod(typeId)),
+    deletePaymentMethod: (paymentMethodId) => dispatch(deletePaymentMethod(paymentMethodId)),
+    hidePaymentMethodCreatedNotification: () => dispatch(hidePaymentMethodCreatedNotification()),
+    hidePaymentMethodDeletedNotification: () => dispatch(hidePaymentMethodDeletedNotification())
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CardFormSocialMediaInputs);
+)(CardFormPaymentInputs);

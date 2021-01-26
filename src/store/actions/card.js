@@ -89,6 +89,20 @@ import {
   LINK_DELETED_UNSUCCESSFULLY,
 } from "./notifications/socialMediaLinkNotifications";
 
+import {
+  PAYMENT_METHOD_IS_CREATING_LOADER,
+  PAYMENT_METHOD_IS_NOT_CREATING_LOADER,
+  PAYMENT_METHOD_IS_DELETING_LOADER,
+  PAYMENT_METHOD_IS_NOT_DELETING_LOADER,
+} from "./loaders/paymentMethodsLoader";
+
+import {
+  PAYMENT_METHOD_CREATED_SUCCESSFULLY,
+  PAYMENT_METHOD_CREATED_UNSUCCESSFULLY,
+  PAYMENT_METHOD_DELETED_SUCCESSFULLY,
+  PAYMENT_METHOD_DELETED_UNSUCCESSFULLY,
+} from "./notifications/paymentMethodsNotifications";
+
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 import CardLocation from "../../models/cardLocation";
@@ -131,6 +145,8 @@ export const CREATE_LINK = "CREATE_LINK";
 export const DELETE_LINK = "DELETE_LINK";
 export const SET_LINK = "SET_LINK";
 export const SET_MULTIPLE_LINKS = "SET_MULTIPLE_LINKS";
+export const CREATE_PAYMENT_METHOD = "CREATE_PAYMENT_METHOD";
+export const DELETE_PAYMENT_METHOD = "DELETE_PAYMENT_METHOD";
 
 export const fetchCard = (userId) => {
   return async (dispatch, getState) => {
@@ -875,6 +891,86 @@ export const deleteLink = (id) => {
       .catch((err) => {
         dispatch({ type: LINK_IS_NOT_DELETING_LOADER });
         dispatch({ type: LINK_DELETED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const createPaymentMethod = (paymentMethodTypeId) => {
+  return (dispatch, getState) => {
+    const { card } = getState();
+
+    const paymentMethodData = {
+      paymentMethodTypeId: paymentMethodTypeId,
+      cardId: card.cardData.id,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(paymentMethodData),
+    };
+
+    dispatch({ type: PAYMENT_METHOD_IS_CREATING_LOADER });
+    fetch(`${API_BASE_URL}/paymentmethods`, reqObj)
+      .then((resp) => resp.json())
+      .then((paymentMethod) => {
+        dispatch({ type: PAYMENT_METHOD_IS_NOT_CREATING_LOADER });
+
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        localStorageCard.paymentMethods.push(paymentMethod);
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: CREATE_PAYMENT_METHOD, paymentMethod: paymentMethod });
+        dispatch({ type: PAYMENT_METHOD_CREATED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: PAYMENT_METHOD_IS_NOT_CREATING_LOADER });
+        dispatch({ type: PAYMENT_METHOD_CREATED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const deletePaymentMethod = (id) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: PAYMENT_METHOD_IS_DELETING_LOADER, paymentMethodId: id });
+    fetch(`${API_BASE_URL}/paymentmethods/${id}`, reqObj)
+      .then(() => {})
+      .then(() => {
+        dispatch({ type: PAYMENT_METHOD_IS_NOT_DELETING_LOADER });
+        // MUST remove payment method from local storage card offerings array
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        let newPaymentMethods = localStorageCard.paymentMethods.filter((paymentMethod) => paymentMethod.id !== id);
+        delete localStorageCard["paymentMethods"];
+        localStorageCard["paymentMethods"] = newPaymentMethods;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: DELETE_PAYMENT_METHOD, id: id });
+        dispatch({ type: PAYMENT_METHOD_DELETED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: PAYMENT_METHOD_IS_NOT_DELETING_LOADER });
+        dispatch({ type: PAYMENT_METHOD_DELETED_UNSUCCESSFULLY });
         console.log(err);
       });
   };
