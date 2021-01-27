@@ -30,7 +30,9 @@ import {
   DELETE_LINK,
   CREATE_LINK,
   SET_LINK,
-  SET_MULTIPLE_LINKS
+  SET_MULTIPLE_LINKS,
+  DELETE_PAYMENT_METHOD,
+  CREATE_PAYMENT_METHOD,
 } from "../actions/card";
 
 const initialState = {
@@ -346,6 +348,32 @@ const card = (state = initialState, action) => {
           links: action.links,
         },
       };
+
+
+    case CREATE_PAYMENT_METHOD:
+      let paymentMethodsCopy = [...state.cardData.paymentMethods];
+      paymentMethodsCopy.unshift(action.paymentMethod);
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          paymentMethods: paymentMethodsCopy,
+        },
+    };
+
+    case DELETE_PAYMENT_METHOD:
+      const filteredPaymentMethods = state.cardData.paymentMethods.filter(
+        (paymentMethod) => paymentMethod.id !== action.id
+      );
+
+      return {
+        ...state,
+        cardData: {
+          ...state.cardData,
+          paymentMethods: filteredPaymentMethods,
+        },
+    };
 
     case SET_CARD_EMAIL:
       return {

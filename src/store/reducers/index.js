@@ -29,6 +29,7 @@ import forgotPasswordLoader from "./loaders/forgotPasswordLoader";
 import changePasswordCodeLoader from "./loaders/changePasswordCodeLoader";
 import contactMessageLoader from "./loaders/contactMessageLoader";
 import linkLoader from "./loaders/socialMediaLinkLoaders";
+import paymentMethodsLoader from "./loaders/paymentMethodsLoader";
 
 // Errors
 import errors from "./errors";
@@ -51,6 +52,7 @@ import userUpdatedNotifications from "./notifications/userUpdatedNotifications";
 import backdropImageNotifications from "./notifications/backdropImageNotifications";
 import linkNotifications from "./notifications/socialMediaLinkNotifications";
 import contactMessageNotifications from "./notifications/contactMessageNotifications";
+import paymentMethodsNotifications from "./notifications/paymentMethodNotifications";
 
 // Modals
 import imageCropperModal from "./modals/imageCropperModal";
@@ -97,6 +99,7 @@ const rootReducer = combineReducers({
   changePasswordCodeLoader,
   contactMessageLoader,
   linkLoader,
+  paymentMethodsLoader,
   // Errors
   errors,
   cardErrors,
@@ -117,6 +120,7 @@ const rootReducer = combineReducers({
   backdropImageNotifications,
   contactMessageNotifications,
   linkNotifications,
+  paymentMethodsNotifications,
   // Modals
   imageCropperModal,
   backdropImageCropperModal,

@@ -122,6 +122,12 @@ const CardOfferings = (props) => {
       <div
         className="card-business-products-services-container"
         id="card-business-products-services-container"
+        style={{
+          marginTop:
+            !showHeader || !props.offerings || props.offerings.length === 0
+              ? 0
+              : 60,
+        }}
         onWheel={onOfferingsContainerWheel}
         ref={offeringsContainer}
       >
