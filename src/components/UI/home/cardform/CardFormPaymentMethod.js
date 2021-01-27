@@ -15,7 +15,7 @@ const CardFormPaymentMethod = (props) => {
   const dispatch = useDispatch();
 
   const paymentMethodsLoader = useSelector((state) => state.paymentMethodsLoader);
-  console.log(paymentMethodsLoader);
+  
   return (
     <div className="card-form-social-media-input-group">
       <span className="card-form-social-media-icon-wrapper">
