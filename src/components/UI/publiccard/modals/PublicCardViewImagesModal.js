@@ -7,6 +7,7 @@ import Modal from "react-modal";
 
 import IosArrowForward from "react-ionicons/lib/IosArrowForward";
 import IosArrowBack from "react-ionicons/lib/IosArrowBack";
+import MdClose from "react-ionicons/lib/MdClose";
 
 import "./modals.css";
 
@@ -29,6 +30,12 @@ const PublicCardViewImagesModal = (props) => {
       contentLabel="Gallery Image Modal"
       className="primary-light-bg public-card-image-modal"
     >
+      <div
+        className="public-card-gallery-modal-close-button"
+        onClick={() => dispatch(closeViewImagesModal())}
+      >
+        <MdClose color="#2ecc71" size={16} />
+      </div>
       <img
         src={props.currentImgUrl}
         alt="gallery"
@@ -64,12 +71,6 @@ const PublicCardViewImagesModal = (props) => {
           </button>
         </div>
       </div>
-      <button
-        className="primary-color public-card-image-modal-button"
-        onClick={() => onCloseModalClick()}
-      >
-        Close
-      </button>
     </Modal>
   );
 };

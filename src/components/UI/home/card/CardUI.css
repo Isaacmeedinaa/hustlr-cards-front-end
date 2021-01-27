@@ -1,5 +1,6 @@
 .card-wrapper {
   width: 100%;
+  max-width: 100% !important;
   padding: 35px;
   border-radius: 5px;
   -webkit-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
@@ -135,14 +136,14 @@
   font-size: 16px;
   font-weight: 500 !important;
   width: 100%;
+  word-break: break-word;
 }
 
 .card-business-products-services-container {
-  margin-top: 60px;
-  width: 95%;
+  width: 100%;
   max-width: 100%;
-  display: flex;
   overflow-x: auto;
+  display: flex;
 }
 
 .card-business-products-services-container::-webkit-scrollbar {
@@ -154,7 +155,7 @@
   width: 70%;
   max-width: 100%;
   border-radius: 10px;
-  margin-right: 5%;
+  margin-right: 20px;
   word-wrap: break-word;
   flex-shrink: 0;
 }
@@ -239,7 +240,8 @@
 .card-business-social-media-links-container {
   display: flex;
   flex-direction: row;
-  margin-top: 20px;
+  flex-wrap: wrap;
+  margin-top: 0px;
   justify-content: center;
   width: 100%;
   max-width: 100%;
@@ -254,6 +256,7 @@
   width: 40px;
   padding-left: 2px;
   margin-right: 18px;
+  margin-top: 20px;
   font-size: 16px;
 }
 
@@ -367,6 +370,51 @@ a > i {
 .card-business-product-service-container .awssld__content {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+}
+
+.card-business-payment-methods-container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-business-payment-method-badge-wrapper {
+  margin-left: 10px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  /* padding-left: 25px;
+  padding-right: 25px; */
+  min-width: 150px;
+  padding-bottom: 4px;
+  padding-top: 3px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-business-payment-method-badge-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-business-payment-method-badge-container > i {
+  margin-top: 5px !important;
+}
+
+.card-business-payment-method-badge-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.card-business-payment-method-badge-text {
+  /* margin-bottom: 2px; */
+  margin-top: 3.5px;
+  margin-left: 5px;
 }
 
 @media only screen and (max-width: 650px) {

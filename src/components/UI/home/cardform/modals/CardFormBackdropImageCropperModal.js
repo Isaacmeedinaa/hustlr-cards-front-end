@@ -8,6 +8,8 @@ import Modal from "react-modal";
 
 import CardFormBackdropImageCropper from "../CardFormBackdropImageCropper";
 
+import MdClose from "react-ionicons/lib/MdClose";
+
 import "../../../../../constants/colors.css";
 import "./modals.css";
 
@@ -35,6 +37,12 @@ const CardFormBackdropImageCropperModal = (props) => {
       contentLabel="Gallery Image Modal"
       className="primary-light-bg card-form-image-cropper-modal"
     >
+      <div
+        className="card-form-image-modal-close-button"
+        onClick={() => dispatch(closeBDImageCropperModal())}
+      >
+        <MdClose color="#2ecc71" size={16} />
+      </div>
       <CardFormBackdropImageCropper
         getBlob={(blob) => setImgBlob(blob)}
         inputImg={props.inputBackdropImg}
@@ -42,12 +50,6 @@ const CardFormBackdropImageCropperModal = (props) => {
       <label onClick={onUploadBackdropImageClick} className="card-form-button">
         <span className="card-form-button-text">Crop and Upload Image</span>
       </label>
-      <button
-        className="primary-color card-form-image-cropper-modal-button"
-        onClick={() => dispatch(closeBDImageCropperModal())}
-      >
-        Close
-      </button>
     </Modal>
   );
 };

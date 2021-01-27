@@ -5,23 +5,21 @@ import {
 
 let initialState = {
   loading: false,
-  offeringId: 0
-}
+  offeringId: 0,
+};
 
 const offeringImageLoader = (state = initialState, action) => {
   switch (action.type) {
     case OFFERING_IMAGE_IS_LOADING:
-
       return {
         loading: true,
-        offeringId: action.offeringId
+        offeringId: action.offeringId,
       };
 
     case OFFERING_IMAGE_IS_NOT_LOADING:
-
       return {
         loading: false,
-        offeringId: 0
+        offeringId: 0,
       };
 
     default:

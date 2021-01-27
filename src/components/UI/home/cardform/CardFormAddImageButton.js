@@ -23,6 +23,7 @@ class CardFormAddImageButton extends Component {
   };
 
   render() {
+    // console.log(this.props.galleryImagesProgress);
     return (
       <Fragment>
         <label
@@ -33,7 +34,9 @@ class CardFormAddImageButton extends Component {
             <Loader type="TailSpin" color="#ffffff" width={15} height={15} />
           ) : (
             <span className="card-form-button-text">
-              + Upload New Gallery Photo
+              {this.props.galleryImagesProgress.progressing
+                ? `Image ${this.props.galleryImagesProgress.currentGalleryImgCount} out of ${this.props.galleryImagesProgress.totalGalleryImgCount} uploaded`
+                : "+ Upload New Gallery Photo"}
             </span>
           )}
         </label>
@@ -54,6 +57,7 @@ const mapStateToProps = (state) => {
   return {
     cardId: state.card.cardData.id,
     cardGalleryImageLoader: state.cardGalleryImageLoader,
+    galleryImagesProgress: state.galleryImagesProgress,
   };
 };
 

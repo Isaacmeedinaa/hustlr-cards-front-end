@@ -17,17 +17,19 @@ import {
 import {
   OFFERING_CREATED_SUCCESSFULLY,
   OFFERING_CREATED_UNSUCCESSFULLY,
+  OFFERING_SAVED_SUCCESSFULLY,
+  OFFERING_SAVED_UNSUCCESSFULLY,
   OFFERING_DELETED_SUCCESSFULLY,
   OFFERING_DELETED_UNSUCCESSFULLY,
 } from "./notifications/offeringNotifications";
 import {
-  OFFERING_IMAGE_UPLOADED_SUCCESSFULLY,
+  // OFFERING_IMAGE_UPLOADED_SUCCESSFULLY,
   OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY,
   OFFERING_IMAGE_DELETED_SUCCESSFULLY,
   OFFERING_IMAGE_DELETED_UNSUCCESSFULLY,
 } from "./notifications/offeringImageNotifications";
 import {
-  GALLERY_IMAGE_UPLOADED_SUCCESSFULLY,
+  // GALLERY_IMAGE_UPLOADED_SUCCESSFULLY,
   GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY,
   GALLERY_IMAGE_DELETED_SUCCESSFULLY,
   GALLERY_IMAGE_DELETED_UNSUCCESSFULLY,
@@ -63,14 +65,59 @@ import {
 import {
   OFFERING_IS_CREATING_LOADER,
   OFFERING_IS_NOT_CREATING_LOADER,
+  OFFERING_IS_UPDATING_LOADER,
+  OFFERING_IS_NOT_UPDATING_LOADER,
   OFFERING_IS_DELETING_LOADER,
   OFFERING_IS_NOT_DELETING_LOADER,
 } from "./loaders/offeringLoader";
+
+import {
+  LINK_IS_CREATING_LOADER,
+  LINK_IS_NOT_CREATING_LOADER,
+  LINK_IS_DELETING_LOADER,
+  LINK_IS_NOT_DELETING_LOADER,
+  LINK_IS_UPDATING_LOADER,
+  LINK_IS_NOT_UPDATING_LOADER,
+} from "./loaders/socialMediaLinkLoaders";
+
+import {
+  LINK_CREATED_SUCCESSFULLY,
+  LINK_CREATED_UNSUCCESSFULLY,
+  LINK_SAVED_SUCCESSFULLY,
+  LINK_SAVED_UNSUCCESSFULLY,
+  LINK_DELETED_SUCCESSFULLY,
+  LINK_DELETED_UNSUCCESSFULLY,
+} from "./notifications/socialMediaLinkNotifications";
+
+import {
+  PAYMENT_METHOD_IS_CREATING_LOADER,
+  PAYMENT_METHOD_IS_NOT_CREATING_LOADER,
+  PAYMENT_METHOD_IS_DELETING_LOADER,
+  PAYMENT_METHOD_IS_NOT_DELETING_LOADER,
+} from "./loaders/paymentMethodsLoader";
+
+import {
+  PAYMENT_METHOD_CREATED_SUCCESSFULLY,
+  PAYMENT_METHOD_CREATED_UNSUCCESSFULLY,
+  PAYMENT_METHOD_DELETED_SUCCESSFULLY,
+  PAYMENT_METHOD_DELETED_UNSUCCESSFULLY,
+} from "./notifications/paymentMethodsNotifications";
+
 import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 import CardLocation from "../../models/cardLocation";
 
 import { openOfferingModal, closeOfferingModal } from "./modals/offeringModal";
+import { TOGGLE_CARD_LINK_LOCAL_STORAGE } from "./localStorage/cardLinkLocalStorage";
+import { TOGGLE_OFFERING_LOCAL_STORAGE } from "./localStorage/offeringLocalStorage";
+import {
+  GALLERY_IMAGES_ARE_PROGRESSING,
+  GALLERY_IMAGES_ARE_NOT_PROGRESSING,
+} from "./progress/galleryImagesProgress";
+import {
+  OFFERING_IMAGES_ARE_PROGRESSING,
+  OFFERING_IMAGES_ARE_NOT_PROGRESSING,
+} from "./progress/offeringImagesProgress";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -92,6 +139,7 @@ export const SET_CARD_OFFERING_TITLE = "SET_CARD_OFFERING_TITLE";
 export const SET_CARD_OFFERING_PRICE = "SET_CARD_OFFERING_PRICE";
 export const SET_CARD_OFFERING_DESCRIPTION = "SET_CARD_OFFERING_DESCRIPTION";
 export const CREATE_OFFERING = "CREATE_OFFERING";
+export const UPDATE_OFFERING = "UPDATE_OFFERING";
 export const DELETE_OFFERING = "DELETE_OFFERING";
 export const SET_CARD_EMAIL = "SET_CARD_EMAIL";
 export const SET_CARD_PHONE_NUMBER = "SET_CARD_PHONE_NUMBER";
@@ -101,6 +149,12 @@ export const DELETE_CARD_GALLERY_PICTURE = "DELETE_CARD_GALLERY_PICTURE";
 export const UPLOAD_OFFERING_PICTURE = "UPLOAD_OFFERING_PICTURE";
 export const DELETE_OFFERING_PICTURE = "DELETE_OFFERING_PICTURE";
 export const SET_CARD_PATH = "SET_CARD_PATH";
+export const CREATE_LINK = "CREATE_LINK";
+export const DELETE_LINK = "DELETE_LINK";
+export const SET_LINK = "SET_LINK";
+export const SET_MULTIPLE_LINKS = "SET_MULTIPLE_LINKS";
+export const CREATE_PAYMENT_METHOD = "CREATE_PAYMENT_METHOD";
+export const DELETE_PAYMENT_METHOD = "DELETE_PAYMENT_METHOD";
 
 export const fetchCard = (userId) => {
   return async (dispatch, getState) => {
@@ -138,7 +192,9 @@ export const fetchCard = (userId) => {
           card.userId,
           card.industry,
           card.photos,
-          card.offerings
+          card.offerings,
+          card.links,
+          card.paymentMethods
         );
 
         const cardTheme = themes.find((theme) => theme.id === card.themeId);
@@ -159,23 +215,6 @@ export const saveCard = (cardId) => {
   return async (dispatch, getState) => {
     const { cardData } = getState().card;
     const localStorageCard = JSON.parse(localStorage.getItem("card"));
-    let updatedOfferings = [];
-
-    for (let i = 0; i < localStorageCard.offerings.length; i++) {
-      let result = cardData.offerings.filter((offeringRedux) => {
-        return (
-          offeringRedux.id === localStorageCard.offerings[i].id &&
-          (offeringRedux.title !== localStorageCard.offerings[i].title ||
-            offeringRedux.price !== localStorageCard.offerings[i].price ||
-            offeringRedux.description !==
-              localStorageCard.offerings[i].description)
-        );
-      });
-
-      if (result.length === 1) {
-        updatedOfferings.push(result[0]);
-      }
-    }
 
     // The location description is stored in the redux state. Let's get the description from there and fill it in with the details from the google api
     let updatedLocation = cardData.location;
@@ -240,7 +279,6 @@ export const saveCard = (cardId) => {
           ? null
           : cardData.industry.id,
       userId: cardData.userId,
-      offerings: updatedOfferings,
     };
 
     const userToken = localStorage.getItem("userToken");
@@ -568,12 +606,72 @@ export const createOffering = (cardId) => {
 
         dispatch({ type: CREATE_OFFERING, offering: offering });
         dispatch({ type: OFFERING_CREATED_SUCCESSFULLY });
-        dispatch(openOfferingModal(offering));
+        dispatch(
+          openOfferingModal(offering, localStorageCard.offerings.length - 1)
+        );
       })
       .catch((err) => {
         dispatch({ type: OFFERING_IS_NOT_CREATING_LOADER });
         dispatch({ type: OFFERING_CREATED_UNSUCCESSFULLY });
         console.log(err);
+      });
+  };
+};
+
+export const updateOffering = (
+  id,
+  title,
+  price,
+  description,
+  cardId,
+  index
+) => {
+  return (dispatch) => {
+    const offeringData = {
+      id: id,
+      title: title,
+      price: price,
+      description: description,
+      cardId: cardId,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(offeringData),
+    };
+
+    dispatch({ type: OFFERING_IS_UPDATING_LOADER });
+    fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
+      .then((resp) => resp.json())
+      .then((offering) => {
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        const localStorageCardOfferings = localStorageCard.offerings;
+        localStorageCardOfferings[index] = offering;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: TOGGLE_OFFERING_LOCAL_STORAGE });
+
+        dispatch({
+          type: UPDATE_OFFERING,
+          offering: offering,
+          offeringIndex: index,
+        });
+
+        dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
+        dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });
+        // dispatch(closeOfferingModal());
+      })
+      .catch((err) => {
+        dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
+        dispatch({ type: OFFERING_SAVED_UNSUCCESSFULLY });
       });
   };
 };
@@ -623,6 +721,269 @@ export const deleteOffering = (id) => {
   };
 };
 
+export const createLink = (linkTypeId) => {
+  return (dispatch, getState) => {
+    const { card } = getState();
+
+    const linkData = {
+      id: 0,
+      url: "",
+      title: "",
+      typeId: linkTypeId,
+      cardId: card.cardData.id,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(linkData),
+    };
+
+    dispatch({ type: LINK_IS_CREATING_LOADER });
+    fetch(`${API_BASE_URL}/links`, reqObj)
+      .then((resp) => resp.json())
+      .then((cardLink) => {
+        dispatch({ type: LINK_IS_NOT_CREATING_LOADER });
+
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        localStorageCard.links.push(cardLink);
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: CREATE_LINK, link: cardLink });
+        dispatch({ type: LINK_CREATED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: LINK_IS_NOT_CREATING_LOADER });
+        dispatch({ type: LINK_CREATED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+// export const updateLinks = () => {
+//   return (dispatch, getState) => {
+//     const { card } = getState();
+
+//     const linkData = [ ...card.cardData.links ];
+
+//     const userToken = localStorage.getItem("userToken");
+
+//     const reqObj = {
+//       method: "PUT",
+//       headers: {
+//         Authorization: `Bearer ${userToken}`,
+//         "Content-Type": "application/json",
+//         Accepts: "application/json",
+//       },
+//       body: JSON.stringify(linkData),
+//     };
+
+//     dispatch({ type: LINK_IS_UPDATING_LOADER });
+//     fetch(`${API_BASE_URL}/links`, reqObj)
+//       .then((resp) => resp.json())
+//       .then((cardLinks) => {
+//         dispatch({ type: LINK_IS_NOT_UPDATING_LOADER });
+
+//         const localStorageCard = JSON.parse(localStorage.getItem("card"));
+//         localStorageCard.links = cardLinks;
+//         localStorage.removeItem("card");
+//         localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+//         dispatch({ type: SET_MULTIPLE_LINKS, links: cardLinks });
+//         dispatch({ type: LINK_SAVED_SUCCESSFULLY });
+
+//       })
+//       .catch((err) => {
+//         dispatch({ type: LINK_IS_NOT_UPDATING_LOADER });
+//         dispatch({ type: LINK_SAVED_UNSUCCESSFULLY });
+//         console.log(err);
+//       });
+//   };
+// };
+
+export const updateLink = (link) => {
+  return (dispatch, getState) => {
+    const { card } = getState();
+
+    const linkData = {
+      id: link.id,
+      url: link.url,
+      title: link.title,
+      typeId: link.type.id,
+      cardId: card.cardData.id,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(linkData),
+    };
+
+    dispatch({ type: LINK_IS_UPDATING_LOADER, linkId: link.id });
+    fetch(`${API_BASE_URL}/links/${link.id}`, reqObj)
+      .then((resp) => resp.json())
+      .then((cardLink) => {
+        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id });
+
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        const localStorageCardLinks = localStorageCard.links;
+        const idx = localStorageCardLinks.findIndex(
+          (currLink) => currLink.id === link.id
+        );
+        localStorageCardLinks[idx] = cardLink;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: TOGGLE_CARD_LINK_LOCAL_STORAGE });
+
+        dispatch({ type: SET_LINK, link: cardLink });
+        dispatch({ type: LINK_SAVED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: LINK_IS_NOT_UPDATING_LOADER, linkId: link.id });
+        dispatch({ type: LINK_SAVED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const setLink = (link) => {
+  return {
+    type: SET_LINK,
+    link: link,
+  };
+};
+
+export const deleteLink = (id) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: LINK_IS_DELETING_LOADER, linkId: id });
+    fetch(`${API_BASE_URL}/links/${id}`, reqObj)
+      .then(() => {})
+      .then(() => {
+        dispatch({ type: LINK_IS_NOT_DELETING_LOADER });
+        // MUST remove offering from local storage card offerings array
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        let newLinks = localStorageCard.links.filter((link) => link.id !== id);
+        delete localStorageCard["links"];
+        localStorageCard["links"] = newLinks;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: DELETE_LINK, id: id });
+        dispatch({ type: LINK_DELETED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: LINK_IS_NOT_DELETING_LOADER });
+        dispatch({ type: LINK_DELETED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const createPaymentMethod = (paymentMethodTypeId) => {
+  return (dispatch, getState) => {
+    const { card } = getState();
+
+    const paymentMethodData = {
+      paymentMethodTypeId: paymentMethodTypeId,
+      cardId: card.cardData.id,
+    };
+
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(paymentMethodData),
+    };
+
+    dispatch({ type: PAYMENT_METHOD_IS_CREATING_LOADER });
+    fetch(`${API_BASE_URL}/paymentmethods`, reqObj)
+      .then((resp) => resp.json())
+      .then((paymentMethod) => {
+        dispatch({ type: PAYMENT_METHOD_IS_NOT_CREATING_LOADER });
+
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        localStorageCard.paymentMethods.push(paymentMethod);
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: CREATE_PAYMENT_METHOD, paymentMethod: paymentMethod });
+        dispatch({ type: PAYMENT_METHOD_CREATED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: PAYMENT_METHOD_IS_NOT_CREATING_LOADER });
+        dispatch({ type: PAYMENT_METHOD_CREATED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
+export const deletePaymentMethod = (id) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: PAYMENT_METHOD_IS_DELETING_LOADER, paymentMethodId: id });
+    fetch(`${API_BASE_URL}/paymentmethods/${id}`, reqObj)
+      .then(() => {})
+      .then(() => {
+        dispatch({ type: PAYMENT_METHOD_IS_NOT_DELETING_LOADER });
+        // MUST remove payment method from local storage card offerings array
+        const localStorageCard = JSON.parse(localStorage.getItem("card"));
+        let newPaymentMethods = localStorageCard.paymentMethods.filter((paymentMethod) => paymentMethod.id !== id);
+        delete localStorageCard["paymentMethods"];
+        localStorageCard["paymentMethods"] = newPaymentMethods;
+        localStorage.removeItem("card");
+        localStorage.setItem("card", JSON.stringify(localStorageCard));
+
+        dispatch({ type: DELETE_PAYMENT_METHOD, id: id });
+        dispatch({ type: PAYMENT_METHOD_DELETED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: PAYMENT_METHOD_IS_NOT_DELETING_LOADER });
+        dispatch({ type: PAYMENT_METHOD_DELETED_UNSUCCESSFULLY });
+        console.log(err);
+      });
+  };
+};
+
 export const setCardEmail = (email) => {
   return {
     type: SET_CARD_EMAIL,
@@ -655,10 +1016,10 @@ export const setCardSocialMediaLinks = (
 export const uploadGalleryImages = (images, cardId) => {
   return (dispatch) => {
     const userToken = localStorage.getItem("userToken");
+    let imagesArrLength = images.length;
+    let counter = 0;
 
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
-
+    Array.from(images).forEach((image) => {
       const body = new FormData();
       body.append("CardId", cardId);
       body.append("File", image);
@@ -677,6 +1038,7 @@ export const uploadGalleryImages = (images, cardId) => {
         .then((resp) => {
           if (!resp.ok) {
             resp.json().then((error) => {
+              dispatch({ type: GALLERY_IMAGES_ARE_NOT_PROGRESSING });
               dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
               dispatch({ type: CARD_ERRORS, errors: [error] });
               dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
@@ -689,16 +1051,31 @@ export const uploadGalleryImages = (images, cardId) => {
           if (!data) {
             return;
           }
+
           dispatch({ type: CARD_NO_ERRORS });
           dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
           dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-          dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
+
+          counter++;
+          dispatch({
+            type: GALLERY_IMAGES_ARE_PROGRESSING,
+            currentGalleryImgCount: counter,
+            totalGalleryImgCount: imagesArrLength,
+          });
+
+          if (counter === imagesArrLength) {
+            setTimeout(() => {
+              dispatch({ type: GALLERY_IMAGES_ARE_NOT_PROGRESSING });
+            }, 1200);
+          }
+          // dispatch({ type: GALLERY_IMAGE_UPLOADED_SUCCESSFULLY });
         })
         .catch((err) => {
+          dispatch({ type: GALLERY_IMAGES_ARE_NOT_PROGRESSING });
           dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
           dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
         });
-    }
+    });
   };
 };
 
@@ -732,13 +1109,11 @@ export const deleteGalleryImage = (photoId) => {
 
 export const uploadOfferingImages = (images, offeringId) => {
   return (dispatch) => {
-    console.log(images);
     const userToken = localStorage.getItem("userToken");
+    let imagesArrLength = images.length;
+    let counter = 0;
 
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
-      console.log(image);
-
+    Array.from(images).forEach((image) => {
       const body = new FormData();
       body.append("OfferingId", offeringId);
       body.append("File", image);
@@ -763,26 +1138,39 @@ export const uploadOfferingImages = (images, offeringId) => {
             });
             return;
           }
-          dispatch({ type: OFFERING_IMAGE_UPLOADED_SUCCESSFULLY });
+          // dispatch({ type: OFFERING_IMAGE_UPLOADED_SUCCESSFULLY });
           return resp.json();
         })
         .then((data) => {
           if (!data) {
             return;
           }
+
           dispatch({ type: CARD_NO_ERRORS });
           dispatch({
             type: UPLOAD_OFFERING_PICTURE,
             photo: data,
             offeringId: offeringId,
           });
+
+          counter++;
+          dispatch({
+            type: OFFERING_IMAGES_ARE_PROGRESSING,
+            currentOfferingImgCount: counter,
+            totalOfferingImgCount: imagesArrLength,
+          });
+
+          if (counter === imagesArrLength) {
+            setTimeout(() => {
+              dispatch({ type: OFFERING_IMAGES_ARE_NOT_PROGRESSING });
+            }, 1200);
+          }
         })
         .catch((err) => {
-          console.log(err);
           dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
           dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
         });
-    }
+    });
   };
 };
 

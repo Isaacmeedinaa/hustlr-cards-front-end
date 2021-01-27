@@ -11,7 +11,16 @@ const CardOfferings = (props) => {
   const offeringsContainer = useRef();
 
   useEffect(() => {
-    checkHeaderState();
+    for (let idx = 0; idx < props.offerings.length; idx++) {
+      let offering = props.offerings[idx];
+      if (offering.title !== "") {
+        setShowHeader(true);
+        break;
+      } else if (idx === props.offerings.length - 1) {
+        setShowHeader(false);
+      }
+    }
+
     const copyOfferingsContainerCurrent = offeringsContainer.current;
     offeringsContainer.current.addEventListener(
       "wheel",
@@ -20,24 +29,13 @@ const CardOfferings = (props) => {
         passive: false,
       }
     );
+
     return () =>
       copyOfferingsContainerCurrent.removeEventListener(
         "wheel",
         onOfferingsContainerWheel
       );
-  });
-
-  const checkHeaderState = () => {
-    for (let idx = 0; idx < props.offerings.length; idx++) {
-      let offering = props.offerings[idx];
-      if (offering.title !== "" || offering.description !== "") {
-        setShowHeader(true);
-        break;
-      } else if (idx === props.offerings.length - 1) {
-        setShowHeader(false);
-      }
-    }
-  };
+  }, [props.offerings]);
 
   const onOfferingsContainerWheel = (event) => {
     event.preventDefault();
@@ -63,10 +61,7 @@ const CardOfferings = (props) => {
 
   const renderOfferings = () => {
     return props.offerings.map((offering, index) => {
-      if (
-        (!offering.title || offering.title === "") &&
-        (!offering.description || offering.description === "")
-      ) {
+      if (!offering.title || offering.title === "") {
         return null;
       }
       return (
@@ -116,7 +111,7 @@ const CardOfferings = (props) => {
       {!showHeader ||
       !props.offerings ||
       props.offerings.length === 0 ? null : (
-       <div className="card-business-section-header-container">
+        <div className="card-business-section-header-container">
           <h4 className="ui horizontal divider header">
             <span className="public-card-products-services-title-text">
               Products &amp; Services
@@ -127,6 +122,12 @@ const CardOfferings = (props) => {
       <div
         className="card-business-products-services-container"
         id="card-business-products-services-container"
+        style={{
+          marginTop:
+            !showHeader || !props.offerings || props.offerings.length === 0
+              ? 0
+              : 60,
+        }}
         onWheel={onOfferingsContainerWheel}
         ref={offeringsContainer}
       >

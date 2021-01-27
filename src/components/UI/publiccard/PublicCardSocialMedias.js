@@ -2,15 +2,26 @@ import React from "react";
 
 import PublicCardPhoneNumber from "./PublicCardPhoneNumber";
 import PublicCardEmail from "./PublicCardEmail";
-import PublicCardFacebookLink from "./PublicCardFacebookLink";
-import PublicCardInstagramLink from "./PublicCardInstagramLink";
-import PublicCardTwitterLink from "./PublicCardTwitterLink";
-import PublicCardSnapchatLink from "./PublicCardSnapchatLink";
+import PublicCardSocialMediaLink from "./PublicCardSocialMediaLink";
 
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
 
 const PublicCardSocialMedias = (props) => {
+
+  const renderSocialMediaLinks = () => {
+    return props.links.map((link) => {
+      return (
+        <PublicCardSocialMediaLink 
+          primaryColor={props.primaryColor}
+          transparentColor={props.transparentColor}
+          link={link}
+          key={link.id}
+        />
+      )
+    })
+  }
+
   return (
     <div className="public-card-social-media-container">
       <PublicCardPhoneNumber
@@ -23,26 +34,7 @@ const PublicCardSocialMedias = (props) => {
         primaryColor={props.primaryColor}
         transparentColor={props.transparentColor}
       />
-      <PublicCardFacebookLink
-        facebookLink={props.facebookLink}
-        primaryColor={props.primaryColor}
-        transparentColor={props.transparentColor}
-      />
-      <PublicCardInstagramLink
-        instagramLink={props.instagramLink}
-        primaryColor={props.primaryColor}
-        transparentColor={props.transparentColor}
-      />
-      <PublicCardTwitterLink
-        twitterLink={props.twitterLink}
-        primaryColor={props.primaryColor}
-        transparentColor={props.transparentColor}
-      />
-      <PublicCardSnapchatLink
-        snapchatLink={props.snapchatLink}
-        primaryColor={props.primaryColor}
-        transparentColor={props.transparentColor}
-      />
+      {renderSocialMediaLinks()}
     </div>
   );
 };

@@ -34,7 +34,10 @@
 
 .grid-container-home {
   display: grid;
-  grid-template-columns: minmax(75px, 75px) 1fr 1fr;
+  grid-template-columns: minmax(75px, 75px) minmax(calc(50% - 75px), 1fr) minmax(
+      calc(50% - 75px),
+      1fr
+    );
   grid-template-areas: "sidetoolbar cardform cardshow";
 }
 
@@ -115,12 +118,22 @@
   overflow-x: hidden !important;
 }
 
+.ReactModal__Html--open,
+.ReactModal__Body--open {
+  overflow: hidden !important; /* prevents background page from scrolling when the modal is open */
+}
+
 .ReactModal__Overlay {
-  z-index: 9999999 !important;
+  z-index: 2000 !important;
   background-color: rgba(0, 0, 0, 0.5) !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
+}
+
+.ReactModal__Content {
+  overflow-y: auto;
+  max-height: calc(80vh - 2rem);
 }
 
 /* 770 breakpoint for the home page */
@@ -130,7 +143,7 @@
   }
 
   .grid-container-home {
-    grid-template-columns: minmax(75px, 75px) 1fr;
+    grid-template-columns: minmax(75px, 75px) minmax(calc(50% - 75px), 1fr);
     grid-template-areas:
       "sidetoolbar cardform"
       "sidetoolbar cardshow";
@@ -178,7 +191,7 @@
 
 @media only screen and (max-width: 650px) {
   .grid-container-home {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(100%, 1fr);
     grid-template-areas:
       "cardform"
       "cardshow";

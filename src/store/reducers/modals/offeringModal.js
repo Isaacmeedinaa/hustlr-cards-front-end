@@ -6,6 +6,7 @@ import {
 const initialState = {
   modalIsOpen: false,
   offering: null,
+  offeringIndex: null,
 };
 
 const offeringModal = (state = initialState, action) => {
@@ -15,6 +16,7 @@ const offeringModal = (state = initialState, action) => {
         ...state,
         modalIsOpen: true,
         offering: action.offering,
+        offeringIndex: action.offeringIndex,
       };
 
     case CLOSE_OFFERING_MODAL:
@@ -22,6 +24,7 @@ const offeringModal = (state = initialState, action) => {
         ...state,
         modalIsOpen: false,
         offering: null,
+        offeringIndex: null,
       };
 
     default:

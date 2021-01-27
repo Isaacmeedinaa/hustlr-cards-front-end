@@ -14,7 +14,12 @@ class PublicCardOfferings extends Component {
     this.offeringsContainer = createRef();
   }
 
+  state = {
+    showHeader: false,
+  };
+
   componentDidMount() {
+    this.setShowHeader();
     this.offeringsContainer.current.addEventListener(
       "wheel",
       this.onOfferingsContainerWheel,
@@ -23,6 +28,22 @@ class PublicCardOfferings extends Component {
       }
     );
   }
+
+  setShowHeader = async () => {
+    for (let idx = 0; idx < this.props.offerings.length; idx++) {
+      let offering = this.props.offerings[idx];
+      if (offering.title !== "") {
+        await this.setState({
+          showHeader: true,
+        });
+        break;
+      } else if (idx === this.props.offerings.length - 1) {
+        await this.setState({
+          showHeader: false,
+        });
+      }
+    }
+  };
 
   componentWillUnmount() {
     this.offeringsContainer.current.removeEventListener(
@@ -50,10 +71,7 @@ class PublicCardOfferings extends Component {
 
   renderOfferings = () => {
     return this.props.offerings.map((offering) => {
-      if (
-        (!offering.title || offering.title === "") &&
-        (!offering.description || offering.description === "")
-      ) {
+      if (!offering.title || offering.title === "") {
         return null;
       }
 
@@ -116,7 +134,9 @@ class PublicCardOfferings extends Component {
   render() {
     return (
       <Fragment>
-        {this.props.offerings.length === 0 ? null : (
+        {!this.state.showHeader ||
+        !this.props.offerings ||
+        this.props.offerings.length === 0 ? null : (
           <div className="public-card-products-services-title-container">
             <h4 className="ui horizontal divider header">
               <span className="public-card-products-services-title-text">

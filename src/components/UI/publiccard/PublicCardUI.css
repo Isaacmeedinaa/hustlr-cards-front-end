@@ -50,8 +50,9 @@
 .public-card-social-media-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 10px;
   width: 95%;
 }
 
@@ -63,6 +64,7 @@
   height: 40px;
   width: 40px;
   margin-right: 18px;
+  margin-top: 20px;
   font-size: 16px;
 }
 
@@ -214,6 +216,63 @@
 .public-card-product-service-container .awssld__content {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+}
+
+.public-card-payment-methods-title-container {
+  width: 90%;
+  margin-top: 50px;
+}
+
+.public-card-payment-methods-title-text {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  font-family: "Montserrat", sans-serif;
+}
+
+.public-card-payment-methods-container {
+  margin-top: 50px;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.public-card-payment-method-badge-wrapper {
+  margin-left: 10px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  /* padding-left: 25px;
+  padding-right: 25px; */
+  min-width: 150px;
+  padding-bottom: 4px;
+  padding-top: 3px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.public-card-payment-method-badge-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.public-card-payment-method-badge-container > i {
+  margin-top: 5px !important;
+}
+
+.public-card-payment-method-badge-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.public-card-payment-method-badge-text {
+  /* margin-bottom: 2px; */
+  margin-top: 3.5px;
+  margin-left: 5px;
 }
 
 @media only screen and (max-width: 650px) {
