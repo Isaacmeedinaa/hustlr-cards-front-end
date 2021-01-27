@@ -11,6 +11,7 @@ import CardGallerySlider from "./CardGallerySlider";
 import CardSocialMedias from "./CardSocialMedias";
 import CardLink from "./CardLink";
 import CardBadges from "./CardBadges";
+import CardPaymentMethods from "./CardPaymentMethods";
 
 import "../../../../constants/colors.css";
 import "./CardUI.css";
@@ -57,6 +58,11 @@ class Card extends Component {
           <CardGallerySlider photos={this.props.cardData.photos} />
           <CardOfferings
             offerings={this.props.cardData.offerings}
+            primaryColor={this.props.cardTheme.primaryColor}
+            transparentColor={this.props.cardTheme.transparentColor}
+          />
+          <CardPaymentMethods
+            paymentMethods={this.props.cardData.paymentMethods}
             primaryColor={this.props.cardTheme.primaryColor}
             transparentColor={this.props.cardTheme.transparentColor}
           />

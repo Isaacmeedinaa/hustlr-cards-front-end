@@ -10,6 +10,7 @@ import PublicCardBadges from "./PublicCardBadges";
 import PublicCardDescription from "./PublicCardDescription";
 import PublicCardGallerySlider from "./PublicCardGallerySlider";
 import PublicCardOfferings from "./PublicCardOfferings";
+import PublicCardPaymentMethods from "./PublicCardPaymentMethods";
 
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
@@ -57,6 +58,11 @@ class PublicCard extends Component {
               primaryColor={this.props.publicCard.primaryColor}
               transparentColor={this.props.publicCard.transparentColor}
               setImagesData={this.props.setImagesData}
+            />
+            <PublicCardPaymentMethods
+              paymentMethods={this.props.publicCard.paymentMethods}
+              primaryColor={this.props.publicCard.primaryColor}
+              transparentColor={this.props.publicCard.transparentColor}
             />
             <div className="public-card-logo-container">
               <Link className="primary-color" to="/">
