@@ -218,7 +218,9 @@ class CardForm extends Component {
           <CardFormGallerySlider />
           <CardFormAddOfferingButton />
           {this.renderOfferingsInputs()}
-          <CardFormAddPaymentMethodButton />
+          <CardFormAddPaymentMethodButton
+            paymentMethods={this.props.cardData.paymentMethods}
+          />
           <PublicToggle />
         </div>
       </div>
