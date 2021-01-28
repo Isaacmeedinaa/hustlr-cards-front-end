@@ -15,7 +15,7 @@ const CardSocialMediaLink = (props) => {
       style={{ backgroundColor: props.transparentColor }}
       className="card-business-social-media-icon-container"
     >
-      <a href={props.link.url} target="_blank" rel="noopener noreferrer">
+      <a href={`//${props.link.url}`} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon
           icon={[props.link.type.iconPrefix, props.link.type.icon]}
           style={{ color: props.primaryColor }}

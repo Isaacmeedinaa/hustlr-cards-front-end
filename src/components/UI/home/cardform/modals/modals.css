@@ -7,6 +7,7 @@
   padding: 15px 15px 15px 15px;
   border-radius: 5px;
   border-bottom: 6px solid #cdcdd2;
+  font-family: "Montserrat", sans-serif;
 }
 
 .card-form-image-cropper-modal:focus {
@@ -35,6 +36,7 @@
   padding-top: 8px;
   font-size: 14px;
   font-weight: 400;
+  font-family: "Montserrat", sans-serif;
 }
 
 .card-form-image-cropper-modal-button:focus {
@@ -55,6 +57,7 @@
   padding: 15px 15px 15px 15px;
   border-radius: 5px;
   border-bottom: 6px solid #cdcdd2;
+  font-family: "Montserrat", sans-serif;
 }
 
 .card-form-modal {
@@ -65,6 +68,7 @@
   padding: 15px 15px 15px 15px;
   border-radius: 5px;
   border-bottom: 6px solid #cdcdd2;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 .card-form-social-media-modal:focus {
@@ -84,6 +88,7 @@
   padding: 15px 15px 15px 15px;
   border-radius: 5px;
   border-bottom: 6px solid #bcbce5;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 .card-form-payment-methods-modal:focus {
@@ -99,6 +104,7 @@
   padding: 15px 15px 15px 15px;
   border-radius: 5px;
   border-bottom: 6px solid #cdcdd2;
+  font-family: "Montserrat", sans-serif;
 }
 
 .card-form-payment-methods-modal-header {
@@ -127,6 +133,10 @@
 
 .card-form-modal-title {
   float: left;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 3.5px !important;
 }
 
 .card-form-modal-btn {
@@ -156,6 +166,7 @@
   border-radius: 5px;
   border: none;
   color: #fff;
+  font-size: 14px;
 }
 
 .card-form-offering-modal-save-button:hover {
