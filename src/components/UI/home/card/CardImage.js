@@ -16,7 +16,7 @@ const CardImage = (props) => {
       style={{
         backgroundImage: `url(${props.imgUrl})`,
         marginTop:
-          !props.backdropImgUrl || props.backdropImgUrl === "" ? 0 : -65,
+          !props.backdropImgUrl || props.backdropImgUrl === "" ? 30 : -65,
       }}
     >
       {props.cardImageLoader ? (

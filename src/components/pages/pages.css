@@ -47,6 +47,8 @@
 
 .card-form-col-container {
   padding: 80px 20px 15px 20px;
+  justify-content: center;
+  /* align-items: center; */
 }
 
 .card-show-col-wrapper {

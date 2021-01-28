@@ -28,11 +28,16 @@ import PublicCardPage from "./components/pages/PublicCardPage";
 import ProtectedRoute from "./components/hoc/ProtectedRoute";
 import RouteHead from "./components/hoc/RouteHead";
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faDollarSign, faCreditCard, faMinusCircle } from '@fortawesome/free-solid-svg-icons'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import {
+  faDollarSign,
+  faCreditCard,
+  faMinusCircle,
+  faCopy,
+} from "@fortawesome/free-solid-svg-icons";
 
-library.add(fab, faDollarSign, faCreditCard, faMinusCircle);
+library.add(fab, faDollarSign, faCreditCard, faMinusCircle, faCopy);
 
 class App extends Component {
   componentDidMount() {

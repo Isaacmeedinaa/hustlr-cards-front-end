@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import { Animated } from "react-animated-css";
-
 import { connect } from "react-redux";
 import { uploadBusinessProfilePicture } from "../../../../store/actions/card";
 import { hideNotification as hideCardSavedNotification } from "../../../../store/actions/notifications/cardSavedNotifications";
@@ -198,34 +196,32 @@ class CardForm extends Component {
     }
 
     return (
-      <Animated animationIn="" animationOut="fadeOut" isVisible={true}>
-        <div className="primary-light-bg card-form-wrapper">
-          <div className="card-form-container">
-            {this.props.cardErrors.map((error, index) => (
-              <p key={index} className="primary-color card-form-error-text">
-                {error.message}
-              </p>
-            ))}
-            <CardFormCardPathInput />
-            <CardFormBackdropImageSelector
-              setInputBackdropImg={this.props.setInputBackdropImg}
-            />
-            <CardFormImageSelector setInputImg={this.props.setInputImg} />
-            <CardFormTitleInput />
-            <CardFormContactInputs />
-            <CardFormAddSocialMediaButton links={this.props.cardData.links} />
-            <CardFormIndustrySelect />
-            <CardFormLocationInputs />
-            <CardFormDescriptionInput />
-            <CardFormAddImageButton />
-            <CardFormGallerySlider />
-            <CardFormAddOfferingButton />
-            {this.renderOfferingsInputs()}
-            <CardFormAddPaymentMethodButton />
-            <PublicToggle />
-          </div>
+      <div className="primary-light-bg card-form-wrapper">
+        <div className="card-form-container">
+          {this.props.cardErrors.map((error, index) => (
+            <p key={index} className="primary-color card-form-error-text">
+              {error.message}
+            </p>
+          ))}
+          <CardFormCardPathInput />
+          <CardFormBackdropImageSelector
+            setInputBackdropImg={this.props.setInputBackdropImg}
+          />
+          <CardFormImageSelector setInputImg={this.props.setInputImg} />
+          <CardFormTitleInput />
+          <CardFormContactInputs />
+          <CardFormAddSocialMediaButton links={this.props.cardData.links} />
+          <CardFormIndustrySelect />
+          <CardFormLocationInputs />
+          <CardFormDescriptionInput />
+          <CardFormAddImageButton />
+          <CardFormGallerySlider />
+          <CardFormAddOfferingButton />
+          {this.renderOfferingsInputs()}
+          <CardFormAddPaymentMethodButton />
+          <PublicToggle />
         </div>
-      </Animated>
+      </div>
     );
   }
 }
