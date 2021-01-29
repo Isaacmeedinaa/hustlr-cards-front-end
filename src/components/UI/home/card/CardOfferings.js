@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 
-import AwesomeSlider from "react-awesome-slider";
+import Carousel from "react-bootstrap/Carousel";
+import { addWidthToImgUrl } from "../../../../services/ImgUrlParser";
 
 import "../../../../constants/colors.css";
 import "./CardUI.css";
@@ -55,7 +56,25 @@ const CardOfferings = (props) => {
 
   const renderOfferingSliderImages = (offering) => {
     return offering.photos.map((photo) => (
-      <div key={photo.id} data-src={photo.url}></div>
+      <Carousel.Item key={photo.id}>
+        <img
+          style={{
+            objectFit: "cover",
+            height: 215,
+            width: "100%",
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+          srcSet={`${addWidthToImgUrl(photo.url, 320)} 320w, ${addWidthToImgUrl(
+            photo.url,
+            640
+          )} 640w, ${addWidthToImgUrl(photo.url, 1280)} 1280w`}
+          sizes={"(max-width: 650px) 100vw, (min-width: 651px) 640px, 640px"}
+          alt="img"
+        />
+      </Carousel.Item>
     ));
   };
 
@@ -71,10 +90,15 @@ const CardOfferings = (props) => {
           className="card-business-product-service-container"
         >
           {offering.photos.length > 0 ? (
-            //<img className="preview-card-offering-photo" src={offering.photos[0].url}/>
-            <AwesomeSlider bullets={false}>
+            // <AwesomeSlider bullets={false}>
+            //   {renderOfferingSliderImages(offering)}
+            // </AwesomeSlider>
+            <Carousel
+              style={{ maxHeight: "215px", width: "100%" }}
+              interval={null}
+            >
               {renderOfferingSliderImages(offering)}
-            </AwesomeSlider>
+            </Carousel>
           ) : null}
           <div className="card-business-offering-body">
             <div className="card-business-product-service-header">

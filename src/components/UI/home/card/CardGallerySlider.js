@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 
-import AwesomeSlider from "react-awesome-slider";
+import { addWidthToImgUrl } from "../../../../services/ImgUrlParser";
+import Carousel from "react-bootstrap/Carousel";
 
 import "../../../../constants/colors.css";
 import "./CardUI.css";
@@ -9,7 +10,23 @@ import "react-awesome-slider/dist/styles.css";
 class CardGallerySlider extends Component {
   renderGallerySliderImages = () => {
     return this.props.photos.map((photo) => (
-      <div key={photo.id} data-src={photo.url}></div>
+      <Carousel.Item key={photo.id}>
+        <img
+          style={{
+            objectFit: "cover",
+            height: 300,
+            width: "100%",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+          srcSet={`${addWidthToImgUrl(photo.url, 320)} 320w, ${addWidthToImgUrl(
+            photo.url,
+            640
+          )} 640w, ${addWidthToImgUrl(photo.url, 1280)} 1280w`}
+          sizes={"(max-width: 650px) 100vw, (min-width: 651px) 640px, 640px"}
+          alt="img"
+        />
+      </Carousel.Item>
     ));
   };
 
@@ -25,9 +42,12 @@ class CardGallerySlider extends Component {
             </h4>
           </div>
           <div className="card-business-gallery-slider-container">
-            <AwesomeSlider bullets={false}>
+            <Carousel
+              style={{ height: "300px", width: "100%" }}
+              interval={null}
+            >
               {this.renderGallerySliderImages()}
-            </AwesomeSlider>
+            </Carousel>
           </div>
         </Fragment>
       );

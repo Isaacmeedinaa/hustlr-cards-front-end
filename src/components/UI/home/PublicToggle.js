@@ -32,7 +32,7 @@ class PublicToggle extends Component {
           styles={{ marginLeft: 10 }}
           inactiveLabel={""}
           activeLabel={""}
-          value={this.state.isPublic}
+          value={this.state.isPublic === null ? true : this.state.isPublic}
           onToggle={this.isPublicChangeHandler}
           colors={{
             activeThumb: {
