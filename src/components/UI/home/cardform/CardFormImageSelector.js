@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { deleteBusinessImage } from "../../../../store/actions/card";
 import { openImageCropperModal } from "../../../../store/actions/modals/imageCropperModal";
+import { addWidthToImgUrl } from "../../../../services/ImgUrlParser";
 
 import Loader from "react-loader-spinner";
 
@@ -51,14 +52,17 @@ class CardFormImageSelector extends Component {
   render() {
     return (
       <Fragment>
-        <div
+        <img
           className="primary-color-bg card-form-business-img-container"
-          style={{ backgroundImage: `url(${this.props.imgUrl})` }}
+          alt="img"
+          style={{
+            backgroundImage: `url(${addWidthToImgUrl(this.props.imgUrl, 130)})`,
+          }}
         >
           {this.props.cardImageLoader ? (
             <Loader type="TailSpin" color="#2ecc71" width={50} height={50} />
           ) : null}
-        </div>
+        </img>
         <div className="ui floating dropdown button card-form-button primary-font">
           <span className="card-form-button-text">Edit Profile Photo</span>
           <div className="menu" id="card-form-edit-image-dropdown">
