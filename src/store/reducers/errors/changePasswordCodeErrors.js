@@ -3,14 +3,13 @@ import {
   CHANGE_PASSWORD_CODE_NO_ERRORS,
 } from "../../actions/errors/changePasswordCodeErrors";
 
-const changePasswordCodeErrors = (state = [], action) => {
+const changePasswordCodeErrors = (state = false, action) => {
   switch (action.type) {
     case CHANGE_PASSWORD_CODE_ERRORS:
-      return action.errors;
+      return true;
 
     case CHANGE_PASSWORD_CODE_NO_ERRORS:
-      const noChangePasswordCodeErrors = [];
-      return noChangePasswordCodeErrors;
+      return false;
 
     default:
       return state;

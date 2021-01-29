@@ -8,4 +8,12 @@ export const formFields = {
   changePasswordCurrentPassword: "OldPassword",
   changePasswordNewPassword: "NewPassword",
   changePasswordConfirmPassword: "ConfirmPassword",
+  registerEmail: "Email",
+  registerUsername: "Username",
+  registerPassword: "Password",
+  registerConfirmPassword: "ConfirmPassword",
+  forgotPasswordUsername: "Username",
+  changePasswordCodeUsername: "Username",
+  changePasswordCodeCode: "RecoveryCode",
+  changePasswordCodeNewPassword: "NewPassword",
 };
