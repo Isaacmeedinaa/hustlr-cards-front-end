@@ -1,61 +1,71 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCardDescription } from "../../../../store/actions/card";
+
+import { formFields } from "../../../../constants/formFields";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
 
-class CardFormDescriptionInput extends Component {
-  state = {
-    description: this.props.description,
-  };
+const CardFormDescriptionInput = () => {
+  const dispatch = useDispatch();
 
-  onCardDescriptionChangeHandler = async (event) => {
-    await this.setState({
-      description: event.target.value,
-    });
+  const descriptionRedux = useSelector(
+    (state) => state.card.cardData.description
+  );
+  const formErrors = useSelector((state) => state.formErrors);
 
-    this.props.setCardDescription(this.state.description);
-  };
-  render() {
-    return (
-      <Fragment>
-        <textarea
-          className="card-form-input-large"
-          name="description"
-          placeholder="Write your hook here!"
-          value={this.state.description}
-          onChange={this.onCardDescriptionChangeHandler}
-        />
+  const [description, setDescription] = useState(descriptionRedux);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const error = formErrors.find(
+      (formError) => formError.field === formFields.cardDescription
+    );
+
+    if (error) {
+      setError(error);
+    } else {
+      setError(error);
+    }
+  }, [formErrors]);
+
+  useEffect(() => {
+    dispatch(setCardDescription(description));
+  }, [description, dispatch]);
+
+  console.log(error);
+  return (
+    <Fragment>
+      <textarea
+        className="card-form-input-large"
+        style={{
+          border: error ? "solid 1px red" : null,
+        }}
+        placeholder="Write your hook here!"
+        value={description}
+        onChange={(event) => setDescription(event.target.value)}
+      />
+      <div className="card-form-description-text-container">
+        {error ? (
+          <p className="card-form-description-error-text">{error.message}</p>
+        ) : null}
         <p
           className="card-form-description-count"
-          style={{ color: this.state.description.length > 250 ? "red" : null }}
+          style={{
+            color: description.length > 500 ? "red" : null,
+            width: error ? "20%" : "100%",
+          }}
         >
-          {this.state.description.length > 250
-            ? `${250 - this.state.description.length}`
-            : this.state.description.length}{" "}
+          {description.length > 500
+            ? `${500 - description.length}`
+            : description.length}{" "}
           / 500
         </p>
-      </Fragment>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    description: state.card.cardData.description,
-  };
+      </div>
+    </Fragment>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCardDescription: (description) =>
-      dispatch(setCardDescription(description)),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CardFormDescriptionInput);
+export default CardFormDescriptionInput;

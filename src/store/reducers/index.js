@@ -70,6 +70,9 @@ import offeringLocalStorage from "./localStorage/offeringLocalStorage";
 import galleryImagesProgress from "./progress/galleryImagesProgress";
 import offeringImagesProgress from "./progress/offeringImagesProgress";
 
+// Form Errors
+import formErrors from "./formErrors/formErrors";
+
 const rootReducer = combineReducers({
   // Main
   user,
@@ -134,6 +137,8 @@ const rootReducer = combineReducers({
   // Progress
   galleryImagesProgress,
   offeringImagesProgress,
+  // Form Errors
+  formErrors,
 });
 
 export default rootReducer;

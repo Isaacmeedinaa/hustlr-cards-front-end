@@ -68,7 +68,13 @@ const CardLink = (props) => {
               }}
               icon={faCopy}
             />
-            <span style={{ cursor: "pointer", marginLeft: 5 }}>
+            <span
+              style={{
+                cursor: "pointer",
+                marginLeft: 5,
+                color: props.primaryColor,
+              }}
+            >
               <b>Copy My Card URL</b>
             </span>
           </div>
@@ -105,7 +111,10 @@ const CardLink = (props) => {
         style={{ backgroundColor: props.transparentColor }}
         className="card-business-link-container"
       >
-        <span className="card-business-link">{`https://hustlr.cards/${pathState}`}</span>
+        <span
+          className="card-business-link"
+          style={{ color: props.primaryColor }}
+        >{`https://hustlr.cards/${pathState}`}</span>
       </div>
     </Fragment>
   );
