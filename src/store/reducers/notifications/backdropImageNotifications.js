@@ -38,7 +38,8 @@ const backdropImageNotifications = (state = intialState, action) => {
         uploaded: {
           show: true,
           success: false,
-          message: "Oops, something went wrong. Try again later.",
+          message:
+            "Oops, your image failed to upload. Ensure your image is less than 5MB.",
         },
       };
 
@@ -68,7 +69,7 @@ const backdropImageNotifications = (state = intialState, action) => {
         deleted: {
           show: true,
           success: false,
-          message: "Oops, something went wrong. Try again later.",
+          message: "Oops, your image failed to delete. Try again later.",
         },
       };
 

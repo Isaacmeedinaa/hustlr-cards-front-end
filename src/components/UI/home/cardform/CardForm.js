@@ -156,7 +156,7 @@ class CardForm extends Component {
   displayNotification(success, message) {
     showToast(success, message);
 
-    if (this.props.cardErrors.length > 0 && !success) {
+    if (this.props.cardErrors && !success) {
       window.scroll({
         top: 0,
         left: 0,
@@ -198,11 +198,11 @@ class CardForm extends Component {
     return (
       <div className="primary-light-bg card-form-wrapper">
         <div className="card-form-container">
-          {this.props.cardErrors.map((error, index) => (
-            <p key={index} className="primary-color card-form-error-text">
-              {error.message}
+          {this.props.cardErrors ? (
+            <p className="primary-color card-form-error-text">
+              Please fix the errors below.
             </p>
-          ))}
+          ) : null}
           <CardFormCardPathInput />
           <CardFormBackdropImageSelector
             setInputBackdropImg={this.props.setInputBackdropImg}

@@ -1,38 +1,49 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setCardEmail,
   setCardPhoneNumber,
 } from "../../../../store/actions/card";
 
+import { formFields } from "../../../../constants/formFields";
+
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
+import { Fragment } from "react";
 
-class CardFormContactInputs extends Component {
-  state = {
-    phoneNumber: this.props.phoneNumber,
-    email: this.props.email,
-  };
+const CardFormContactInputs = () => {
+  const dispatch = useDispatch();
 
-  onCardPhoneNumberChangeHandler = async (event) => {
-    await this.setState({
-      phoneNumber: event.target.value,
-    });
+  const phoneNumberRedux = useSelector(
+    (state) => state.card.cardData.phoneNumber
+  );
+  const emailRedux = useSelector((state) => state.card.cardData.email);
+  const formErrors = useSelector((state) => state.formErrors);
 
-    this.props.setCardPhoneNumber(this.state.phoneNumber);
-  };
+  const [phoneNumber, setPhoneNumber] = useState(phoneNumberRedux);
+  const [email, setEmail] = useState(emailRedux);
+  const [error, setError] = useState(null);
 
-  onCardEmailChangeHandler = async (event) => {
-    await this.setState({
-      email: event.target.value,
-    });
+  useEffect(() => {
+    const error = formErrors.find(
+      (formError) => formError.field === formFields.cardEmail
+    );
 
-    this.props.setCardEmail(this.state.email);
-  };
+    if (error) {
+      setError(error);
+    } else {
+      setError(error);
+    }
+  }, [formErrors]);
 
-  render() {
-    return (
+  useEffect(() => {
+    dispatch(setCardPhoneNumber(phoneNumber));
+    dispatch(setCardEmail(email));
+  }, [phoneNumber, email, dispatch]);
+
+  return (
+    <Fragment>
       <div className="card-form-contact-fields">
         <input
           id="cardFormInputPhoneNumber"
@@ -40,38 +51,25 @@ class CardFormContactInputs extends Component {
           name="phoneNumber"
           placeholder="+1 (773) 555-0000"
           maxLength={16}
-          value={this.state.phoneNumber}
-          onChange={this.onCardPhoneNumberChangeHandler}
+          value={phoneNumber}
+          onChange={(event) => setPhoneNumber(event.target.value)}
         />
         <input
           id="cardFormInputEmail"
           className="card-form-input-contact"
-          name="email"
           placeholder="youremail@email.com"
-          value={this.state.email}
-          onChange={this.onCardEmailChangeHandler}
+          style={{
+            border: error ? "solid 1px red" : null,
+          }}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
         />
       </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    email: state.card.cardData.email,
-    phoneNumber: state.card.cardData.phoneNumber,
-  };
+      {error ? (
+        <p className="card-form-email-error-text">{error.message}</p>
+      ) : null}
+    </Fragment>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCardEmail: (email) => dispatch(setCardEmail(email)),
-    setCardPhoneNumber: (phoneNumber) =>
-      dispatch(setCardPhoneNumber(phoneNumber)),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CardFormContactInputs);
+export default CardFormContactInputs;

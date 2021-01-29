@@ -77,16 +77,10 @@ class HomeContainer extends Component {
     const keysToCompare = [
       "title",
       "description",
-      "city",
-      "state",
       "email",
       "phoneNumber",
       "pathToCard",
       "isPublic",
-      "facebookLink",
-      "instagramLink",
-      "snapchatLink",
-      "twitterLink",
       "themeId",
       "industryId",
     ];
@@ -122,6 +116,10 @@ class HomeContainer extends Component {
           return;
         }
       }
+    }
+    if (this.props.formErrors.length > 0) {
+      this.props.cardIsNotSaved();
+      return;
     }
     this.props.cardIsSaved();
   }
@@ -219,6 +217,7 @@ const mapStateToProps = (state) => {
     imageCropperModal: state.imageCropperModal,
     backdropImageCropperModal: state.backdropImageCropperModal,
     offeringModal: state.offeringModal,
+    formErrors: state.formErrors,
   };
 };
 

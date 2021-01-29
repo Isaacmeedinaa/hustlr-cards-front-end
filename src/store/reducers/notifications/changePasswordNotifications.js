@@ -23,7 +23,7 @@ const changePasswordNotifications = (state = intialState, action) => {
       return {
         show: true,
         success: false,
-        message: "Oops, something went wrong.",
+        message: "Password change unsuccessful. Please correct the errors.",
       };
 
     case HIDE_PASSWORD_CHANGED_NOTIFICATION:
