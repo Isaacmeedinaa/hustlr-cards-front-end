@@ -75,7 +75,7 @@ class CardFormOfferingInputs extends Component {
             )}
           </h6>
           <div className="card-form-accordion-icon-container">
-            <MdCreate color="#2ecc71" fontSize={18} />
+            <MdCreate color="#2ecc71" fontSize={'18px'} />
           </div>
         </div>
       </Fragment>

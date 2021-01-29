@@ -3,7 +3,8 @@ import React, { Component, Fragment, createRef } from "react";
 import { connect } from "react-redux";
 import { openViewImagesModal } from "../../../store/actions/modals/viewImagesModal";
 
-import AwesomeSlider from "react-awesome-slider";
+import Carousel from 'react-bootstrap/Carousel';
+import { addWidthToImgUrl } from "../../../services/ImgUrlParser";
 
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
@@ -54,13 +55,25 @@ class PublicCardOfferings extends Component {
 
   renderOfferingSliderImages = (offering) => {
     return offering.photos.map((photo, index) => (
-      <div
-        key={photo.id}
-        data-src={photo.url}
-        onClick={() =>
-          this.onOfferingImageClick(offering.photos, photo.url, index)
-        }
-      ></div>
+      <Carousel.Item key={photo.id}>
+          <img
+            style={{
+              objectFit: 'cover',
+              height: 250,
+              width: '100%',
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center'
+            }}
+            srcSet={`${addWidthToImgUrl(photo.url, 320)} 320w, ${addWidthToImgUrl(photo.url, 640)} 640w, ${addWidthToImgUrl(photo.url, 1280)} 1280w`}
+            sizes={'(max-width: 650px) 67vw, (min-width: 651px) 412px, 412px'}
+            onClick={() =>
+              this.onOfferingImageClick(offering.photos, photo.url, index)
+            }
+            alt="img"
+          />
+        </Carousel.Item>
     ));
   };
 
@@ -83,9 +96,11 @@ class PublicCardOfferings extends Component {
         >
           {offering.photos.length > 0 ? (
             <div className="slider-container">
-              <AwesomeSlider bullets={false}>
+              <Carousel 
+                style={{maxHeight: '250px', width: '100%'}}
+                interval={null}>
                 {this.renderOfferingSliderImages(offering)}
-              </AwesomeSlider>
+              </Carousel> 
             </div>
           ) : null}
           <div className="public-card-offering-body">

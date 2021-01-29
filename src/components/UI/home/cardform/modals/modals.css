@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 400px;
-  padding: 15px 15px 15px 15px;
+  width: 450px;
+  padding: 20px;
   border-radius: 5px;
   border-bottom: 6px solid #cdcdd2;
 }
@@ -51,8 +51,8 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 400px;
-  padding: 15px 15px 15px 15px;
+  width: 450px;
+  padding: 20px;
   border-radius: 5px;
   border-bottom: 6px solid #cdcdd2;
 }
@@ -61,8 +61,8 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 400px;
-  padding: 15px 15px 15px 15px;
+  width: 450px;
+  padding: 20px;
   border-radius: 5px;
   border-bottom: 6px solid #cdcdd2;
 }
@@ -80,8 +80,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 400px;
-  padding: 15px 15px 15px 15px;
+  width: 450px;
+  padding: 20px;
   border-radius: 5px;
   border-bottom: 6px solid #bcbce5;
 }
@@ -95,8 +95,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 400px;
-  padding: 15px 15px 15px 15px;
+  width: 450px;
+  padding: 20px 20px;
   border-radius: 5px;
   border-bottom: 6px solid #cdcdd2;
 }
@@ -177,22 +177,27 @@
 
 @media only screen and (max-width: 450px) {
   .card-form-image-cropper-modal {
-    width: 350px;
+    width: 95%;
+    padding: 20px 18px;
   }
 
   .card-form-social-media-modal {
-    width: 350px;
+    width: 95%;
+    padding: 20px 18px;
   }
 
   .card-form-payment-methods-modal {
-    width: 350px;
+    width: 95%;
+    padding: 20px 18px;
   }
 
   .card-form-offering-modal {
-    width: 350px;
+    width: 95%;
+    padding: 20px 18px;
   }
 
   .card-form-modal {
-    width: 350px;
+    width: 95%;
+    padding: 20px 18px;
   }
 }

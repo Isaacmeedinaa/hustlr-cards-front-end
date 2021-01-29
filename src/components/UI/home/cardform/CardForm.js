@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import { Animated } from "react-animated-css";
-
 import { connect } from "react-redux";
 import { uploadBusinessProfilePicture } from "../../../../store/actions/card";
 import { hideNotification as hideCardSavedNotification } from "../../../../store/actions/notifications/cardSavedNotifications";
@@ -198,7 +196,6 @@ class CardForm extends Component {
     }
 
     return (
-      <Animated animationIn="" animationOut="fadeOut" isVisible={true}>
         <div className="primary-light-bg card-form-wrapper">
           <div className="card-form-container">
             {this.props.cardErrors.map((error, index) => (
@@ -225,7 +222,6 @@ class CardForm extends Component {
             <PublicToggle />
           </div>
         </div>
-      </Animated>
     );
   }
 }

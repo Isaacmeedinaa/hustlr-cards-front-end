@@ -1,5 +1,7 @@
 import React from "react";
 
+import { addWidthToImgUrl } from "../../../services/ImgUrlParser";
+
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
 
@@ -11,7 +13,7 @@ const PublicCardImage = (props) => {
   
   return (
     <img
-      src={props.imgUrl}
+      src={addWidthToImgUrl(props.imgUrl, 130)}
       style={{
         marginTop:
           !props.backdropImgUrl || props.backdropImgUrl === "" ? 30 : -65,
