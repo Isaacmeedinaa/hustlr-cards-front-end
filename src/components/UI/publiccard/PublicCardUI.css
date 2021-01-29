@@ -230,6 +230,8 @@
 }
 
 .public-card-payment-methods-container {
+  padding-left: 25px;
+  padding-right: 25px;
   margin-top: 50px;
   width: 100%;
   max-width: 100%;
