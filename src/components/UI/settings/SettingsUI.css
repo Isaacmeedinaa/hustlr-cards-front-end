@@ -98,6 +98,27 @@
   outline: none;
 }
 
+.personal-info-input-error-texts-container {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.personal-info-input-error-text {
+  color: red;
+  width: 100%;
+  margin: 0;
+}
+
+#personalInfoInputErrorEmail {
+  text-align: left;
+}
+
+#personalInfoInputErrorUsername {
+  text-align: right;
+}
+
 .personal-info-form-button {
   margin-top: 30px;
   width: 100%;
@@ -263,6 +284,13 @@
 
 .change-password-form-input:focus {
   outline: none;
+}
+
+.change-password-error-text {
+  color: red;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
 }
 
 .change-password-form-button {

@@ -656,6 +656,13 @@ export const updateOffering = (
     fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
       .then((resp) => resp.json())
       .then((offering) => {
+        if (offering.errors) {
+          const formErrors = offering.errors.map((error) => error);
+          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+
+          dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
+          return;
+        }
         const localStorageCard = JSON.parse(localStorage.getItem("card"));
         const localStorageCardOfferings = localStorageCard.offerings;
         localStorageCardOfferings[index] = offering;
@@ -669,6 +676,7 @@ export const updateOffering = (
           offering: offering,
           offeringIndex: index,
         });
+        dispatch({ type: REMOVE_FORM_ERRORS });
 
         dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
         dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });

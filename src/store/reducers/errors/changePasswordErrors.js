@@ -1,11 +1,14 @@
-import { CHANGE_PASSWORD_ERRORS, CHANGE_PASSWORD_NO_ERRORS } from "../../actions/errors/changePasswordErrors";
+import {
+  CHANGE_PASSWORD_ERRORS,
+  CHANGE_PASSWORD_NO_ERRORS,
+} from "../../actions/errors/changePasswordErrors";
 
-const changePasswordErrors = (state = [], action) => {
+const changePasswordErrors = (state = false, action) => {
   switch (action.type) {
     case CHANGE_PASSWORD_ERRORS:
-      return action.errors;
+      return true;
     case CHANGE_PASSWORD_NO_ERRORS:
-      return [];
+      return false;
     default:
       return state;
   }

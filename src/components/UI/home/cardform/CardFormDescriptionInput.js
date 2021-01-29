@@ -35,7 +35,6 @@ const CardFormDescriptionInput = () => {
     dispatch(setCardDescription(description));
   }, [description, dispatch]);
 
-  console.log(error);
   return (
     <Fragment>
       <textarea
