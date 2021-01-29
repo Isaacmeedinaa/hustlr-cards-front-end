@@ -12,6 +12,8 @@ import {
   deleteOfferingImage,
 } from "../../../../../store/actions/card";
 
+import { formFields } from "../../../../../constants/formFields";
+
 import Modal from "react-modal";
 import Loader from "react-loader-spinner";
 import AwesomeSlider from "react-awesome-slider";
@@ -40,12 +42,14 @@ const CardFormOfferingModal = (props) => {
     (state) => state.offeringImagesProgress
   );
   const offering = offeringModal.offering;
+  const formErrors = useSelector((state) => state.formErrors);
 
   const [title, setTitle] = useState(offering.title);
   const [price, setPrice] = useState(offering.price);
   const [description, setDescription] = useState(offering.description);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [originalOffering, setOriginalOffering] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const cardString = localStorage.getItem("card");
@@ -65,6 +69,18 @@ const CardFormOfferingModal = (props) => {
     dispatch,
     offeringLocalStorage,
   ]);
+
+  useEffect(() => {
+    const error = formErrors.find(
+      (formError) => formError.field === formFields.offeringTitle
+    );
+
+    if (error) {
+      setError(error);
+    } else {
+      setError(error);
+    }
+  }, [formErrors]);
 
   const onImageChangeHandler = (event) => {
     const images = event.target.files;
@@ -148,6 +164,7 @@ const CardFormOfferingModal = (props) => {
       <div className="card-form-product-service-inputs-container">
         <input
           className="card-form-product-service-title-input"
+          style={{ border: error ? "solid 1px red" : null }}
           name="offeringTitle"
           placeholder="Product or Service Title"
           value={title}
@@ -162,6 +179,9 @@ const CardFormOfferingModal = (props) => {
           onChange={(event) => setPrice(event.target.value)}
         />
       </div>
+      {error ? (
+        <p className="card-form-offering-modal-error-text">{error.message}</p>
+      ) : null}
       <textarea
         className="card-form-product-service-description-input "
         name="description"

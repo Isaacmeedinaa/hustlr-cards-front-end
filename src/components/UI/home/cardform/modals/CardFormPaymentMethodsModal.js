@@ -27,9 +27,7 @@ const CardFormPaymentMethodsModal = () => {
       className="primary-light-bg card-form-modal"
     >
       <div className="card-form-modal-header">
-        <h3 className="card-form-modal-title">
-          Payment Methods
-        </h3>
+        <h3 className="card-form-modal-title">Payment Methods</h3>
         <div
           className="card-form-modal-btn"
           onClick={() => dispatch(closePaymentMethodsModal())}

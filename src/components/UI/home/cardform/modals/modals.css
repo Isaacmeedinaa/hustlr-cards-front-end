@@ -107,6 +107,14 @@
   font-family: "Montserrat", sans-serif;
 }
 
+.card-form-offering-modal-error-text {
+  margin-top: 12px;
+  margin-bottom: 0px;
+  width: 100%;
+  color: red;
+  font-size: 13px;
+}
+
 .card-form-payment-methods-modal-header {
   width: 100%;
   display: flex;
