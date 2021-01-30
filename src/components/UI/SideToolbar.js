@@ -6,7 +6,7 @@ import { userLogout } from "../../store/actions/user";
 import MdHome from "react-ionicons/lib/MdHome";
 import MdSettings from "react-ionicons/lib/MdSettings";
 import MdLogOut from "react-ionicons/lib/MdLogOut";
-import MdInformationCircle from "react-ionicons/lib/MdInformationCircle";
+import MdHelp from "react-ionicons/lib/MdHelpCircle";
 import LogoCodepen from "react-ionicons/lib/LogoCodepen";
 
 import $ from 'jquery';
@@ -128,7 +128,7 @@ class SideToolbar extends Component {
                   : "sidetoolbar-icon-wrapper selected"
               }
             >
-              <MdInformationCircle
+              <MdHelp
                 className="sidetoolbar-icon"
                 onClick={() => {
                   this.props.history.push("/support");

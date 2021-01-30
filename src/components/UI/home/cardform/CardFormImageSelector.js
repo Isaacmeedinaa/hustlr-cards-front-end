@@ -50,21 +50,32 @@ class CardFormImageSelector extends Component {
   };
 
   render() {
+    console.log(addWidthToImgUrl(this.state.imgUrl,320));
     return (
       <Fragment>
-        <img
-          className="primary-color-bg card-form-business-img-container"
-          alt="img"
-          style={{
-            backgroundImage: `url(${addWidthToImgUrl(this.props.imgUrl, 130)})`,
-          }}
-        >
-          {this.props.cardImageLoader ? (
-            <Loader type="TailSpin" color="#2ecc71" width={50} height={50} />
-          ) : null}
-        </img>
+        {
+          !this.state.imgUrl || this.state.imgUrl === '' ? 
+            <div className="primary-color-bg card-form-business-img-container"></div>
+            :
+            <img
+            className="primary-color-bg card-form-business-img-container"
+            alt="img"
+            srcSet={`${addWidthToImgUrl(
+              this.state.imgUrl,
+              320
+            )} 320w, ${addWidthToImgUrl(
+              this.state.imgUrl,
+              640
+            )} 640w, ${addWidthToImgUrl(this.state.imgUrl, 1280)} 1280w`}
+            sizes={"130px"}
+          />
+        }
         <div className="ui floating dropdown button card-form-button primary-font">
-          <span className="card-form-button-text">Edit Profile Photo</span>
+          <span className="card-form-button-text">
+            {this.props.cardImageLoader ? (
+              <Loader type="TailSpin" color="#ffff" width={22} height={22} />
+            ) : "Edit Profile Photo"}
+            </span>
           <div className="menu" id="card-form-edit-image-dropdown">
             <div className="item">
               <i

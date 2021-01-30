@@ -8,16 +8,6 @@ import "../../../../constants/colors.css";
 import "./CardUI.css";
 
 const CardSocialMedias = (props) => {
-  if (
-    !props.facebookLink &&
-    !props.instagramLink &&
-    !props.twitterLink &&
-    !props.snapchatLink &&
-    !props.email &&
-    !props.phoneNumber
-  ) {
-    return null;
-  }
 
   const renderSocialMediaLinks = () => {
     return props.links.map((link) => {

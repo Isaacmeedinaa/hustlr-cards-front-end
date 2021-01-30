@@ -112,10 +112,6 @@
   align-items: center;
   position: relative;
   margin-top: -65px;
-  object-fit: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   border: 6px solid #ffffff;
 }
 
