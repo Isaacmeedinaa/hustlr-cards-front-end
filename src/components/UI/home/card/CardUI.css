@@ -105,10 +105,7 @@
   align-items: center;
   position: relative;
   /* margin-top: -65px; */
-  object-fit: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #f1f1f1;
   border: 6px solid #ffffff;
 }
 

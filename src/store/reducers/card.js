@@ -215,6 +215,7 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           industry: action.industry,
+          industryId: action.industry === null ? null : action.industry.id
         },
       };
 
