@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { changePassword } from "../../../store/actions/user";
 import { hidePasswordChangedNotification } from "../../../store/actions/notifications/changePasswordNotifications";
+import {clearChangePasswordErrors} from '../../../store/actions/errors/changePasswordErrors'
+import {clearFormErrors} from '../../../store/actions/formErrors/formErrors'
 
 import { showToast } from "../Toasts";
 
@@ -25,9 +27,9 @@ const ChangePasswordForm = () => {
   const changePasswordNotifications = useSelector(
     (state) => state.changePasswordNotifications
   );
-  const changePasswordErrors = useSelector(
-    (state) => state.changePasswordErrors
-  );
+  // const changePasswordErrors = useSelector(
+  //   (state) => state.changePasswordErrors
+  // );
   const formErrors = useSelector((state) => state.formErrors);
 
   const [password, setPassword] = useState("");
@@ -80,6 +82,13 @@ const ChangePasswordForm = () => {
     }
   }, [changePasswordNotifications, dispatch]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(clearChangePasswordErrors());
+      dispatch(clearFormErrors());
+    }
+  }, [dispatch]);
+
   const displayNotification = (success, message) => {
     showToast(success, message);
   };
@@ -110,13 +119,13 @@ const ChangePasswordForm = () => {
           className="change-password-form-container"
           onSubmit={onChangePasswordFormSubmit}
         >
-          {changePasswordErrors ? (
+          {/* {changePasswordErrors ? (
             <div style={{ paddingTop: "20px" }}>
               <p className="card-form-error-text">
                 Please fix the errors below.
               </p>
             </div>
-          ) : null}
+          ) : null} */}
           <input
             className="change-password-form-input"
             style={{ border: currentPasswordError ? "solid 1px red" : null }}

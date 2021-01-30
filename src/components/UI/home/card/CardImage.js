@@ -1,6 +1,5 @@
 import React from "react";
 
-import Loader from "react-loader-spinner";
 import { addWidthToImgUrl } from "../../../../services/ImgUrlParser";
 
 import "../../../../constants/colors.css";
@@ -11,19 +10,29 @@ const CardImage = (props) => {
     return null;
   }
 
-  return (
-    <div
-      className="primary-color-bg card-business-img-container"
-      style={{
-        backgroundImage: `url(${addWidthToImgUrl(props.imgUrl, 130)})`,
-        marginTop:
-          !props.backdropImgUrl || props.backdropImgUrl === "" ? 30 : -65,
-      }}
-    >
-      {props.cardImageLoader ? (
-        <Loader type="TailSpin" color="#fff" width={50} height={50} />
-      ) : null}
-    </div>
+  return (!props.imgUrl || props.imgUrl === '' ? 
+        <div className="card-business-img-container" 
+          style={{
+            marginTop:
+             !props.backdropImgUrl || props.backdropImgUrl === "" ? 30 : -65,
+        }}></div>
+        :
+        <img
+        className="card-business-img-container"
+        alt="img"
+        srcSet={`${addWidthToImgUrl(
+          props.imgUrl,
+          320
+        )} 320w, ${addWidthToImgUrl(
+          props.imgUrl,
+          640
+        )} 640w, ${addWidthToImgUrl(props.imgUrl, 1280)} 1280w`}
+        sizes={"130px"}
+        style={{
+          marginTop:
+            !props.backdropImgUrl || props.backdropImgUrl === "" ? 30 : -65,
+        }}
+      />
   );
 };
 

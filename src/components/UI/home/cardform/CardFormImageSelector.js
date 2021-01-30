@@ -50,15 +50,14 @@ class CardFormImageSelector extends Component {
   };
 
   render() {
-    console.log(addWidthToImgUrl(this.state.imgUrl,320));
     return (
       <Fragment>
         {
           !this.state.imgUrl || this.state.imgUrl === '' ? 
-            <div className="primary-color-bg card-form-business-img-container"></div>
+            <div className="card-form-business-img-container"></div>
             :
             <img
-            className="primary-color-bg card-form-business-img-container"
+            className="card-form-business-img-container"
             alt="img"
             srcSet={`${addWidthToImgUrl(
               this.state.imgUrl,

@@ -37,7 +37,9 @@ class CardFormIndustrySelect extends Component {
       },
     });
 
-    this.props.setCardIndustry(this.state.industry);
+    let updatedIndustry = selectedId === null ? null : this.state.industry;
+
+    this.props.setCardIndustry(updatedIndustry);
   };
 
   render() {
