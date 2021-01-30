@@ -434,8 +434,9 @@
 
 .card-form-product-service-text {
   margin-left: 10px;
+  margin-right: 10px;
   position: relative;
-  top: 18px;
+  top: 9px;
   font-size: 18px;
 }
 
