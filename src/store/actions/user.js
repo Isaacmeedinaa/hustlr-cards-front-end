@@ -45,6 +45,8 @@ import {
 import { SET_IS_AUTHENTICATED, SET_IS_NOT_AUTHENTICATED } from "./auth";
 import { LOGIN_ERRORS, LOGIN_NO_ERRORS } from "./errors/loginErrors";
 import { REGISTER_ERRORS, REGISTER_NO_ERRORS } from "./errors/registerErrors";
+import { SET_FORM_ERRORS, REMOVE_FORM_ERRORS } from "./formErrors/formErrors";
+import { CARD_NO_ERRORS } from "./errors/cardErrors";
 
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
@@ -161,8 +163,6 @@ export const userRegister = (
   history
 ) => {
   return (dispatch) => {
-    let messages = [];
-
     const registerData = {
       email: email,
       username: username,
@@ -180,45 +180,62 @@ export const userRegister = (
     };
 
     if (password !== confirmPassword) {
-      messages = [];
-      messages.push("Passwords do not match");
       dispatch({
         type: REGISTER_ERRORS,
-        messages: messages,
       });
+      const formErrors = [
+        { field: "ConfirmPassword", message: "Passwords do not match." },
+      ];
+      dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
     } else {
       dispatch({ type: IS_REGISTERING });
       fetch(`${API_BASE_URL}/register`, reqObj)
-        .then((resp) => {
-          if (resp.status === 422) {
+        .then((resp) => resp.json())
+        .then((user) => {
+          if (user.errors) {
+            const firstFormErrors = user.errors.map((error) => error);
+
+            if (firstFormErrors.some((error) => error.field === "Password")) {
+              const formErrors = firstFormErrors.filter(
+                (error) => error.field !== "Password"
+              );
+              formErrors.push({
+                field: "Password",
+                message:
+                  "Password must be at least 6 characters long, must contain 1 uppercase letter, and must contain 1 lowercase letter.",
+              });
+              dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+
+              dispatch({ type: REGISTER_ERRORS });
+
+              dispatch({ type: IS_NOT_REGISTERING });
+              return;
+            }
+
+            dispatch({ type: REGISTER_ERRORS });
+            dispatch({ type: SET_FORM_ERRORS, formErrors: firstFormErrors });
             dispatch({ type: IS_NOT_REGISTERING });
-            return resp.json();
-          } else {
-            dispatch({ type: REGISTER_NO_ERRORS });
-            return resp.json();
-          }
-        })
-        .then((json) => {
-          if (json.errors) {
-            json.errors.map((error) => messages.push(error.message));
-            dispatch({ type: REGISTER_ERRORS, messages: messages });
             return;
           }
 
-          localStorage.setItem("userToken", json.token);
-          localStorage.setItem("userId", json.user.id);
+          dispatch({ type: REGISTER_NO_ERRORS });
 
-          const userId = json.user.id;
+          localStorage.setItem("userToken", user.token);
+          localStorage.setItem("userId", user.user.id);
+
+          const userId = user.user.id;
 
           dispatch({ type: SET_IS_AUTHENTICATED });
           dispatch(fetchCard(userId));
-          dispatch({ type: USER_REGISTER, user: json.user });
+          dispatch({ type: USER_REGISTER, user: user.user });
 
           history.push("/home");
 
           dispatch({ type: IS_NOT_REGISTERING });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          dispatch({ type: IS_NOT_REGISTERING });
+        });
     }
   };
 };
@@ -229,6 +246,10 @@ export const userLogout = (history) => {
     localStorage.removeItem("userToken");
     localStorage.removeItem("card");
     dispatch({ type: SET_IS_NOT_AUTHENTICATED });
+    dispatch({ type: REMOVE_FORM_ERRORS });
+    dispatch({ type: CARD_NO_ERRORS });
+    dispatch({ type: CHANGE_PASSWORD_NO_ERRORS });
+    dispatch({ type: PERSONAL_INFO_NO_ERRORS });
 
     await history.push("/login");
 
@@ -261,37 +282,35 @@ export const updateUser = (firstName, lastName, username, email) => {
 
     dispatch({ type: USER_IS_UPDATING });
     fetch(`${API_BASE_URL}/users`, reqObj)
-      .then((resp) => {
-        if (resp.ok) {
-          dispatch({ type: PERSONAL_INFO_NO_ERRORS });
-          dispatch({ type: USER_IS_NOT_UPDATING });
-          dispatch({ type: USER_UPDATED_SUCCESSFULLY });
-          return resp.json();
-        } else {
-          dispatch({ type: USER_IS_NOT_UPDATING });
-          resp.json().then((json) => {
-            dispatch({ type: PERSONAL_INFO_ERRORS, errors: json.errors });
-          });
+      .then((resp) => resp.json())
+      .then((user) => {
+        if (user.errors) {
+          dispatch({ type: PERSONAL_INFO_ERRORS, errors: user.errors });
+
+          const formErrors = user.errors.map((error) => error);
+          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+
           dispatch({ type: USER_UPDATED_UNSUCCESSFULLY });
+          dispatch({ type: USER_IS_NOT_UPDATING });
           return;
         }
-      })
-      .then((json) => {
-        if (json) {
-          // need this bc this method is still called even when request fails
-          const user = {
-            id: json.id,
-            firstName: json.firstName,
-            lastName: json.lastName,
-            username: json.username,
-            email: json.email,
-          };
-          dispatch({ type: USER_UPDATED, user: user });
-        }
+
+        const userObj = {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          email: user.email,
+        };
+        dispatch({ type: USER_UPDATED, user: userObj });
+        dispatch({ type: PERSONAL_INFO_NO_ERRORS });
+        dispatch({ type: REMOVE_FORM_ERRORS });
+        dispatch({ type: USER_IS_NOT_UPDATING });
+        dispatch({ type: USER_UPDATED_SUCCESSFULLY });
       })
       .catch((err) => {
         dispatch({ type: USER_IS_NOT_UPDATING });
-        console.log(err);
+        dispatch({ type: USER_UPDATED_UNSUCCESSFULLY });
       });
   };
 };
@@ -324,6 +343,12 @@ export const userForgotPassword = (username, history) => {
           errors = [];
           errors.push("Username cannot be empty.");
           dispatch({ type: FORGOT_PASSWORD_ERRORS, errors: errors });
+          dispatch({
+            type: SET_FORM_ERRORS,
+            formErrors: [
+              { field: "Username", message: "Username cannot be empty." },
+            ],
+          });
           return;
         } else {
           dispatch({ type: FORGOT_PASSWORD_NO_ERRORS });
@@ -337,6 +362,12 @@ export const userForgotPassword = (username, history) => {
           errors = [];
           errors.push(data.message);
           dispatch({ type: FORGOT_PASSWORD_ERRORS, errors: errors });
+          dispatch({
+            type: SET_FORM_ERRORS,
+            formErrors: [
+              { field: "Username", message: "Username cannot be found." },
+            ],
+          });
           dispatch({ type: FORGOT_PASSWORD_IS_NOT_LOADING });
           return;
         }
@@ -352,8 +383,6 @@ export const userChangePasswordCode = (
   history
 ) => {
   return (dispatch) => {
-    let errors = [];
-
     const userRecoverPasswordData = {
       username: username,
       recoveryCode: recoveryCode,
@@ -373,15 +402,23 @@ export const userChangePasswordCode = (
     fetch(`${API_BASE_URL}/changepassword`, reqObj)
       .then((resp) => {
         if (resp.status === 401) {
-          errors = [];
-          errors.push("Invalid recovery code!");
-          dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS, errors: errors });
+          dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS });
+
+          const formErrors = [
+            { field: "RecoveryCode", message: "Invalid recovery code." },
+          ];
+          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+
           dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
           return;
         } else if (resp.status === 404) {
-          errors = [];
-          errors.push("Invalid username!");
-          dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS, errors: errors });
+          dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS });
+
+          const formErrors = [
+            { field: "Username", message: "Username was not found." },
+          ];
+          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+
           dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
           return;
         }
@@ -391,10 +428,30 @@ export const userChangePasswordCode = (
         if (data === undefined) {
           dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
           return;
-        } else if (data.errors) {
-          errors = [];
-          data.errors.map((error) => errors.push(error.message));
-          dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS, errors: errors });
+        }
+
+        if (data.errors) {
+          const firstFormErrors = data.errors.map((error) => error);
+
+          if (firstFormErrors.some((error) => error.field === "NewPassword")) {
+            const formErrors = firstFormErrors.filter(
+              (error) => error.field !== "NewPassword"
+            );
+            formErrors.push({
+              field: "NewPassword",
+              message:
+                "New password must be at least 6 characters long, must contain 1 uppercase letter, and must contain 1 lowercase letter.",
+            });
+            dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+
+            dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS });
+
+            dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
+            return;
+          }
+
+          dispatch({ type: CHANGE_PASSWORD_CODE_ERRORS });
+
           dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
           return;
         }
@@ -405,28 +462,40 @@ export const userChangePasswordCode = (
         dispatch({ type: CHANGE_PASSWORD_CODE_NO_ERRORS });
         dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        dispatch({ type: CHANGE_PASSWORD_CODE_IS_NOT_LOADING });
+      });
   };
 };
 
 export const changePassword = (oldPassword, newPassword, confirmPassword) => {
   return (dispatch, getState) => {
-    const inputErrors = [];
-    if (!oldPassword) {
-      inputErrors.push({ message: "'Current Password' cannot be empty." });
+    dispatch({ type: PASSWORD_IS_UPDATING });
+
+    if (!oldPassword.length === 0 || !oldPassword) {
+      dispatch({ type: CHANGE_PASSWORD_ERRORS });
+      const formErrors = [
+        { field: "OldPassword", message: "Current password cannot be empty." },
+      ];
+      dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+      dispatch({ type: PASSWORD_IS_NOT_UPDATING });
+      dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
+      return;
     }
+
     if (newPassword !== confirmPassword) {
-      inputErrors.push({ message: "Passwords do not match." });
-    }
-    if (inputErrors.length > 0) {
-      dispatch({ type: CHANGE_PASSWORD_ERRORS, errors: inputErrors });
+      dispatch({ type: CHANGE_PASSWORD_ERRORS });
+      const formErrors = [
+        { field: "ConfirmPassword", message: "Passwords do not match." },
+      ];
+      dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+      dispatch({ type: PASSWORD_IS_NOT_UPDATING });
       dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
       return;
     }
 
     const user = getState().user;
     const userToken = localStorage.getItem("userToken");
-    localStorage.getItem("userId");
 
     const passwordData = {
       username: user.username,
@@ -448,27 +517,45 @@ export const changePassword = (oldPassword, newPassword, confirmPassword) => {
     dispatch({ type: PASSWORD_IS_UPDATING });
     fetch(`${API_BASE_URL}/changepassword`, reqObj)
       .then((resp) => {
-        dispatch({ type: PASSWORD_IS_NOT_UPDATING });
-        if (resp.ok) {
-          dispatch({ type: CHANGE_PASSWORD_NO_ERRORS });
-          dispatch({ type: PASSWORD_CHANGED_SUCCESSFULLY });
-          return resp.json();
-        } else if (resp.status === 401) {
-          dispatch({
-            type: CHANGE_PASSWORD_ERRORS,
-            errors: [{ message: "Invalid 'Current Password'." }],
-          });
-          dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
-        } else {
-          resp.json().then((json) => {
-            dispatch({ type: CHANGE_PASSWORD_ERRORS, errors: json.errors });
-          });
-          dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
+        if (resp.status === 401) {
+          const formErrors = [
+            {
+              field: "OldPassword",
+              message: "Old password is incorrect.",
+            },
+          ];
+          console.log(formErrors);
+          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+          return;
         }
+
+        return resp.json();
+      })
+      .then((data) => {
+        if (data.errors) {
+          dispatch({ type: CHANGE_PASSWORD_ERRORS });
+
+          const formErrors = [
+            {
+              field: "NewPassword",
+              message:
+                "Password must be at least 6 characters long, must contain 1 uppercase letter, and must contain 1 lowercase letter.",
+            },
+          ];
+          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+          dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
+          dispatch({ type: PASSWORD_IS_NOT_UPDATING });
+          return;
+        }
+
+        dispatch({ type: CHANGE_PASSWORD_NO_ERRORS });
+        dispatch({ type: REMOVE_FORM_ERRORS });
+        dispatch({ type: PASSWORD_CHANGED_SUCCESSFULLY });
+        dispatch({ type: PASSWORD_IS_NOT_UPDATING });
       })
       .catch((err) => {
         dispatch({ type: PASSWORD_IS_NOT_UPDATING });
-        console.log(err);
+        dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
       });
   };
 };

@@ -20,6 +20,7 @@ const PublicCardPaymentMethods = (props) => {
   const renderPaymentMethods = () => {
     return props.paymentMethods.map((paymentMethod) => (
       <PublicCardPaymentMethod
+        key={paymentMethod.id}
         paymentMethod={paymentMethod}
         primaryColor={props.primaryColor}
         transparentColor={props.transparentColor}

@@ -1,15 +1,14 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
+import React, { Fragment, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { updateUser } from "../../../store/actions/user";
 import { hideUserUpdatedNotification } from "../../../store/actions/notifications/userUpdatedNotifications";
-import { clearPersonalInfoErrors } from "../../../store/actions/errors/personalInfoErrors";
 
 import { showToast } from "../Toasts";
 
-import Loader from "react-loader-spinner";
+import { formFields } from "../../../constants/formFields";
 
-import { Animated } from "react-animated-css";
+import Loader from "react-loader-spinner";
 
 import MdArrowDropup from "react-ionicons/lib/MdArrowDropup";
 import MdArrowDropdown from "react-ionicons/lib/MdArrowDropdown";
@@ -17,169 +16,165 @@ import MdArrowDropdown from "react-ionicons/lib/MdArrowDropdown";
 import "../../../constants/colors.css";
 import "./SettingsUI.css";
 
-class PersonalInfoForm extends Component {
-  state = {
-    firstName: this.props.firstName,
-    lastName: this.props.lastName,
-    email: this.props.email,
-    username: this.props.username,
-    showForm: true,
-  };
+const PersonalInfoForm = () => {
+  const dispatch = useDispatch();
 
-  onPersonalInfoFormChangeHandler = async (event) => {
-    await this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
+  const firstNameRedux = useSelector((state) => state.user.firstName);
+  const lastNameRedux = useSelector((state) => state.user.lastName);
+  const emailRedux = useSelector((state) => state.user.email);
+  const usernameRedux = useSelector((state) => state.user.username);
+  const userUpdatingLoader = useSelector((state) => state.userUpdatingLoader);
+  const userUpdatedNotifications = useSelector(
+    (state) => state.userUpdatedNotifications
+  );
+  const personalInfoErrors = useSelector((state) => state.personalInfoErrors);
 
-  onPersonalInfoFormSubmitHandler = (event) => {
-    event.preventDefault();
-  };
+  const formErrors = useSelector((state) => state.formErrors);
 
-  onSubmitPersonalInfoHandler = (event) => {
-    this.props.updateUser(
-      this.state.firstName,
-      this.state.lastName,
-      this.state.username,
-      this.state.email
+  const [firstName, setFirstName] = useState(firstNameRedux);
+  const [lastName, setLastName] = useState(lastNameRedux);
+  const [email, setEmail] = useState(emailRedux);
+  const [username, setUsername] = useState(usernameRedux);
+  const [showForm, setShowForm] = useState(true);
+  const [usernameError, setUsernameError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+
+  useEffect(() => {
+    const usernameError = formErrors.find(
+      (error) => error.field === formFields.personalInfoUsername
     );
-  };
 
-  componentDidUpdate() {
-    if (this.props.userUpdatedNotifications.show) {
-      this.displayNotification(
-        this.props.userUpdatedNotifications.success,
-        this.props.userUpdatedNotifications.message
-      );
-      this.props.hideUserUpdatedNotification();
+    if (usernameError) {
+      setUsernameError(usernameError);
+    } else {
+      setUsernameError(usernameError);
     }
-  }
 
-  componentWillUnmount() {
-    this.props.clearErrors();
-  }
-
-  displayNotification(success, message) {
-    showToast(success, message);
-  }
-
-  onShowFormClickHandler = async () => {
-    await this.setState((prevState) => {
-      return {
-        showForm: !prevState.showForm,
-      };
-    });
-  };
-
-  render() {
-    let personalInfoErrors =
-      this.props.personalInfoErrors.length > 0 ? (
-        <div style={{ paddingTop: "20px" }}>
-          {this.props.personalInfoErrors.map((error, index) => (
-            <p key={index} className="card-form-error-text">
-              {error.message}
-            </p>
-          ))}
-        </div>
-      ) : null;
-
-    return (
-      <Fragment>
-        <div
-          className="personal-info-form-header-btn-container"
-          onClick={this.onShowFormClickHandler}
-        >
-          <h5 className="user-settings-header">Personal Information</h5>
-          <div className="settings-accordion-icon-container">
-            {this.state.showForm ? (
-              <MdArrowDropdown color="#2ecc71" />
-            ) : (
-              <MdArrowDropup color="#2ecc71" />
-            )}
-          </div>
-        </div>
-        {this.state.showForm ? (
-          <Animated
-            animationIn=""
-            animationOut="fadeOut"
-            isVisible={true}
-            className="settings-form-animation-container"
-          >
-            <form
-              className="personal-info-form-container"
-              onSubmit={this.onPersonalInfoFormSubmitHandler}
-            >
-              {personalInfoErrors}
-              <div className="personal-info-form-group-fields">
-                <input
-                  className="personal-info-form-input-field"
-                  name="firstName"
-                  placeholder="First Name"
-                  value={this.state.firstName}
-                  onChange={this.onPersonalInfoFormChangeHandler}
-                />
-                <input
-                  className="personal-info-form-input-field"
-                  name="lastName"
-                  placeholder="Last Name"
-                  value={this.state.lastName}
-                  onChange={this.onPersonalInfoFormChangeHandler}
-                />
-              </div>
-              <div className="personal-info-form-group-fields">
-                <input
-                  className="personal-info-form-input-field"
-                  name="username"
-                  placeholder="Username"
-                  value={this.state.username}
-                  onChange={this.onPersonalInfoFormChangeHandler}
-                />
-                <input
-                  className="personal-info-form-input-field"
-                  name="email"
-                  placeholder="Email"
-                  value={this.state.email}
-                  onChange={this.onPersonalInfoFormChangeHandler}
-                />
-              </div>
-              <button
-                className="white-text personal-info-form-button"
-                onClick={this.onSubmitPersonalInfoHandler}
-              >
-                {this.props.userUpdatingLoader ? (
-                  <Loader type="TailSpin" color="#fff" width={28} height={28} />
-                ) : (
-                  "Update Personal Information"
-                )}
-              </button>
-            </form>
-          </Animated>
-        ) : null}
-      </Fragment>
+    const emailError = formErrors.find(
+      (error) => error.field === formFields.personalInfoEmail
     );
-  }
-}
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    firstName: state.user.firstName,
-    lastName: state.user.lastName,
-    email: state.user.email,
-    username: state.user.username,
-    userUpdatingLoader: state.userUpdatingLoader,
-    userUpdatedNotifications: state.userUpdatedNotifications,
-    personalInfoErrors: state.personalInfoErrors,
+    if (emailError) {
+      setEmailError(emailError);
+    } else {
+      setEmailError(emailError);
+    }
+  }, [formErrors]);
+
+  useEffect(() => {}, [formErrors]);
+
+  useEffect(() => {
+    if (userUpdatedNotifications.show) {
+      displayNotification(
+        userUpdatedNotifications.success,
+        userUpdatedNotifications.message
+      );
+      dispatch(hideUserUpdatedNotification());
+    }
+  }, [userUpdatedNotifications, dispatch]);
+
+  const displayNotification = (success, message) => {
+    showToast(success, message);
   };
+
+  const onPersonalInfoFormSubmitHandler = (event) => {
+    event.preventDefault();
+
+    dispatch(updateUser(firstName, lastName, username, email));
+  };
+
+  return (
+    <Fragment>
+      <div
+        className="personal-info-form-header-btn-container"
+        onClick={() => setShowForm((showForm) => !showForm)}
+      >
+        <h5 className="user-settings-header">Personal Information</h5>
+        <div className="settings-accordion-icon-container">
+          {showForm ? (
+            <MdArrowDropdown color="#2ecc71" />
+          ) : (
+            <MdArrowDropup color="#2ecc71" />
+          )}
+        </div>
+      </div>
+      {showForm ? (
+        <form
+          className="personal-info-form-container"
+          onSubmit={onPersonalInfoFormSubmitHandler}
+        >
+          {personalInfoErrors ? (
+            <div style={{ paddingTop: "20px" }}>
+              <p className="card-form-error-text">
+                Please fix the errors below.
+              </p>
+            </div>
+          ) : null}
+          <div className="personal-info-form-group-fields">
+            <input
+              className="personal-info-form-input-field"
+              name="firstName"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+            />
+            <input
+              className="personal-info-form-input-field"
+              name="lastName"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+            />
+          </div>
+          <div className="personal-info-form-group-fields">
+            <input
+              className="personal-info-form-input-field"
+              style={{ border: usernameError ? "solid 1px red" : null }}
+              name="username"
+              placeholder="Username"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+            <input
+              className="personal-info-form-input-field"
+              style={{ border: emailError ? "solid 1px red" : null }}
+              name="email"
+              placeholder="Email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
+          {usernameError || emailError ? (
+            <div className="personal-info-input-error-texts-container">
+              {usernameError ? (
+                <p
+                  className="personal-info-input-error-text"
+                  id="personalInfoInputErrorEmail"
+                >
+                  {usernameError.message}
+                </p>
+              ) : null}
+              {emailError ? (
+                <p
+                  className="personal-info-input-error-text"
+                  id="personalInfoInputErrorUsername"
+                >
+                  {emailError.message}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
+          <button className="white-text personal-info-form-button">
+            {userUpdatingLoader ? (
+              <Loader type="TailSpin" color="#fff" width={28} height={28} />
+            ) : (
+              "Update Personal Information"
+            )}
+          </button>
+        </form>
+      ) : null}
+    </Fragment>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateUser: (firstName, lastName, username, email) =>
-      dispatch(updateUser(firstName, lastName, username, email)),
-    hideUserUpdatedNotification: () => dispatch(hideUserUpdatedNotification()),
-    clearErrors: () => dispatch(clearPersonalInfoErrors()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PersonalInfoForm);
+export default PersonalInfoForm;

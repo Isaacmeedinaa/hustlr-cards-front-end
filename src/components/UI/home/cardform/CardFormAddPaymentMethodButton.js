@@ -6,7 +6,7 @@ import { openPaymentMethodsModal } from "../../../../store/actions/modals/paymen
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
 
-const CardFormAddPaymentMethodButton = () => {
+const CardFormAddPaymentMethodButton = (props) => {
   const dispatch = useDispatch();
 
   return (
@@ -14,7 +14,11 @@ const CardFormAddPaymentMethodButton = () => {
       className="primary color card-form-add-payment-button"
       onClick={() => dispatch(openPaymentMethodsModal())}
     >
-      <span className="card-form-button-text">+ Add Payment Method</span>
+      <span className="card-form-button-text">
+        {props.paymentMethods.length === 0
+          ? "+ Add Payment Method"
+          : "Edit Payment Methods"}
+      </span>
     </label>
   );
 };

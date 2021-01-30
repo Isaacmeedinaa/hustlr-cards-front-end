@@ -1,6 +1,7 @@
 import React from "react";
 
 import Loader from "react-loader-spinner";
+import { addWidthToImgUrl } from "../../../../services/ImgUrlParser";
 
 import "../../../../constants/colors.css";
 import "./CardUI.css";
@@ -14,9 +15,9 @@ const CardImage = (props) => {
     <div
       className="primary-color-bg card-business-img-container"
       style={{
-        backgroundImage: `url(${props.imgUrl})`,
+        backgroundImage: `url(${addWidthToImgUrl(props.imgUrl, 130)})`,
         marginTop:
-          !props.backdropImgUrl || props.backdropImgUrl === "" ? 0 : -65,
+          !props.backdropImgUrl || props.backdropImgUrl === "" ? 30 : -65,
       }}
     >
       {props.cardImageLoader ? (

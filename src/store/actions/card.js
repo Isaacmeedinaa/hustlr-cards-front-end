@@ -118,6 +118,7 @@ import {
   OFFERING_IMAGES_ARE_PROGRESSING,
   OFFERING_IMAGES_ARE_NOT_PROGRESSING,
 } from "./progress/offeringImagesProgress";
+import { SET_FORM_ERRORS, REMOVE_FORM_ERRORS } from "./formErrors/formErrors";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -303,7 +304,11 @@ export const saveCard = (cardId) => {
           return;
         }
         if (data.errors) {
-          dispatch({ type: CARD_ERRORS, errors: data.errors });
+          dispatch({ type: CARD_ERRORS });
+
+          const formErrors = data.errors.map((error) => error);
+          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+
           dispatch({ type: CARD_IS_NOT_UPDATING });
           dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
           dispatch({ type: CARD_IS_NOT_SAVED });
@@ -320,13 +325,13 @@ export const saveCard = (cardId) => {
         dispatch({ type: CARD_SAVED_SUCCESSFULLY });
         dispatch({ type: CARD_IS_SAVED });
         dispatch({ type: CARD_NO_ERRORS });
+        dispatch({ type: REMOVE_FORM_ERRORS });
         dispatch({ type: CARD_IS_NOT_UPDATING });
       })
       .catch((err) => {
         dispatch({ type: CARD_IS_NOT_UPDATING });
         dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
         dispatch({ type: CARD_IS_NOT_SAVED });
-        console.log(err);
       });
   };
 };
@@ -651,6 +656,13 @@ export const updateOffering = (
     fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
       .then((resp) => resp.json())
       .then((offering) => {
+        if (offering.errors) {
+          const formErrors = offering.errors.map((error) => error);
+          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+
+          dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
+          return;
+        }
         const localStorageCard = JSON.parse(localStorage.getItem("card"));
         const localStorageCardOfferings = localStorageCard.offerings;
         localStorageCardOfferings[index] = offering;
@@ -664,6 +676,7 @@ export const updateOffering = (
           offering: offering,
           offeringIndex: index,
         });
+        dispatch({ type: REMOVE_FORM_ERRORS });
 
         dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
         dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });
@@ -967,7 +980,9 @@ export const deletePaymentMethod = (id) => {
         dispatch({ type: PAYMENT_METHOD_IS_NOT_DELETING_LOADER });
         // MUST remove payment method from local storage card offerings array
         const localStorageCard = JSON.parse(localStorage.getItem("card"));
-        let newPaymentMethods = localStorageCard.paymentMethods.filter((paymentMethod) => paymentMethod.id !== id);
+        let newPaymentMethods = localStorageCard.paymentMethods.filter(
+          (paymentMethod) => paymentMethod.id !== id
+        );
         delete localStorageCard["paymentMethods"];
         localStorageCard["paymentMethods"] = newPaymentMethods;
         localStorage.removeItem("card");

@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+
 import "../../../../constants/colors.css";
 import "./CardUI.css";
 
@@ -43,31 +46,76 @@ const CardLink = (props) => {
       {isCopied ? (
         <span className="card-business-link-copied-text">Copied!</span>
       ) : null}
-      <CopyToClipboard
-        text={`https://www.hustlr.cards/${pathState}`}
-        onCopy={onCopySuccessChange}
-      >
-        <div
-          style={{ backgroundColor: props.transparentColor, cursor: "pointer" }}
-          className="card-business-link-container"
+      <div className="card-business-link-buttons-container">
+        <CopyToClipboard
+          text={`https://www.hustlr.cards/${pathState}`}
+          onCopy={onCopySuccessChange}
         >
-          <span style={{ cursor: "pointer" }}>
-            <b>Copy My Card URL</b>
-          </span>
-          <span
+          <div
+            style={{
+              backgroundColor: props.transparentColor,
+              cursor: "pointer",
+              marginRight: 10,
+            }}
+            className="card-business-link-small-container"
+            id="cardBusinessLinkSmallContainerCopy"
+          >
+            <FontAwesomeIcon
+              style={{
+                color: props.primaryColor,
+                marginRight: 5,
+                marginTop: 1,
+              }}
+              icon={faCopy}
+            />
+            <span
+              style={{
+                cursor: "pointer",
+                marginLeft: 5,
+                color: props.primaryColor,
+              }}
+            >
+              <b>Copy My Card URL</b>
+            </span>
+          </div>
+        </CopyToClipboard>
+        <div
+          style={{
+            backgroundColor: props.transparentColor,
+            cursor: "pointer",
+            marginLeft: 10,
+          }}
+          className="card-business-link-small-container"
+          id="cardBusinessLinkSmallContainerExternalLink"
+        >
+          <FontAwesomeIcon
+            style={{ color: props.primaryColor, marginRight: 5, marginTop: 1 }}
+            icon={faExternalLinkAlt}
+          />
+          <a
             style={{
               color: props.primaryColor,
-              marginTop: 5,
               cursor: "pointer",
+              marginLeft: 5,
             }}
-            className="card-business-link"
+            className="card-business-link-text"
+            href={`https://hustlr.cards/${pathState}`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            https://www.hustlr.cards/{pathState}
-          </span>
+            Go To My Card URL
+          </a>
         </div>
-      </CopyToClipboard>
+      </div>
+      <div
+        style={{ backgroundColor: props.transparentColor }}
+        className="card-business-link-container"
+      >
+        <span
+          className="card-business-link"
+          style={{ color: props.primaryColor }}
+        >{`https://hustlr.cards/${pathState}`}</span>
+      </div>
     </Fragment>
   );
 };

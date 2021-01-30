@@ -6,7 +6,7 @@ import { userLogout } from "../../store/actions/user";
 import MdHome from "react-ionicons/lib/MdHome";
 import MdSettings from "react-ionicons/lib/MdSettings";
 import MdLogOut from "react-ionicons/lib/MdLogOut";
-import MdInformationCircle from "react-ionicons/lib/MdInformationCircle";
+import MdHelp from "react-ionicons/lib/MdHelpCircle";
 
 import $ from 'jquery';
 
@@ -117,7 +117,7 @@ class BottomToolbar extends Component {
                 : "bottomtoolbar-icon-wrapper selected"
             }
           >
-            <MdInformationCircle
+            <MdHelp
               className="bottomtoolbar-icon"
               onClick={() => {
                 this.props.history.push("/support");

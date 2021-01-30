@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 
-import AwesomeSlider from "react-awesome-slider";
-
 import { connect } from "react-redux";
 import { deleteGalleryImage } from "../../../../store/actions/card";
+
+import Carousel from "react-bootstrap/Carousel";
+import { addWidthToImgUrl } from "../../../../services/ImgUrlParser";
 
 import MdTrash from "react-ionicons/lib/MdTrash";
 
@@ -25,24 +26,38 @@ class CardFormGallerySlider extends Component {
   }
 
   renderSliderImages = () => {
-    return this.state.photos.map((photo) => (
-      <div
-        key={photo.id}
-        style={{
-          backgroundImage: `url('${photo.url}')`,
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      >
-        <div
-          className="card-form-gallery-slider-image-delete-btn"
-          onClick={() => this.props.deleteGalleryImage(photo.id)}
-        >
-          <MdTrash color="#2ecc71" fontSize="24px" />
-        </div>
-      </div>
-    ));
+    return this.state.photos.map((photo) => {
+      return (
+        <Carousel.Item key={photo.id}>
+          <img
+            style={{
+              objectFit: "cover",
+              height: 300,
+              width: "100%",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+            }}
+            srcSet={`${addWidthToImgUrl(
+              photo.url,
+              320
+            )} 320w, ${addWidthToImgUrl(
+              photo.url,
+              640
+            )} 640w, ${addWidthToImgUrl(photo.url, 1280)} 1280w`}
+            sizes={"(max-width: 650px) 100vw, (min-width: 651px) 640px, 640px"}
+            alt="img"
+          />
+          <Carousel.Caption className="carousel-caption">
+            <div
+              className="card-form-gallery-slider-image-delete-btn"
+              onClick={() => this.props.deleteGalleryImage(photo.id)}
+            >
+              <MdTrash color="white" fontSize="24px" />
+            </div>
+          </Carousel.Caption>
+        </Carousel.Item>
+      );
+    });
   };
 
   render() {
@@ -52,9 +67,9 @@ class CardFormGallerySlider extends Component {
 
     return (
       <div className="card-form-gallery-slider-container">
-        <AwesomeSlider bullets={false}>
+        <Carousel style={{ height: "300px", width: "100%" }} interval={null}>
           {this.renderSliderImages()}
-        </AwesomeSlider>
+        </Carousel>
       </div>
     );
   }

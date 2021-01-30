@@ -1,55 +1,62 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCardPath } from "../../../../store/actions/card";
+
+import { formFields } from "../../../../constants/formFields";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
+import { Fragment } from "react";
 
-class CardFormCardPathInput extends Component {
-  state = {
-    pathToCard: this.props.pathToCard,
-  };
+const CardFormCardPathInput = () => {
+  const dispatch = useDispatch();
 
-  onCardPathChangeHandler = async (event) => {
-    await this.setState({
-      pathToCard: event.target.value,
-    });
+  const pathToCardRedux = useSelector(
+    (state) => state.card.cardData.pathToCard
+  );
+  const formErrors = useSelector((state) => state.formErrors);
 
-    this.props.setCardPath(this.state.pathToCard);
-  };
+  const [pathToCard, setPathToCard] = useState(pathToCardRedux);
+  const [error, setError] = useState(null);
 
-  render() {
-    return (
+  useEffect(() => {
+    const error = formErrors.find(
+      (formError) => formError.field === formFields.cardPath
+    );
+
+    if (error) {
+      setError(error);
+    } else {
+      setError(error);
+    }
+  }, [formErrors]);
+
+  useEffect(() => {
+    dispatch(setCardPath(pathToCard));
+  }, [pathToCard, dispatch]);
+
+  return (
+    <Fragment>
       <div className="card-form-path-to-card-container">
         <p className="primary-color card-form-path-to-card-url">
           https://www.hustlr.cards/
         </p>
         <input
           className="card-form-path-to-card-input"
+          style={{
+            border: error ? "solid 1px red" : null,
+          }}
           placeholder="your-link-here"
-          name="pathToCard"
-          value={this.state.pathToCard}
-          onChange={this.onCardPathChangeHandler}
+          value={pathToCard}
+          onChange={(event) => setPathToCard(event.target.value)}
         />
       </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    pathToCard: state.card.cardData.pathToCard,
-  };
+      {error ? (
+        <p className="card-form-path-error-text">{error.message}</p>
+      ) : null}
+    </Fragment>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCardPath: (pathToCard) => dispatch(setCardPath(pathToCard)),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CardFormCardPathInput);
+export default CardFormCardPathInput;

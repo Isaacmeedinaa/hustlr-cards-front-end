@@ -1,5 +1,6 @@
 .card-form-wrapper {
   width: 100%;
+  max-width: 640px;
   padding: 35px;
   border-radius: 5px;
   -webkit-box-shadow: 0px 5px 0px -1px rgba(0, 0, 0, 0.17);
@@ -58,6 +59,7 @@
   height: 180px;
   border-radius: 5px;
   background-color: #f1f1f1;
+  background-color: #505050a8;
   object-fit: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -110,10 +112,6 @@
   align-items: center;
   position: relative;
   margin-top: -65px;
-  object-fit: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   border: 6px solid #ffffff;
 }
 
@@ -266,9 +264,23 @@
   outline: none;
 }
 
-.card-form-description-count {
+.card-form-description-text-container {
   margin-top: 10px;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-form-description-error-text {
+  margin: 0;
+  width: 100%;
+  text-align: left;
+  color: red;
+}
+
+.card-form-description-count {
+  margin: 0;
   text-align: right;
 }
 
@@ -292,6 +304,14 @@
 
 .card-form-input-contact:focus {
   outline: none;
+}
+
+.card-form-email-error-text {
+  margin-top: 10px;
+  margin-bottom: 0 !important;
+  width: 100%;
+  text-align: right;
+  color: red;
 }
 
 .card-form-button {
@@ -410,8 +430,9 @@
 
 .card-form-product-service-text {
   margin-left: 10px;
+  margin-right: 10px;
   position: relative;
-  top: 18px;
+  top: 9px;
   font-size: 18px;
 }
 
@@ -638,17 +659,20 @@
   border-radius: 5px;
 }
 
+.carousel-caption {
+  left: 85% !important;
+}
+
 .card-form-gallery-slider-image-delete-btn {
   width: 35px;
   height: 35px;
-  background: rgba(46, 204, 113, 0.25);
+  background: #2ecc71;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  right: 10px;
-  top: 10px;
+  margin-top: 5px;
+  margin-bottom: 210px;
 }
 
 .card-form-gallery-slider-image-delete-btn:hover {
@@ -682,6 +706,14 @@
 
 .card-form-path-to-card-input:focus {
   outline: none;
+}
+
+.card-form-path-error-text {
+  margin-top: 10px;
+  margin-bottom: 0 !important;
+  width: 100%;
+  text-align: right;
+  color: red;
 }
 
 .card-form-offering-image {

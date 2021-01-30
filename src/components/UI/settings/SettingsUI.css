@@ -22,6 +22,7 @@
 .user-settings-header {
   text-align: start;
   font-size: 18px;
+  margin-bottom: 0 !important;
 }
 
 .settings-accordion-icon-container {
@@ -42,10 +43,13 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .personal-info-form-header-btn-container:hover {
   cursor: pointer;
+  background-color: rgba(112, 112, 112, 0.06);
 }
 
 .settings-form-animation-container {
@@ -59,6 +63,7 @@
   justify-content: center;
   width: 100%;
   max-width: 100%;
+  padding: 0 10px;
 }
 
 .personal-info-form-group-fields {
@@ -98,6 +103,27 @@
   outline: none;
 }
 
+.personal-info-input-error-texts-container {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.personal-info-input-error-text {
+  color: red;
+  width: 100%;
+  margin: 0;
+}
+
+#personalInfoInputErrorEmail {
+  text-align: left;
+}
+
+#personalInfoInputErrorUsername {
+  text-align: right;
+}
+
 .personal-info-form-button {
   margin-top: 30px;
   width: 100%;
@@ -110,6 +136,11 @@
   font-weight: 600;
 }
 
+.personal-info-form-button:hover {
+  background-color: #2bc16b !important;
+  cursor: pointer;
+}
+
 .personal-info-form-button:focus {
   outline: none;
 }
@@ -119,10 +150,13 @@
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .payment-method-form-header-btn-container:hover {
   cursor: pointer;
+  background-color: rgba(112, 112, 112, 0.06);
 }
 
 .payment-method-form-container {
@@ -132,6 +166,7 @@
   justify-content: center;
   width: 100%;
   max-width: 100%;
+  padding: 0 10px;
 }
 
 .payment-method-form-input {
@@ -226,6 +261,11 @@
   font-weight: 600;
 }
 
+.payment-method-button-form-button:hover {
+  background-color: #2bc16b !important;
+  cursor: pointer;
+}
+
 .payment-method-button-form-button:focus {
   outline: none;
 }
@@ -235,10 +275,13 @@
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.change-password-form-header-btn-container {
+.change-password-form-header-btn-container:hover {
   cursor: pointer;
+  background-color: rgba(112, 112, 112, 0.06);
 }
 
 .change-password-form-container {
@@ -248,6 +291,7 @@
   justify-content: center;
   width: 100%;
   max-width: 100%;
+  padding: 0 10px;
 }
 
 .change-password-form-input {
@@ -265,6 +309,13 @@
   outline: none;
 }
 
+.change-password-error-text {
+  color: red;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+}
+
 .change-password-form-button {
   margin-top: 30px;
   width: 100%;
@@ -274,6 +325,11 @@
   border-radius: 5px;
   text-align: center;
   font-weight: 600;
+}
+
+.change-password-form-button:hover {
+  background-color: #2bc16b !important;
+  cursor: pointer;
 }
 
 .change-password-form-button:focus {

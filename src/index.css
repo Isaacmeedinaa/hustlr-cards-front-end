@@ -1,31 +1,3 @@
-@font-face {
-  font-family: "Montserrat";
-  font-weight: 400;
-  src: local("Montserrat"),
-    url(./assets/fonts/montserrat/Montserrat-Regular.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Montserrat";
-  font-weight: 500;
-  src: local("Montserrat"),
-    url(./assets/fonts/montserrat/Montserrat-Medium.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Montserrat";
-  font-weight: 600;
-  src: local("Montserrat"),
-    url(./assets/fonts/montserrat/Montserrat-SemiBold.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Montserrat";
-  font-weight: 700;
-  src: local("Montserrat"),
-    url(./assets/fonts/montserrat/Montserrat-Bold.ttf) format("truetype");
-}
-
 html,
 body,
 #root {
@@ -33,7 +5,7 @@ body,
   height: 100% !important;
   width: 100%;
   max-width: 100%;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500;
   color: #2f3640;
   background-color: #f6f7fb;
@@ -41,6 +13,20 @@ body,
 
 body {
   overflow-x: hidden !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+label,
+div,
+span {
+  /* margin: 0 !important; */
+  font-family: "Poppins", sans-serif !important;
 }
 
 .dropdown-menu {

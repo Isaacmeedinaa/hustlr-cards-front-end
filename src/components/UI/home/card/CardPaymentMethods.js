@@ -27,7 +27,6 @@ const CardPaymentMethods = (props) => {
     ));
   };
 
-  console.log(props.paymentMethods.length);
   return (
     <Fragment>
       {!showHeader ||
