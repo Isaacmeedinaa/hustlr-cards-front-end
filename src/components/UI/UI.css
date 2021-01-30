@@ -45,7 +45,7 @@
   height: 60px;
   padding-right: 15px;
   padding-left: 15px;
-  z-index: 2000 !important;
+  z-index: 100 !important;
   position: fixed;
   bottom: 0px;
   display: none;

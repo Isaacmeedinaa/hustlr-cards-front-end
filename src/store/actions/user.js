@@ -471,6 +471,18 @@ export const userChangePasswordCode = (
 export const changePassword = (oldPassword, newPassword, confirmPassword) => {
   return (dispatch, getState) => {
     dispatch({ type: PASSWORD_IS_UPDATING });
+
+    if (!oldPassword.length === 0 || !oldPassword) {
+      dispatch({ type: CHANGE_PASSWORD_ERRORS });
+      const formErrors = [
+        { field: "OldPassword", message: "Current password cannot be empty." },
+      ];
+      dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+      dispatch({ type: PASSWORD_IS_NOT_UPDATING });
+      dispatch({ type: PASSWORD_CHANGED_UNSUCCESSFULLY });
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       dispatch({ type: CHANGE_PASSWORD_ERRORS });
       const formErrors = [
@@ -537,6 +549,7 @@ export const changePassword = (oldPassword, newPassword, confirmPassword) => {
         }
 
         dispatch({ type: CHANGE_PASSWORD_NO_ERRORS });
+        dispatch({ type: REMOVE_FORM_ERRORS });
         dispatch({ type: PASSWORD_CHANGED_SUCCESSFULLY });
         dispatch({ type: PASSWORD_IS_NOT_UPDATING });
       })
