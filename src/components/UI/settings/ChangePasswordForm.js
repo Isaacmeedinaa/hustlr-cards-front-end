@@ -88,6 +88,9 @@ const ChangePasswordForm = () => {
     event.preventDefault();
 
     dispatch(changePassword(password, newPassword, confirmPassword));
+    setPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
   };
 
   return (
