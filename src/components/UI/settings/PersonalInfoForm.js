@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { updateUser } from "../../../store/actions/user";
 import { hideUserUpdatedNotification } from "../../../store/actions/notifications/userUpdatedNotifications";
-
+import {clearFormErrors} from '../../../store/actions/formErrors/formErrors'
+import {clearPersonalInfoErrors} from '../../../store/actions/errors/personalInfoErrors'
 import { showToast } from "../Toasts";
 
 import { formFields } from "../../../constants/formFields";
@@ -27,7 +28,7 @@ const PersonalInfoForm = () => {
   const userUpdatedNotifications = useSelector(
     (state) => state.userUpdatedNotifications
   );
-  const personalInfoErrors = useSelector((state) => state.personalInfoErrors);
+  // const personalInfoErrors = useSelector((state) => state.personalInfoErrors);
 
   const formErrors = useSelector((state) => state.formErrors);
 
@@ -61,7 +62,12 @@ const PersonalInfoForm = () => {
     }
   }, [formErrors]);
 
-  useEffect(() => {}, [formErrors]);
+  useEffect(() => {
+    return () => {
+      dispatch(clearPersonalInfoErrors());
+      dispatch(clearFormErrors());
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     if (userUpdatedNotifications.show) {
@@ -103,13 +109,13 @@ const PersonalInfoForm = () => {
           className="personal-info-form-container"
           onSubmit={onPersonalInfoFormSubmitHandler}
         >
-          {personalInfoErrors ? (
+          {/* {personalInfoErrors ? (
             <div style={{ paddingTop: "20px" }}>
               <p className="card-form-error-text">
                 Please fix the errors below.
               </p>
             </div>
-          ) : null}
+          ) : null} */}
           <div className="personal-info-form-group-fields">
             <input
               className="personal-info-form-input-field"

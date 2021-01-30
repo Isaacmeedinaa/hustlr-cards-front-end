@@ -81,11 +81,10 @@ class HomeContainer extends Component {
       "phoneNumber",
       "pathToCard",
       "isPublic",
-      "themeId",
-      "industryId",
+      "themeId"
     ];
     const localStorageCard = JSON.parse(localStorage.getItem("card"));
-
+    
     if (this.props.cardData.id === null) return;
 
     for (const key in localStorageCard) {
@@ -103,7 +102,7 @@ class HomeContainer extends Component {
               return;
             }
           } else if (key === "industry") {
-            if (localStorageCard[key]?.id !== this.props.cardData[key]?.id) {
+            if (localStorageCard[key]?.id  !== this.props.cardData[key]?.id) {
               this.props.cardIsNotSaved();
               return;
             }

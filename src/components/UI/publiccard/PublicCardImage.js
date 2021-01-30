@@ -11,15 +11,22 @@ const PublicCardImage = (props) => {
   }
 
   return (
-    <img
-      src={addWidthToImgUrl(props.imgUrl, 130)}
-      style={{
-        marginTop:
-          !props.backdropImgUrl || props.backdropImgUrl === "" ? 30 : -65,
-      }}
-      className="public-card-image"
-      alt="profile_pic"
-    />
+        <img
+        className="public-card-image"
+        alt="profile_pic"
+        srcSet={`${addWidthToImgUrl(
+          props.imgUrl,
+          320
+        )} 320w, ${addWidthToImgUrl(
+          props.imgUrl,
+          640
+        )} 640w, ${addWidthToImgUrl(props.imgUrl, 1280)} 1280w`}
+        sizes={"130px"}
+        style={{
+          marginTop:
+            !props.backdropImgUrl || props.backdropImgUrl === "" ? 30 : -65,
+        }}
+      />
   );
 };
 

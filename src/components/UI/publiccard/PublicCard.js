@@ -32,7 +32,7 @@ class PublicCard extends Component {
               imgUrl={this.props.publicCard.imgUrl}
               backdropImgUrl={this.props.publicCard.backdropImgUrl}
             />
-            <PublicCardName title={this.props.publicCard.title} />
+            <PublicCardName title={this.props.publicCard.title} profileImgUrl={this.props.publicCard.imgUrl}/>
             <PublicCardSocialMedias
               phoneNumber={this.props.publicCard.phoneNumber}
               email={this.props.publicCard.email}
