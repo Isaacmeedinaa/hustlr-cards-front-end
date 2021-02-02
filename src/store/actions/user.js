@@ -48,6 +48,7 @@ import { REGISTER_ERRORS, REGISTER_NO_ERRORS } from "./errors/registerErrors";
 import { SET_FORM_ERRORS, REMOVE_FORM_ERRORS } from "./formErrors/formErrors";
 import { CARD_NO_ERRORS } from "./errors/cardErrors";
 import { closeAuthModal } from "./modals/authModal";
+import { openReviewModal } from "./modals/reviewModal";
 
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
@@ -114,6 +115,7 @@ export const userLogin = (username, password, history) => {
         }
 
         dispatch(closeAuthModal());
+        dispatch(openReviewModal());
       })
       .catch((err) => console.log(err));
   };
@@ -243,6 +245,7 @@ export const userRegister = (
           }
 
           dispatch(closeAuthModal());
+          dispatch(openReviewModal());
         })
         .catch((err) => {
           dispatch({ type: IS_NOT_REGISTERING });

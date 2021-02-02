@@ -30,6 +30,7 @@ import changePasswordCodeLoader from "./loaders/changePasswordCodeLoader";
 import contactMessageLoader from "./loaders/contactMessageLoader";
 import linkLoader from "./loaders/socialMediaLinkLoaders";
 import paymentMethodsLoader from "./loaders/paymentMethodsLoader";
+import reviewLoader from "./loaders/reviewLoader";
 
 // Errors
 import errors from "./errors";
@@ -62,6 +63,7 @@ import socialMediaModal from "./modals/socialMediaModal";
 import paymentMethodsModal from "./modals/paymentMethodsModal";
 import offeringModal from "./modals/offeringModal";
 import authModal from "./modals/authModal";
+import reviewModal from "./modals/reviewModal";
 
 // Local Storage
 import cardLinkLocalStorage from "./localStorage/cardLinkLocalStorage";
@@ -104,6 +106,7 @@ const rootReducer = combineReducers({
   contactMessageLoader,
   linkLoader,
   paymentMethodsLoader,
+  reviewLoader,
   // Errors
   errors,
   cardErrors,
@@ -133,6 +136,7 @@ const rootReducer = combineReducers({
   paymentMethodsModal,
   offeringModal,
   authModal,
+  reviewModal,
   // Local Storage
   cardLinkLocalStorage,
   offeringLocalStorage,

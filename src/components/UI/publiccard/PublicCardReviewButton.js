@@ -2,6 +2,7 @@ import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { openAuthModal } from "../../../store/actions/modals/authModal";
+import { openReviewModal } from "../../../store/actions/modals/reviewModal";
 
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
@@ -15,6 +16,8 @@ const PublicCardReviewButton = (props) => {
   const onReviewButtonClick = () => {
     if (!auth.isAuthenticated || !user) {
       dispatch(openAuthModal());
+    } else if (auth.isAuthenticated || user !== null) {
+      dispatch(openReviewModal());
     }
   };
 

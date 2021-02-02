@@ -10,6 +10,7 @@ import PublicCard from "../UI/publiccard/PublicCard";
 import PrivateCard from "../UI/publiccard/PrivateCard";
 import PublicCardViewImagesModal from "../UI/publiccard/modals/PublicCardViewImagesModal";
 import AuthModal from "./Auth Pages/modals/AuthModal";
+import ReviewModal from "../UI/reviews/modals/ReviewModal";
 
 import "./pages.css";
 
@@ -89,7 +90,9 @@ class PublicCardPage extends Component {
         />
         {!this.props.auth.isAuthenticated || !this.props.user ? (
           <AuthModal />
-        ) : null}
+        ) : (
+          <ReviewModal />
+        )}
 
         {!this.props.publicCard.isPublic ? (
           <PrivateCard />
