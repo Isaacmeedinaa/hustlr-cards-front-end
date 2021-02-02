@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import PublicCardImage from "./PublicCardImage";
 import PublicCardBackdropImage from "./PublicCardBackdropImage";
 import PublicCardName from "./PublicCardName";
+import PublicCardRatings from "./PublicCardRatings";
 import PublicCardSocialMedias from "./PublicCardSocialMedias";
 import PublicCardBadges from "./PublicCardBadges";
 import PublicCardDescription from "./PublicCardDescription";
@@ -32,7 +33,10 @@ class PublicCard extends Component {
               imgUrl={this.props.publicCard.imgUrl}
               backdropImgUrl={this.props.publicCard.backdropImgUrl}
             />
-            <PublicCardName title={this.props.publicCard.title} profileImgUrl={this.props.publicCard.imgUrl}/>
+            <PublicCardName
+              title={this.props.publicCard.title}
+              profileImgUrl={this.props.publicCard.imgUrl}
+            />
             <PublicCardSocialMedias
               phoneNumber={this.props.publicCard.phoneNumber}
               email={this.props.publicCard.email}
@@ -43,6 +47,10 @@ class PublicCard extends Component {
             <PublicCardBadges
               industry={this.props.publicCard.industry}
               location={this.props.publicCard.location}
+              primaryColor={this.props.publicCard.primaryColor}
+              transparentColor={this.props.publicCard.transparentColor}
+            />
+            <PublicCardRatings
               primaryColor={this.props.publicCard.primaryColor}
               transparentColor={this.props.publicCard.transparentColor}
             />

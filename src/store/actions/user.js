@@ -47,6 +47,7 @@ import { LOGIN_ERRORS, LOGIN_NO_ERRORS } from "./errors/loginErrors";
 import { REGISTER_ERRORS, REGISTER_NO_ERRORS } from "./errors/registerErrors";
 import { SET_FORM_ERRORS, REMOVE_FORM_ERRORS } from "./formErrors/formErrors";
 import { CARD_NO_ERRORS } from "./errors/cardErrors";
+import { closeAuthModal } from "./modals/authModal";
 
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
@@ -106,9 +107,13 @@ export const userLogin = (username, password, history) => {
         dispatch(fetchCard(userId));
         dispatch({ type: USER_LOGIN, user: json.user });
 
-        history.push("/home");
-
         dispatch({ type: IS_NOT_LOGGING_IN });
+
+        if (history) {
+          history.push("/home");
+        }
+
+        dispatch(closeAuthModal());
       })
       .catch((err) => console.log(err));
   };
@@ -158,6 +163,7 @@ export const userAutoLogin = () => {
 export const userRegister = (
   email,
   username,
+  isHustlr,
   password,
   confirmPassword,
   history
@@ -166,6 +172,7 @@ export const userRegister = (
     const registerData = {
       email: email,
       username: username,
+      isHustlr: isHustlr,
       password: password,
       confirmPassword: confirmPassword,
     };
@@ -229,9 +236,13 @@ export const userRegister = (
           dispatch(fetchCard(userId));
           dispatch({ type: USER_REGISTER, user: user.user });
 
-          history.push("/home");
-
           dispatch({ type: IS_NOT_REGISTERING });
+
+          if (history) {
+            history.push("/home");
+          }
+
+          dispatch(closeAuthModal());
         })
         .catch((err) => {
           dispatch({ type: IS_NOT_REGISTERING });
@@ -257,7 +268,7 @@ export const userLogout = (history) => {
   };
 };
 
-export const updateUser = (firstName, lastName, username, email) => {
+export const updateUser = (firstName, lastName, username, email, isHustlr) => {
   return (dispatch) => {
     const userToken = localStorage.getItem("userToken");
     const userId = localStorage.getItem("userId");
@@ -268,6 +279,7 @@ export const updateUser = (firstName, lastName, username, email) => {
       lastName: lastName,
       username: username,
       email: email,
+      isHustlr: isHustlr,
     };
 
     const reqObj = {
@@ -301,6 +313,7 @@ export const updateUser = (firstName, lastName, username, email) => {
           lastName: user.lastName,
           username: user.username,
           email: user.email,
+          isHustlr: user.isHustlr,
         };
         dispatch({ type: USER_UPDATED, user: userObj });
         dispatch({ type: PERSONAL_INFO_NO_ERRORS });

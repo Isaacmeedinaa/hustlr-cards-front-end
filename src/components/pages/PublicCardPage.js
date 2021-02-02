@@ -9,6 +9,7 @@ import Modal from "react-modal";
 import PublicCard from "../UI/publiccard/PublicCard";
 import PrivateCard from "../UI/publiccard/PrivateCard";
 import PublicCardViewImagesModal from "../UI/publiccard/modals/PublicCardViewImagesModal";
+import AuthModal from "./Auth Pages/modals/AuthModal";
 
 import "./pages.css";
 
@@ -86,6 +87,10 @@ class PublicCardPage extends Component {
           onPreviousButtonClick={this.onPreviousButtonClick}
           clearImagesData={this.clearImagesData}
         />
+        {!this.props.auth.isAuthenticated || !this.props.user ? (
+          <AuthModal />
+        ) : null}
+
         {!this.props.publicCard.isPublic ? (
           <PrivateCard />
         ) : (
@@ -106,6 +111,8 @@ const mapStateToProps = (state) => {
     publicCardLoader: state.publicCardLoader,
     publicCard: state.publicCard,
     viewImageModal: state.viewImageModal,
+    auth: state.auth,
+    user: state.user,
   };
 };
 

@@ -61,6 +61,7 @@ import viewImagesModal from "./modals/viewImagesModal";
 import socialMediaModal from "./modals/socialMediaModal";
 import paymentMethodsModal from "./modals/paymentMethodsModal";
 import offeringModal from "./modals/offeringModal";
+import authModal from "./modals/authModal";
 
 // Local Storage
 import cardLinkLocalStorage from "./localStorage/cardLinkLocalStorage";
@@ -131,6 +132,7 @@ const rootReducer = combineReducers({
   socialMediaModal,
   paymentMethodsModal,
   offeringModal,
+  authModal,
   // Local Storage
   cardLinkLocalStorage,
   offeringLocalStorage,
