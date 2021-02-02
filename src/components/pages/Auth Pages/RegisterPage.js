@@ -92,7 +92,9 @@ const RegisterPage = (props) => {
 
     const history = props.history;
 
-    dispatch(userRegister(email, username, password, confirmPassword, history));
+    dispatch(
+      userRegister(email, username, true, password, confirmPassword, history)
+    );
   };
 
   return (

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { updateUser } from "../../../store/actions/user";
 import { hideUserUpdatedNotification } from "../../../store/actions/notifications/userUpdatedNotifications";
-import {clearFormErrors} from '../../../store/actions/formErrors/formErrors'
-import {clearPersonalInfoErrors} from '../../../store/actions/errors/personalInfoErrors'
+import { clearFormErrors } from "../../../store/actions/formErrors/formErrors";
+import { clearPersonalInfoErrors } from "../../../store/actions/errors/personalInfoErrors";
 import { showToast } from "../Toasts";
 
 import { formFields } from "../../../constants/formFields";
@@ -24,6 +24,7 @@ const PersonalInfoForm = () => {
   const lastNameRedux = useSelector((state) => state.user.lastName);
   const emailRedux = useSelector((state) => state.user.email);
   const usernameRedux = useSelector((state) => state.user.username);
+  const isHustlrRedux = useSelector((state) => state.user.isHustlr);
   const userUpdatingLoader = useSelector((state) => state.userUpdatingLoader);
   const userUpdatedNotifications = useSelector(
     (state) => state.userUpdatedNotifications
@@ -36,6 +37,7 @@ const PersonalInfoForm = () => {
   const [lastName, setLastName] = useState(lastNameRedux);
   const [email, setEmail] = useState(emailRedux);
   const [username, setUsername] = useState(usernameRedux);
+  const [isHustlr] = useState(isHustlrRedux);
   const [showForm, setShowForm] = useState(true);
   const [usernameError, setUsernameError] = useState(null);
   const [emailError, setEmailError] = useState(null);
@@ -66,7 +68,7 @@ const PersonalInfoForm = () => {
     return () => {
       dispatch(clearPersonalInfoErrors());
       dispatch(clearFormErrors());
-    }
+    };
   }, [dispatch]);
 
   useEffect(() => {
@@ -86,7 +88,7 @@ const PersonalInfoForm = () => {
   const onPersonalInfoFormSubmitHandler = (event) => {
     event.preventDefault();
 
-    dispatch(updateUser(firstName, lastName, username, email));
+    dispatch(updateUser(firstName, lastName, username, email, isHustlr));
   };
 
   return (

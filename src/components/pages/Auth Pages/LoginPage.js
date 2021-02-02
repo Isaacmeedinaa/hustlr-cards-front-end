@@ -60,12 +60,12 @@ class LoginPage extends Component {
       <div className="secondary-light-bg auth-container">
         <div className="mobile-full-width">
           <AuthCard>
-          <div className="auth-info">
-            <Link to="/">
-              <h1 className="primary-color app-name">hustlr.cards</h1>
-            </Link>
-            <h5 className="auth-text">Login to continue</h5>
-          </div>
+            <div className="auth-info">
+              <Link to="/">
+                <h1 className="primary-color app-name">hustlr.cards</h1>
+              </Link>
+              <h5 className="auth-text">Login to continue</h5>
+            </div>
             {this.props.loginErrors.length !== 0
               ? this.props.loginErrors.map((error, index) => (
                   <p key={index} className="auth-error-text">
@@ -134,7 +134,7 @@ const mapDispatchToProps = (dispatch) => {
     userLogin: (username, password, history) =>
       dispatch(userLogin(username, password, history)),
     userAutoLogin: (history) => dispatch(userAutoLogin(history)),
-    clearLoginErrors: () => dispatch({type: LOGIN_NO_ERRORS}),
+    clearLoginErrors: () => dispatch({ type: LOGIN_NO_ERRORS }),
   };
 };
 

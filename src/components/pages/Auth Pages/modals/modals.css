@@ -1,0 +1,245 @@
+.auth-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 400px;
+  padding: 15px 15px 15px 15px;
+  border-radius: 5px;
+  border-bottom: 6px solid #cdcdd2;
+}
+
+.auth-modal:focus {
+  outline: none;
+}
+
+.auth-modal-header {
+  width: 100%;
+}
+
+.auth-modal-title {
+  float: left;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+  top: 6px !important;
+}
+
+.auth-modal-btn {
+  float: right;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.auth-modal-btn:hover {
+  cursor: pointer;
+  background-color: rgba(112, 112, 112, 0.06);
+}
+
+.auth-modal-header-btn:focus {
+  outline: none;
+}
+
+.login-modal-form-errors {
+  margin-top: 30px;
+  text-align: center;
+  color: red;
+}
+
+.login-modal-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-modal-form-input {
+  margin-top: 30px;
+  width: 100%;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.login-modal-form-input:focus {
+  outline: none;
+}
+
+.login-modal-form-login-btn {
+  margin-top: 30px;
+  padding: 8px 0px 8px 0px;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
+  color: white;
+  background-color: #2ecc71;
+}
+
+.login-modal-form-login-btn:hover {
+  background-color: #2bc16b;
+}
+
+.login-modal-form-login-btn:focus {
+  outline: none;
+}
+
+.login-modal-form-question-container {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-modal-form-question {
+  font-size: 13.5px;
+  margin-right: 4px;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.login-modal-form-link {
+  font-size: 14px;
+  margin-left: 4px;
+  color: #2ecc71;
+  font-weight: 600;
+}
+
+.login-modal-form-link:hover {
+  color: #2bc16b;
+  text-decoration: none;
+}
+
+.login-modal-form-register-text {
+  font-size: 14px;
+  margin-left: 4px;
+  color: #2ecc71;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-modal-form-register-text:hover {
+  color: #2bc16b;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.register-modal-form-errors {
+  margin-top: 30px;
+  text-align: center;
+  color: red;
+}
+
+.register-modal-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-modal-form-error-text {
+  margin-top: 10px;
+  color: red;
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+.register-modal-form-input {
+  margin-top: 30px;
+  width: 100%;
+  height: 40px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.register-modal-form-input:focus {
+  outline: none;
+}
+
+.register-modal-form-register-button {
+  margin-top: 30px;
+  padding: 8px 0px 8px 0px;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
+  color: white;
+  background-color: #2ecc71;
+}
+
+.register-modal-form-register-button:hover {
+  background-color: #2bc16b;
+}
+
+.register-modal-form-register-button:focus {
+  outline: none;
+}
+
+.register-modal-form-question-container {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.register-modal-form-question {
+  font-size: 13.5px;
+  margin-right: 4px;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.register-modal-form-register-text {
+  font-size: 14px;
+  margin-left: 4px;
+  color: #2ecc71;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.register-modal-form-register-text:hover {
+  color: #2bc16b;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 450px) {
+  .login-modal {
+    width: 95%;
+    padding: 20px 18px;
+  }
+
+  .login-modal-form-question-container {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .login-modal-form-question {
+    margin-right: 0px;
+  }
+
+  .login-modal-form-register-text {
+    margin-left: 0px;
+  }
+
+  .login-modal-form-link {
+    margin-left: 0px;
+  }
+
+  .register-modal-form-question-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .register-modal-form-question {
+    margin-right: 0px;
+  }
+
+  .register-modal-form-register-text {
+    margin-left: 0px;
+  }
+}
