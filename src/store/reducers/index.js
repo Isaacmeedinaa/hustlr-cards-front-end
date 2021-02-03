@@ -42,6 +42,9 @@ import changePasswordErrors from "./errors/changePasswordErrors";
 import forgotPasswordErrors from "./errors/forgotPasswordErrors";
 import changePasswordCodeErrors from "./errors/changePasswordCodeErrors";
 
+// Auth Errors
+import reviewAuthError from "./authErrors/reviewAuthError";
+
 // Notifications
 import changePasswordNotifications from "./notifications/changePasswordNotifications";
 import cardSavedNotification from "./notifications/cardSavedNotifications";
@@ -116,6 +119,8 @@ const rootReducer = combineReducers({
   changePasswordErrors,
   forgotPasswordErrors,
   changePasswordCodeErrors,
+  // Auth Errors
+  reviewAuthError,
   // Notifications
   changePasswordNotifications,
   cardSavedNotification,

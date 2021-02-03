@@ -40,6 +40,12 @@
   outline: none;
 }
 
+.review-modal-error-text {
+  margin-top: 20px;
+  margin-bottom: 0px;
+  color: red;
+}
+
 .review-modal-ratings-container {
   margin-top: 30px;
   width: 100%;
@@ -49,7 +55,6 @@
 }
 
 .review-modal-rating-container {
-  margin-top: 25px;
   padding: 10px;
   border-radius: 5px;
   display: flex;
