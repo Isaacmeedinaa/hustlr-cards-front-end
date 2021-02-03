@@ -15,6 +15,12 @@ import {
   REMOVE_REVIEW_AUTH_ERROR,
 } from "./authErrors/reviewAuthError";
 
+// notifications
+import {
+  REVIEW_CREATED_SUCCESSFULLY,
+  REVIEW_CREATED_UNSUCCESSFULLY,
+} from "./notifications/reviewNotifications";
+
 export const CREATE_REVIEW = "CREATE_REVIEW";
 export const UPDATE_REVIEW = "UPDATE_REVIEW";
 export const SET_REVIEW = "SET_REVIEW";
@@ -49,15 +55,18 @@ export const createReview = (description, rating, userId, cardId) => {
         if (review.code) {
           dispatch({ type: REVIEW_IS_NOT_LOADING });
           dispatch({ type: SET_REVIEW_AUTH_ERROR, error: review.message });
+          dispatch({ type: REVIEW_CREATED_UNSUCCESSFULLY });
           return;
         }
 
         dispatch({ type: REVIEW_IS_NOT_LOADING });
         dispatch({ type: REMOVE_REVIEW_AUTH_ERROR });
+        dispatch({ type: REVIEW_CREATED_SUCCESSFULLY });
         dispatch(closeReviewModal());
       })
       .catch((err) => {
         dispatch({ type: REVIEW_IS_NOT_LOADING });
+        dispatch({ type: REVIEW_CREATED_UNSUCCESSFULLY });
       });
   };
 };

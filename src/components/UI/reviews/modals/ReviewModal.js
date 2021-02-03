@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { closeReviewModal } from "../../../../store/actions/modals/reviewModal";
 import { createReview } from "../../../../store/actions/reviews";
 import { clearReviewAuthError } from "../../../../store/actions/authErrors/reviewAuthError";
+import { hideReviewCreatedNotification } from "../../../../store/actions/notifications/reviewNotifications";
+
+import { showToast } from "../../../UI/Toasts";
 
 import Modal from "react-modal";
 import Loader from "react-loader-spinner";
@@ -20,11 +23,22 @@ const ReviewModal = () => {
   const reviewModal = useSelector((state) => state.reviewModal);
   const reviewLoader = useSelector((state) => state.reviewLoader);
   const reviewAuthError = useSelector((state) => state.reviewAuthError);
+  const reviewNotifications = useSelector((state) => state.reviewNotifications);
   const userId = useSelector((state) => state.user.id);
   const cardId = useSelector((state) => state.publicCard.id);
 
   const [rating, setRating] = useState(null);
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (reviewNotifications.created.show) {
+      showToast(
+        reviewNotifications.created.success,
+        reviewNotifications.created.message
+      );
+      dispatch(hideReviewCreatedNotification());
+    }
+  }, [dispatch, reviewNotifications]);
 
   const onReviewModalClose = () => {
     dispatch(closeReviewModal());
