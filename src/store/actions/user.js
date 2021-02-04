@@ -166,7 +166,10 @@ export const userLogin = (username, password, history) => {
         dispatch(closeAuthModal());
         dispatch(openReviewModal());
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        dispatch({ type: SET_IS_NOT_AUTHENTICATED });
+        dispatch({ type: IS_NOT_LOGGING_IN });
+      });
   };
 };
 
