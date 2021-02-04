@@ -14,14 +14,17 @@ const CardFormDescriptionInput = () => {
   const descriptionRedux = useSelector(
     (state) => state.card.cardData.description
   );
-  const formErrors = useSelector((state) => state.formErrors);
+  const cardValidationErrors = useSelector(
+    (state) => state.cardValidationErrors
+  );
 
   const [description, setDescription] = useState(descriptionRedux);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const error = formErrors.find(
-      (formError) => formError.field === formFields.cardDescription
+    const error = cardValidationErrors.find(
+      (validationErrors) =>
+        validationErrors.field === formFields.cardDescription
     );
 
     if (error) {
@@ -29,7 +32,7 @@ const CardFormDescriptionInput = () => {
     } else {
       setError(error);
     }
-  }, [formErrors]);
+  }, [cardValidationErrors]);
 
   useEffect(() => {
     dispatch(setCardDescription(description));

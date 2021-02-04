@@ -81,10 +81,10 @@ class HomeContainer extends Component {
       "phoneNumber",
       "pathToCard",
       "isPublic",
-      "themeId"
+      "themeId",
     ];
     const localStorageCard = JSON.parse(localStorage.getItem("card"));
-    
+
     if (this.props.cardData.id === null) return;
 
     for (const key in localStorageCard) {
@@ -102,7 +102,7 @@ class HomeContainer extends Component {
               return;
             }
           } else if (key === "industry") {
-            if (localStorageCard[key]?.id  !== this.props.cardData[key]?.id) {
+            if (localStorageCard[key]?.id !== this.props.cardData[key]?.id) {
               this.props.cardIsNotSaved();
               return;
             }
@@ -116,7 +116,10 @@ class HomeContainer extends Component {
         }
       }
     }
-    if (this.props.formErrors.length > 0) {
+    if (
+      this.props.cardValidationErrors.length > 0 ||
+      this.props.cardAuthError
+    ) {
       this.props.cardIsNotSaved();
       return;
     }
@@ -216,7 +219,8 @@ const mapStateToProps = (state) => {
     imageCropperModal: state.imageCropperModal,
     backdropImageCropperModal: state.backdropImageCropperModal,
     offeringModal: state.offeringModal,
-    formErrors: state.formErrors,
+    cardAuthError: state.cardAuthError,
+    cardValidationErrors: state.cardValidationErrors,
   };
 };
 

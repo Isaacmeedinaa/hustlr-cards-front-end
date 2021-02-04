@@ -1,0 +1,9 @@
+export const SET_CHANGE_PASSWORD_AUTH_ERROR = "SET_CHANGE_PASSWORD_AUTH_ERROR";
+export const REMOVE_CHANGE_PASSWORD_AUTH_ERROR =
+  "REMOVE_CHANGE_PASSWORD_AUTH_ERROR";
+
+export const clearChangePasswordAuthError = () => {
+  return {
+    type: REMOVE_CHANGE_PASSWORD_AUTH_ERROR,
+  };
+};

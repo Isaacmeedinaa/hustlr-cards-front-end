@@ -2,9 +2,6 @@ import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { closeAuthModal } from "../../../../store/actions/modals/authModal";
-import { clearLoginErrors } from "../../../../store/actions/errors/loginErrors";
-import { clearRegisterErrors } from "../../../../store/actions/errors/registerErrors";
-import { clearFormErrors } from "../../../../store/actions/formErrors/formErrors";
 
 import Modal from "react-modal";
 
@@ -25,10 +22,6 @@ const AuthModal = () => {
   const [showRegisterForm, setShowRegisterForm] = useState(false);
 
   const onAuthModalClose = () => {
-    dispatch(clearLoginErrors());
-    dispatch(clearRegisterErrors());
-    dispatch(clearFormErrors());
-
     setShowRegisterForm(false);
     dispatch(closeAuthModal());
   };

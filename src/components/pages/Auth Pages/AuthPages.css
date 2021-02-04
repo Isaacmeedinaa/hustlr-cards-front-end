@@ -177,7 +177,21 @@
   text-decoration: none;
 }
 
+.login-error-text {
+  margin-top: 10px;
+  color: red;
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
 .register-error-text {
+  margin-top: 10px;
+  color: red;
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+.forgot-password-error-text {
   margin-top: 10px;
   color: red;
   margin-bottom: 0;

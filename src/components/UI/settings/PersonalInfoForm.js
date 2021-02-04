@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { updateUser } from "../../../store/actions/user";
 import { hideUserUpdatedNotification } from "../../../store/actions/notifications/userUpdatedNotifications";
-import { clearFormErrors } from "../../../store/actions/formErrors/formErrors";
-import { clearPersonalInfoErrors } from "../../../store/actions/errors/personalInfoErrors";
+import { clearUpdateUserAuthError } from "../../../store/actions/authErrors/updateUserAuthError";
+import { clearUpdateUserValidationErrors } from "../../../store/actions/validationErrors/updateUserValidationErrors";
 import { showToast } from "../Toasts";
 
 import { formFields } from "../../../constants/formFields";
@@ -29,9 +29,10 @@ const PersonalInfoForm = () => {
   const userUpdatedNotifications = useSelector(
     (state) => state.userUpdatedNotifications
   );
-  // const personalInfoErrors = useSelector((state) => state.personalInfoErrors);
-
-  const formErrors = useSelector((state) => state.formErrors);
+  const updateUserAuthError = useSelector((state) => state.userUpdateAuthError);
+  const updateUserValidationErrors = useSelector(
+    (state) => state.updateUserValidationErrors
+  );
 
   const [firstName, setFirstName] = useState(firstNameRedux);
   const [lastName, setLastName] = useState(lastNameRedux);
@@ -43,8 +44,9 @@ const PersonalInfoForm = () => {
   const [emailError, setEmailError] = useState(null);
 
   useEffect(() => {
-    const usernameError = formErrors.find(
-      (error) => error.field === formFields.personalInfoUsername
+    const usernameError = updateUserValidationErrors.find(
+      (validationError) =>
+        validationError.field === formFields.personalInfoUsername
     );
 
     if (usernameError) {
@@ -53,8 +55,9 @@ const PersonalInfoForm = () => {
       setUsernameError(usernameError);
     }
 
-    const emailError = formErrors.find(
-      (error) => error.field === formFields.personalInfoEmail
+    const emailError = updateUserValidationErrors.find(
+      (validationError) =>
+        validationError.field === formFields.personalInfoEmail
     );
 
     if (emailError) {
@@ -62,28 +65,24 @@ const PersonalInfoForm = () => {
     } else {
       setEmailError(emailError);
     }
-  }, [formErrors]);
+  }, [updateUserValidationErrors]);
 
   useEffect(() => {
     return () => {
-      dispatch(clearPersonalInfoErrors());
-      dispatch(clearFormErrors());
+      dispatch(clearUpdateUserAuthError());
+      dispatch(clearUpdateUserValidationErrors());
     };
   }, [dispatch]);
 
   useEffect(() => {
     if (userUpdatedNotifications.show) {
-      displayNotification(
+      showToast(
         userUpdatedNotifications.success,
         userUpdatedNotifications.message
       );
       dispatch(hideUserUpdatedNotification());
     }
   }, [userUpdatedNotifications, dispatch]);
-
-  const displayNotification = (success, message) => {
-    showToast(success, message);
-  };
 
   const onPersonalInfoFormSubmitHandler = (event) => {
     event.preventDefault();
@@ -111,13 +110,18 @@ const PersonalInfoForm = () => {
           className="personal-info-form-container"
           onSubmit={onPersonalInfoFormSubmitHandler}
         >
-          {/* {personalInfoErrors ? (
+          {updateUserAuthError ? (
+            <div style={{ paddingTop: "20px" }}>
+              <p className="card-form-error-text">{updateUserAuthError}</p>
+            </div>
+          ) : null}
+          {updateUserValidationErrors.length > 0 ? (
             <div style={{ paddingTop: "20px" }}>
               <p className="card-form-error-text">
                 Please fix the errors below.
               </p>
             </div>
-          ) : null} */}
+          ) : null}
           <div className="personal-info-form-group-fields">
             <input
               className="personal-info-form-input-field"

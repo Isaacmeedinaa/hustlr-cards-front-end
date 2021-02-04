@@ -1,7 +1,7 @@
 import {
   SET_FORM_ERRORS,
   REMOVE_FORM_ERRORS,
-} from "../../actions/formErrors/formErrors";
+} from "../../actions/validationErrors/formErrors";
 
 const formErrors = (state = [], action) => {
   switch (action.type) {

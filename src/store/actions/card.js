@@ -103,7 +103,6 @@ import {
   PAYMENT_METHOD_DELETED_UNSUCCESSFULLY,
 } from "./notifications/paymentMethodsNotifications";
 
-import { CARD_ERRORS, CARD_NO_ERRORS } from "./errors/cardErrors";
 import { CARD_IS_SAVED, CARD_IS_NOT_SAVED } from "./cardSaved";
 import CardLocation from "../../models/cardLocation";
 
@@ -118,7 +117,26 @@ import {
   OFFERING_IMAGES_ARE_PROGRESSING,
   OFFERING_IMAGES_ARE_NOT_PROGRESSING,
 } from "./progress/offeringImagesProgress";
-import { SET_FORM_ERRORS, REMOVE_FORM_ERRORS } from "./formErrors/formErrors";
+
+// Auth Errors
+import {
+  SET_CARD_AUTH_ERROR,
+  REMOVE_CARD_AUTH_ERROR,
+} from "./authErrors/cardAuthError";
+import {
+  SET_OFFERING_AUTH_ERROR,
+  REMOVE_OFFERING_AUTH_ERROR,
+} from "./authErrors/offeringAuthError";
+
+// Validation Errors
+import {
+  SET_CARD_VALIDATION_ERRORS,
+  REMOVE_CARD_VALIDATION_ERRORS,
+} from "./validationErrors/cardValidationErrors";
+import {
+  SET_OFFERING_VALIDATION_ERRORS,
+  REMOVE_OFFERING_VALIDATION_ERRORS,
+} from "./validationErrors/offeringValidationErrors";
 
 export const FETCH_CARD = "FETCH_CARD";
 export const SET_CARD = "SET_CARD";
@@ -296,24 +314,35 @@ export const saveCard = (cardId) => {
     };
 
     fetch(`${API_BASE_URL}/cards/${cardId}`, reqObj)
-      .then((resp) => {
-        return resp.json();
-      })
+      .then((resp) => resp.json())
       .then((data) => {
-        if (!data) {
-          return;
-        }
-        if (data.errors) {
-          dispatch({ type: CARD_ERRORS });
-
-          const formErrors = data.errors.map((error) => error);
-          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
-
-          dispatch({ type: CARD_IS_NOT_UPDATING });
+        // Auth Errors
+        if (data.code) {
+          dispatch({ type: REMOVE_CARD_VALIDATION_ERRORS });
+          dispatch({ type: SET_CARD_AUTH_ERROR, error: data.message });
           dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
           dispatch({ type: CARD_IS_NOT_SAVED });
+          dispatch({ type: CARD_IS_NOT_UPDATING });
           return;
         }
+
+        // Validation Errors
+        if (data.errors) {
+          dispatch({ type: REMOVE_CARD_AUTH_ERROR });
+          const validationErrors = data.errors.map((error) => error);
+          dispatch({
+            type: SET_CARD_VALIDATION_ERRORS,
+            validationErrors: validationErrors,
+          });
+          dispatch({ type: CARD_SAVE_UNSUCCESSFUL });
+          dispatch({ type: CARD_IS_NOT_SAVED });
+          dispatch({ type: CARD_IS_NOT_UPDATING });
+          return;
+        }
+
+        dispatch({ type: REMOVE_CARD_AUTH_ERROR });
+        dispatch({ type: REMOVE_CARD_VALIDATION_ERRORS });
+
         localStorage.removeItem("card");
         localStorage.setItem("card", JSON.stringify(data));
 
@@ -322,10 +351,8 @@ export const saveCard = (cardId) => {
           dispatch(setFullCardLocation(data.location));
         }
 
-        dispatch({ type: CARD_SAVED_SUCCESSFULLY });
         dispatch({ type: CARD_IS_SAVED });
-        dispatch({ type: CARD_NO_ERRORS });
-        dispatch({ type: REMOVE_FORM_ERRORS });
+        dispatch({ type: CARD_SAVED_SUCCESSFULLY });
         dispatch({ type: CARD_IS_NOT_UPDATING });
       })
       .catch((err) => {
@@ -380,7 +407,6 @@ export const uploadBackdropImage = (reqImgData, cardId) => {
         if (!resp.ok) {
           dispatch({ type: CARD_BACKDROP_IMAGE_IS_NOT_UPLOADING });
           resp.json().then((error) => {
-            dispatch({ type: CARD_ERRORS, errors: [error] });
             dispatch({ type: BACKDROP_IMAGE_UPLOADED_UNSUCCESSFULLY });
           });
           return;
@@ -391,7 +417,6 @@ export const uploadBackdropImage = (reqImgData, cardId) => {
         if (!data) {
           return;
         }
-        dispatch({ type: CARD_NO_ERRORS });
         dispatch({
           type: UPLOAD_BACKDROP_IMAGE,
           backdropImgUrl: data.url,
@@ -458,7 +483,6 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
         if (!resp.ok) {
           dispatch({ type: CARD_IMAGE_IS_NOT_UPLOADING });
           resp.json().then((error) => {
-            dispatch({ type: CARD_ERRORS, errors: [error] });
             dispatch({ type: PROFILE_IMAGE_UPLOADED_UNSUCCESSFULLY });
           });
           return;
@@ -469,7 +493,6 @@ export const uploadBusinessProfilePicture = (reqImgData, cardId) => {
         if (!data) {
           return;
         }
-        dispatch({ type: CARD_NO_ERRORS });
         dispatch({
           type: UPLOAD_BUSINESS_PROFILE_PICTURE,
           imgUrl: data.url,
@@ -656,13 +679,30 @@ export const updateOffering = (
     fetch(`${API_BASE_URL}/offerings/${id}`, reqObj)
       .then((resp) => resp.json())
       .then((offering) => {
+        // Auth Errors
+        if (offering.code) {
+          dispatch({ type: REMOVE_OFFERING_VALIDATION_ERRORS });
+          dispatch({ type: SET_OFFERING_AUTH_ERROR, error: offering.message });
+          dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
+          return;
+        }
+
+        // Validation Errors
         if (offering.errors) {
-          const formErrors = offering.errors.map((error) => error);
-          dispatch({ type: SET_FORM_ERRORS, formErrors: formErrors });
+          dispatch({ type: REMOVE_OFFERING_AUTH_ERROR });
+          const validationErrors = offering.errors.map((error) => error);
+          dispatch({
+            type: SET_OFFERING_VALIDATION_ERRORS,
+            validationErrors: validationErrors,
+          });
 
           dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
           return;
         }
+
+        dispatch({ type: REMOVE_OFFERING_AUTH_ERROR });
+        dispatch({ type: REMOVE_OFFERING_VALIDATION_ERRORS });
+
         const localStorageCard = JSON.parse(localStorage.getItem("card"));
         const localStorageCardOfferings = localStorageCard.offerings;
         localStorageCardOfferings[index] = offering;
@@ -676,7 +716,6 @@ export const updateOffering = (
           offering: offering,
           offeringIndex: index,
         });
-        dispatch({ type: REMOVE_FORM_ERRORS });
 
         dispatch({ type: OFFERING_IS_NOT_UPDATING_LOADER });
         dispatch({ type: OFFERING_SAVED_SUCCESSFULLY });
@@ -1055,7 +1094,6 @@ export const uploadGalleryImages = (images, cardId) => {
             resp.json().then((error) => {
               dispatch({ type: GALLERY_IMAGES_ARE_NOT_PROGRESSING });
               dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
-              dispatch({ type: CARD_ERRORS, errors: [error] });
               dispatch({ type: GALLERY_IMAGE_UPLOADED_UNSUCCESSFULLY });
             });
             return;
@@ -1067,7 +1105,6 @@ export const uploadGalleryImages = (images, cardId) => {
             return;
           }
 
-          dispatch({ type: CARD_NO_ERRORS });
           dispatch({ type: UPLOAD_CARD_GALLERY_PICTURE, photo: data });
           dispatch({ type: CARD_GALLERY_IMAGE_IS_NOT_LOADING });
 
@@ -1148,7 +1185,6 @@ export const uploadOfferingImages = (images, offeringId) => {
           dispatch({ type: OFFERING_IMAGE_IS_NOT_LOADING });
           if (!resp.ok) {
             resp.json().then((error) => {
-              dispatch({ type: CARD_ERRORS, errors: [error] });
               dispatch({ type: OFFERING_IMAGE_UPLOADED_UNSUCCESSFULLY });
             });
             return;
@@ -1161,7 +1197,6 @@ export const uploadOfferingImages = (images, offeringId) => {
             return;
           }
 
-          dispatch({ type: CARD_NO_ERRORS });
           dispatch({
             type: UPLOAD_OFFERING_PICTURE,
             photo: data,

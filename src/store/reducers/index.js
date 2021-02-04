@@ -32,18 +32,26 @@ import linkLoader from "./loaders/socialMediaLinkLoaders";
 import paymentMethodsLoader from "./loaders/paymentMethodsLoader";
 import reviewLoader from "./loaders/reviewLoader";
 
-// Errors
-import errors from "./errors";
-import cardErrors from "./errors/cardErrors";
-import loginErrors from "./errors/loginErrors";
-import registerErrors from "./errors/registerErrors";
-import personalInfoErrors from "./errors/personalInfoErrors";
-import changePasswordErrors from "./errors/changePasswordErrors";
-import forgotPasswordErrors from "./errors/forgotPasswordErrors";
-import changePasswordCodeErrors from "./errors/changePasswordCodeErrors";
-
 // Auth Errors
 import reviewAuthError from "./authErrors/reviewAuthError";
+import loginAuthError from "./authErrors/loginAuthError";
+import registerAuthError from "./authErrors/registerAuthError";
+import forgotPasswordAuthError from "./authErrors/forgotPasswordAuthError";
+import changePasswordCodeAuthError from "./authErrors/changePasswordCodeAuthError";
+import updateUserAuthError from "./authErrors/updateUserAuthError";
+import changePasswordAuthError from "./authErrors/changePasswordAuthError";
+import cardAuthError from "./authErrors/cardAuthError";
+import offeringAuthError from "./authErrors/offeringAuthError";
+
+// Validation Errors
+import loginValidationErrors from "./validationErrors/loginValidationErrors";
+import registerValidationErrors from "./validationErrors/registerValidationErrors";
+import forgotPasswordValidationErrors from "./validationErrors/forgotPasswordValidationErrors";
+import changePasswordCodeValidationErrors from "./validationErrors/changePasswordCodeValidationErrors";
+import updateUserValidationErrors from "./validationErrors/updateUserValidationErrors";
+import changePasswordValidationErrors from "./validationErrors/changePasswordValidationErrors";
+import cardValidationErrors from "./validationErrors/cardValidationErrors";
+import offeringValidationErrors from "./validationErrors/offeringValidationErrors";
 
 // Notifications
 import changePasswordNotifications from "./notifications/changePasswordNotifications";
@@ -77,9 +85,6 @@ import offeringLocalStorage from "./localStorage/offeringLocalStorage";
 import galleryImagesProgress from "./progress/galleryImagesProgress";
 import offeringImagesProgress from "./progress/offeringImagesProgress";
 
-// Form Errors
-import formErrors from "./formErrors/formErrors";
-
 const rootReducer = combineReducers({
   // Main
   user,
@@ -111,17 +116,25 @@ const rootReducer = combineReducers({
   linkLoader,
   paymentMethodsLoader,
   reviewLoader,
-  // Errors
-  errors,
-  cardErrors,
-  loginErrors,
-  registerErrors,
-  personalInfoErrors,
-  changePasswordErrors,
-  forgotPasswordErrors,
-  changePasswordCodeErrors,
   // Auth Errors
   reviewAuthError,
+  loginAuthError,
+  registerAuthError,
+  forgotPasswordAuthError,
+  changePasswordCodeAuthError,
+  updateUserAuthError,
+  changePasswordAuthError,
+  cardAuthError,
+  offeringAuthError,
+  // Validation Errors
+  loginValidationErrors,
+  registerValidationErrors,
+  forgotPasswordValidationErrors,
+  changePasswordCodeValidationErrors,
+  updateUserValidationErrors,
+  changePasswordValidationErrors,
+  cardValidationErrors,
+  offeringValidationErrors,
   // Notifications
   changePasswordNotifications,
   cardSavedNotification,
@@ -150,8 +163,6 @@ const rootReducer = combineReducers({
   // Progress
   galleryImagesProgress,
   offeringImagesProgress,
-  // Form Errors
-  formErrors,
 });
 
 export default rootReducer;

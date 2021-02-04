@@ -1,0 +1,10 @@
+export const SET_UPDATE_USER_VALIDATION_ERRORS =
+  "SET_UPDATE_USER_VALIDATION_ERRORS";
+export const REMOVE_UPDATE_USER_VALIDATION_ERRORS =
+  "REMOVE_UPDATE_USER_VALIDATION_ERRORS";
+
+export const clearUpdateUserValidationErrors = () => {
+  return {
+    type: REMOVE_UPDATE_USER_VALIDATION_ERRORS,
+  };
+};

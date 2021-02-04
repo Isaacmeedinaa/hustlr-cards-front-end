@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../../../store/actions/user";
-import { clearRegisterErrors } from "../../../store/actions/errors/registerErrors";
-import { clearFormErrors } from "../../../store/actions/formErrors/formErrors";
+import { clearRegisterAuthError } from "../../../store/actions/authErrors/registerAuthError";
+import { clearRegisterValidationErrors } from "../../../store/actions/validationErrors/registerValidationErrors";
 
 import Loader from "react-loader-spinner";
 
@@ -19,9 +19,11 @@ const RegisterPage = (props) => {
   const dispatch = useDispatch();
 
   const auth = useSelector((state) => state.auth);
-  const registerErrors = useSelector((state) => state.registerErrors);
   const registerLoader = useSelector((state) => state.registerLoader);
-  const formErrors = useSelector((state) => state.formErrors);
+  const registerAuthError = useSelector((state) => state.registerAuthError);
+  const registerValidationErrors = useSelector(
+    (state) => state.registerValidationErrors
+  );
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -38,16 +40,18 @@ const RegisterPage = (props) => {
     if (auth.isAuthenticated) {
       history.push("/home");
     }
-
-    return () => {
-      dispatch(clearRegisterErrors());
-      dispatch(clearFormErrors());
-    };
-  }, [dispatch, props.history, auth.isAuthenticated]);
+  }, [auth, props.history]);
 
   useEffect(() => {
-    const emailError = formErrors.find(
-      (formError) => formError.field === formFields.registerEmail
+    return () => {
+      dispatch(clearRegisterAuthError());
+      dispatch(clearRegisterValidationErrors());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const emailError = registerValidationErrors.find(
+      (validationError) => validationError.field === formFields.registerEmail
     );
 
     if (emailError) {
@@ -56,8 +60,8 @@ const RegisterPage = (props) => {
       setEmailError(emailError);
     }
 
-    const usernameError = formErrors.find(
-      (formError) => formError.field === formFields.registerUsername
+    const usernameError = registerValidationErrors.find(
+      (validationError) => validationError.field === formFields.registerUsername
     );
 
     if (usernameError) {
@@ -66,8 +70,8 @@ const RegisterPage = (props) => {
       setUsernameError(usernameError);
     }
 
-    const passwordError = formErrors.find(
-      (formError) => formError.field === formFields.registerPassword
+    const passwordError = registerValidationErrors.find(
+      (validationError) => validationError.field === formFields.registerPassword
     );
 
     if (passwordError) {
@@ -76,8 +80,9 @@ const RegisterPage = (props) => {
       setPasswordError(passwordError);
     }
 
-    const confirmPasswordError = formErrors.find(
-      (formError) => formError.field === formFields.registerConfirmPassword
+    const confirmPasswordError = registerValidationErrors.find(
+      (validationError) =>
+        validationError.field === formFields.registerConfirmPassword
     );
 
     if (confirmPasswordError) {
@@ -85,7 +90,7 @@ const RegisterPage = (props) => {
     } else {
       setConfirmPasswordError(confirmPasswordError);
     }
-  }, [formErrors]);
+  }, [registerValidationErrors]);
 
   const registerSubmitHandler = (event) => {
     event.preventDefault();
@@ -107,7 +112,10 @@ const RegisterPage = (props) => {
             </Link>
             <h5 className="auth-text">Join us today!</h5>
           </div>
-          {registerErrors ? (
+          {registerAuthError ? (
+            <p className="auth-error-text">{registerAuthError}</p>
+          ) : null}
+          {registerValidationErrors.length > 0 ? (
             <p className="auth-error-text">Please fix the errors below.</p>
           ) : null}
           <form onSubmit={registerSubmitHandler}>

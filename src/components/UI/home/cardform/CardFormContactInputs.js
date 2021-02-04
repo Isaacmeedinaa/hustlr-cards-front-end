@@ -19,15 +19,17 @@ const CardFormContactInputs = () => {
     (state) => state.card.cardData.phoneNumber
   );
   const emailRedux = useSelector((state) => state.card.cardData.email);
-  const formErrors = useSelector((state) => state.formErrors);
+  const cardValidationErrors = useSelector(
+    (state) => state.cardValidationErrors
+  );
 
   const [phoneNumber, setPhoneNumber] = useState(phoneNumberRedux);
   const [email, setEmail] = useState(emailRedux);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const error = formErrors.find(
-      (formError) => formError.field === formFields.cardEmail
+    const error = cardValidationErrors.find(
+      (validationError) => validationError.field === formFields.cardEmail
     );
 
     if (error) {
@@ -35,7 +37,7 @@ const CardFormContactInputs = () => {
     } else {
       setError(error);
     }
-  }, [formErrors]);
+  }, [cardValidationErrors]);
 
   useEffect(() => {
     dispatch(setCardPhoneNumber(phoneNumber));

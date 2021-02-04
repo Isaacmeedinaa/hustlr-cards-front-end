@@ -1,4 +1,6 @@
 export const formFields = {
+  loginUsername: "Username",
+  loginPassword: "Password",
   cardPath: "PathToCard",
   cardEmail: "Email",
   cardDescription: "Description",

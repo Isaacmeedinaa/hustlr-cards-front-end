@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userChangePasswordCode } from "../../../store/actions/user";
-import { clearChangePasswordCodeErrors } from "../../../store/actions/errors/changePasswordCodeErrors";
-import { clearFormErrors } from "../../../store/actions/formErrors/formErrors";
+import { clearChangePasswordCodeAuthError } from "../../../store/actions/authErrors/changePasswordCodeAuthError";
+import { clearChangePasswordCodeValidationErrors } from "../../../store/actions/validationErrors/chagePasswordCodeValidationErrors";
 
 import Loader from "react-loader-spinner";
 
@@ -19,13 +19,15 @@ const ChangePasswordPage = (props) => {
   const dispatch = useDispatch();
 
   const auth = useSelector((state) => state.auth);
-  const changePasswordCodeErrors = useSelector(
-    (state) => state.changePasswordCodeErrors
-  );
   const changePasswordCodeLoader = useSelector(
     (state) => state.changePasswordCodeLoader
   );
-  const formErrors = useSelector((state) => state.formErrors);
+  const changePasswordCodeAuthError = useSelector(
+    (state) => state.changePasswordCodeAuthError
+  );
+  const changePasswordCodeValidationErrors = useSelector(
+    (state) => state.changePasswordCodeValidationErrors
+  );
 
   const [username, setUsername] = useState("");
   const [recoveryCode, setRecoveryCode] = useState("");
@@ -40,16 +42,19 @@ const ChangePasswordPage = (props) => {
     if (auth.isAuthenticated) {
       history.push("/home");
     }
-
-    return () => {
-      dispatch(clearChangePasswordCodeErrors());
-      dispatch(clearFormErrors());
-    };
-  }, [dispatch, auth, props.history]);
+  }, [auth, props.history]);
 
   useEffect(() => {
-    const usernameError = formErrors.find(
-      (formError) => formError.field === formFields.changePasswordCodeUsername
+    return () => {
+      dispatch(clearChangePasswordCodeAuthError());
+      dispatch(clearChangePasswordCodeValidationErrors());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const usernameError = changePasswordCodeValidationErrors.find(
+      (validationError) =>
+        validationError.field === formFields.changePasswordCodeUsername
     );
 
     if (usernameError) {
@@ -58,8 +63,9 @@ const ChangePasswordPage = (props) => {
       setUsernameError(usernameError);
     }
 
-    const recoveryCodeError = formErrors.find(
-      (formError) => formError.field === formFields.changePasswordCodeCode
+    const recoveryCodeError = changePasswordCodeValidationErrors.find(
+      (validationError) =>
+        validationError.field === formFields.changePasswordCodeCode
     );
 
     if (recoveryCodeError) {
@@ -68,9 +74,9 @@ const ChangePasswordPage = (props) => {
       setRecoveryCodeError(recoveryCodeError);
     }
 
-    const newPasswordError = formErrors.find(
-      (formError) =>
-        formError.field === formFields.changePasswordCodeNewPassword
+    const newPasswordError = changePasswordCodeValidationErrors.find(
+      (validationError) =>
+        validationError.field === formFields.changePasswordCodeNewPassword
     );
 
     if (newPasswordError) {
@@ -78,7 +84,7 @@ const ChangePasswordPage = (props) => {
     } else {
       setNewPasswordError(newPasswordError);
     }
-  }, [formErrors]);
+  }, [changePasswordCodeValidationErrors]);
 
   const changePasswordSubmitHandler = (event) => {
     event.preventDefault();
@@ -102,13 +108,22 @@ const ChangePasswordPage = (props) => {
               Enter the recovery code that was sent to your email.
             </h5>
           </div>
-          {changePasswordCodeErrors ? (
+          {changePasswordCodeAuthError ? (
+            <p className="auth-error-text">{changePasswordCodeAuthError}</p>
+          ) : null}
+          {changePasswordCodeValidationErrors.length > 0 ? (
             <p className="auth-error-text">Please fix the errors below.</p>
           ) : null}
           <form onSubmit={changePasswordSubmitHandler}>
             <input
               className="block auth-input full-width"
-              style={{ border: usernameError ? "solid 1px red" : null }}
+              style={{
+                border:
+                  changePasswordCodeAuthError === "Username was not found." ||
+                  usernameError
+                    ? "solid 1px red"
+                    : null,
+              }}
               placeholder="Username"
               name="username"
               value={username}
@@ -121,7 +136,13 @@ const ChangePasswordPage = (props) => {
             ) : null}
             <input
               className="block auth-input full-width"
-              style={{ border: recoveryCodeError ? "solid 1px red" : null }}
+              style={{
+                border:
+                  changePasswordCodeAuthError === "Invalid recovery code." ||
+                  recoveryCodeError
+                    ? "solid 1px red"
+                    : null,
+              }}
               placeholder="Recovery Code"
               name="recoveryCode"
               value={recoveryCode}
