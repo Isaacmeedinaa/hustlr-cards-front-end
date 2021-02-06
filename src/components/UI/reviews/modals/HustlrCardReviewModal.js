@@ -58,6 +58,9 @@ const HustlrCardReviewModal = () => {
     if (hustlrCardReviewModal.review) {
       setRating(hustlrCardReviewModal.review.rating);
       setDescription(hustlrCardReviewModal.review.description);
+    } else if (!hustlrCardReviewModal.review) {
+      setRating(null);
+      setDescription("");
     }
   }, [hustlrCardReviewModal]);
 
