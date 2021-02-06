@@ -1,10 +1,10 @@
-import PublicCard from "../../models/publicCard";
+import PublicCard from "../../../models/publicCard";
 
 import {
   PUBLIC_CARD_IS_LOADING,
   PUBLIC_CARD_IS_NOT_LOADING,
-} from "./loaders/publicCardLoader";
-import { API_BASE_URL } from "../../constants/urls";
+} from "../loaders/publicCardLoader";
+import { API_BASE_URL } from "../../../constants/urls";
 
 export const SET_PUBLIC_CARD = "SET_PUBLIC_CARD";
 
@@ -60,6 +60,7 @@ export const fetchPublicCard = (pathname, history) => {
           publicCard.offerings,
           publicCard.links,
           publicCard.paymentMethods,
+          publicCard.reviews,
           primaryColor,
           transparentColor
         );

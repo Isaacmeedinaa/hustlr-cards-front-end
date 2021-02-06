@@ -6,10 +6,11 @@ import dropdowns from "./dropdowns";
 import themes from "./themes";
 import card from "./card";
 import cardSaved from "./cardSaved";
-import publicCard from "./publicCard";
+import publicCard from "./hustlrCard/publicCard";
 import auth from "./auth";
 import emailVerification from "./emailVerification";
 import tabs from "./tabs";
+import hustlrCardReviews from "./hustlrCard/hustlrCardReviews";
 
 // Loaders
 import loginLoader from "./loaders/loginLoader";
@@ -31,9 +32,10 @@ import contactMessageLoader from "./loaders/contactMessageLoader";
 import linkLoader from "./loaders/socialMediaLinkLoaders";
 import paymentMethodsLoader from "./loaders/paymentMethodsLoader";
 import reviewLoader from "./loaders/reviewLoader";
+import hustlrCardReviewLoader from "./loaders/hustlrCardReviewLoader";
 
 // Auth Errors
-import reviewAuthError from "./authErrors/reviewAuthError";
+import hustlrCardReviewAuthError from "./authErrors/hustlrCardReviewAuthError";
 import loginAuthError from "./authErrors/loginAuthError";
 import registerAuthError from "./authErrors/registerAuthError";
 import forgotPasswordAuthError from "./authErrors/forgotPasswordAuthError";
@@ -65,7 +67,7 @@ import backdropImageNotifications from "./notifications/backdropImageNotificatio
 import linkNotifications from "./notifications/socialMediaLinkNotifications";
 import contactMessageNotifications from "./notifications/contactMessageNotifications";
 import paymentMethodsNotifications from "./notifications/paymentMethodNotifications";
-import reviewNotifications from "./notifications/reviewNotifications";
+import hustlrCardReviewNotifications from "./notifications/hustlrCardReviewNotifications";
 
 // Modals
 import imageCropperModal from "./modals/imageCropperModal";
@@ -75,7 +77,7 @@ import socialMediaModal from "./modals/socialMediaModal";
 import paymentMethodsModal from "./modals/paymentMethodsModal";
 import offeringModal from "./modals/offeringModal";
 import authModal from "./modals/authModal";
-import reviewModal from "./modals/reviewModal";
+import hustlrCardReviewModal from "./modals/hustlrCardReviewModal";
 
 // Local Storage
 import cardLinkLocalStorage from "./localStorage/cardLinkLocalStorage";
@@ -96,6 +98,7 @@ const rootReducer = combineReducers({
   auth,
   emailVerification,
   tabs,
+  hustlrCardReviews,
   // Loaders
   loginLoader,
   registerLoader,
@@ -116,8 +119,9 @@ const rootReducer = combineReducers({
   linkLoader,
   paymentMethodsLoader,
   reviewLoader,
+  hustlrCardReviewLoader,
   // Auth Errors
-  reviewAuthError,
+  hustlrCardReviewAuthError,
   loginAuthError,
   registerAuthError,
   forgotPasswordAuthError,
@@ -147,7 +151,7 @@ const rootReducer = combineReducers({
   contactMessageNotifications,
   linkNotifications,
   paymentMethodsNotifications,
-  reviewNotifications,
+  hustlrCardReviewNotifications,
   // Modals
   imageCropperModal,
   backdropImageCropperModal,
@@ -156,7 +160,7 @@ const rootReducer = combineReducers({
   paymentMethodsModal,
   offeringModal,
   authModal,
-  reviewModal,
+  hustlrCardReviewModal,
   // Local Storage
   cardLinkLocalStorage,
   offeringLocalStorage,

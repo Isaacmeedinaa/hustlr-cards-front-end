@@ -25,6 +25,7 @@ import HomePage from "./components/pages/HomePage";
 import SettingsPage from "./components/pages/SettingsPage";
 import SupportPage from "./components/pages/SupportPage";
 import PublicCardPage from "./components/pages/PublicCardPage";
+import HustlrCardReviewsPage from "./components/pages/HustlrCardReviewsPage";
 import ProtectedRoute from "./components/hoc/ProtectedRoute";
 import RouteHead from "./components/hoc/RouteHead";
 
@@ -102,6 +103,11 @@ class App extends Component {
               path="/support"
               component={SupportPage}
               isAuthenticated={this.props.auth.isAuthenticated}
+            />
+            <Route
+              exact
+              path="/:pathToCard/reviews"
+              component={HustlrCardReviewsPage}
             />
             <Route exact path="/:pathToCard" component={PublicCardPage} />
             <Route exact path="/" component={LandingPage} />

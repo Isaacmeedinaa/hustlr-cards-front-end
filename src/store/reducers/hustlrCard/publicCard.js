@@ -1,4 +1,4 @@
-import { SET_PUBLIC_CARD } from "../actions/publicCard";
+import { SET_PUBLIC_CARD } from "../../actions/hustlrCard/publicCard";
 
 const publicCard = (state = null, action) => {
   switch (action.type) {

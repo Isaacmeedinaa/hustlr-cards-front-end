@@ -2,7 +2,7 @@ import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { openAuthModal } from "../../../store/actions/modals/authModal";
-import { openReviewModal } from "../../../store/actions/modals/reviewModal";
+import { openHustlrCardReviewModal } from "../../../store/actions/modals/hustlrCardReviewModal";
 
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
@@ -17,7 +17,7 @@ const PublicCardReviewButton = (props) => {
     if (!auth.isAuthenticated || !user) {
       dispatch(openAuthModal());
     } else if (auth.isAuthenticated || user !== null) {
-      dispatch(openReviewModal());
+      dispatch(openHustlrCardReviewModal(null));
     }
   };
 
