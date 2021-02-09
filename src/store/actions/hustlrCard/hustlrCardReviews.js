@@ -1,6 +1,8 @@
 // API URL
 import { API_BASE_URL } from "../../../constants/urls";
 
+import { sortOptions } from "../../../constants/sortOptions";
+
 // modals
 import { closeHustlrCardReviewModal } from "../modals/hustlrCardReviewModal";
 
@@ -8,6 +10,8 @@ import { closeHustlrCardReviewModal } from "../modals/hustlrCardReviewModal";
 import {
   HUSTLR_CARD_REVIEWS_ARE_LOADING,
   HUSTLR_CARD_REVIEWS_ARE_NOT_LOADING,
+  HUSTLR_CARD_NEXT_REVIEWS_ARE_LOADING,
+  HUSTLR_CARD_NEXT_REVIEWS_ARE_NOT_LOADING,
   HUSTLR_CARD_REVIEW_IS_CREATING_LOADER,
   HUSTLR_CARD_REVIEW_IS_NOT_CREATING_LOADER,
   HUSTLR_CARD_REVIEW_IS_UPDATING_LOADER,
@@ -35,15 +39,24 @@ import {
 } from "../authErrors/hustlrCardReviewAuthError";
 
 export const SET_HUSTLR_CARD_REVIEWS = "SET_HUSTLR_CARD_REVIEWS";
+export const SET_NEXT_HUSTLR_CARD_REVIEWS = "SET_NEXT_HUSTLR_CARD_REVIEWS";
 export const REMOVE_HUSTLR_CARD_REVIEWS = "REMOVE_HUSTLR_CARD_REVIEWS";
 export const CREATE_HUSTLR_CARD_REVIEW = "CREATE_HUSTLR_CARD_REVIEW";
 export const UPDATE_HUSTLR_CARD_REVIEW = "UPDATE_HUSTLR_CARD_REVIEW";
 export const DELETE_HUSTLR_CARD_REVIEW = "DELETE_HUSTLR_CARD_REVIEW";
+export const RESET_PAGINATION_NUMBER_AND_SORTING_VALUE =
+  "RESET_PAGINATION_NUMBER_AND_SORTING_VALUE";
 
-export const fetchHustlrCardReviews = (cardId, pageNumber, sortValue) => {
+export const fetchInitialHustlrCardReviews = (
+  cardId,
+  pageNumber,
+  sortValue
+) => {
   return (dispatch) => {
     dispatch({ type: HUSTLR_CARD_REVIEWS_ARE_LOADING });
-    fetch(`${API_BASE_URL}/reviews/card/${cardId}/${pageNumber}/${sortValue}`)
+    fetch(
+      `${API_BASE_URL}/reviews/card/${cardId}/${pageNumber}/${sortValue}?pageSize=4`
+    )
       .then((resp) => resp.json())
       .then((hustlrCardReviews) => {
         if (hustlrCardReviews.code) {
@@ -61,6 +74,36 @@ export const fetchHustlrCardReviews = (cardId, pageNumber, sortValue) => {
       })
       .catch((err) => {
         dispatch({ type: HUSTLR_CARD_REVIEWS_ARE_NOT_LOADING });
+        dispatch({ type: HUSTLR_CARD_REVIEWS_FETCHED_UNSUCCESSFULLY });
+      });
+  };
+};
+
+export const fetchNextHustlrCardReview = (pageNumber, sortValue) => {
+  return (dispatch, getState) => {
+    const cardId = getState().publicCard.id;
+
+    dispatch({ type: HUSTLR_CARD_NEXT_REVIEWS_ARE_LOADING });
+    fetch(
+      `${API_BASE_URL}/reviews/card/${cardId}/${pageNumber}/${sortValue}?pageSize=4`
+    )
+      .then((resp) => resp.json())
+      .then((hustlrCardReviews) => {
+        if (hustlrCardReviews.code) {
+          dispatch({ type: HUSTLR_CARD_NEXT_REVIEWS_ARE_NOT_LOADING });
+          dispatch({ type: HUSTLR_CARD_REVIEWS_FETCHED_UNSUCCESSFULLY });
+          return;
+        }
+
+        dispatch({
+          type: SET_NEXT_HUSTLR_CARD_REVIEWS,
+          nextHustlrCardReviews: hustlrCardReviews.reviews,
+        });
+        dispatch({ type: HUSTLR_CARD_NEXT_REVIEWS_ARE_NOT_LOADING });
+        dispatch({ type: HUSTLR_CARD_REVIEWS_FETCHED_SUCCESSFULLY });
+      })
+      .catch((err) => {
+        dispatch({ type: HUSTLR_CARD_NEXT_REVIEWS_ARE_NOT_LOADING });
         dispatch({ type: HUSTLR_CARD_REVIEWS_FETCHED_UNSUCCESSFULLY });
       });
   };
@@ -102,14 +145,17 @@ export const createHustlrCardReview = (description, rating, userId, cardId) => {
           return;
         }
 
-        dispatch({ type: CREATE_HUSTLR_CARD_REVIEW, review: review });
+        // dispatch({ type: CREATE_HUSTLR_CARD_REVIEW, review: review });
         dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_CREATING_LOADER });
         dispatch({ type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR });
         dispatch({ type: HUSTLR_CARD_REVIEW_CREATED_SUCCESSFULLY });
+        dispatch({ type: RESET_PAGINATION_NUMBER_AND_SORTING_VALUE });
+        dispatch(
+          fetchInitialHustlrCardReviews(cardId, 1, sortOptions[2].value)
+        );
         dispatch(closeHustlrCardReviewModal());
       })
       .catch((err) => {
-        console.log(err);
         dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_CREATING_LOADER });
         dispatch({ type: HUSTLR_CARD_REVIEW_CREATED_UNSUCCESSFULLY });
       });
@@ -117,8 +163,9 @@ export const createHustlrCardReview = (description, rating, userId, cardId) => {
 };
 
 export const updatHustlrCardReview = (reviewId, rating, description) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const userToken = localStorage.getItem("userToken");
+    const cardId = getState().publicCard.id;
 
     const reviewObj = {
       id: reviewId,
@@ -151,9 +198,13 @@ export const updatHustlrCardReview = (reviewId, rating, description) => {
           return;
         }
 
-        dispatch({ type: UPDATE_HUSTLR_CARD_REVIEW, review: review });
+        // dispatch({ type: UPDATE_HUSTLR_CARD_REVIEW, review: review });
         dispatch({ type: HUSTLR_CARD_REVIEW_SAVED_SUCCESSFULLY });
         dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER });
+        dispatch({ type: RESET_PAGINATION_NUMBER_AND_SORTING_VALUE });
+        dispatch(
+          fetchInitialHustlrCardReviews(cardId, 1, sortOptions[2].value)
+        );
         dispatch(closeHustlrCardReviewModal());
       })
       .catch((err) => {
@@ -164,7 +215,8 @@ export const updatHustlrCardReview = (reviewId, rating, description) => {
 };
 
 export const deleteHustlrCardReview = (reviewId) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const cardId = getState().publicCard.id;
     const userToken = localStorage.getItem("userToken");
 
     const reqObj = {
@@ -186,9 +238,13 @@ export const deleteHustlrCardReview = (reviewId) => {
         }
 
         if (resp.ok) {
-          dispatch({ type: DELETE_HUSTLR_CARD_REVIEW, reviewId: reviewId });
+          // dispatch({ type: DELETE_HUSTLR_CARD_REVIEW, reviewId: reviewId });
           dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_DELETING_LOADER });
           dispatch({ type: HUSTLR_CARD_REVIEW_DELETED_SUCCESSFULLY });
+          dispatch({ type: RESET_PAGINATION_NUMBER_AND_SORTING_VALUE });
+          dispatch(
+            fetchInitialHustlrCardReviews(cardId, 1, sortOptions[2].value)
+          );
           return;
         }
       })

@@ -1,6 +1,8 @@
 import {
   HUSTLR_CARD_REVIEWS_ARE_LOADING,
   HUSTLR_CARD_REVIEWS_ARE_NOT_LOADING,
+  HUSTLR_CARD_NEXT_REVIEWS_ARE_LOADING,
+  HUSTLR_CARD_NEXT_REVIEWS_ARE_NOT_LOADING,
   HUSTLR_CARD_REVIEW_IS_LOADING,
   HUSTLR_CARD_REVIEW_IS_NOT_LOADING,
   HUSTLR_CARD_REVIEW_IS_CREATING_LOADER,
@@ -13,6 +15,7 @@ import {
 
 let initialState = {
   fetchingAllLoader: false,
+  fetchingNextLoader: false,
   fetchingLoader: false,
   creatingLoader: false,
   updatingLoader: false,
@@ -31,6 +34,18 @@ const hustlrCardReviewLoader = (state = initialState, action) => {
       return {
         ...state,
         fetchingAllLoader: false,
+      };
+
+    case HUSTLR_CARD_NEXT_REVIEWS_ARE_LOADING:
+      return {
+        ...state,
+        fetchingNextLoader: true,
+      };
+
+    case HUSTLR_CARD_NEXT_REVIEWS_ARE_NOT_LOADING:
+      return {
+        ...state,
+        fetchingNextLoader: false,
       };
 
     case HUSTLR_CARD_REVIEW_IS_LOADING:
