@@ -40,10 +40,10 @@ export const CREATE_HUSTLR_CARD_REVIEW = "CREATE_HUSTLR_CARD_REVIEW";
 export const UPDATE_HUSTLR_CARD_REVIEW = "UPDATE_HUSTLR_CARD_REVIEW";
 export const DELETE_HUSTLR_CARD_REVIEW = "DELETE_HUSTLR_CARD_REVIEW";
 
-export const fetchHustlrCardReviews = (cardId) => {
+export const fetchHustlrCardReviews = (cardId, pageNumber, sortValue) => {
   return (dispatch) => {
     dispatch({ type: HUSTLR_CARD_REVIEWS_ARE_LOADING });
-    fetch(`${API_BASE_URL}/reviews/card/${cardId}`)
+    fetch(`${API_BASE_URL}/reviews/card/${cardId}/${pageNumber}/${sortValue}`)
       .then((resp) => resp.json())
       .then((hustlrCardReviews) => {
         if (hustlrCardReviews.code) {
@@ -54,7 +54,7 @@ export const fetchHustlrCardReviews = (cardId) => {
 
         dispatch({
           type: SET_HUSTLR_CARD_REVIEWS,
-          hustlrCardReviews: hustlrCardReviews,
+          hustlrCardReviews: hustlrCardReviews.reviews,
         });
         dispatch({ type: HUSTLR_CARD_REVIEWS_ARE_NOT_LOADING });
         dispatch({ type: HUSTLR_CARD_REVIEWS_FETCHED_SUCCESSFULLY });

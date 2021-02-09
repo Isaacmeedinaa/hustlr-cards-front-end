@@ -21,6 +21,16 @@
   overflow-y: auto;
 }
 
+.hustlr-card-reviews-toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hustlr-card-reviews-sort-options-select {
+  width: 50%;
+}
+
 .hustlr-card-review-container {
   margin-top: 25px;
   padding: 20px 25px;
