@@ -11,6 +11,7 @@ import {
 const initialState = {
   reviews: [],
   resetPaginationAndSortingValue: false,
+  totalPages: -1
 };
 
 const hustlrCardReviews = (state = initialState, action) => {
@@ -19,6 +20,7 @@ const hustlrCardReviews = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.hustlrCardReviews,
+        totalPages: action.totalPages
       };
 
     case SET_NEXT_HUSTLR_CARD_REVIEWS:
@@ -31,12 +33,15 @@ const hustlrCardReviews = (state = initialState, action) => {
       return {
         ...state,
         reviews: [],
+        resetPaginationAndSortingValue: false,
+        totalPages: -1
       };
 
     case RESET_PAGINATION_NUMBER_AND_SORTING_VALUE:
       return {
         ...state,
         resetPaginationAndSortingValue: !state.resetPaginationAndSortingValue,
+        totalPages: -1
       };
 
     // case CREATE_HUSTLR_CARD_REVIEW:

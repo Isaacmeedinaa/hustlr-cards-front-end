@@ -68,6 +68,7 @@ export const fetchInitialHustlrCardReviews = (
         dispatch({
           type: SET_HUSTLR_CARD_REVIEWS,
           hustlrCardReviews: hustlrCardReviews.reviews,
+          totalPages: hustlrCardReviews.totalPages
         });
         dispatch({ type: HUSTLR_CARD_REVIEWS_ARE_NOT_LOADING });
         dispatch({ type: HUSTLR_CARD_REVIEWS_FETCHED_SUCCESSFULLY });

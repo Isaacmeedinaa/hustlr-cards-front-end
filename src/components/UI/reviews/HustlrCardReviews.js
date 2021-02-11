@@ -45,6 +45,9 @@ const HustlrCardReviews = () => {
   const hustlrCardReviewNotifications = useSelector(
     (state) => state.hustlrCardReviewNotifications
   );
+  const hustlrCardTotalReviewPages = useSelector(
+    (state) => state.hustlrCardReviews.totalPages
+  );
 
   const [pageNumber, setPageNumber] = useState(1);
   const [sortOption, setSortOption] = useState(sortOptions[2]);
@@ -59,8 +62,12 @@ const HustlrCardReviews = () => {
 
   useEffect(() => {
     if (pageNumber === 1) return;
+    if (pageNumber > hustlrCardTotalReviewPages) {
+      console.table(hustlrCardTotalReviewPages)
+      return;
+    }
     dispatch(fetchNextHustlrCardReview(pageNumber, sortOption.value));
-  }, [dispatch, pageNumber, sortOption]);
+  }, [dispatch, pageNumber, sortOption, hustlrCardTotalReviewPages]);
 
   useEffect(() => {
     setPageNumber(1);
