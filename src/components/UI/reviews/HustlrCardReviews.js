@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchInitialHustlrCardReviews,
   fetchNextHustlrCardReview,
+  resetHustlrCardReviewsState,
 } from "../../../store/actions/hustlrCard/hustlrCardReviews";
 import {
   hideHustlrCardReviewSavedNotification,
@@ -14,8 +15,6 @@ import { showToast } from "../Toasts";
 
 import Loader from "react-loader-spinner";
 import Select from "react-select";
-
-import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 import PublicCardReviewButton from "../publiccard/PublicCardReviewButton";
 import HustlrCardReview from "./HustlrCardReview";
@@ -39,9 +38,6 @@ const HustlrCardReviews = () => {
   const hustlrCardReviews = useSelector(
     (state) => state.hustlrCardReviews.reviews
   );
-  const resetPaginationAndSortingValue = useSelector(
-    (state) => state.hustlrCardReviews.resetPaginationAndSortingValue
-  );
   const hustlrCardReviewNotifications = useSelector(
     (state) => state.hustlrCardReviewNotifications
   );
@@ -52,27 +48,24 @@ const HustlrCardReviews = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [sortOption, setSortOption] = useState(sortOptions[2]);
 
+  // initial fetch (first page)
   useEffect(() => {
     if (publicCard) {
-      dispatch(
-        fetchInitialHustlrCardReviews(publicCard.id, 1, sortOptions[2].value)
-      );
+      dispatch(fetchInitialHustlrCardReviews(1, sortOptions[2].value));
     }
   }, [dispatch, publicCard]);
 
+  // next fetch (next pages)
   useEffect(() => {
     if (pageNumber === 1) return;
-    if (pageNumber > hustlrCardTotalReviewPages) {
-      console.table(hustlrCardTotalReviewPages)
-      return;
-    }
     dispatch(fetchNextHustlrCardReview(pageNumber, sortOption.value));
-  }, [dispatch, pageNumber, sortOption, hustlrCardTotalReviewPages]);
+  }, [dispatch, pageNumber, sortOption]);
 
   useEffect(() => {
-    setPageNumber(1);
-    setSortOption(sortOptions[2]);
-  }, [resetPaginationAndSortingValue]);
+    return () => {
+      dispatch(resetHustlrCardReviewsState());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     if (hustlrCardReviewNotifications.saved.show) {
@@ -102,24 +95,19 @@ const HustlrCardReviews = () => {
     ));
   };
 
-  const onBottomReach = () => {
-    setPageNumber(pageNumber + 1);
-  };
-
-  const scrollRef = useBottomScrollListener(onBottomReach);
-
   const onSortSelectChange = (e) => {
     setSortOption(e);
     setPageNumber(1);
-    dispatch(fetchInitialHustlrCardReviews(publicCard.id, 1, e.value));
+    dispatch(fetchInitialHustlrCardReviews(1, e.value));
+  };
+
+  const onViewMoreClick = () => {
+    setPageNumber(pageNumber + 1);
   };
 
   return (
     <div className="hustlr-card-reviews-wrapper">
-      <div
-        ref={scrollRef}
-        className="primary-light-bg hustlr-card-reviews-container"
-      >
+      <div className="primary-light-bg hustlr-card-reviews-container">
         {hustlrCardReviewFetchingAllLoader ? (
           <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
         ) : (
@@ -166,8 +154,24 @@ const HustlrCardReviews = () => {
               <PublicCardReviewButton />
             </div>
             {renderHustlrCardReviews()}
-            {!hustlrCardReviewFetchingNextLoader ? null : (
-              <Loader type="TailSpin" color="#2ecc71" width={12} height={12} />
+            {pageNumber >= hustlrCardTotalReviewPages ? null : (
+              <div className="hustlr-card-reviews-view-more-text-container">
+                {!hustlrCardReviewFetchingNextLoader ? (
+                  <span
+                    className="hustlr-card-reviews-view-more-text"
+                    onClick={onViewMoreClick}
+                  >
+                    View More
+                  </span>
+                ) : (
+                  <Loader
+                    type="TailSpin"
+                    color="#2ecc71"
+                    width={12}
+                    height={12}
+                  />
+                )}
+              </div>
             )}
           </Fragment>
         )}
