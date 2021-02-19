@@ -1,7 +1,13 @@
 import React, { Fragment, useRef, useEffect }  from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { openViewImagesModal } from "../../../store/actions/modals/viewImagesModal";
+import { showToast } from "../Toasts";
+
+import {
+  hideHustlrCardReviewSavedNotification,
+  hideHustlrCardReviewDeletedNotification,
+} from "../../../store/actions/notifications/hustlrCardReviewNotifications";
 
 import Carousel from "react-bootstrap/Carousel";
 import { addWidthToImgUrl } from "../../../services/ImgUrlParser";
@@ -14,9 +20,28 @@ const PublicCardReviews = (props) => {
   const dispatch = useDispatch();
   const reviewsContainer = useRef();
 
+  const hustlrCardReviewNotifications = useSelector(
+    (state) => state.hustlrCardReviewNotifications
+  );
+
   useEffect(() => {
-    
-    console.log('here');
+    if (hustlrCardReviewNotifications.saved.show) {
+      showToast(
+        hustlrCardReviewNotifications.saved.success,
+        hustlrCardReviewNotifications.saved.message
+      );
+      dispatch(hideHustlrCardReviewSavedNotification());
+    }
+    if (hustlrCardReviewNotifications.deleted.show) {
+      showToast(
+        hustlrCardReviewNotifications.deleted.success,
+        hustlrCardReviewNotifications.deleted.message
+      );
+      dispatch(hideHustlrCardReviewDeletedNotification());
+    }
+  }, [dispatch, hustlrCardReviewNotifications]);
+
+  useEffect(() => {
     reviewsContainer.current.addEventListener(
       "wheel",
       onReviewsContainerWheel,
@@ -40,7 +65,7 @@ const PublicCardReviews = (props) => {
     const containerScrollPosition = document.getElementById(
       "public-card-reviews"
     ).scrollLeft;
-    
+
     container.scrollTo({
       top: 0,
       left: containerScrollPosition + event.deltaY,
