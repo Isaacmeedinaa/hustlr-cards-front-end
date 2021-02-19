@@ -213,7 +213,8 @@ export const fetchCard = (userId) => {
           card.photos,
           card.offerings,
           card.links,
-          card.paymentMethods
+          card.paymentMethods,
+          card.reviews
         );
 
         const cardTheme = themes.find((theme) => theme.id === card.themeId);

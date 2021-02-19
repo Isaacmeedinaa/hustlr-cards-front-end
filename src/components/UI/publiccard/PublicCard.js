@@ -15,13 +15,14 @@ import PublicCardPaymentMethods from "./PublicCardPaymentMethods";
 
 import "../../../constants/colors.css";
 import "./PublicCardUI.css";
+import PublicCardReviews from "./PublicCardReviews";
 
 class PublicCard extends Component {
   render() {
     if (!this.props.publicCard) {
       return null;
     }
-
+    console.log(this.props.publicCard);
     return (
       <Fragment>
         <div className="primary-light-bg public-card">
@@ -66,6 +67,11 @@ class PublicCard extends Component {
               primaryColor={this.props.publicCard.primaryColor}
               transparentColor={this.props.publicCard.transparentColor}
               setImagesData={this.props.setImagesData}
+            />
+            <PublicCardReviews
+              reviews={this.props.publicCard.reviews}
+              primaryColor={this.props.publicCard.primaryColor}
+              transparentColor={this.props.publicCard.transparentColor}
             />
             <PublicCardPaymentMethods
               paymentMethods={this.props.publicCard.paymentMethods}

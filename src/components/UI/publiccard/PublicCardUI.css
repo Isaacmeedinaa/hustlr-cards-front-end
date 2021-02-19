@@ -324,6 +324,25 @@
   margin-left: 5px;
 }
 
+.public-card-reviews {
+  margin-top: 50px;
+  width: 95%;
+  display: flex;
+  overflow-x: auto;
+  margin-bottom: 0px;
+}
+
+.public-card-reviews .hustlr-card-review-container {
+  margin-right: 2%;
+  margin-top: 0px;
+  min-width: 70%;
+  max-width: 100%;
+}
+
+.public-card-reviews::-webkit-scrollbar {
+  display: none;
+}
+
 @media only screen and (max-width: 650px) {
   .public-card {
     border-radius: 0px;
