@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import Moment from "react-moment";
 import "moment-timezone";
@@ -20,6 +21,8 @@ const HustlrCardReview = (props) => {
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const [likedCount, setLikedCount] = useState(null);
   const [dislikedCount, setDislikedCount] = useState(null);
+
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     if (review) {
@@ -58,22 +61,24 @@ const HustlrCardReview = (props) => {
             {review.dateCreated}
           </Moment>
         </div>
-        <div className="hustlr-card-review-top-right-container">
-          <IosMore
-            color={props.primaryColor}
-            onClick={() =>
-              setShowOptionsModal((showOptionsModal) => !showOptionsModal)
-            }
-            className="hustlr-card-review-more-button"
-            fontSize="30px"
-          />
-          {showOptionsModal ? (
-            <HustlrCardReviewOptionsModal
-              review={review}
-              hideReviewOptionsModal={hideReviewOptionsModal}
+        {user.id !== review.user.id ? null : (
+          <div className="hustlr-card-review-top-right-container">
+            <IosMore
+              color={props.primaryColor}
+              onClick={() =>
+                setShowOptionsModal((showOptionsModal) => !showOptionsModal)
+              }
+              className="hustlr-card-review-more-button"
+              fontSize="30px"
             />
-          ) : null}
-        </div>
+            {showOptionsModal ? (
+              <HustlrCardReviewOptionsModal
+                review={review}
+                hideReviewOptionsModal={hideReviewOptionsModal}
+              />
+            ) : null}
+          </div>
+        )}
       </div>
       <div className="hustlr-card-review-middle-container">
         <span
