@@ -283,9 +283,6 @@ const CardFormOfferingModal = (props) => {
           className="card-form-gallery-slider-container"
           style={{ marginTop: offeringImagesProgress.progressing ? 15 : 30 }}
         >
-          {/* <AwesomeSlider bullets={false}>
-            {renderOfferingSliderImages()}
-          </AwesomeSlider> */}
           <Carousel style={{ height: "300px", width: "100%" }} interval={null}>
             {renderOfferingSliderImages()}
           </Carousel>
