@@ -122,7 +122,7 @@
 
 .hustlr-card-review-modal-carousel {
   height: 200px;
-  width: "100%";
+  width: 100%;
 }
 
 .hustlr-card-review-modal-carousel-img {
@@ -131,6 +131,26 @@
   object-fit: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.carousel-caption {
+  left: 85% !important;
+}
+
+.hustlr-card-review-carousel-photo-delete-btn {
+  width: 35px;
+  height: 35px;
+  background: #2ecc71;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 110px;
+}
+
+.hustlr-card-review-carousel-photo-delete-btn:hover {
+  cursor: pointer;
 }
 
 .hustlr-card-review-modal-post-review-btn {

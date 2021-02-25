@@ -1,6 +1,7 @@
 import {
   OPEN_HUSTLR_CARD_REVIEW_MODAL,
   CLOSE_HUSTLR_CARD_REVIEW_MODAL,
+  DELETE_HUSTLR_CARD_REVIEW_PHOTO,
 } from "../../actions/modals/hustlrCardReviewModal";
 
 const intialState = {
@@ -22,6 +23,17 @@ const hustlrCardReviewModal = (state = intialState, action) => {
         ...state,
         isOpen: false,
         review: null,
+      };
+
+    case DELETE_HUSTLR_CARD_REVIEW_PHOTO:
+      return {
+        ...state,
+        review: {
+          ...state.review,
+          photos: state.review.photos.filter(
+            (photo) => photo.id !== action.photoId
+          ),
+        },
       };
 
     default:

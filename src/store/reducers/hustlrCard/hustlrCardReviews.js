@@ -5,6 +5,7 @@ import {
   CREATE_HUSTLR_CARD_REVIEW,
   UPDATE_HUSTLR_CARD_REVIEW,
   DELETE_HUSTLR_CARD_REVIEW,
+  DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY,
 } from "../../actions/hustlrCard/hustlrCardReviews";
 
 const initialState = {
@@ -46,10 +47,10 @@ const hustlrCardReviews = (state = initialState, action) => {
 
     case UPDATE_HUSTLR_CARD_REVIEW:
       const updatedHustlrCardReviews = [...state.reviews];
-      const reviewIndex = updatedHustlrCardReviews.findIndex(
+      const updateReviewIndex = updatedHustlrCardReviews.findIndex(
         (review) => review.id === action.review.id
       );
-      updatedHustlrCardReviews[reviewIndex] = action.review;
+      updatedHustlrCardReviews[updateReviewIndex] = action.review;
 
       return {
         ...state,
@@ -63,6 +64,25 @@ const hustlrCardReviews = (state = initialState, action) => {
           (review) => review.id !== action.reviewId
         ),
         reviewWasDeleted: true,
+      };
+
+    case DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY:
+      const newHustlrCardReviews = [...state.reviews];
+      const deletePhotoReviewIndex = newHustlrCardReviews.findIndex(
+        (review) => review.id === action.reviewId
+      );
+      const review = newHustlrCardReviews.find(
+        (review) => review.id === action.reviewId
+      );
+      const newReviewPhotos = review.photos.filter(
+        (photo) => photo.id !== action.photoId
+      );
+      review.photos = newReviewPhotos;
+      newHustlrCardReviews[deletePhotoReviewIndex] = review;
+
+      return {
+        ...state,
+        reviews: newHustlrCardReviews,
       };
 
     default:

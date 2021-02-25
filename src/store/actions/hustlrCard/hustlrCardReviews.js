@@ -2,7 +2,10 @@
 import { API_BASE_URL } from "../../../constants/urls";
 
 // modals
-import { closeHustlrCardReviewModal } from "../modals/hustlrCardReviewModal";
+import {
+  DELETE_HUSTLR_CARD_REVIEW_PHOTO,
+  closeHustlrCardReviewModal,
+} from "../modals/hustlrCardReviewModal";
 
 // Loaders
 import {
@@ -16,6 +19,8 @@ import {
   HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER,
   HUSTLR_CARD_REVIEW_IS_DELETING_LOADER,
   HUSTLR_CARD_REVIEW_IS_NOT_DELETING_LOADER,
+  HUSTLR_CARD_REVIEW_PHOTO_IS_DELETING_LOADER,
+  HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER,
 } from "../loaders/hustlrCardReviewLoader";
 
 // Notifications
@@ -28,6 +33,8 @@ import {
   HUSTLR_CARD_REVIEW_SAVED_UNSUCCESSFULLY,
   HUSTLR_CARD_REVIEW_DELETED_SUCCESSFULLY,
   HUSTLR_CARD_REVIEW_DELETED_UNSUCCESSFULLY,
+  HUSTLR_CARD_REVIEW_PHOTO_DELETED_SUCCESSFULLY,
+  HUSTLR_CARD_REVIEW_PHOTO_DELETED_UNSUCCESSFULLY,
 } from "../notifications/hustlrCardReviewNotifications";
 
 // Auth Errors
@@ -44,6 +51,8 @@ export const CREATE_HUSTLR_CARD_REVIEW = "CREATE_HUSTLR_CARD_REVIEW";
 export const UPDATE_HUSTLR_CARD_REVIEW = "UPDATE_HUSTLR_CARD_REVIEW";
 export const DELETE_HUSTLR_CARD_REVIEW = "DELETE_HUSTLR_CARD_REVIEW";
 export const ADDED_REVIEW_ID = "ADDED_REVIEW_ID";
+export const DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY =
+  "DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY";
 
 export const resetHustlrCardReviewsState = () => {
   return {
@@ -58,7 +67,7 @@ export const fetchInitialHustlrCardReviews = (pageNumber, sortValue) => {
     dispatch({ type: REMOVE_HUSTLR_CARD_REVIEWS_STATE });
     dispatch({ type: HUSTLR_CARD_REVIEWS_ARE_LOADING });
     fetch(
-      `${API_BASE_URL}/reviews/card/${cardPath}/${pageNumber}/${sortValue}?pageSize=25`
+      `${API_BASE_URL}/reviews/card/${cardPath}/${pageNumber}/${sortValue}?pageSize=4`
     )
       .then((resp) => resp.json())
       .then((hustlrCardReviews) => {
@@ -94,7 +103,7 @@ export const fetchNextHustlrCardReview = (pageNumber, sortValue) => {
 
     dispatch({ type: HUSTLR_CARD_NEXT_REVIEWS_ARE_LOADING });
     fetch(
-      `${API_BASE_URL}/reviews/card/${cardPath}/${pageNumber}/${sortValue}?pageSize=25&ignoreReviewId=${ignoreReviewIdParam}&offsetByOne=${offsetByOneParam}`
+      `${API_BASE_URL}/reviews/card/${cardPath}/${pageNumber}/${sortValue}?pageSize=4&ignoreReviewId=${ignoreReviewIdParam}&offsetByOne=${offsetByOneParam}`
     )
       .then((resp) => resp.json())
       .then((hustlrCardReviews) => {
@@ -161,8 +170,7 @@ export const createHustlrCardReview = (
         }
 
         if (photos.length !== 0) {
-          let reviewPhotos = [];
-
+          let counter = 0;
           Array.from(photos).forEach((photo) => {
             const body = new FormData();
             body.append("ReviewId", review.id);
@@ -183,17 +191,21 @@ export const createHustlrCardReview = (
                 if (photo.code) {
                   return;
                 }
-                reviewPhotos.push(photo);
+                review.photos = [...review.photos, photo];
+                counter++;
+                if (counter === photos.length) {
+                  dispatch({
+                    type: CREATE_HUSTLR_CARD_REVIEW,
+                    review: review,
+                  });
+
+                  dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_CREATING_LOADER });
+                  dispatch({ type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR });
+                  dispatch({ type: HUSTLR_CARD_REVIEW_CREATED_SUCCESSFULLY });
+                  dispatch(closeHustlrCardReviewModal());
+                }
               });
           });
-
-          review.photos = reviewPhotos;
-          dispatch({ type: CREATE_HUSTLR_CARD_REVIEW, review: review });
-          dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_CREATING_LOADER });
-          dispatch({ type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR });
-          dispatch({ type: HUSTLR_CARD_REVIEW_CREATED_SUCCESSFULLY });
-          dispatch(closeHustlrCardReviewModal());
-
           return;
         }
 
@@ -252,6 +264,7 @@ export const updatHustlrCardReview = (
         }
 
         if (photos.length !== 0) {
+          let counter = 0;
           Array.from(photos).forEach((photo) => {
             const body = new FormData();
             body.append("ReviewId", reviewId);
@@ -272,16 +285,17 @@ export const updatHustlrCardReview = (
                 if (photo.code) {
                   return;
                 }
-                review.photos.push(photo);
+                review.photos = [...review.photos, photo];
+                counter++;
+                if (counter === photos.length) {
+                  dispatch({ type: UPDATE_HUSTLR_CARD_REVIEW, review: review });
+                  dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER });
+                  dispatch({ type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR });
+                  dispatch({ type: HUSTLR_CARD_REVIEW_SAVED_SUCCESSFULLY });
+                  dispatch(closeHustlrCardReviewModal());
+                }
               });
           });
-
-          dispatch({ type: UPDATE_HUSTLR_CARD_REVIEW, review: review });
-          dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER });
-          dispatch({ type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR });
-          dispatch({ type: HUSTLR_CARD_REVIEW_SAVED_SUCCESSFULLY });
-          dispatch(closeHustlrCardReviewModal());
-
           return;
         }
 
@@ -330,6 +344,46 @@ export const deleteHustlrCardReview = (reviewId) => {
       .catch((err) => {
         dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_DELETING_LOADER });
         dispatch({ type: HUSTLR_CARD_REVIEW_DELETED_UNSUCCESSFULLY });
+      });
+  };
+};
+
+export const deleteHustlrCardReviewPhoto = (reviewId, photoId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_IS_DELETING_LOADER });
+    fetch(`${API_BASE_URL}/photos/review/${photoId}`, reqObj)
+      .then((resp) => {
+        if (!resp.ok) {
+          dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_DELETED_UNSUCCESSFULLY });
+          dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER });
+          return;
+        }
+        if (resp.ok) {
+          dispatch({ type: DELETE_HUSTLR_CARD_REVIEW_PHOTO, photoId: photoId });
+          dispatch({
+            type: DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY,
+            reviewId: reviewId,
+            photoId: photoId,
+          });
+          dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_DELETED_SUCCESSFULLY });
+          dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER });
+          return;
+        }
+      })
+      .catch((err) => {
+        dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_DELETED_UNSUCCESSFULLY });
+        dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER });
       });
   };
 };

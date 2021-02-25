@@ -3,12 +3,11 @@ import { useSelector } from "react-redux";
 
 import Moment from "react-moment";
 import "moment-timezone";
+import Carousel from "react-bootstrap/Carousel";
 
 import IosMore from "react-ionicons/lib/IosMore";
 import MdThumbsUp from "react-ionicons/lib/MdThumbsUp";
 import MdThumbsDown from "react-ionicons/lib/MdThumbsDown";
-import MdDownload from "react-ionicons/lib/MdDownload";
-import MdShare from "react-ionicons/lib/MdShare";
 
 import HustlrCardReviewOptionsModal from "./modals/HustlrCardReviewOptionsModal";
 
@@ -38,6 +37,18 @@ const HustlrCardReview = (props) => {
 
   const hideReviewOptionsModal = () => {
     setShowOptionsModal(false);
+  };
+
+  const renderReviewPhotos = () => {
+    return review.photos.map((photo) => (
+      <Carousel.Item key={photo.id}>
+        <img
+          className="hustlr-card-review-carousel-img"
+          src={photo.url}
+          alt="review-img"
+        />
+      </Carousel.Item>
+    ));
   };
 
   return (
@@ -105,6 +116,11 @@ const HustlrCardReview = (props) => {
             {review.description}
           </p>
         )}
+        {review.photos.length !== 0 ? (
+          <Carousel className="hustlr-card-review-carousel" interval={null}>
+            {renderReviewPhotos()}
+          </Carousel>
+        ) : null}
       </div>
       <div className="hustlr-card-review-bottom-container">
         <div className="hustlr-card-review-bottom-left-container">
@@ -136,18 +152,6 @@ const HustlrCardReview = (props) => {
               {dislikedCount}
             </span>
           </div>
-        </div>
-        <div className="hustlr-card-review-bottom-right-container">
-          <MdDownload
-            color={props.primaryColor}
-            className="hustlr-card-review-camera-button"
-            fontSize="22px"
-          />
-          <MdShare
-            color={props.primaryColor}
-            className="hustlr-card-review-share-button"
-            fontSize="18px"
-          />
         </div>
       </div>
     </div>

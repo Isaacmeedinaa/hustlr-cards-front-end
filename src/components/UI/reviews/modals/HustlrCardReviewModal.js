@@ -5,9 +5,13 @@ import { closeHustlrCardReviewModal } from "../../../../store/actions/modals/hus
 import {
   createHustlrCardReview,
   updatHustlrCardReview,
+  deleteHustlrCardReviewPhoto,
 } from "../../../../store/actions/hustlrCard/hustlrCardReviews";
 import { clearHustlrCardReviewAuthError } from "../../../../store/actions/authErrors/hustlrCardReviewAuthError";
-import { hideHustlrCardReviewCreatedNotification } from "../../../../store/actions/notifications/hustlrCardReviewNotifications";
+import {
+  hideHustlrCardReviewCreatedNotification,
+  hideHustlrCardReviewPhotoDeletedNotification,
+} from "../../../../store/actions/notifications/hustlrCardReviewNotifications";
 
 import { showToast } from "../../Toasts";
 
@@ -16,10 +20,14 @@ import Loader from "react-loader-spinner";
 import Carousel from "react-bootstrap/Carousel";
 
 import MdClose from "react-ionicons/lib/MdClose";
+import MdTrash from "react-ionicons/lib/MdTrash";
 
 import "./modals.css";
 
 Modal.setAppElement("#root");
+
+const LOCAL_PHOTOS = "localPhotos";
+const LOCAL_CLOUD_PHOTOS = "localCloudPhotos";
 
 const HustlrCardReviewModal = () => {
   const dispatch = useDispatch();
@@ -32,6 +40,9 @@ const HustlrCardReviewModal = () => {
   );
   const hustlrCardreviewUpdatingLoader = useSelector(
     (state) => state.hustlrCardReviewLoader.updatingLoader
+  );
+  const hustlrCardReviewPhotoDeletingLoader = useSelector(
+    (state) => state.hustlrCardReviewLoader.deletingPhotoLoader
   );
   const hustlrCardReviewAuthError = useSelector(
     (state) => state.hustlrCardReviewAuthError
@@ -46,6 +57,7 @@ const HustlrCardReviewModal = () => {
   const [description, setDescription] = useState("");
   const [localPhotos, setLocalPhotos] = useState([]);
   const [photos, setPhotos] = useState([]);
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
 
   useEffect(() => {
     if (hustlrCardReviewNotifications.created.show) {
@@ -54,6 +66,14 @@ const HustlrCardReviewModal = () => {
         hustlrCardReviewNotifications.created.message
       );
       dispatch(hideHustlrCardReviewCreatedNotification());
+    }
+
+    if (hustlrCardReviewNotifications.deletedPhoto.show) {
+      showToast(
+        hustlrCardReviewNotifications.deletedPhoto.success,
+        hustlrCardReviewNotifications.deletedPhoto.message
+      );
+      dispatch(hideHustlrCardReviewPhotoDeletedNotification());
     }
   }, [dispatch, hustlrCardReviewNotifications]);
 
@@ -76,6 +96,7 @@ const HustlrCardReviewModal = () => {
     setDescription("");
     setLocalPhotos([]);
     setPhotos([]);
+    setSelectedPhotoIndex(0);
     dispatch(clearHustlrCardReviewAuthError());
   };
 
@@ -88,14 +109,37 @@ const HustlrCardReviewModal = () => {
     const newLocalPhotosArray = Array.from(selectedLocalPhotos);
     if (!hustlrCardReviewModal.review) {
       setLocalPhotos([...localPhotos, ...newLocalPhotosArray]);
+      e.target.value = null;
     } else if (hustlrCardReviewModal.review) {
       setPhotos([...photos, ...newLocalPhotosArray]);
+      e.target.value = null;
+    }
+  };
+
+  const deleteLocalPhoto = (index, typeOfPhotosArray) => {
+    if (typeOfPhotosArray === LOCAL_PHOTOS) {
+      const newLocalPhotosArray = localPhotos.filter(
+        (photo, photoIndex) => photoIndex !== index
+      );
+      setLocalPhotos([...newLocalPhotosArray]);
+      if (selectedPhotoIndex > 0) {
+        setSelectedPhotoIndex(selectedPhotoIndex - 1);
+      }
+    } else if (typeOfPhotosArray === LOCAL_CLOUD_PHOTOS) {
+      const newLocalCloudPhotosArray = photos.filter(
+        (photo, photoIndex) => photoIndex !== index
+      );
+      setPhotos([...newLocalCloudPhotosArray]);
+      if (selectedPhotoIndex > 0) {
+        setSelectedPhotoIndex(selectedPhotoIndex - 1);
+      }
     }
   };
 
   const renderReviewPhotos = () => {
     if (!hustlrCardReviewModal.review) {
       let localPhotosUrls = [];
+
       for (let i = 0; i < localPhotos.length; i++) {
         const localPhoto = localPhotos[i];
         let localPhotoURL = URL.createObjectURL(localPhoto);
@@ -108,6 +152,14 @@ const HustlrCardReviewModal = () => {
             src={photo}
             alt="review-img"
           />
+          <Carousel.Caption className="carousel-caption">
+            <div
+              className="hustlr-card-review-carousel-photo-delete-btn"
+              onClick={() => deleteLocalPhoto(index, LOCAL_PHOTOS)}
+            >
+              <MdTrash color="white" fontSize="24px" />
+            </div>
+          </Carousel.Caption>
         </Carousel.Item>
       ));
     } else if (hustlrCardReviewModal.review) {
@@ -127,9 +179,30 @@ const HustlrCardReviewModal = () => {
             src={photo.url ? photo.url : photo}
             alt="review-img"
           />
+          <Carousel.Caption className="carousel-caption">
+            <div
+              className="hustlr-card-review-carousel-photo-delete-btn"
+              onClick={() =>
+                photo.id
+                  ? dispatch(
+                      deleteHustlrCardReviewPhoto(
+                        hustlrCardReviewModal.review.id,
+                        photo.id
+                      )
+                    )
+                  : deleteLocalPhoto(index, LOCAL_CLOUD_PHOTOS)
+              }
+            >
+              <MdTrash color="white" fontSize="24px" />
+            </div>
+          </Carousel.Caption>
         </Carousel.Item>
       ));
     }
+  };
+
+  const onSelectCarouselPhoto = (index) => {
+    setSelectedPhotoIndex(index);
   };
 
   const onPostReviewClick = () => {
@@ -261,7 +334,11 @@ const HustlrCardReviewModal = () => {
         className="hustlr-card-review-modal-add-photo-button"
         htmlFor="reviewPhotoSelector"
       >
-        Add Photo
+        {hustlrCardReviewPhotoDeletingLoader ? (
+          <Loader type="TailSpin" color="#2ecc71" width={22} height={22} />
+        ) : (
+          "Add Photo"
+        )}
       </label>
       <input
         className="hustlr-card-review-modal-file-input"
@@ -276,6 +353,8 @@ const HustlrCardReviewModal = () => {
           <Carousel
             className="hustlr-card-review-modal-carousel"
             interval={null}
+            activeIndex={selectedPhotoIndex}
+            onSelect={onSelectCarouselPhoto}
           >
             {renderReviewPhotos()}
           </Carousel>
