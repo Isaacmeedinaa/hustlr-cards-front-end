@@ -21,6 +21,8 @@ import {
   HUSTLR_CARD_REVIEW_IS_NOT_DELETING_LOADER,
   HUSTLR_CARD_REVIEW_PHOTO_IS_DELETING_LOADER,
   HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER,
+  HUSTLR_CARD_REVIEW_LIKE_IS_LOADING,
+  HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING,
 } from "../loaders/hustlrCardReviewLoader";
 
 // Notifications
@@ -53,6 +55,9 @@ export const DELETE_HUSTLR_CARD_REVIEW = "DELETE_HUSTLR_CARD_REVIEW";
 export const ADDED_REVIEW_ID = "ADDED_REVIEW_ID";
 export const DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY =
   "DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY";
+export const CREATE_HUSTLR_CARD_REVIEW_LIKE = "CREATE_HUSTLR_CARD_REVIEW_LIKE";
+export const UPDATE_HUSTLR_CARD_REVIEW_LIKE = "UPDATE_HUSTLR_CARD_REVIEW_LIKE";
+export const DELETE_HUSTLR_CARD_REVIEW_LIKE = "DELLETE_HUSTLR_CARD_REVIEW_LIKE";
 
 export const resetHustlrCardReviewsState = () => {
   return {
@@ -385,5 +390,117 @@ export const deleteHustlrCardReviewPhoto = (reviewId, photoId) => {
         dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_DELETED_UNSUCCESSFULLY });
         dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER });
       });
+  };
+};
+
+export const createHustlrCardReviewLike = (sentiment, reviewId, userId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reviewLikeData = {
+      isLiked: sentiment,
+      reviewId: reviewId,
+      userId: userId,
+    };
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(reviewLikeData),
+    };
+
+    dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_LOADING });
+    fetch(`${API_BASE_URL}/reviews/sentiment`, reqObj)
+      .then((resp) => resp.json())
+      .then((like) => {
+        if (like.code) {
+          return;
+        }
+
+        dispatch({
+          type: CREATE_HUSTLR_CARD_REVIEW_LIKE,
+          reviewId: reviewId,
+          like: like,
+        });
+        dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING });
+      });
+  };
+};
+
+export const updateHustlrCardReviewLike = (
+  sentiment,
+  sentimentId,
+  reviewId
+) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reviewLikeData = {
+      id: sentimentId,
+      isLiked: sentiment,
+    };
+
+    const reqObj = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(reviewLikeData),
+    };
+
+    dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_LOADING });
+    fetch(`${API_BASE_URL}/reviews/sentiment/${sentimentId}`, reqObj)
+      .then((resp) => resp.json())
+      .then((like) => {
+        if (like.code) {
+          return;
+        }
+        dispatch({
+          type: UPDATE_HUSTLR_CARD_REVIEW_LIKE,
+          reviewId: reviewId,
+          like: like,
+        });
+        dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING });
+      });
+  };
+};
+
+export const deleteHustlrCardReviewLike = (sentimentId, reviewId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_LOADING });
+    fetch(`${API_BASE_URL}/reviews/sentiment/${sentimentId}`, reqObj).then(
+      (resp) => {
+        if (!resp.ok) {
+          return;
+        }
+
+        if (resp.ok) {
+          dispatch({
+            type: DELETE_HUSTLR_CARD_REVIEW_LIKE,
+            reviewId: reviewId,
+            sentimentId: sentimentId,
+          });
+          dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING });
+          return;
+        }
+      }
+    );
   };
 };

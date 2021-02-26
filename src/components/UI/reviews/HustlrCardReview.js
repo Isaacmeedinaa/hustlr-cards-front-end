@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createHustlrCardReviewLike,
+  updateHustlrCardReviewLike,
+  deleteHustlrCardReviewLike,
+} from "../../../store/actions/hustlrCard/hustlrCardReviews";
+import { openAuthModal } from "../../../store/actions/modals/authModal";
 
 import Moment from "react-moment";
 import "moment-timezone";
@@ -14,26 +21,53 @@ import HustlrCardReviewOptionsModal from "./modals/HustlrCardReviewOptionsModal"
 import "./reviewsUI.css";
 import "../../../constants/colors.css";
 
+const LIKE = "LIKE";
+const DISLIKE = "DISLIKE";
+
 const HustlrCardReview = (props) => {
   const review = props.hustlrCardReview;
+
+  const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.user);
+  const likeLoader = useSelector(
+    (state) => state.hustlrCardReviewLoader.likeLoader
+  );
 
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const [likedCount, setLikedCount] = useState(null);
   const [dislikedCount, setDislikedCount] = useState(null);
-
-  const user = useSelector((state) => state.user);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+  const [sentimentId, setSentimentId] = useState(null);
 
   useEffect(() => {
-    if (review) {
-      const likedArray = review.likes.filter((like) => like.isLiked === true);
-      const dislikedArray = review.likes.filter(
-        (like) => like.isLiked === false
-      );
+    const likedArray = props.hustlrCardReview.likes.filter(
+      (like) => like.isLiked === true
+    );
+    const dislikedArray = props.hustlrCardReview.likes.filter(
+      (like) => like.isLiked === false
+    );
 
-      setLikedCount(likedArray.length);
-      setDislikedCount(dislikedArray.length);
+    setLikedCount(likedArray.length);
+    setDislikedCount(dislikedArray.length);
+
+    if (!user) return;
+    const userLike = props.hustlrCardReview.likes.find(
+      (like) => like.userId === user.id
+    );
+
+    if (userLike && userLike.isLiked) {
+      setIsLiked(true);
+      setIsDisliked(false);
+      setSentimentId(userLike.id);
+    } else if (userLike && !userLike.isLiked) {
+      setIsDisliked(true);
+      setIsLiked(false);
+      setSentimentId(userLike.id);
     }
-  }, [review]);
+  }, [user, props.hustlrCardReview.likes]);
 
   const hideReviewOptionsModal = () => {
     setShowOptionsModal(false);
@@ -49,6 +83,55 @@ const HustlrCardReview = (props) => {
         />
       </Carousel.Item>
     ));
+  };
+
+  const onSentimentClick = (sentiment) => {
+    if (likeLoader) return;
+
+    if (!isLoggedIn) {
+      dispatch(openAuthModal());
+      return;
+    }
+
+    if (sentiment === LIKE) {
+      if (isLiked) {
+        // delete like
+        dispatch(deleteHustlrCardReviewLike(sentimentId, review.id));
+        setIsLiked(false);
+        setSentimentId(null);
+        setLikedCount(likedCount - 1);
+      } else if (isDisliked) {
+        // update to isLiked
+        dispatch(updateHustlrCardReviewLike(true, sentimentId, review.id));
+        setIsLiked(true);
+        setIsDisliked(false);
+        setLikedCount(likedCount + 1);
+        setDislikedCount(dislikedCount - 1);
+      } else {
+        // create like
+        dispatch(createHustlrCardReviewLike(true, review.id, user.id));
+        setIsLiked(true);
+      }
+    } else if (sentiment === DISLIKE) {
+      if (isDisliked) {
+        // delete dislike
+        dispatch(deleteHustlrCardReviewLike(sentimentId, review.id));
+        setIsDisliked(false);
+        setSentimentId(null);
+        setDislikedCount(dislikedCount - 1);
+      } else if (isLiked) {
+        // update to isDisliked
+        dispatch(updateHustlrCardReviewLike(false, sentimentId, review.id));
+        setIsDisliked(true);
+        setIsLiked(false);
+        setDislikedCount(dislikedCount + 1);
+        setLikedCount(likedCount - 1);
+      } else {
+        // create dislike
+        dispatch(createHustlrCardReviewLike(false, review.id, user.id));
+        setIsDisliked(true);
+      }
+    }
   };
 
   return (
@@ -72,7 +155,7 @@ const HustlrCardReview = (props) => {
             {review.dateCreated}
           </Moment>
         </div>
-        {user.id !== review.user.id ? null : (
+        {!user || user.id !== review.user.id ? null : (
           <div className="hustlr-card-review-top-right-container">
             <IosMore
               color={props.primaryColor}
@@ -128,8 +211,9 @@ const HustlrCardReview = (props) => {
             <MdThumbsUp
               color={props.primaryColor}
               className="hustlr-card-review-like-button"
-              style={{ opacity: 0.5 }}
+              style={{ opacity: isLiked ? 1 : 0.5 }}
               fontSize="20px"
+              onClick={() => onSentimentClick(LIKE)}
             />
             <span
               className="hustlr-card-review-like-count"
@@ -142,8 +226,9 @@ const HustlrCardReview = (props) => {
             <MdThumbsDown
               color={props.primaryColor}
               className="hustlr-card-review-unlike-button"
-              style={{ opacity: 0.5 }}
+              style={{ opacity: isDisliked ? 1 : 0.5 }}
               fontSize="20px"
+              onClick={() => onSentimentClick(DISLIKE)}
             />
             <span
               className="hustlr-card-review-unlike-count"

@@ -85,14 +85,16 @@ const HustlrCardReviews = () => {
   }, [dispatch, hustlrCardReviewNotifications]);
 
   const renderHustlrCardReviews = () => {
-    return hustlrCardReviews.map((hustlrCardReview) => (
-      <HustlrCardReview
-        key={hustlrCardReview.id}
-        hustlrCardReview={hustlrCardReview}
-        primaryColor={publicCard.primaryColor}
-        transparentColor={publicCard.transparentColor}
-      />
-    ));
+    return hustlrCardReviews.map((hustlrCardReview) => {
+      return (
+        <HustlrCardReview
+          key={hustlrCardReview.id}
+          hustlrCardReview={hustlrCardReview}
+          primaryColor={publicCard.primaryColor}
+          transparentColor={publicCard.transparentColor}
+        />
+      );
+    });
   };
 
   const onSortSelectChange = (e) => {
