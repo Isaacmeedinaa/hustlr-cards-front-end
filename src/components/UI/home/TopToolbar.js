@@ -42,7 +42,7 @@ class TopToolbar extends Component {
     if (this.props.cardLoader) {
       return null;
     }
-
+    
     return (
       <div className="toptoolbar-wrapper">
         <div className="primary-light-bg toptoolbar">
@@ -74,6 +74,7 @@ class TopToolbar extends Component {
           <ThemePicker closeThemePickerHandler={this.closeThemePickerHandler} />
         )}
         <Tabs />
+        
       </div>
     );
   }

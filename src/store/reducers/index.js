@@ -9,7 +9,8 @@ import cardSaved from "./cardSaved";
 import publicCard from "./hustlrCard/publicCard";
 import auth from "./auth";
 import emailVerification from "./emailVerification";
-import tabs from "./tabs";
+import tabs from "./tabs/tabs"
+import reviewsTabs from "./tabs/reviewsTabs";
 import hustlrCardReviews from "./hustlrCard/hustlrCardReviews";
 
 // Loaders
@@ -33,6 +34,7 @@ import linkLoader from "./loaders/socialMediaLinkLoaders";
 import paymentMethodsLoader from "./loaders/paymentMethodsLoader";
 import reviewLoader from "./loaders/reviewLoader";
 import hustlrCardReviewLoader from "./loaders/hustlrCardReviewLoader";
+import accountUpgradingLoader from "./loaders/accountUpgradingLoader";
 
 // Auth Errors
 import hustlrCardReviewAuthError from "./authErrors/hustlrCardReviewAuthError";
@@ -68,6 +70,7 @@ import linkNotifications from "./notifications/socialMediaLinkNotifications";
 import contactMessageNotifications from "./notifications/contactMessageNotifications";
 import paymentMethodsNotifications from "./notifications/paymentMethodNotifications";
 import hustlrCardReviewNotifications from "./notifications/hustlrCardReviewNotifications";
+import accountUpgradedNotifications from "./notifications/accountUpgradedNotifications";
 
 // Modals
 import imageCropperModal from "./modals/imageCropperModal";
@@ -98,6 +101,7 @@ const rootReducer = combineReducers({
   auth,
   emailVerification,
   tabs,
+  reviewsTabs,
   hustlrCardReviews,
   // Loaders
   loginLoader,
@@ -120,6 +124,7 @@ const rootReducer = combineReducers({
   paymentMethodsLoader,
   reviewLoader,
   hustlrCardReviewLoader,
+  accountUpgradingLoader,
   // Auth Errors
   hustlrCardReviewAuthError,
   loginAuthError,
@@ -152,6 +157,7 @@ const rootReducer = combineReducers({
   linkNotifications,
   paymentMethodsNotifications,
   hustlrCardReviewNotifications,
+  accountUpgradedNotifications,
   // Modals
   imageCropperModal,
   backdropImageCropperModal,

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedTab } from "../../../store/actions/tabs";
+import { setSelectedTab } from "../../../store/actions/tabs/tabs";
 
 import "../../../constants/colors.css";
 import "./HomeUI.css";

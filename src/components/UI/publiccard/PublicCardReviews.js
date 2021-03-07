@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useEffect }  from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { openViewImagesModal } from "../../../store/actions/modals/viewImagesModal";
+// import { openViewImagesModal } from "../../../store/actions/modals/viewImagesModal";
 import { showToast } from "../Toasts";
 
 import {
@@ -9,8 +9,8 @@ import {
   hideHustlrCardReviewDeletedNotification,
 } from "../../../store/actions/notifications/hustlrCardReviewNotifications";
 
-import Carousel from "react-bootstrap/Carousel";
-import { addWidthToImgUrl } from "../../../services/ImgUrlParser";
+// import Carousel from "react-bootstrap/Carousel";
+// import { addWidthToImgUrl } from "../../../services/ImgUrlParser";
 import HustlrCardReview from "../reviews/HustlrCardReview";
 
 import "../../../constants/colors.css";
@@ -42,13 +42,15 @@ const PublicCardReviews = (props) => {
   }, [dispatch, hustlrCardReviewNotifications]);
 
   useEffect(() => {
-    reviewsContainer.current.addEventListener(
-      "wheel",
-      onReviewsContainerWheel,
-      {
-        passive: false,
-      }
-    );
+    if (reviewsContainer.current !== undefined) {
+      reviewsContainer.current.addEventListener(
+        "wheel",
+        onReviewsContainerWheel,
+        {
+          passive: false,
+        }
+      );
+    }
   }, [reviewsContainer]); 
 
   if (!props.reviews || props.reviews.length === 0) {
@@ -73,37 +75,37 @@ const PublicCardReviews = (props) => {
     });
   };
 
-  const onReviewImageClick = (images, currentImgUrl, currentImgIndex) => {
-    props.setImagesData(images, currentImgUrl, currentImgIndex);
-    dispatch(openViewImagesModal());
-  };
+  // const onReviewImageClick = (images, currentImgUrl, currentImgIndex) => {
+  //   props.setImagesData(images, currentImgUrl, currentImgIndex);
+  //   dispatch(openViewImagesModal());
+  // };
 
-  const renderReviewSliderImages = (review) => {
-    return review.photos.map((photo, index) => (
-      <Carousel.Item key={photo.id}>
-        <img
-          style={{
-            objectFit: "cover",
-            height: 250,
-            width: "100%",
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-          srcSet={`${addWidthToImgUrl(photo.url, 320)} 320w, ${addWidthToImgUrl(
-            photo.url,
-            640
-          )} 640w, ${addWidthToImgUrl(photo.url, 1280)} 1280w`}
-          sizes={"(max-width: 650px) 67vw, (min-width: 651px) 412px, 412px"}
-          onClick={() =>
-            onReviewImageClick(review.photos, photo.url, index)
-          }
-          alt="img"
-        />
-      </Carousel.Item>
-    ));
-  };
+  // const renderReviewSliderImages = (review) => {
+  //   return review.photos.map((photo, index) => (
+  //     <Carousel.Item key={photo.id}>
+  //       <img
+  //         style={{
+  //           objectFit: "cover",
+  //           height: 250,
+  //           width: "100%",
+  //           borderTopLeftRadius: 10,
+  //           borderTopRightRadius: 10,
+  //           backgroundRepeat: "no-repeat",
+  //           backgroundPosition: "center",
+  //         }}
+  //         srcSet={`${addWidthToImgUrl(photo.url, 320)} 320w, ${addWidthToImgUrl(
+  //           photo.url,
+  //           640
+  //         )} 640w, ${addWidthToImgUrl(photo.url, 1280)} 1280w`}
+  //         sizes={"(max-width: 650px) 67vw, (min-width: 651px) 412px, 412px"}
+  //         onClick={() =>
+  //           onReviewImageClick(review.photos, photo.url, index)
+  //         }
+  //         alt="img"
+  //       />
+  //     </Carousel.Item>
+  //   ));
+  // };
 
   const renderReviews = () => {
     return props.reviews.map((review) => (

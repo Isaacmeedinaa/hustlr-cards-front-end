@@ -10,6 +10,7 @@
   padding: 0 !important;
 }
 
+/* Landing Page */
 .landing-page-wrapper {
   width: 100%;
   height: auto;
@@ -32,6 +33,8 @@
   transition: 0.3s;
 }
 
+
+/* Home page */
 .grid-container-home {
   display: grid;
   grid-template-columns: minmax(75px, 75px) minmax(calc(50% - 75px), 1fr) minmax(
@@ -64,6 +67,8 @@
   align-items: center;
 }
 
+/* Settings Page */
+
 .grid-container-settings {
   min-height: 100%;
   display: grid;
@@ -88,6 +93,7 @@
   padding: 15px 20px 15px 20px;
 }
 
+/* Support Page */
 .grid-container-support {
   min-height: 100%;
   display: grid;
@@ -112,6 +118,7 @@
   padding: 15px 20px 15px 20px;
 }
 
+/* Public card Page */
 .public-card-page-wrapper {
   min-height: 100%;
   width: 100%;
@@ -124,6 +131,7 @@
   overflow-x: hidden !important;
 }
 
+/* Modals */
 .ReactModal__Html--open,
 .ReactModal__Body--open {
   overflow: hidden !important; /* prevents background page from scrolling when the modal is open */
@@ -142,6 +150,7 @@
   max-height: calc(80vh - 2rem);
 }
 
+/* Reviews page */
 .hustlr-card-reviews-page-wrapper {
   min-height: 100%;
   width: 100%;
@@ -152,6 +161,29 @@
   justify-content: center;
   justify-items: center;
   overflow-x: hidden !important;
+}
+
+.grid-container-reviews {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(75px, 75px) 1fr;
+  grid-template-areas: "sidetoolbar reviews";
+}
+
+.reviews-col-wrapper {
+  grid-area: reviews;
+}
+
+.reviews-col-container-less-padding {
+  padding: 15px 20px 15px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.reviews-col-container-more-padding {
+  padding: 80px 20px 15px 20px;
+  display: flex;
+  justify-content: center;
 }
 
 /* 770 breakpoint for the home page */
@@ -258,5 +290,20 @@
 
   .support-faq-col-container {
     padding: 20px 10px 80px 10px;
+  }
+
+  .grid-container-reviews {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "reviews"
+  }
+
+  .reviews-col-container-less-padding {
+    padding: 20px 10px 80px 10px;
+  }
+
+  .reviews-col-container-more-padding {
+    padding: 80px 10px 80px 10px;
   }
 }

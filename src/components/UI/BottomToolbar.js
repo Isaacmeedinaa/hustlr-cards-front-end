@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { userLogout } from "../../store/actions/user";
 
 import MdHome from "react-ionicons/lib/MdHome";
+import MdList from "react-ionicons/lib/MdList";
 import MdSettings from "react-ionicons/lib/MdSettings";
 import MdLogOut from "react-ionicons/lib/MdLogOut";
 import MdHelp from "react-ionicons/lib/MdHelpCircle";
@@ -72,24 +73,59 @@ class BottomToolbar extends Component {
           </div> */}
           <div
             className={
-              this.state.pathname !== "/home"
-                ? "bottomtoolbar-icon-wrapper"
-                : "bottomtoolbar-icon-wrapper selected"
+              this.props.user.isHustlr ?
+                  this.state.pathname !== "/home"
+                    ? "bottomtoolbar-icon-wrapper"
+                    : "bottomtoolbar-icon-wrapper selected"
+                :
+                  this.state.pathname !== "/reviews"
+                    ? "bottomtoolbar-icon-wrapper"
+                    : "bottomtoolbar-icon-wrapper selected"
             }
           >
             <MdHome
               className="bottomtoolbar-icon"
               onClick={() => {
-                this.props.history.push("/home");
+                this.props.user.isHustlr ? this.props.history.push("/home") : this.props.history.push("/reviews");
               }}
               fontsize="26px"
               color={
-                this.state.pathname !== "/home"
-                  ? this.state.secondary
-                  : this.state.primary
+                this.props.user.isHustlr ?
+                    this.state.pathname !== "/home"
+                      ? this.state.secondary
+                      : this.state.primary
+                  : 
+                    this.state.pathname !== "/reviews"
+                      ? this.state.secondary
+                      : this.state.primary
               }
             />
           </div>
+          {
+              this.props.user.isHustlr ?
+                <div
+                  className={
+                    this.state.pathname !== "/reviews"
+                      ? "bottomtoolbar-icon-wrapper"
+                      : "bottomtoolbar-icon-wrapper selected"
+                  }
+                >
+                  <MdList
+                    className="bottomtoolbar-icon"
+                    onClick={() => {
+                      this.props.history.push("/reviews");
+                    }}
+                    fontSize="26px"
+                    color={
+                      this.state.pathname !== "/reviews"
+                        ? this.state.secondary
+                        : this.state.primary
+                    }
+                  />
+                </div>
+              : 
+                null
+            }
           <div
             className={
               this.state.pathname !== "/settings"
@@ -147,10 +183,16 @@ class BottomToolbar extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     userLogout: (history) => dispatch(userLogout(history)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(BottomToolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(BottomToolbar);

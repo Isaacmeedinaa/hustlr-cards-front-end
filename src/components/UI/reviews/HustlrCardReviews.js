@@ -18,6 +18,7 @@ import Select from "react-select";
 
 import PublicCardReviewButton from "../publiccard/PublicCardReviewButton";
 import HustlrCardReview from "./HustlrCardReview";
+import ReviewsTabs from "./ReviewsTabs";
 
 import { sortOptions } from "../../../constants/sortOptions";
 
@@ -25,10 +26,12 @@ import "./reviewsUI.css";
 import "../../../constants/colors.css";
 import { Fragment } from "react";
 
-const HustlrCardReviews = () => {
+const HustlrCardReviews = (props) => {
   const dispatch = useDispatch();
 
   const publicCard = useSelector((state) => state.publicCard);
+  const user = useSelector((state) => state.user);
+
   const hustlrCardReviewFetchingAllLoader = useSelector(
     (state) => state.hustlrCardReviewLoader.fetchingAllLoader
   );
@@ -50,16 +53,16 @@ const HustlrCardReviews = () => {
 
   // initial fetch (first page)
   useEffect(() => {
-    if (publicCard) {
-      dispatch(fetchInitialHustlrCardReviews(1, sortOptions[2].value));
+    if (publicCard || props.fetchReviewsBy !== null) {
+      dispatch(fetchInitialHustlrCardReviews(1, sortOptions[2].value, props.fetchReviewsBy));
     }
-  }, [dispatch, publicCard]);
+  }, [dispatch, publicCard, props.fetchReviewsBy]);
 
   // next fetch (next pages)
   useEffect(() => {
     if (pageNumber === 1) return;
-    dispatch(fetchNextHustlrCardReview(pageNumber, sortOption.value));
-  }, [dispatch, pageNumber, sortOption]);
+    dispatch(fetchNextHustlrCardReview(pageNumber, sortOption.value, props.fetchReviewsBy));
+  }, [dispatch, pageNumber, sortOption, props.fetchReviewsBy]);
 
   useEffect(() => {
     return () => {
@@ -89,8 +92,8 @@ const HustlrCardReviews = () => {
       <HustlrCardReview
         key={hustlrCardReview.id}
         hustlrCardReview={hustlrCardReview}
-        primaryColor={publicCard.primaryColor}
-        transparentColor={publicCard.transparentColor}
+        primaryColor={publicCard !== null ? publicCard.primaryColor : '#28af60'}
+        transparentColor={publicCard !== null ? publicCard.transparentColor : '#28af601a'}
       />
     ));
   };
@@ -98,7 +101,7 @@ const HustlrCardReviews = () => {
   const onSortSelectChange = (e) => {
     setSortOption(e);
     setPageNumber(1);
-    dispatch(fetchInitialHustlrCardReviews(1, e.value));
+    dispatch(fetchInitialHustlrCardReviews(1, e.value, props.fetchReviewsBy));
   };
 
   const onViewMoreClick = () => {
@@ -112,6 +115,9 @@ const HustlrCardReviews = () => {
           <Loader type="TailSpin" color="#2ecc71" width={48} height={48} />
         ) : (
           <Fragment>
+            {!props.publicReviews && user.isHustlr ? 
+              <ReviewsTabs/> :
+              <h2 className="hustlr-card-reviews-header">{props.title}</h2>}
             <div className="hustlr-card-reviews-toolbar">
               <Select
                 className="hustlr-card-reviews-sort-options-select"
@@ -151,9 +157,12 @@ const HustlrCardReviews = () => {
                   }),
                 }}
               />
-              <PublicCardReviewButton />
+              {props.publicReviews ? <PublicCardReviewButton /> : null}
             </div>
-            {renderHustlrCardReviews()}
+            { hustlrCardReviews.length === 0 ? 
+              <div className="hustlr-card-no-reviews">No Reviews</div> :
+              renderHustlrCardReviews()
+            } 
             {pageNumber >= hustlrCardTotalReviewPages ? null : (
               <div className="hustlr-card-reviews-view-more-text-container">
                 {!hustlrCardReviewFetchingNextLoader ? (

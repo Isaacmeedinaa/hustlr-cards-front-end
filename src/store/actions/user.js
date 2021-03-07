@@ -2,9 +2,13 @@
 import { API_BASE_URL } from "../../constants/urls";
 
 // Card
-import { fetchCard } from "./card";
+import { fetchCard, REMOVE_CARD } from "./card";
 
 // Notifications
+import {
+  ACCOUNT_UPGRADED_SUCCESSFULLY,
+  ACCOUNT_UPGRADED_UNSUCCESSFULLY
+} from "./notifications/accountUpgradedNotifications";
 import {
   USER_UPDATED_SUCCESSFULLY,
   USER_UPDATED_UNSUCCESSFULLY,
@@ -36,6 +40,10 @@ import {
   USER_IS_UPDATING,
   USER_IS_NOT_UPDATING,
 } from "./loaders/userUpdatingLoader";
+import {
+  ACCOUNT_IS_UPGRADING,
+  ACCOUNT_IS_NOT_UPGRADING
+} from "./loaders/accountUpgradingLoader";
 import {
   PASSWORD_IS_UPDATING,
   PASSWORD_IS_NOT_UPDATING,
@@ -164,7 +172,6 @@ export const userLogin = (username, password, history) => {
         }
 
         dispatch(closeAuthModal());
-        dispatch(openHustlrCardReviewModal());
       })
       .catch((err) => {
         dispatch({ type: SET_IS_NOT_AUTHENTICATED });
@@ -198,16 +205,15 @@ export const userAutoLogin = () => {
             return;
           }
 
-          dispatch({ type: SET_IS_AUTHENTICATED });
-
           const userId = localStorage.getItem("userId");
           dispatch(fetchCard(userId));
 
           dispatch({ type: USER_LOGIN, user: user });
+          dispatch({ type: SET_IS_AUTHENTICATED });
           dispatch({ type: IS_NOT_LOGGING_IN });
         })
         .catch((err) => {
-          dispatch({ type: SET_IS_AUTHENTICATED });
+          dispatch({ type: SET_IS_NOT_AUTHENTICATED });
           dispatch({ type: IS_NOT_LOGGING_IN });
         });
     } else {
@@ -337,6 +343,7 @@ export const userLogout = (history) => {
     dispatch({ type: REMOVE_OFFERING_AUTH_ERROR });
     dispatch({ type: REMOVE_OFFERING_VALIDATION_ERRORS });
 
+    dispatch({ type: REMOVE_CARD });
     dispatch({ type: REMOVE_CARD_AUTH_ERROR });
     dispatch({ type: REMOVE_CARD_VALIDATION_ERRORS });
 
@@ -420,6 +427,65 @@ export const updateUser = (firstName, lastName, username, email, isHustlr) => {
       .catch((err) => {
         dispatch({ type: USER_IS_NOT_UPDATING });
         dispatch({ type: USER_UPDATED_UNSUCCESSFULLY });
+      });
+  };
+};
+
+export const upgradeToHustlrAccount = (history) => {
+  return (dispatch, getState) => {
+    const userToken = localStorage.getItem("userToken");
+    const userId = localStorage.getItem("userId");
+    const user = getState().user;
+
+    const userData = {
+      id: +userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      email: user.email,
+      isHustlr: true,
+    };
+
+    const reqObj = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(userData),
+    };
+
+    dispatch({ type: ACCOUNT_IS_UPGRADING });
+    fetch(`${API_BASE_URL}/users`, reqObj)
+      .then((resp) => resp.json())
+      .then((user) => {
+        // Auth Errors or Validation errors
+        if (user.code || user.errors) {
+          dispatch({ type: ACCOUNT_UPGRADED_UNSUCCESSFULLY });
+          dispatch({ type: ACCOUNT_IS_NOT_UPGRADING });
+          return;
+        }
+
+        dispatch({ type: ACCOUNT_UPGRADED_SUCCESSFULLY });
+
+        const userObj = {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          email: user.email,
+          isHustlr: user.isHustlr,
+        };
+
+        dispatch({ type: USER_UPDATED, user: userObj });
+        dispatch({ type: ACCOUNT_IS_NOT_UPGRADING });
+        history.push("/home")
+
+      })
+      .catch((err) => {
+        dispatch({ type: ACCOUNT_IS_NOT_UPGRADING });
+        dispatch({ type: ACCOUNT_UPGRADED_UNSUCCESSFULLY });
       });
   };
 };

@@ -1,4 +1,4 @@
-import { SET_SELECTED_TAB, EDIT } from "../actions/tabs";
+import { SET_SELECTED_TAB, EDIT } from "../../actions/tabs/tabs";
 
 const tabs = (state = EDIT, action) => {
   switch (action.type) {
