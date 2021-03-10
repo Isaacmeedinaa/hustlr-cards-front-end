@@ -5,6 +5,10 @@ import {
   CREATE_HUSTLR_CARD_REVIEW,
   UPDATE_HUSTLR_CARD_REVIEW,
   DELETE_HUSTLR_CARD_REVIEW,
+  DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY,
+  CREATE_HUSTLR_CARD_REVIEW_LIKE,
+  UPDATE_HUSTLR_CARD_REVIEW_LIKE,
+  DELETE_HUSTLR_CARD_REVIEW_LIKE,
 } from "../../actions/hustlrCard/hustlrCardReviews";
 
 const initialState = {
@@ -46,10 +50,10 @@ const hustlrCardReviews = (state = initialState, action) => {
 
     case UPDATE_HUSTLR_CARD_REVIEW:
       const updatedHustlrCardReviews = [...state.reviews];
-      const reviewIndex = updatedHustlrCardReviews.findIndex(
+      const updateReviewIndex = updatedHustlrCardReviews.findIndex(
         (review) => review.id === action.review.id
       );
-      updatedHustlrCardReviews[reviewIndex] = action.review;
+      updatedHustlrCardReviews[updateReviewIndex] = action.review;
 
       return {
         ...state,
@@ -63,6 +67,80 @@ const hustlrCardReviews = (state = initialState, action) => {
           (review) => review.id !== action.reviewId
         ),
         reviewWasDeleted: true,
+      };
+
+    case DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY:
+      const newHustlrCardReviews = [...state.reviews];
+      const deletePhotoReviewIndex = newHustlrCardReviews.findIndex(
+        (review) => review.id === action.reviewId
+      );
+      const review = newHustlrCardReviews.find(
+        (review) => review.id === action.reviewId
+      );
+      const newReviewPhotos = review.photos.filter(
+        (photo) => photo.id !== action.photoId
+      );
+      review.photos = newReviewPhotos;
+      newHustlrCardReviews[deletePhotoReviewIndex] = review;
+
+      return {
+        ...state,
+        reviews: newHustlrCardReviews,
+      };
+
+    case CREATE_HUSTLR_CARD_REVIEW_LIKE:
+      const reviewsArrayCopy = [...state.reviews];
+      const reviewCopyIndex = reviewsArrayCopy.findIndex(
+        (review) => review.id === action.reviewId
+      );
+      const reviewCopy = reviewsArrayCopy.find(
+        (review) => review.id === action.reviewId
+      );
+      const reviewLikesArrayCopy = [...reviewCopy.likes, action.like];
+      reviewCopy.likes = reviewLikesArrayCopy;
+      reviewsArrayCopy[reviewCopyIndex] = reviewCopy;
+
+      return {
+        ...state,
+        reviews: reviewsArrayCopy,
+      };
+
+    case UPDATE_HUSTLR_CARD_REVIEW_LIKE:
+      const updateReviewsCopy = [...state.reviews];
+      const updateReviewIndexCopy = updateReviewsCopy.findIndex(
+        (review) => review.id === action.reviewId
+      );
+      const updateReviewCopy = updateReviewsCopy.find(
+        (review) => review.id === action.reviewId
+      );
+      const udpateReviewLikeIndexCopy = updateReviewCopy.likes.findIndex(
+        (like) => like.id === action.like.id
+      );
+      updateReviewCopy.likes[udpateReviewLikeIndexCopy] = action.like;
+      updateReviewsCopy[updateReviewIndexCopy] = updateReviewCopy;
+
+      return {
+        ...state,
+        reviews: updateReviewsCopy,
+      };
+
+    case DELETE_HUSTLR_CARD_REVIEW_LIKE:
+      const deleteReviewsCopy = [...state.reviews];
+      const deleteReviewIndexCopy = deleteReviewsCopy.findIndex(
+        (review) => review.id === action.reviewId
+      );
+      const deleteReviewCopy = deleteReviewsCopy.find(
+        (review) => review.id === action.reviewId
+      );
+      const deleteReviewLikesCopy = deleteReviewCopy.likes.filter(
+        (review) => review.id !== action.sentimentId
+      );
+      deleteReviewCopy.likes = deleteReviewLikesCopy;
+      deleteReviewsCopy[deleteReviewIndexCopy] = deleteReviewCopy;
+
+      return {
+        ...state,
+        reviews: deleteReviewsCopy,
       };
 
     default:

@@ -90,6 +90,69 @@
   outline: none;
 }
 
+.hustlr-card-review-modal-add-photo-button {
+  margin-top: 10px;
+  align-self: flex-end;
+  border: none;
+  background-color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #2ecc71;
+}
+
+.hustlr-card-review-modal-add-photo-button:focus {
+  outline: none;
+}
+
+.hustlr-card-review-modal-add-photo-button:hover {
+  border-radius: 5px;
+  background-color: rgba(112, 112, 112, 0.06);
+  cursor: pointer;
+}
+
+.hustlr-card-review-modal-file-input {
+  display: none;
+}
+
+.hustlr-card-review-modal-carousel-container {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.hustlr-card-review-modal-carousel {
+  height: 200px;
+  width: 100%;
+}
+
+.hustlr-card-review-modal-carousel-img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.carousel-caption {
+  left: 85% !important;
+}
+
+.hustlr-card-review-carousel-photo-delete-btn {
+  width: 35px;
+  height: 35px;
+  background: #2ecc71;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 110px;
+}
+
+.hustlr-card-review-carousel-photo-delete-btn:hover {
+  cursor: pointer;
+}
+
 .hustlr-card-review-modal-post-review-btn {
   margin-top: 30px;
   padding: 8px 0px 8px 0px;

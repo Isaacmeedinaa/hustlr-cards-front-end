@@ -11,6 +11,10 @@ import {
   HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER,
   HUSTLR_CARD_REVIEW_IS_DELETING_LOADER,
   HUSTLR_CARD_REVIEW_IS_NOT_DELETING_LOADER,
+  HUSTLR_CARD_REVIEW_PHOTO_IS_DELETING_LOADER,
+  HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER,
+  HUSTLR_CARD_REVIEW_LIKE_IS_LOADING,
+  HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING,
 } from "../../actions/loaders/hustlrCardReviewLoader";
 
 let initialState = {
@@ -20,6 +24,8 @@ let initialState = {
   creatingLoader: false,
   updatingLoader: false,
   deletingLoader: false,
+  deletingPhotoLoader: false,
+  likeLoader: false,
 };
 
 const hustlrCardReviewLoader = (state = initialState, action) => {
@@ -95,6 +101,30 @@ const hustlrCardReviewLoader = (state = initialState, action) => {
       return {
         ...state,
         deletingLoader: false,
+      };
+
+    case HUSTLR_CARD_REVIEW_PHOTO_IS_DELETING_LOADER:
+      return {
+        ...state,
+        deletingPhotoLoader: true,
+      };
+
+    case HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER:
+      return {
+        ...state,
+        deletingPhotoLoader: false,
+      };
+
+    case HUSTLR_CARD_REVIEW_LIKE_IS_LOADING:
+      return {
+        ...state,
+        likeLoader: true,
+      };
+
+    case HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING:
+      return {
+        ...state,
+        likeLoader: false,
       };
 
     default:

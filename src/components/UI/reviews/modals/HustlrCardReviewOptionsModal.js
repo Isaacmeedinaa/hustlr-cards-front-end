@@ -60,9 +60,6 @@ const HustlrCardReviewOptionsModal = (props) => {
               )}
             </button>
           )}
-          <button className="primary-light-bg hustlr-card-review-options-modal-button">
-            Report
-          </button>
         </Fragment>
       ) : (
         <Fragment>

@@ -17,7 +17,7 @@ Modal.setAppElement("#root");
 const AuthModal = () => {
   const dispatch = useDispatch();
 
-  const authModal = useSelector((state) => state.authModal);
+  const isOpen = useSelector((state) => state.authModal.isOpen);
 
   const [showRegisterForm, setShowRegisterForm] = useState(false);
 
@@ -28,7 +28,7 @@ const AuthModal = () => {
 
   return (
     <Modal
-      isOpen={authModal}
+      isOpen={isOpen}
       onRequestClose={() => onAuthModalClose()}
       contentLabel="Auth Modal"
       className="primary-light-bg auth-modal"

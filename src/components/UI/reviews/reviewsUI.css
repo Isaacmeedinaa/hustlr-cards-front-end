@@ -43,6 +43,10 @@
   font-size: 16px;
 }
 
+.hustlr-card-reviews-view-more-text:hover {
+  cursor: pointer;
+}
+
 .hustlr-card-review-container {
   margin-top: 25px;
   padding: 20px 25px;
@@ -98,6 +102,24 @@
   margin-top: 30px;
   margin-bottom: 0px;
   font-size: 16px;
+}
+
+.hustlr-card-review-carousel {
+  margin-top: 30px;
+  height: 200px;
+  width: 100%;
+}
+
+.carousel-inner {
+  border-radius: 5px;
+}
+
+.hustlr-card-review-carousel-img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hustlr-card-review-bottom-container {

@@ -9,11 +9,14 @@ import {
   HUSTLR_CARD_REVIEW_SAVED_UNSUCCESSFULLY,
   HUSTLR_CARD_REVIEW_DELETED_SUCCESSFULLY,
   HUSTLR_CARD_REVIEW_DELETED_UNSUCCESSFULLY,
+  HUSTLR_CARD_REVIEW_PHOTO_DELETED_SUCCESSFULLY,
+  HUSTLR_CARD_REVIEW_PHOTO_DELETED_UNSUCCESSFULLY,
   HIDE_HUSTLR_CARD_REVIEWS_FETCHED_NOTIFICATION,
   HIDE_HUSTLR_CARD_REVIEW_FETCHED_NOTIFICATION,
   HIDE_HUSTLR_CARD_REVIEW_CREATED_NOTIFICATION,
   HIDE_HUSTLR_CARD_REVIEW_SAVED_NOTIFICATION,
   HIDE_HUSTLR_CARD_REVIEW_DELETED_NOTIFICATION,
+  HIDE_HUSTLR_CARD_REVIEW_PHOTO_DELETED_NOTIFICATION,
 } from "../../actions/notifications/hustlrCardReviewNotifications";
 
 const intialState = {
@@ -38,6 +41,11 @@ const intialState = {
     message: "",
   },
   deleted: {
+    show: false,
+    success: false,
+    message: "",
+  },
+  deletedPhoto: {
     show: false,
     success: false,
     message: "",
@@ -190,6 +198,36 @@ const hustlrCardReviewNotifications = (state = intialState, action) => {
       return {
         ...state,
         deleted: {
+          show: false,
+          success: undefined,
+          message: "",
+        },
+      };
+
+    case HUSTLR_CARD_REVIEW_PHOTO_DELETED_SUCCESSFULLY:
+      return {
+        ...state,
+        deletedPhoto: {
+          show: true,
+          success: true,
+          message: "Your photo was successfully deleted!",
+        },
+      };
+
+    case HUSTLR_CARD_REVIEW_PHOTO_DELETED_UNSUCCESSFULLY:
+      return {
+        ...state,
+        deletedPhoto: {
+          show: true,
+          success: false,
+          message: "Oops, something went wrong. Try again later.",
+        },
+      };
+
+    case HIDE_HUSTLR_CARD_REVIEW_PHOTO_DELETED_NOTIFICATION:
+      return {
+        ...state,
+        deletedPhoto: {
           show: false,
           success: undefined,
           message: "",

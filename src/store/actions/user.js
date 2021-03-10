@@ -23,7 +23,6 @@ import { SET_IS_AUTHENTICATED, SET_IS_NOT_AUTHENTICATED } from "./auth";
 
 // Modals
 import { closeAuthModal } from "./modals/authModal";
-import { openHustlrCardReviewModal } from "./modals/hustlrCardReviewModal";
 
 // Loaders
 import { IS_LOGGING_IN, IS_NOT_LOGGING_IN } from "./loaders/loginLoader";
@@ -111,7 +110,7 @@ export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_UPDATED = "USER_UPDATED";
 
 export const userLogin = (username, password, history) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const loginData = {
       username: username,
       password: password,
@@ -325,7 +324,7 @@ export const userRegister = (
         }
 
         dispatch(closeAuthModal());
-        dispatch(openHustlrCardReviewModal());
+        // dispatch(openHustlrCardReviewModal());
       })
       .catch((err) => {
         dispatch({ type: IS_NOT_REGISTERING });

@@ -2,7 +2,10 @@
 import { API_BASE_URL, FETCH_REVIEWS_BY, DefaultReviewPageSize } from "../../../constants/urls";
 
 // modals
-import { closeHustlrCardReviewModal } from "../modals/hustlrCardReviewModal";
+import {
+  DELETE_HUSTLR_CARD_REVIEW_PHOTO,
+  closeHustlrCardReviewModal,
+} from "../modals/hustlrCardReviewModal";
 
 // Loaders
 import {
@@ -16,6 +19,10 @@ import {
   HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER,
   HUSTLR_CARD_REVIEW_IS_DELETING_LOADER,
   HUSTLR_CARD_REVIEW_IS_NOT_DELETING_LOADER,
+  HUSTLR_CARD_REVIEW_PHOTO_IS_DELETING_LOADER,
+  HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER,
+  HUSTLR_CARD_REVIEW_LIKE_IS_LOADING,
+  HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING,
 } from "../loaders/hustlrCardReviewLoader";
 
 // Notifications
@@ -28,6 +35,8 @@ import {
   HUSTLR_CARD_REVIEW_SAVED_UNSUCCESSFULLY,
   HUSTLR_CARD_REVIEW_DELETED_SUCCESSFULLY,
   HUSTLR_CARD_REVIEW_DELETED_UNSUCCESSFULLY,
+  HUSTLR_CARD_REVIEW_PHOTO_DELETED_SUCCESSFULLY,
+  HUSTLR_CARD_REVIEW_PHOTO_DELETED_UNSUCCESSFULLY,
 } from "../notifications/hustlrCardReviewNotifications";
 
 // Auth Errors
@@ -44,6 +53,11 @@ export const CREATE_HUSTLR_CARD_REVIEW = "CREATE_HUSTLR_CARD_REVIEW";
 export const UPDATE_HUSTLR_CARD_REVIEW = "UPDATE_HUSTLR_CARD_REVIEW";
 export const DELETE_HUSTLR_CARD_REVIEW = "DELETE_HUSTLR_CARD_REVIEW";
 export const ADDED_REVIEW_ID = "ADDED_REVIEW_ID";
+export const DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY =
+  "DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY";
+export const CREATE_HUSTLR_CARD_REVIEW_LIKE = "CREATE_HUSTLR_CARD_REVIEW_LIKE";
+export const UPDATE_HUSTLR_CARD_REVIEW_LIKE = "UPDATE_HUSTLR_CARD_REVIEW_LIKE";
+export const DELETE_HUSTLR_CARD_REVIEW_LIKE = "DELLETE_HUSTLR_CARD_REVIEW_LIKE";
 
 export const resetHustlrCardReviewsState = () => {
   return {
@@ -134,7 +148,13 @@ export const fetchNextHustlrCardReview = (pageNumber, sortValue, fetchReviewsBy)
   };
 };
 
-export const createHustlrCardReview = (description, rating, userId, cardId) => {
+export const createHustlrCardReview = (
+  rating,
+  description,
+  photos,
+  userId,
+  cardId
+) => {
   return (dispatch) => {
     const userToken = localStorage.getItem("userToken");
 
@@ -170,6 +190,46 @@ export const createHustlrCardReview = (description, rating, userId, cardId) => {
           return;
         }
 
+        if (photos.length !== 0) {
+          let counter = 0;
+          Array.from(photos).forEach((photo) => {
+            const body = new FormData();
+            body.append("ReviewId", review.id);
+            body.append("File", photo);
+
+            const reqObj = {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+                Accepts: "application/json",
+              },
+              body: body,
+            };
+
+            fetch(`${API_BASE_URL}/photos/review`, reqObj)
+              .then((resp) => resp.json())
+              .then((photo) => {
+                if (photo.code) {
+                  return;
+                }
+                review.photos = [...review.photos, photo];
+                counter++;
+                if (counter === photos.length) {
+                  dispatch({
+                    type: CREATE_HUSTLR_CARD_REVIEW,
+                    review: review,
+                  });
+
+                  dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_CREATING_LOADER });
+                  dispatch({ type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR });
+                  dispatch({ type: HUSTLR_CARD_REVIEW_CREATED_SUCCESSFULLY });
+                  dispatch(closeHustlrCardReviewModal());
+                }
+              });
+          });
+          return;
+        }
+
         dispatch({ type: CREATE_HUSTLR_CARD_REVIEW, review: review });
         dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_CREATING_LOADER });
         dispatch({ type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR });
@@ -184,7 +244,12 @@ export const createHustlrCardReview = (description, rating, userId, cardId) => {
   };
 };
 
-export const updatHustlrCardReview = (reviewId, rating, description) => {
+export const updatHustlrCardReview = (
+  reviewId,
+  rating,
+  description,
+  photos
+) => {
   return (dispatch) => {
     const userToken = localStorage.getItem("userToken");
 
@@ -220,9 +285,46 @@ export const updatHustlrCardReview = (reviewId, rating, description) => {
           return;
         }
 
+        if (photos.length !== 0) {
+          let counter = 0;
+          Array.from(photos).forEach((photo) => {
+            const body = new FormData();
+            body.append("ReviewId", reviewId);
+            body.append("File", photo);
+
+            const reqObj = {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+                Accepts: "application/json",
+              },
+              body: body,
+            };
+
+            fetch(`${API_BASE_URL}/photos/review`, reqObj)
+              .then((resp) => resp.json())
+              .then((photo) => {
+                if (photo.code) {
+                  return;
+                }
+                review.photos = [...review.photos, photo];
+                counter++;
+                if (counter === photos.length) {
+                  dispatch({ type: UPDATE_HUSTLR_CARD_REVIEW, review: review });
+                  dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER });
+                  dispatch({ type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR });
+                  dispatch({ type: HUSTLR_CARD_REVIEW_SAVED_SUCCESSFULLY });
+                  dispatch(closeHustlrCardReviewModal());
+                }
+              });
+          });
+          return;
+        }
+
         dispatch({ type: UPDATE_HUSTLR_CARD_REVIEW, review: review });
-        dispatch({ type: HUSTLR_CARD_REVIEW_SAVED_SUCCESSFULLY });
         dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER });
+        dispatch({ type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR });
+        dispatch({ type: HUSTLR_CARD_REVIEW_SAVED_SUCCESSFULLY });
         dispatch(closeHustlrCardReviewModal());
       })
       .catch((err) => {
@@ -236,7 +338,6 @@ export const updatHustlrCardReview = (reviewId, rating, description) => {
 export const deleteHustlrCardReview = (reviewId) => {
   return (dispatch) => {
     const userToken = localStorage.getItem("userToken");
-    // const reviewWasDeleted = getState().hustlrCardReviews.reviewWasDeleted;
 
     const reqObj = {
       method: "DELETE",
@@ -267,5 +368,157 @@ export const deleteHustlrCardReview = (reviewId) => {
         dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_DELETING_LOADER });
         dispatch({ type: HUSTLR_CARD_REVIEW_DELETED_UNSUCCESSFULLY });
       });
+  };
+};
+
+export const deleteHustlrCardReviewPhoto = (reviewId, photoId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_IS_DELETING_LOADER });
+    fetch(`${API_BASE_URL}/photos/review/${photoId}`, reqObj)
+      .then((resp) => {
+        if (!resp.ok) {
+          dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_DELETED_UNSUCCESSFULLY });
+          dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER });
+          return;
+        }
+        if (resp.ok) {
+          dispatch({ type: DELETE_HUSTLR_CARD_REVIEW_PHOTO, photoId: photoId });
+          dispatch({
+            type: DELETE_HUSTLR_CARD_REVIEW_PHOTO_ARRAY,
+            reviewId: reviewId,
+            photoId: photoId,
+          });
+          dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_DELETED_SUCCESSFULLY });
+          dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER });
+          return;
+        }
+      })
+      .catch((err) => {
+        dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_DELETED_UNSUCCESSFULLY });
+        dispatch({ type: HUSTLR_CARD_REVIEW_PHOTO_IS_NOT_DELETING_LOADER });
+      });
+  };
+};
+
+export const createHustlrCardReviewLike = (sentiment, reviewId, userId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reviewLikeData = {
+      isLiked: sentiment,
+      reviewId: reviewId,
+      userId: userId,
+    };
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(reviewLikeData),
+    };
+
+    dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_LOADING });
+    fetch(`${API_BASE_URL}/reviews/sentiment`, reqObj)
+      .then((resp) => resp.json())
+      .then((like) => {
+        if (like.code) {
+          return;
+        }
+
+        dispatch({
+          type: CREATE_HUSTLR_CARD_REVIEW_LIKE,
+          reviewId: reviewId,
+          like: like,
+        });
+        dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING });
+      });
+  };
+};
+
+export const updateHustlrCardReviewLike = (
+  sentiment,
+  sentimentId,
+  reviewId
+) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reviewLikeData = {
+      id: sentimentId,
+      isLiked: sentiment,
+    };
+
+    const reqObj = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify(reviewLikeData),
+    };
+
+    dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_LOADING });
+    fetch(`${API_BASE_URL}/reviews/sentiment/${sentimentId}`, reqObj)
+      .then((resp) => resp.json())
+      .then((like) => {
+        if (like.code) {
+          return;
+        }
+        dispatch({
+          type: UPDATE_HUSTLR_CARD_REVIEW_LIKE,
+          reviewId: reviewId,
+          like: like,
+        });
+        dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING });
+      });
+  };
+};
+
+export const deleteHustlrCardReviewLike = (sentimentId, reviewId) => {
+  return (dispatch) => {
+    const userToken = localStorage.getItem("userToken");
+
+    const reqObj = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        Accepts: "application/json",
+      },
+    };
+
+    dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_LOADING });
+    fetch(`${API_BASE_URL}/reviews/sentiment/${sentimentId}`, reqObj).then(
+      (resp) => {
+        if (!resp.ok) {
+          return;
+        }
+
+        if (resp.ok) {
+          dispatch({
+            type: DELETE_HUSTLR_CARD_REVIEW_LIKE,
+            reviewId: reviewId,
+            sentimentId: sentimentId,
+          });
+          dispatch({ type: HUSTLR_CARD_REVIEW_LIKE_IS_NOT_LOADING });
+          return;
+        }
+      }
+    );
   };
 };
