@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCardPath } from "../../../../store/actions/card";
@@ -7,7 +7,6 @@ import { formFields } from "../../../../constants/formFields";
 
 import "../../../../constants/colors.css";
 import "./CardFormUI.css";
-import { Fragment } from "react";
 
 const CardFormCardPathInput = () => {
   const dispatch = useDispatch();
@@ -15,14 +14,16 @@ const CardFormCardPathInput = () => {
   const pathToCardRedux = useSelector(
     (state) => state.card.cardData.pathToCard
   );
-  const formErrors = useSelector((state) => state.formErrors);
+  const cardValidationErrors = useSelector(
+    (state) => state.cardValidationErrors
+  );
 
   const [pathToCard, setPathToCard] = useState(pathToCardRedux);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const error = formErrors.find(
-      (formError) => formError.field === formFields.cardPath
+    const error = cardValidationErrors.find(
+      (validationError) => validationError.field === formFields.cardPath
     );
 
     if (error) {
@@ -30,7 +31,7 @@ const CardFormCardPathInput = () => {
     } else {
       setError(error);
     }
-  }, [formErrors]);
+  }, [cardValidationErrors]);
 
   useEffect(() => {
     dispatch(setCardPath(pathToCard));

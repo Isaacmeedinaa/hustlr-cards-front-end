@@ -156,7 +156,10 @@ class CardForm extends Component {
   displayNotification(success, message) {
     showToast(success, message);
 
-    if (this.props.cardErrors && !success) {
+    if (
+      this.props.cardAuthError ||
+      (this.props.cardValidationErrors.length > 0 && !success)
+    ) {
       window.scroll({
         top: 0,
         left: 0,
@@ -198,7 +201,8 @@ class CardForm extends Component {
     return (
       <div className="primary-light-bg card-form-wrapper">
         <div className="card-form-container">
-          {this.props.cardErrors ? (
+          {this.props.cardAuthError ||
+          this.props.cardValidationErrors.length > 0 ? (
             <p className="primary-color card-form-error-text">
               Please fix the errors below.
             </p>
@@ -232,7 +236,8 @@ const mapStateToProps = (state) => {
   return {
     cardLoader: state.cardLoader,
     cardData: state.card.cardData,
-    cardErrors: state.cardErrors,
+    cardAuthError: state.cardAuthError,
+    cardValidationErrors: state.cardValidationErrors,
     cardSavedNotification: state.cardSavedNotification,
     offeringNotifications: state.offeringNotifications,
     galleryNotifications: state.galleryNotifications,

@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { changePassword } from "../../../store/actions/user";
 import { hidePasswordChangedNotification } from "../../../store/actions/notifications/changePasswordNotifications";
-import {clearChangePasswordErrors} from '../../../store/actions/errors/changePasswordErrors'
-import {clearFormErrors} from '../../../store/actions/formErrors/formErrors'
+import { clearChangePasswordAuthError } from "../../../store/actions/authErrors/changePasswordAuthError";
+import { clearChangePasswordValidationErrors } from "../../../store/actions/validationErrors/changePasswordValidationErrors";
 
 import { showToast } from "../Toasts";
 
@@ -27,32 +27,24 @@ const ChangePasswordForm = () => {
   const changePasswordNotifications = useSelector(
     (state) => state.changePasswordNotifications
   );
-  // const changePasswordErrors = useSelector(
-  //   (state) => state.changePasswordErrors
-  // );
-  const formErrors = useSelector((state) => state.formErrors);
+  const changePasswordAuthError = useSelector(
+    (state) => state.changePasswordAuthError
+  );
+  const changePasswordValidationErrors = useSelector(
+    (state) => state.changePasswordValidationErrors
+  );
 
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const [currentPasswordError, setCurrentPasswordError] = useState(null);
   const [newPasswordError, setNewPasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
 
   useEffect(() => {
-    const currentPasswordError = formErrors.find(
-      (error) => error.field === formFields.changePasswordCurrentPassword
-    );
-
-    if (currentPasswordError) {
-      setCurrentPasswordError(currentPasswordError);
-    } else {
-      setCurrentPasswordError(currentPasswordError);
-    }
-
-    const newPasswordError = formErrors.find(
-      (error) => error.field === formFields.changePasswordNewPassword
+    const newPasswordError = changePasswordValidationErrors.find(
+      (validationError) =>
+        validationError.field === formFields.changePasswordNewPassword
     );
 
     if (newPasswordError) {
@@ -61,8 +53,9 @@ const ChangePasswordForm = () => {
       setNewPasswordError(newPasswordError);
     }
 
-    const confirmPasswordError = formErrors.find(
-      (error) => error.field === formFields.changePasswordConfirmPassword
+    const confirmPasswordError = changePasswordValidationErrors.find(
+      (validationError) =>
+        validationError.field === formFields.changePasswordConfirmPassword
     );
 
     if (confirmPasswordError) {
@@ -70,7 +63,7 @@ const ChangePasswordForm = () => {
     } else {
       setConfirmPasswordError(confirmPasswordError);
     }
-  }, [formErrors]);
+  }, [changePasswordValidationErrors]);
 
   useEffect(() => {
     if (changePasswordNotifications.show) {
@@ -84,9 +77,9 @@ const ChangePasswordForm = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(clearChangePasswordErrors());
-      dispatch(clearFormErrors());
-    }
+      dispatch(clearChangePasswordAuthError());
+      dispatch(clearChangePasswordValidationErrors());
+    };
   }, [dispatch]);
 
   const displayNotification = (success, message) => {
@@ -122,25 +115,26 @@ const ChangePasswordForm = () => {
           className="change-password-form-container"
           onSubmit={onChangePasswordFormSubmit}
         >
-          {/* {changePasswordErrors ? (
+          {changePasswordAuthError ||
+          changePasswordValidationErrors.length > 0 ? (
             <div style={{ paddingTop: "20px" }}>
               <p className="card-form-error-text">
                 Please fix the errors below.
               </p>
             </div>
-          ) : null} */}
+          ) : null}
           <input
             className="change-password-form-input"
-            style={{ border: currentPasswordError ? "solid 1px red" : null }}
+            style={{ border: changePasswordAuthError ? "solid 1px red" : null }}
             name="password"
             placeholder="Current Password"
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          {currentPasswordError ? (
+          {changePasswordAuthError ? (
             <p className="change-password-error-text">
-              {currentPasswordError.message}
+              {changePasswordAuthError}
             </p>
           ) : null}
           <input

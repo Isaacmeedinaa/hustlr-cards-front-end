@@ -208,7 +208,7 @@
 }
 
 @media only screen and (max-width: 450px) {
-  .login-modal {
+  .auth-modal {
     width: 95%;
     padding: 20px 18px;
   }

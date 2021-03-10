@@ -62,7 +62,7 @@ const initialState = {
     photos: [],
     offerings: [],
     links: [],
-    paymentMethods: []
+    paymentMethods: [],
   },
   cardTheme: {
     primaryColor: "",
@@ -100,7 +100,7 @@ const card = (state = initialState, action) => {
           offerings: action.cardData.offerings,
           links: action.cardData.links,
           paymentMethods: action.cardData.paymentMethods,
-          location: action.cardData.location
+          location: action.cardData.location,
         },
         cardTheme: {
           primaryColor: action.cardTheme.primaryColor,
@@ -215,7 +215,7 @@ const card = (state = initialState, action) => {
         cardData: {
           ...state.cardData,
           industry: action.industry,
-          industryId: action.industry === null ? null : action.industry.id
+          industryId: action.industry === null ? null : action.industry.id,
         },
       };
 
@@ -329,7 +329,7 @@ const card = (state = initialState, action) => {
 
     case SET_LINK:
       const links = [...state.cardData.links];
-      const linkIndex = links.findIndex(link => link.id === action.link.id);
+      const linkIndex = links.findIndex((link) => link.id === action.link.id);
       links[linkIndex] = action.link;
 
       return {
@@ -341,7 +341,6 @@ const card = (state = initialState, action) => {
       };
 
     case SET_MULTIPLE_LINKS:
-
       return {
         ...state,
         cardData: {
@@ -349,7 +348,6 @@ const card = (state = initialState, action) => {
           links: action.links,
         },
       };
-
 
     case CREATE_PAYMENT_METHOD:
       let paymentMethodsCopy = [...state.cardData.paymentMethods];
@@ -361,7 +359,7 @@ const card = (state = initialState, action) => {
           ...state.cardData,
           paymentMethods: paymentMethodsCopy,
         },
-    };
+      };
 
     case DELETE_PAYMENT_METHOD:
       const filteredPaymentMethods = state.cardData.paymentMethods.filter(
@@ -374,7 +372,7 @@ const card = (state = initialState, action) => {
           ...state.cardData,
           paymentMethods: filteredPaymentMethods,
         },
-    };
+      };
 
     case SET_CARD_EMAIL:
       return {

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { closeAuthModal } from "../../../../store/actions/modals/authModal";
-import { clearLoginErrors } from "../../../../store/actions/errors/loginErrors";
 
 import Modal from "react-modal";
 
@@ -18,19 +17,18 @@ Modal.setAppElement("#root");
 const AuthModal = () => {
   const dispatch = useDispatch();
 
-  const authModal = useSelector((state) => state.authModal);
+  const isOpen = useSelector((state) => state.authModal.isOpen);
 
   const [showRegisterForm, setShowRegisterForm] = useState(false);
 
   const onAuthModalClose = () => {
-    dispatch(closeAuthModal());
     setShowRegisterForm(false);
-    dispatch(clearLoginErrors());
+    dispatch(closeAuthModal());
   };
 
   return (
     <Modal
-      isOpen={authModal}
+      isOpen={isOpen}
       onRequestClose={() => onAuthModalClose()}
       contentLabel="Auth Modal"
       className="primary-light-bg auth-modal"

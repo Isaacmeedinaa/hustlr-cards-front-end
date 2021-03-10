@@ -23,7 +23,6 @@ class CardFormAddImageButton extends Component {
   };
 
   render() {
-    // console.log(this.props.galleryImagesProgress);
     return (
       <Fragment>
         <label

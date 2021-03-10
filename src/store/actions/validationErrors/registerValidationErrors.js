@@ -1,0 +1,9 @@
+export const SET_REGISTER_VALIDATION_ERRORS = "SET_REGISTER_VALIDATION_ERRORS";
+export const REMOVE_REGISTER_VALIDATION_ERRORS =
+  "REMOVE_REGISTER_VALIDATION_ERRORS";
+
+export const clearRegisterValidationErrors = () => {
+  return {
+    type: REMOVE_REGISTER_VALIDATION_ERRORS,
+  };
+};

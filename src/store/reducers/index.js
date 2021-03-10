@@ -6,10 +6,11 @@ import dropdowns from "./dropdowns";
 import themes from "./themes";
 import card from "./card";
 import cardSaved from "./cardSaved";
-import publicCard from "./publicCard";
+import publicCard from "./hustlrCard/publicCard";
 import auth from "./auth";
 import emailVerification from "./emailVerification";
 import tabs from "./tabs";
+import hustlrCardReviews from "./hustlrCard/hustlrCardReviews";
 
 // Loaders
 import loginLoader from "./loaders/loginLoader";
@@ -30,16 +31,29 @@ import changePasswordCodeLoader from "./loaders/changePasswordCodeLoader";
 import contactMessageLoader from "./loaders/contactMessageLoader";
 import linkLoader from "./loaders/socialMediaLinkLoaders";
 import paymentMethodsLoader from "./loaders/paymentMethodsLoader";
+import reviewLoader from "./loaders/reviewLoader";
+import hustlrCardReviewLoader from "./loaders/hustlrCardReviewLoader";
 
-// Errors
-import errors from "./errors";
-import cardErrors from "./errors/cardErrors";
-import loginErrors from "./errors/loginErrors";
-import registerErrors from "./errors/registerErrors";
-import personalInfoErrors from "./errors/personalInfoErrors";
-import changePasswordErrors from "./errors/changePasswordErrors";
-import forgotPasswordErrors from "./errors/forgotPasswordErrors";
-import changePasswordCodeErrors from "./errors/changePasswordCodeErrors";
+// Auth Errors
+import hustlrCardReviewAuthError from "./authErrors/hustlrCardReviewAuthError";
+import loginAuthError from "./authErrors/loginAuthError";
+import registerAuthError from "./authErrors/registerAuthError";
+import forgotPasswordAuthError from "./authErrors/forgotPasswordAuthError";
+import changePasswordCodeAuthError from "./authErrors/changePasswordCodeAuthError";
+import updateUserAuthError from "./authErrors/updateUserAuthError";
+import changePasswordAuthError from "./authErrors/changePasswordAuthError";
+import cardAuthError from "./authErrors/cardAuthError";
+import offeringAuthError from "./authErrors/offeringAuthError";
+
+// Validation Errors
+import loginValidationErrors from "./validationErrors/loginValidationErrors";
+import registerValidationErrors from "./validationErrors/registerValidationErrors";
+import forgotPasswordValidationErrors from "./validationErrors/forgotPasswordValidationErrors";
+import changePasswordCodeValidationErrors from "./validationErrors/changePasswordCodeValidationErrors";
+import updateUserValidationErrors from "./validationErrors/updateUserValidationErrors";
+import changePasswordValidationErrors from "./validationErrors/changePasswordValidationErrors";
+import cardValidationErrors from "./validationErrors/cardValidationErrors";
+import offeringValidationErrors from "./validationErrors/offeringValidationErrors";
 
 // Notifications
 import changePasswordNotifications from "./notifications/changePasswordNotifications";
@@ -53,6 +67,7 @@ import backdropImageNotifications from "./notifications/backdropImageNotificatio
 import linkNotifications from "./notifications/socialMediaLinkNotifications";
 import contactMessageNotifications from "./notifications/contactMessageNotifications";
 import paymentMethodsNotifications from "./notifications/paymentMethodNotifications";
+import hustlrCardReviewNotifications from "./notifications/hustlrCardReviewNotifications";
 
 // Modals
 import imageCropperModal from "./modals/imageCropperModal";
@@ -62,6 +77,7 @@ import socialMediaModal from "./modals/socialMediaModal";
 import paymentMethodsModal from "./modals/paymentMethodsModal";
 import offeringModal from "./modals/offeringModal";
 import authModal from "./modals/authModal";
+import hustlrCardReviewModal from "./modals/hustlrCardReviewModal";
 
 // Local Storage
 import cardLinkLocalStorage from "./localStorage/cardLinkLocalStorage";
@@ -70,9 +86,6 @@ import offeringLocalStorage from "./localStorage/offeringLocalStorage";
 // Progress
 import galleryImagesProgress from "./progress/galleryImagesProgress";
 import offeringImagesProgress from "./progress/offeringImagesProgress";
-
-// Form Errors
-import formErrors from "./formErrors/formErrors";
 
 const rootReducer = combineReducers({
   // Main
@@ -85,6 +98,7 @@ const rootReducer = combineReducers({
   auth,
   emailVerification,
   tabs,
+  hustlrCardReviews,
   // Loaders
   loginLoader,
   registerLoader,
@@ -104,15 +118,27 @@ const rootReducer = combineReducers({
   contactMessageLoader,
   linkLoader,
   paymentMethodsLoader,
-  // Errors
-  errors,
-  cardErrors,
-  loginErrors,
-  registerErrors,
-  personalInfoErrors,
-  changePasswordErrors,
-  forgotPasswordErrors,
-  changePasswordCodeErrors,
+  reviewLoader,
+  hustlrCardReviewLoader,
+  // Auth Errors
+  hustlrCardReviewAuthError,
+  loginAuthError,
+  registerAuthError,
+  forgotPasswordAuthError,
+  changePasswordCodeAuthError,
+  updateUserAuthError,
+  changePasswordAuthError,
+  cardAuthError,
+  offeringAuthError,
+  // Validation Errors
+  loginValidationErrors,
+  registerValidationErrors,
+  forgotPasswordValidationErrors,
+  changePasswordCodeValidationErrors,
+  updateUserValidationErrors,
+  changePasswordValidationErrors,
+  cardValidationErrors,
+  offeringValidationErrors,
   // Notifications
   changePasswordNotifications,
   cardSavedNotification,
@@ -125,6 +151,7 @@ const rootReducer = combineReducers({
   contactMessageNotifications,
   linkNotifications,
   paymentMethodsNotifications,
+  hustlrCardReviewNotifications,
   // Modals
   imageCropperModal,
   backdropImageCropperModal,
@@ -133,14 +160,13 @@ const rootReducer = combineReducers({
   paymentMethodsModal,
   offeringModal,
   authModal,
+  hustlrCardReviewModal,
   // Local Storage
   cardLinkLocalStorage,
   offeringLocalStorage,
   // Progress
   galleryImagesProgress,
   offeringImagesProgress,
-  // Form Errors
-  formErrors,
 });
 
 export default rootReducer;

@@ -1,9 +1,12 @@
-import { SET_IS_AUTHENTICATED, SET_IS_NOT_AUTHENTICATED } from "../actions/auth";
+import {
+  SET_IS_AUTHENTICATED,
+  SET_IS_NOT_AUTHENTICATED,
+} from "../actions/auth";
 
 const initialState = {
   isAuthenticated: false,
-  hasCheckedAuth: false
-}
+  hasCheckedAuth: false,
+};
 
 const auth = (state = initialState, action) => {
   switch (action.type) {

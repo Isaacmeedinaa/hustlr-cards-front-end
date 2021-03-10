@@ -14,13 +14,11 @@ class CardFormIndustrySelect extends Component {
   };
 
   onCardIndustryChangeHandler = async (event) => {
-
     let selectedId = null;
     let selectedTitle = null;
     let selectedIcon = null;
 
     if (event !== null && event !== undefined) {
-
       selectedIcon = this.props.dropdownIndustries.find(
         (dropdown) => dropdown.label === event.label
       ).icon;
@@ -81,7 +79,11 @@ class CardFormIndustrySelect extends Component {
               },
             }),
           }}
-          placeholder={<div className="card-form-placeholder-color">Select an industry</div>}
+          placeholder={
+            <div className="card-form-placeholder-color">
+              Select an industry
+            </div>
+          }
           options={this.props.dropdownIndustries}
           value={
             !this.props.industry || this.props.industry.id === null

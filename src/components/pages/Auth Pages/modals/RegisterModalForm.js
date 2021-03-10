@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { userRegister } from "../../../../store/actions/user";
+import { clearRegisterAuthError } from "../../../../store/actions/authErrors/registerAuthError";
+import { clearRegisterValidationErrors } from "../../../../store/actions/validationErrors/registerValidationErrors";
 
 import Loader from "react-loader-spinner";
 
@@ -12,9 +14,11 @@ import "./modals.css";
 const RegisterModalForm = (props) => {
   const dispatch = useDispatch();
 
-  const registerErrors = useSelector((state) => state.registerErrors);
   const registerLoader = useSelector((state) => state.registerLoader);
-  const formErrors = useSelector((state) => state.formErrors);
+  const registerAuthError = useSelector((state) => state.registerAuthError);
+  const registerValidationErrors = useSelector(
+    (state) => state.registerValidationErrors
+  );
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -26,8 +30,15 @@ const RegisterModalForm = (props) => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
 
   useEffect(() => {
-    const emailError = formErrors.find(
-      (formError) => formError.field === formFields.registerEmail
+    return () => {
+      dispatch(clearRegisterAuthError());
+      dispatch(clearRegisterValidationErrors());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const emailError = registerValidationErrors.find(
+      (validationErrors) => validationErrors.field === formFields.registerEmail
     );
 
     if (emailError) {
@@ -36,8 +47,9 @@ const RegisterModalForm = (props) => {
       setEmailError(emailError);
     }
 
-    const usernameError = formErrors.find(
-      (formError) => formError.field === formFields.registerUsername
+    const usernameError = registerValidationErrors.find(
+      (validationErrors) =>
+        validationErrors.field === formFields.registerUsername
     );
 
     if (usernameError) {
@@ -46,8 +58,9 @@ const RegisterModalForm = (props) => {
       setUsernameError(usernameError);
     }
 
-    const passwordError = formErrors.find(
-      (formError) => formError.field === formFields.registerPassword
+    const passwordError = registerValidationErrors.find(
+      (validationErrors) =>
+        validationErrors.field === formFields.registerPassword
     );
 
     if (passwordError) {
@@ -56,8 +69,9 @@ const RegisterModalForm = (props) => {
       setPasswordError(passwordError);
     }
 
-    const confirmPasswordError = formErrors.find(
-      (formError) => formError.field === formFields.registerConfirmPassword
+    const confirmPasswordError = registerValidationErrors.find(
+      (validationErrors) =>
+        validationErrors.field === formFields.registerConfirmPassword
     );
 
     if (confirmPasswordError) {
@@ -65,7 +79,7 @@ const RegisterModalForm = (props) => {
     } else {
       setConfirmPasswordError(confirmPasswordError);
     }
-  }, [formErrors]);
+  }, [registerValidationErrors]);
 
   const onRegisterFormSubmit = (event) => {
     event.preventDefault();
@@ -75,7 +89,7 @@ const RegisterModalForm = (props) => {
 
   return (
     <Fragment>
-      {registerErrors ? (
+      {registerAuthError || registerValidationErrors.length > 0 ? (
         <p className="register-modal-form-errors">
           Please fix the errors below.
         </p>

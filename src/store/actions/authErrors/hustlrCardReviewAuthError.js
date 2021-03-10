@@ -1,0 +1,10 @@
+export const SET_HUSTLR_CARD_REVIEW_AUTH_ERROR =
+  "SET_HUSTLR_CARD_REVIEW_AUTH_ERROR";
+export const REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR =
+  "REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR";
+
+export const clearHustlrCardReviewAuthError = () => {
+  return {
+    type: REMOVE_HUSTLR_CARD_REVIEW_AUTH_ERROR,
+  };
+};

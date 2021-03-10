@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
-import { fetchPublicCard } from "../../store/actions/publicCard";
+import { fetchPublicCard } from "../../store/actions/hustlrCard/publicCard";
 
 import Loader from "react-loader-spinner";
 import Modal from "react-modal";
@@ -10,6 +10,7 @@ import PublicCard from "../UI/publiccard/PublicCard";
 import PrivateCard from "../UI/publiccard/PrivateCard";
 import PublicCardViewImagesModal from "../UI/publiccard/modals/PublicCardViewImagesModal";
 import AuthModal from "./Auth Pages/modals/AuthModal";
+import HustlrCardReviewModal from "../UI/reviews/modals/HustlrCardReviewModal";
 
 import "./pages.css";
 
@@ -23,7 +24,7 @@ class PublicCardPage extends Component {
   };
 
   componentDidMount() {
-    const pathname = this.props.location.pathname.slice(1);
+    const pathname = this.props.match.params.pathToCard;
     const history = this.props.history;
     this.props.fetchPublicCard(pathname, history);
   }
@@ -89,7 +90,9 @@ class PublicCardPage extends Component {
         />
         {!this.props.auth.isAuthenticated || !this.props.user ? (
           <AuthModal />
-        ) : null}
+        ) : (
+          <HustlrCardReviewModal />
+        )}
 
         {!this.props.publicCard.isPublic ? (
           <PrivateCard />

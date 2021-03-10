@@ -11,6 +11,7 @@ import {
   uploadOfferingImages,
   deleteOfferingImage,
 } from "../../../../../store/actions/card";
+import { clearOfferingValidationErrors } from "../../../../../store/actions/validationErrors/offeringValidationErrors";
 
 import { formFields } from "../../../../../constants/formFields";
 
@@ -43,7 +44,9 @@ const CardFormOfferingModal = (props) => {
     (state) => state.offeringImagesProgress
   );
   const offering = offeringModal.offering;
-  const formErrors = useSelector((state) => state.formErrors);
+  const offeringValidationErrors = useSelector(
+    (state) => state.offeringValidationErrors
+  );
 
   const [title, setTitle] = useState(offering.title);
   const [price, setPrice] = useState(offering.price);
@@ -72,8 +75,8 @@ const CardFormOfferingModal = (props) => {
   ]);
 
   useEffect(() => {
-    const error = formErrors.find(
-      (formError) => formError.field === formFields.offeringTitle
+    const error = offeringValidationErrors.find(
+      (validationError) => validationError.field === formFields.offeringTitle
     );
 
     if (error) {
@@ -81,7 +84,13 @@ const CardFormOfferingModal = (props) => {
     } else {
       setError(error);
     }
-  }, [formErrors]);
+  }, [offeringValidationErrors]);
+
+  useEffect(() => {
+    if (offering.title === originalOffering.title) {
+      dispatch(clearOfferingValidationErrors());
+    }
+  }, [dispatch, originalOffering, offering]);
 
   const onImageChangeHandler = (event) => {
     const images = event.target.files;
@@ -274,9 +283,6 @@ const CardFormOfferingModal = (props) => {
           className="card-form-gallery-slider-container"
           style={{ marginTop: offeringImagesProgress.progressing ? 15 : 30 }}
         >
-          {/* <AwesomeSlider bullets={false}>
-            {renderOfferingSliderImages()}
-          </AwesomeSlider> */}
           <Carousel style={{ height: "300px", width: "100%" }} interval={null}>
             {renderOfferingSliderImages()}
           </Carousel>

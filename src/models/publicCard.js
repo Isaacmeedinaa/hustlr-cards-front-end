@@ -24,6 +24,7 @@ class PublicCard {
     offerings,
     links,
     paymentMethods,
+    reviews,
     primaryColor,
     transparentColor
   ) {
@@ -51,6 +52,7 @@ class PublicCard {
     this.offerings = offerings;
     this.links = links;
     this.paymentMethods = paymentMethods;
+    this.reviews = reviews;
     this.primaryColor = primaryColor;
     this.transparentColor = transparentColor;
   }
