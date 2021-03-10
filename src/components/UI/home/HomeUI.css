@@ -49,6 +49,24 @@
   font-weight: 600;
 }
 
+.standard-top-toolbar-upgrade-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  width: 175px;
+  color: white;
+  font-weight: 600;
+  padding: 5px 15px;
+  background-color: #2ecc71;
+  border-radius: 5px;
+}
+
+.standard-top-toolbar-upgrade-btn:hover {
+  cursor: pointer;
+  background-color: #2ecc70de;
+}
+
 .theme-picker-animation-wrapper {
   width: 150px;
   height: 150px;

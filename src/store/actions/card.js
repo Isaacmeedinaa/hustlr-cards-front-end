@@ -174,6 +174,7 @@ export const SET_LINK = "SET_LINK";
 export const SET_MULTIPLE_LINKS = "SET_MULTIPLE_LINKS";
 export const CREATE_PAYMENT_METHOD = "CREATE_PAYMENT_METHOD";
 export const DELETE_PAYMENT_METHOD = "DELETE_PAYMENT_METHOD";
+export const REMOVE_CARD = "REMOVE_CARD";
 
 export const fetchCard = (userId) => {
   return async (dispatch, getState) => {
@@ -213,7 +214,8 @@ export const fetchCard = (userId) => {
           card.photos,
           card.offerings,
           card.links,
-          card.paymentMethods
+          card.paymentMethods,
+          card.reviews
         );
 
         const cardTheme = themes.find((theme) => theme.id === card.themeId);
@@ -1264,3 +1266,10 @@ export const setCardPath = (pathToCard) => {
     pathToCard: pathToCard,
   };
 };
+
+export const removeCard = () => {
+  return {
+    type: REMOVE_CARD,
+  };
+};
+

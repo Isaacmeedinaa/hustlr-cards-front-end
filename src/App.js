@@ -26,6 +26,7 @@ import SettingsPage from "./components/pages/SettingsPage";
 import SupportPage from "./components/pages/SupportPage";
 import PublicCardPage from "./components/pages/PublicCardPage";
 import HustlrCardReviewsPage from "./components/pages/HustlrCardReviewsPage";
+import ReviewsPage from "./components/pages/ReviewsPage";
 import ProtectedRoute from "./components/hoc/ProtectedRoute";
 import RouteHead from "./components/hoc/RouteHead";
 
@@ -37,6 +38,7 @@ import {
   faMinusCircle,
   faCopy,
 } from "@fortawesome/free-solid-svg-icons";
+import HustlrProtectedRoute from "./components/hoc/HustlrProtectedRoute";
 
 library.add(fab, faDollarSign, faCreditCard, faMinusCircle, faCopy);
 
@@ -86,10 +88,12 @@ class App extends Component {
               path="/verify-email/:token"
               component={VerifyEmailPage}
             />
-            <ProtectedRoute
+            <HustlrProtectedRoute
               exact
               path="/home"
               component={HomePage}
+              isHustlr={this.props.user === null ? false : this.props.user.isHustlr}
+              redirectPath={"/reviews"}
               isAuthenticated={this.props.auth.isAuthenticated}
             />
             <ProtectedRoute
@@ -102,6 +106,12 @@ class App extends Component {
               exact
               path="/support"
               component={SupportPage}
+              isAuthenticated={this.props.auth.isAuthenticated}
+            />
+            <ProtectedRoute
+              exact
+              path="/reviews"
+              component={ReviewsPage}
               isAuthenticated={this.props.auth.isAuthenticated}
             />
             <Route
@@ -123,6 +133,7 @@ const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     publicCard: state.publicCard,
+    user: state.user
   };
 };
 

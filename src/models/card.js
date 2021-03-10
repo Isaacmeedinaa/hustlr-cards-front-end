@@ -23,7 +23,8 @@ class Card {
     photos,
     offerings,
     links,
-    paymentMethods
+    paymentMethods,
+    reviews
   ) {
     this.id = id;
     this.title = title;
@@ -49,6 +50,7 @@ class Card {
     this.offerings = offerings;
     this.links = links;
     this.paymentMethods = paymentMethods;
+    this.reviews = reviews;
   }
 }
 

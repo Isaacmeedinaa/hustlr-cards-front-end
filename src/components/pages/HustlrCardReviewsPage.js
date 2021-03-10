@@ -5,6 +5,8 @@ import { fetchPublicCard } from "../../store/actions/hustlrCard/publicCard";
 
 import Loader from "react-loader-spinner";
 
+import { FETCH_REVIEWS_BY } from "../../constants/urls";
+
 import PrivateCard from "../UI/publiccard/PrivateCard";
 import HustlrCardReviews from "../UI/reviews/HustlrCardReviews";
 import HusltrCardReviewModal from "../UI/reviews/modals/HustlrCardReviewModal";
@@ -48,7 +50,9 @@ const HustlrCardReviewsPage = (props) => {
           className="hustlr-card-reviews-page-wrapper"
           style={{ backgroundColor: publicCard.primaryColor }}
         >
-          <HustlrCardReviews />
+          <HustlrCardReviews title="Reviews"
+           fetchReviewsBy={FETCH_REVIEWS_BY.cardPath}
+           publicReviews={true}/>
         </div>
       )}
     </Fragment>

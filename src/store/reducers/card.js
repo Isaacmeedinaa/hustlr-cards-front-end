@@ -33,6 +33,7 @@ import {
   SET_MULTIPLE_LINKS,
   DELETE_PAYMENT_METHOD,
   CREATE_PAYMENT_METHOD,
+  REMOVE_CARD
 } from "../actions/card";
 
 const initialState = {
@@ -472,7 +473,10 @@ const card = (state = initialState, action) => {
           pathToCard: action.pathToCard,
         },
       };
-
+    
+    case REMOVE_CARD:
+      return initialState;
+      
     default:
       return state;
   }

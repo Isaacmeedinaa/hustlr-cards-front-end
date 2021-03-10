@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { userLogout } from "../../store/actions/user";
 
 import MdHome from "react-ionicons/lib/MdHome";
+import MdList from "react-ionicons/lib/MdList";
 import MdSettings from "react-ionicons/lib/MdSettings";
 import MdLogOut from "react-ionicons/lib/MdLogOut";
 import MdHelp from "react-ionicons/lib/MdHelpCircle";
@@ -73,24 +74,59 @@ class SideToolbar extends Component {
             </div>
             <div
               className={
-                this.state.pathname !== "/home"
-                  ? "sidetoolbar-icon-wrapper"
-                  : "sidetoolbar-icon-wrapper selected"
+                this.props.user.isHustlr ?
+                  this.state.pathname !== "/home"
+                    ? "sidetoolbar-icon-wrapper"
+                    : "sidetoolbar-icon-wrapper selected"
+                :
+                  this.state.pathname !== "/reviews"
+                    ? "sidetoolbar-icon-wrapper"
+                    : "sidetoolbar-icon-wrapper selected"
               }
             >
               <MdHome
                 className="sidetoolbar-icon"
                 onClick={() => {
-                  this.props.history.push("/home");
+                  this.props.user.isHustlr ? this.props.history.push("/home") : this.props.history.push("/reviews");
                 }}
                 fontSize="30px"
                 color={
-                  this.state.pathname !== "/home"
-                    ? this.state.secondary
-                    : this.state.primary
+                  this.props.user.isHustlr ?
+                    this.state.pathname !== "/home"
+                      ? this.state.secondary
+                      : this.state.primary
+                  : 
+                    this.state.pathname !== "/reviews"
+                      ? this.state.secondary
+                      : this.state.primary
                 }
               />
             </div>
+            {
+              this.props.user.isHustlr ?
+                <div
+                  className={
+                    this.state.pathname !== "/reviews"
+                      ? "sidetoolbar-icon-wrapper"
+                      : "sidetoolbar-icon-wrapper selected"
+                  }
+                >
+                  <MdList
+                    className="sidetoolbar-icon"
+                    onClick={() => {
+                      this.props.history.push("/reviews");
+                    }}
+                    fontSize="30px"
+                    color={
+                      this.state.pathname !== "/reviews"
+                        ? this.state.secondary
+                        : this.state.primary
+                    }
+                  />
+                </div>
+              : 
+                null
+            }
             <div
               className={
                 this.state.pathname !== "/settings"
@@ -109,16 +145,6 @@ class SideToolbar extends Component {
                     ? this.state.secondary
                     : this.state.primary
                 }
-              />
-            </div>
-            <div className="sidetoolbar-icon-wrapper">
-              <MdLogOut
-                className="sidetoolbar-icon"
-                onClick={() => {
-                  $('.ui.dimmable').dimmer('show');
-                }}
-                fontSize="30px"
-                color={this.state.secondary}
               />
             </div>
             <div
@@ -141,11 +167,27 @@ class SideToolbar extends Component {
                 }
               />
             </div>
+            <div className="sidetoolbar-icon-wrapper">
+              <MdLogOut
+                className="sidetoolbar-icon"
+                onClick={() => {
+                  $('.ui.dimmable').dimmer('show');
+                }}
+                fontSize="30px"
+                color={this.state.secondary}
+              />
+            </div>
           </div>
         </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -153,4 +195,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SideToolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(SideToolbar);

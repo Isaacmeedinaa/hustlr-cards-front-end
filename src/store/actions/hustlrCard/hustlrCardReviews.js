@@ -1,5 +1,5 @@
 // API URL
-import { API_BASE_URL } from "../../../constants/urls";
+import { API_BASE_URL, FETCH_REVIEWS_BY, DefaultReviewPageSize } from "../../../constants/urls";
 
 // modals
 import {
@@ -65,15 +65,23 @@ export const resetHustlrCardReviewsState = () => {
   };
 };
 
-export const fetchInitialHustlrCardReviews = (pageNumber, sortValue) => {
+export const fetchInitialHustlrCardReviews = (pageNumber, sortValue, fetchReviewsBy) => {
   return (dispatch, getState) => {
-    const cardPath = getState().publicCard.pathToCard;
+
+    let url = '';
+
+    if (fetchReviewsBy === FETCH_REVIEWS_BY.cardPath) {
+      const cardPath = getState().publicCard === null ? getState().card.cardData.pathToCard : getState().publicCard.pathToCard;
+      url = `${API_BASE_URL}/reviews/card/${cardPath}/${pageNumber}/${sortValue}?pageSize=${DefaultReviewPageSize}`;
+    }
+    else if (fetchReviewsBy === FETCH_REVIEWS_BY.userId) {
+      const userId = getState().user.id;
+      url = `${API_BASE_URL}/reviews/user/${userId}/${pageNumber}/${sortValue}?pageSize=${DefaultReviewPageSize}`;
+    }
 
     dispatch({ type: REMOVE_HUSTLR_CARD_REVIEWS_STATE });
     dispatch({ type: HUSTLR_CARD_REVIEWS_ARE_LOADING });
-    fetch(
-      `${API_BASE_URL}/reviews/card/${cardPath}/${pageNumber}/${sortValue}?pageSize=4`
-    )
+    fetch(url)
       .then((resp) => resp.json())
       .then((hustlrCardReviews) => {
         if (hustlrCardReviews.code) {
@@ -97,19 +105,27 @@ export const fetchInitialHustlrCardReviews = (pageNumber, sortValue) => {
   };
 };
 
-export const fetchNextHustlrCardReview = (pageNumber, sortValue) => {
+export const fetchNextHustlrCardReview = (pageNumber, sortValue, fetchReviewsBy) => {
   return (dispatch, getState) => {
-    const cardPath = getState().publicCard.pathToCard;
     const addedReviewId = getState().hustlrCardReviews.addedReviewId;
     const reviewWasDeleted = getState().hustlrCardReviews.reviewWasDeleted;
 
     let ignoreReviewIdParam = !addedReviewId ? -1 : addedReviewId;
     let offsetByOneParam = reviewWasDeleted && !addedReviewId;
 
+    let url = '';
+
+    if (fetchReviewsBy === FETCH_REVIEWS_BY.cardPath) {
+      const cardPath = getState().publicCard === null ? getState().card.cardData.pathToCard : getState().publicCard.pathToCard;
+      url = `${API_BASE_URL}/reviews/card/${cardPath}/${pageNumber}/${sortValue}?pageSize=${DefaultReviewPageSize}&ignoreReviewId=${ignoreReviewIdParam}&offsetByOne=${offsetByOneParam}`;
+    }
+    else if (fetchReviewsBy === FETCH_REVIEWS_BY.userId) {
+      const userId = getState().user.id;
+      url = `${API_BASE_URL}/reviews/user/${userId}/${pageNumber}/${sortValue}?pageSize=${DefaultReviewPageSize}&ignoreReviewId=${ignoreReviewIdParam}&offsetByOne=${offsetByOneParam}`;
+    }
+
     dispatch({ type: HUSTLR_CARD_NEXT_REVIEWS_ARE_LOADING });
-    fetch(
-      `${API_BASE_URL}/reviews/card/${cardPath}/${pageNumber}/${sortValue}?pageSize=4&ignoreReviewId=${ignoreReviewIdParam}&offsetByOne=${offsetByOneParam}`
-    )
+    fetch(url)
       .then((resp) => resp.json())
       .then((hustlrCardReviews) => {
         if (hustlrCardReviews.code) {
@@ -258,6 +274,7 @@ export const updatHustlrCardReview = (
     fetch(`${API_BASE_URL}/reviews`, reqObj)
       .then((resp) => resp.json())
       .then((review) => {
+        console.log(review)
         if (review.code) {
           dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER });
           dispatch({
@@ -311,6 +328,7 @@ export const updatHustlrCardReview = (
         dispatch(closeHustlrCardReviewModal());
       })
       .catch((err) => {
+        console.log(err)
         dispatch({ type: HUSTLR_CARD_REVIEW_IS_NOT_UPDATING_LOADER });
         dispatch({ type: HUSTLR_CARD_REVIEW_SAVED_UNSUCCESSFULLY });
       });

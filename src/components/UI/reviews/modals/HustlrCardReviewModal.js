@@ -51,7 +51,7 @@ const HustlrCardReviewModal = () => {
     (state) => state.hustlrCardReviewNotifications
   );
   const userId = useSelector((state) => state.user.id);
-  const cardId = useSelector((state) => state.publicCard.id);
+  const cardId = useSelector((state) =>  state.publicCard ? state.publicCard.id : 0);
 
   const [rating, setRating] = useState(null);
   const [description, setDescription] = useState("");
