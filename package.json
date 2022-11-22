@@ -46,7 +46,7 @@
     "react-redux-loading-bar": "^5.0.0",
     "react-router-dom": "^5.2.0",
     "react-sage": "^0.1.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "react-scroll-to-component": "^1.0.2",
     "react-select": "^3.1.0",
     "react-toggle-button": "^2.2.0",
